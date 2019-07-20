@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".login">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/wadi_rum"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:adjustViewBounds="true"
+        android:cropToPadding="true"
+        />
+
+    <TextView
+        android:id="@+id/welcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/welcome_to_seyaha"
+        android:layout_marginBottom="90dp"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="50"
+        android:shadowColor="@color/white_login_screen"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:fontFamily="@font/coves_light"
+        android:textColor="@color/white_login_screen"
+        android:textSize="54sp"
+        android:gravity="center_horizontal"
+        />
+    <TextView
+        android:id="@+id/disc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login_description"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/welcome"
+        app:layout_constraintRight_toRightOf="parent"
+        android:fontFamily="@font/coves_light"
+        android:textColor="@color/white_login_screen"
+        android:layout_marginTop="1dp"
+        android:gravity="center_horizontal"/>
+
+    <TextView
+        android:id="@+id/cont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="15dp"
+        android:fontFamily="@font/coves_light"
+        android:text="@string/login_continue"
+        android:textColor="@color/white_login_screen"
+        android:textSize="21sp"
+        app:layout_constraintBottom_toTopOf="@+id/gmail_btn"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <Button
+        android:id="@+id/gmail_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/gmail_btn_shape"
+        android:fontFamily="@font/coves_light"
+        android:text="GMAIL"
+        android:textAlignment="center"
+        android:textColor="@color/white_login_screen"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="50dp"
+        android:background="@drawable/facebook_btn_shape"
+        android:fontFamily="@font/coves_light"
+        android:text="Facebook"
+        android:textColor="@color/white_login_screen"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
