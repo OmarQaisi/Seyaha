@@ -1,6 +1,7 @@
 package com.example.seyaha;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -23,12 +24,20 @@ import android.os.Handler;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.widget.Toast;
+
+import com.firebase.ui.auth.AuthMethodPickerLayout;
+import com.firebase.ui.auth.AuthUI;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
@@ -38,6 +47,12 @@ public class SplashScreenActivity extends AppCompatActivity {
     int counter=0;
     SharedPreferences sharedPreferences;
     String check="notDownloaded";
+
+    //firebase
+    private FirebaseAuth mFirebaseAuth;
+    private  FirebaseAuth.AuthStateListener mFirebaseAuthListner;
+
+    private final  int RC_SIGN_IN=1;
 
     public String [] link={"https://firebasestorage.googleapis.com/v0/b/seyaha-2efa3.appspot.com/o/climbing.jpg?alt=media&token=6b188ad6-ece5-414e-beaa-8ce3ce66cb15",
             "https://firebasestorage.googleapis.com/v0/b/seyaha-2efa3.appspot.com/o/historical.jpg?alt=media&token=52549211-7e5e-410e-a6cd-cd51667f23a0",
@@ -55,7 +70,45 @@ public class SplashScreenActivity extends AppCompatActivity {
         progressDialog=new ProgressDialog(this);
         WIFI=checkInternetConnection();
        MOBDATA=isNetworkConnected();
-        checkallpermissions();
+
+        mFirebaseAuth=FirebaseAuth.getInstance();
+       mFirebaseAuthListner=new FirebaseAuth.AuthStateListener() {
+           @Override
+           public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+               FirebaseUser user=firebaseAuth.getCurrentUser();
+               if(user==null)
+               {
+                   List<AuthUI.IdpConfig> providers = Arrays.asList(
+                           new AuthUI.IdpConfig.FacebookBuilder().build(),
+                           new AuthUI.IdpConfig.GoogleBuilder().build()
+                   );
+
+                   AuthMethodPickerLayout customLayout = new AuthMethodPickerLayout
+                           .Builder(R.layout.activity_login)
+                           .setGoogleButtonId(R.id.gmail_btn)
+                           .setFacebookButtonId(R.id.facbook_btn)
+                           .build();
+
+                   startActivityForResult(
+                           AuthUI.getInstance()
+                                   .createSignInIntentBuilder()
+                                   .setAvailableProviders(providers)
+                                   .setIsSmartLockEnabled(false)
+                                   .setTheme(R.style.AppThemeFirebaseAuth)
+                                   .setAuthMethodPickerLayout(customLayout)
+                                   .build(),
+                           RC_SIGN_IN);
+               }
+               else
+               {
+                   checkallpermissions();
+               }
+           }
+       };
+
+
+
+
     }
 
     private void checkimgs()
@@ -229,5 +282,34 @@ public class SplashScreenActivity extends AppCompatActivity {
             Log.e("notsaved",e+"");
             e.printStackTrace();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mFirebaseAuth.addAuthStateListener(mFirebaseAuthListner);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mFirebaseAuth.removeAuthStateListener(mFirebaseAuthListner);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode==RESULT_OK)
+        {
+            Toast.makeText(this, "successful sign in", Toast.LENGTH_SHORT).show();
+            checkallpermissions();
+        }
+      else if(resultCode==RESULT_CANCELED)
+        {
+            Toast.makeText(this, "sign in canceled", Toast.LENGTH_SHORT).show();
+            finish();
+        }
+
     }
 }
