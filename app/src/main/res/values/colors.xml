@@ -2,17 +2,18 @@
 <resources>
     <color name="colorPrimary">#000000</color>
     <color name="colorPrimaryDark">#000000</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorAccent">#3acce1</color>
 
 
     <color name="white_login_screen">#ffffff</color>
 
     <color name="light_blue">#3acce1</color>
     <color name="dark_blue">#3290A2</color>
-
+    
 
     <color name="dark_grey">#353a50</color>
     <color name="light_grey">#5B6183</color>
-
-
+    
+    <color name="gray_text_view">#C9C9C9</color>
+    <color name="light_grey_shade">#E0E0E0</color>
 </resources>

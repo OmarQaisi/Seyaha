@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/layout_overview"
+    android:descendantFocusability="blocksDescendants"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:id="@+id/place_pic_overview"
+        android:src="@drawable/petra_hd"
+        android:background="@drawable/corners"
+        android:scaleType="centerCrop"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/linear_overview"
+        android:layout_marginLeft="10dp"
+        app:layout_constraintLeft_toRightOf="@id/place_pic_overview"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="20dp">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/place_name_overview"
+        android:focusable="false"
+        android:text="Place name"
+        android:fontFamily="sans-serif"
+        android:textColor="@android:color/black"
+        android:textSize="22sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/category_tv_overview"
+        android:textSize="18sp"
+        android:focusable="false"
+        android:fontFamily="sans-serif"
+        android:text="Catefory"/>
+
+    </LinearLayout>
+
+    <ImageButton
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:id="@+id/arabic_voice_image_button"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/ic_speaker_gray"
+        android:background="@android:color/transparent"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="10dp"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Day2"
+        app:layout_constraintTop_toBottomOf="@id/arabic_voice_image_button"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="10dp"
+        android:textSize="14sp"
+        android:id="@+id/days_tv"
+        android:textColor="@color/gray_text_view"
+        android:fontFamily="sans-serif"
+        android:layout_marginTop="40dp"/>
+
+    <View
+        android:layout_width="7dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/verical_line_overview"
+        android:layout_height="110dp"
+        android:background="@color/light_blue"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

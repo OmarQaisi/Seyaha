@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">Seyaha</string>
-    <string name="welcome_to_seyaha">"Welcome To Seyaha"</string>
+    <string name="welcome_to_seyaha">"Welcome To\nSeyaha"</string>
     <string name="login_description">the best way to navigate through jordan and discover new places .let\'s get started</string>
     <string name="login_continue">continue with :</string>
     <array name="categorynames">
-        <item >Climbing</item>
+        <item>Climbing</item>
         <item>Historical</item>
         <item>Treatment</item>
         <item>WonderLand</item>
