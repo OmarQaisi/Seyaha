@@ -58,6 +58,14 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
         Picasso.get().load(tour.ImageURLs[2]).fit().into(holder.img3);
         holder.img3.setClipToOutline(true);
 
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Tour.addClickEffect(v);
+            }
+        });
+
     }
 
     @Override

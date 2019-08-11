@@ -1,5 +1,9 @@
 package com.example.seyaha;
 
+import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+
 import java.util.Map;
 
 public class Tour {
@@ -44,6 +48,13 @@ public class Tour {
             }
         }
         return result;
+    }
+
+    public static void addClickEffect(View view)
+    {
+        Animation animation1 = new AlphaAnimation(0.3f, 1.0f);
+        animation1.setDuration(500);
+        view.startAnimation(animation1);
     }
 
 }
