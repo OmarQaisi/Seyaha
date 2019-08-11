@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -24,10 +25,12 @@ import android.os.Handler;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthMethodPickerLayout;
 import com.firebase.ui.auth.AuthUI;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -41,254 +44,125 @@ import java.util.List;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
-    Bitmap[] imgs;
-    public static   String WIFI ="0";
-    public static String MOBDATA="0";
-    int counter=0;
-    SharedPreferences sharedPreferences;
-    String check="notDownloaded";
+
+    CoordinatorLayout coordinatorLayout;
+    Snackbar snackbar;
+
 
     //firebase
     private FirebaseAuth mFirebaseAuth;
     private  FirebaseAuth.AuthStateListener mFirebaseAuthListner;
-
+    private FirebaseUser user;
     private final  int RC_SIGN_IN=1;
 
-    public String [] link={"https://firebasestorage.googleapis.com/v0/b/seyaha-2efa3.appspot.com/o/climbing.jpg?alt=media&token=6b188ad6-ece5-414e-beaa-8ce3ce66cb15",
-            "https://firebasestorage.googleapis.com/v0/b/seyaha-2efa3.appspot.com/o/historical.jpg?alt=media&token=52549211-7e5e-410e-a6cd-cd51667f23a0",
-            "https://firebasestorage.googleapis.com/v0/b/seyaha-2efa3.appspot.com/o/treatment.jpg?alt=media&token=d453f77e-58b7-4e62-9d10-014d604fe669",
-            "https://firebasestorage.googleapis.com/v0/b/seyaha-2efa3.appspot.com/o/wonderland.jpg?alt=media&token=d02446db-381f-4531-8734-ec8bc386f7d8"};
-
-    ProgressDialog progressDialog;
-    AlertDialog.Builder builder;
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
-        progressDialog=new ProgressDialog(this);
-        WIFI=checkInternetConnection();
-       MOBDATA=isNetworkConnected();
-
         mFirebaseAuth=FirebaseAuth.getInstance();
-       mFirebaseAuthListner=new FirebaseAuth.AuthStateListener() {
-           @Override
-           public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-               FirebaseUser user=firebaseAuth.getCurrentUser();
-               if(user==null)
-               {
-                   List<AuthUI.IdpConfig> providers = Arrays.asList(
-                           new AuthUI.IdpConfig.FacebookBuilder().build(),
-                           new AuthUI.IdpConfig.GoogleBuilder().build()
-                   );
+        mFirebaseAuthListner=new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                user=firebaseAuth.getCurrentUser();
+                if(user==null)
+                {
+                    List<AuthUI.IdpConfig> providers = Arrays.asList(
+                            new AuthUI.IdpConfig.FacebookBuilder().build(),
+                            new AuthUI.IdpConfig.GoogleBuilder().build()
+                    );
 
-                   AuthMethodPickerLayout customLayout = new AuthMethodPickerLayout
-                           .Builder(R.layout.activity_login)
-                           .setGoogleButtonId(R.id.gmail_btn)
-                           .setFacebookButtonId(R.id.facbook_btn)
-                           .build();
+                    AuthMethodPickerLayout customLayout = new AuthMethodPickerLayout
+                            .Builder(R.layout.activity_login)
+                            .setGoogleButtonId(R.id.gmail_btn)
+                            .setFacebookButtonId(R.id.facbook_btn)
+                            .build();
 
-                   startActivityForResult(
-                           AuthUI.getInstance()
-                                   .createSignInIntentBuilder()
-                                   .setAvailableProviders(providers)
-                                   .setIsSmartLockEnabled(false)
-                                   .setTheme(R.style.AppThemeFirebaseAuth)
-                                   .setAuthMethodPickerLayout(customLayout)
-                                   .build(),
-                           RC_SIGN_IN);
-               }
-               else
-               {
-                   checkallpermissions();
-               }
-           }
-       };
-
-
-
-
-    }
-
-    private void checkimgs()
-    {
-        builder=new AlertDialog.Builder(this);
-        imgs=new Bitmap[link.length];
-        sharedPreferences= PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor editor= sharedPreferences.edit();
-        check=sharedPreferences.getString("check","");
-        Log.e("anas",check+"anas");
-
-        if(!check.equalsIgnoreCase("Downloaded")&& (WIFI.equalsIgnoreCase("connected")|| MOBDATA.equalsIgnoreCase("connected")))
-        {
-
-            // editor.putString("check",);
-
-            editor.putString("check","Downloaded");
-            editor.commit();
-            try {
-                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-                StrictMode.setThreadPolicy(policy);
-                progressDialog.setTitle(getResources().getString(R.string.loading));
-                progressDialog.setMessage(getResources().getString(R.string.waiting));
-                progressDialog.show();
-                new Handler().post(new Runnable() {
-                    @Override
-                    public void run() {
-                        final Thread dothread = new Thread()
-                        {
-                            @Override
-                            public void run() {
-                                try {
-
-                                    for (int i = 0; i < link.length; i++) {
-                                        URL url = new URL(link[i]);
-                                        Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                                        SaveImage(bmp);
-                                        if (i == link.length - 1)
-                                        {
-                                            progressDialog.dismiss();
-
-                                        }
-                                    }
-
-                                } catch (MalformedURLException e)
-                                {
-                                    e.printStackTrace();
-                                } catch (IOException e)
-                                {
-                                    e.printStackTrace();
-                                }
-                            }
-                        };
-                        dothread.start();
-                    }
-                });
-                move_to_another_activity();
-            }
-            catch (Exception e)
-            {
-                e.printStackTrace();
-
-            }
-
-        }
-        else if(!check.equalsIgnoreCase("Downloaded") &&(!WIFI.equalsIgnoreCase("connected")&& !MOBDATA.equalsIgnoreCase("connected")))
-        {
-
-            builder.setTitle(getResources().getString(R.string.lost_internet));
-            builder.setMessage(getResources().getString(R.string.check_connection));
-            builder.setCancelable(false);
-            builder.setPositiveButton(getResources().getString(R.string.retry), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    WIFI=checkInternetConnection();
-                    MOBDATA=isNetworkConnected();
-                    dialogInterface.cancel();
-                    checkimgs();
+                    startActivityForResult(
+                            AuthUI.getInstance()
+                                    .createSignInIntentBuilder()
+                                    .setAvailableProviders(providers)
+                                    .setIsSmartLockEnabled(false)
+                                    .setTheme(R.style.AppThemeFirebaseAuth)
+                                    .setAuthMethodPickerLayout(customLayout)
+                                    .build(),
+                            RC_SIGN_IN);
                 }
-            });
-            builder.show();
-
-        }
-        else
-        {
-            move_to_another_activity();
-        }
-        check=sharedPreferences.getString("check","");
+                else
+                {
+                    checkallpermissions();
+                }
+            }
+        };
     }
 
-
-    public void move_to_another_activity()
+    private void loading()
     {
+        // here if internet is connected
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run()
             {
-                Intent i=new Intent(SplashScreenActivity.this,TourActivity.class);
+                Intent i=new Intent(SplashScreenActivity.this, TourActivity.class);
                 startActivity(i);
             }
         },3000);
     }
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
+    private void checkInternet()
     {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (grantResults[0] == PackageManager.PERMISSION_GRANTED )
+        if(SeyahaUtils.checkInternetConnectivity(this))
         {
-            checkimgs();
-
+            loading();
         }
         else
         {
-            checkallpermissions();
+            showSnackBar();
         }
-
     }
+    private void init()
+    {
+        coordinatorLayout=findViewById(R.id.coordinator);
+    }
+    private void showSnackBar()
+    {
+        snackbar=Snackbar.make(coordinatorLayout,getResources().getString(R.string.lost_internet),Snackbar.LENGTH_INDEFINITE)
+                .setAction(getResources().getString(R.string.retry), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view)
+                    {
+                        if (snackbar.isShown())
+                        {
+                            snackbar.dismiss();
+                        }
+                        checkInternet();
+                    }
+                });
 
-    private void checkallpermissions() {
+        snackbar.show();
+    }
+    private void checkallpermissions()
+    {
 
-        if (ContextCompat.checkSelfPermission(SplashScreenActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED ||ContextCompat.checkSelfPermission(SplashScreenActivity.this, Manifest.permission.LOCATION_HARDWARE) == PackageManager.PERMISSION_DENIED || ContextCompat.checkSelfPermission(SplashScreenActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED || ContextCompat.checkSelfPermission(SplashScreenActivity.this, Manifest.permission.WRITE_CONTACTS) == PackageManager.PERMISSION_DENIED) {
+        if (ContextCompat.checkSelfPermission(SplashScreenActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED || ContextCompat.checkSelfPermission(SplashScreenActivity.this, Manifest.permission.LOCATION_HARDWARE) == PackageManager.PERMISSION_DENIED || ContextCompat.checkSelfPermission(SplashScreenActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED || ContextCompat.checkSelfPermission(SplashScreenActivity.this, Manifest.permission.WRITE_CONTACTS) == PackageManager.PERMISSION_DENIED) {
 
             ActivityCompat.requestPermissions(SplashScreenActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.READ_CONTACTS}, 1);
         }
-    }
 
-    private String isNetworkConnected() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        if( cm.getActiveNetworkInfo() != null)
-        {
-            return "connected";
-        }
-        else
-        {
-            return "failed";
-        }
-    }
-    @SuppressLint("MissingPermission")
-    private String checkInternetConnection() {
-        ConnectivityManager conMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        // ARE WE CONNECTED TO THE NET
-        if (conMgr.getActiveNetworkInfo() != null && conMgr.getActiveNetworkInfo().isAvailable() && conMgr.getActiveNetworkInfo().isConnected()) {
-
-            return "connected";
-
-
-        } else {
-            return "failed";
-        }
-    }
-    private void SaveImage(Bitmap finalBitmap) {
-        Log.e("saved","start saving");
-        String root = Environment.getExternalStorageDirectory().toString();
-        File myDir = new File(root + "/saved_images");
-        if (!myDir.exists()) {
-            myDir.mkdirs();
-        }
-        String fname = "Image-"+ counter++ +".jpg";
-        File file = new File (myDir, fname);
-        if (file.exists ())
-            file.delete ();
-        try {
-            FileOutputStream out = new FileOutputStream(file);
-            finalBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
-            out.flush();
-            out.close();
-            Log.e("saved","save success "+counter);
-        } catch (Exception e) {
-            Log.e("notsaved",e+"");
-            e.printStackTrace();
-        }
     }
 
     @Override
-    protected void onResume() {
+    protected void onResume()
+    {
         super.onResume();
+        if(user!=null) {
+            init();
+            checkInternet();
+        }
         mFirebaseAuth.addAuthStateListener(mFirebaseAuthListner);
     }
+
 
     @Override
     protected void onPause() {
@@ -304,12 +178,17 @@ public class SplashScreenActivity extends AppCompatActivity {
         {
             Toast.makeText(this, "successful sign in", Toast.LENGTH_SHORT).show();
             checkallpermissions();
+            init();
+            checkInternet();
         }
-      else if(resultCode==RESULT_CANCELED)
+        else if(resultCode==RESULT_CANCELED)
         {
             Toast.makeText(this, "sign in canceled", Toast.LENGTH_SHORT).show();
             finish();
         }
 
     }
+
+
 }
+
