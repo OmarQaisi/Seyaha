@@ -53,10 +53,10 @@
     <ImageButton
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:id="@+id/arabic_voice_image_button"
         app:layout_constraintTop_toTopOf="parent"
         android:src="@drawable/ic_speaker_gray"
-        android:background="@android:color/transparent"
         android:layout_marginTop="8dp"
         android:layout_marginRight="10dp"
         app:layout_constraintRight_toRightOf="parent"/>

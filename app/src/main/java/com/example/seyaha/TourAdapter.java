@@ -4,6 +4,7 @@ import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -56,6 +57,7 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
 
         Picasso.get().load(tour.ImageURLs[2]).fit().into(holder.img3);
         holder.img3.setClipToOutline(true);
+
     }
 
     @Override
@@ -68,6 +70,7 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
     {
         ImageView img1, img2, img3;
         TextView mTitle, mDescription, mRating, mComments;
+        ImageButton mShare_btn,mComment_btn,mRate_btn;
 
         @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         public ImageViewHolder(View itemView)
@@ -81,6 +84,9 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
             img1 = itemView.findViewById(R.id.img1);
             img2 = itemView.findViewById(R.id.img2);
             img3 = itemView.findViewById(R.id.img3);
+            mShare_btn=itemView.findViewById(R.id.share_btn);
+            mComment_btn=itemView.findViewById(R.id.comment_btn);
+            mRate_btn=itemView.findViewById(R.id.star);
         }
 
     }
