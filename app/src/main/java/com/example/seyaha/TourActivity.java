@@ -2,6 +2,7 @@ package com.example.seyaha;
 
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -17,6 +18,7 @@ public class TourActivity extends AppCompatActivity {
     ArrayList<Tour> tours = new ArrayList<Tour>();
     RecyclerView mRecyclerView;
     RecyclerView.LayoutManager mManger;
+    int close=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +66,25 @@ public class TourActivity extends AppCompatActivity {
         tours.add(tour3);
     }
 
-    /*
+    @Override
+    public void onBackPressed()
+    {
+        if(close%2==0)
+        {
+            mToast(getResources().getString(R.string.close),1);
+        }
+        else
+        {
+            //finish();
+            moveTaskToBack(true);
+        }
+        close++;
+    }
+    private void mToast(String msg,int duration)
+    {
+        Toast.makeText(this,msg,duration).show();
+    }
+/*
     @Override
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {

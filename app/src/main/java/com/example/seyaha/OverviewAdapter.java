@@ -1,4 +1,6 @@
 package com.example.seyaha;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +21,7 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.ViewHo
 {
 
     public static Tour mTour;
+    ColorDrawable colorDrawable;
     public OverviewAdapter(Tour tour)
     {
         mTour=tour;
@@ -39,8 +42,8 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.ViewHo
     {
           holder.placeName.setText(mTour.placeNames[position]);
           holder.category.setText(mTour.categories.get(mTour.placeNames[position]));
-
-          Picasso.get().load(mTour.ImageURLs[position]).into(holder.placePic);
+        colorDrawable =new ColorDrawable(Color.GRAY);
+          Picasso.get().load(mTour.ImageURLs[position]).placeholder(colorDrawable).into(holder.placePic);
           holder.placePic.setClipToOutline(true);
 
           int i=position+1;

@@ -44,61 +44,28 @@ import java.util.List;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
+    private static final String TAG = "anas";
 
     CoordinatorLayout coordinatorLayout;
     Snackbar snackbar;
-
-
     //firebase
     private FirebaseAuth mFirebaseAuth;
     private  FirebaseAuth.AuthStateListener mFirebaseAuthListner;
     private FirebaseUser user;
     private final  int RC_SIGN_IN=1;
-
-
+    private boolean internet_checked=false;
+    private boolean flag=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
-        mFirebaseAuth=FirebaseAuth.getInstance();
-        mFirebaseAuthListner=new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                user=firebaseAuth.getCurrentUser();
-                if(user==null)
-                {
-                    List<AuthUI.IdpConfig> providers = Arrays.asList(
-                            new AuthUI.IdpConfig.FacebookBuilder().build(),
-                            new AuthUI.IdpConfig.GoogleBuilder().build()
-                    );
-
-                    AuthMethodPickerLayout customLayout = new AuthMethodPickerLayout
-                            .Builder(R.layout.activity_login)
-                            .setGoogleButtonId(R.id.gmail_btn)
-                            .setFacebookButtonId(R.id.facbook_btn)
-                            .build();
-
-                    startActivityForResult(
-                            AuthUI.getInstance()
-                                    .createSignInIntentBuilder()
-                                    .setAvailableProviders(providers)
-                                    .setIsSmartLockEnabled(false)
-                                    .setTheme(R.style.AppThemeFirebaseAuth)
-                                    .setAuthMethodPickerLayout(customLayout)
-                                    .build(),
-                            RC_SIGN_IN);
-                }
-                else
-                {
-                    checkallpermissions();
-                }
-            }
-        };
+        coordinatorLayout=findViewById(R.id.coordinator);
+        checkInternet();
+        firebaseLogin();
     }
-
-    private void loading()
+    private void start_activity_with_delay()
     {
         // here if internet is connected
         new Handler().postDelayed(new Runnable() {
@@ -108,22 +75,49 @@ public class SplashScreenActivity extends AppCompatActivity {
                 Intent i=new Intent(SplashScreenActivity.this, TourActivity.class);
                 startActivity(i);
             }
-        },3000);
+        },2000);
+    }
+    private void start_activity()
+    {
+        Intent i=new Intent(SplashScreenActivity.this, TourActivity.class);
+        startActivity(i);
     }
     private void checkInternet()
     {
-        if(SeyahaUtils.checkInternetConnectivity(this))
-        {
-            loading();
-        }
-        else
+        if(!SeyahaUtils.checkInternetConnectivity(this))
         {
             showSnackBar();
         }
+        else
+        {
+            internet_checked=true;
+        }
     }
-    private void init()
-    {
-        coordinatorLayout=findViewById(R.id.coordinator);
+
+    private void firebaseLogin() {
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseAuthListner = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                user = firebaseAuth.getCurrentUser();
+                if (user == null) {
+
+                    flag = true;
+                    List <AuthUI.IdpConfig> providers = Arrays.asList(new AuthUI.IdpConfig.FacebookBuilder().build(), new AuthUI.IdpConfig.GoogleBuilder().build());
+
+                    AuthMethodPickerLayout customLayout = new AuthMethodPickerLayout.Builder(R.layout.activity_login).setGoogleButtonId(R.id.gmail_btn).setFacebookButtonId(R.id.facbook_btn).build();
+
+                    startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder().setAvailableProviders(providers).setIsSmartLockEnabled(false).setTheme(R.style.AppThemeFirebaseAuth).setAuthMethodPickerLayout(customLayout).build(), RC_SIGN_IN);
+                } else {
+                    if (flag)
+                    {
+                        start_activity();
+                    }
+                    else
+                        start_activity_with_delay();
+                }
+            }
+        };
     }
     private void showSnackBar()
     {
@@ -137,58 +131,41 @@ public class SplashScreenActivity extends AppCompatActivity {
                             snackbar.dismiss();
                         }
                         checkInternet();
+                        onResume();
                     }
                 });
-
         snackbar.show();
     }
-    private void checkallpermissions()
-    {
-
-        if (ContextCompat.checkSelfPermission(SplashScreenActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED || ContextCompat.checkSelfPermission(SplashScreenActivity.this, Manifest.permission.LOCATION_HARDWARE) == PackageManager.PERMISSION_DENIED || ContextCompat.checkSelfPermission(SplashScreenActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED || ContextCompat.checkSelfPermission(SplashScreenActivity.this, Manifest.permission.WRITE_CONTACTS) == PackageManager.PERMISSION_DENIED) {
-
-            ActivityCompat.requestPermissions(SplashScreenActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.READ_CONTACTS}, 1);
-        }
-
-    }
-
     @Override
     protected void onResume()
     {
         super.onResume();
-        if(user!=null) {
-            init();
-            checkInternet();
+        if (internet_checked) {
+            mFirebaseAuth.addAuthStateListener(mFirebaseAuthListner);
         }
-        mFirebaseAuth.addAuthStateListener(mFirebaseAuthListner);
+        else
+            showSnackBar();
     }
-
-
     @Override
-    protected void onPause() {
+    protected void onPause()
+    {
         super.onPause();
         mFirebaseAuth.removeAuthStateListener(mFirebaseAuthListner);
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode==RESULT_OK)
         {
-            Toast.makeText(this, "successful sign in", Toast.LENGTH_SHORT).show();
-            checkallpermissions();
-            init();
-            checkInternet();
+            Log.d(TAG, "onActivityResult: intered ");
+            start_activity();
         }
         else if(resultCode==RESULT_CANCELED)
         {
             Toast.makeText(this, "sign in canceled", Toast.LENGTH_SHORT).show();
             finish();
         }
-
     }
-
-
 }
 

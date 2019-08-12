@@ -1,5 +1,7 @@
 package com.example.seyaha;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +20,7 @@ import java.util.List;
 
 public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolder> {
     public static List<Tour> mTours;
+    ColorDrawable colorDrawable;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @NonNull
@@ -48,14 +51,14 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
         holder.mRating.setText(tour.rating+"");
 
         holder.mComments.setText(tour.comments+"");
-
-        Picasso.get().load(tour.ImageURLs[0]).fit().into(holder.img1);
+        colorDrawable =new ColorDrawable(Color.GRAY);
+        Picasso.get().load(tour.ImageURLs[0]).placeholder(colorDrawable).fit().into(holder.img1);
         holder.img1.setClipToOutline(true);
 
-        Picasso.get().load(tour.ImageURLs[1]).fit().into(holder.img2);
+        Picasso.get().load(tour.ImageURLs[1]).placeholder(colorDrawable).fit().into(holder.img2);
         holder.img2.setClipToOutline(true);
 
-        Picasso.get().load(tour.ImageURLs[2]).fit().into(holder.img3);
+        Picasso.get().load(tour.ImageURLs[2]).placeholder(colorDrawable).fit().into(holder.img3);
         holder.img3.setClipToOutline(true);
 
     }

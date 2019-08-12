@@ -10,6 +10,7 @@
         <item>WonderLand</item>
     </array>
     <string name="loading">Loading..</string>
+    <string name="close">Press again to Quit </string>
     <string name="waiting">Please Wait ...</string>
     <string name="retry">Retry</string>
     <string name="lost_internet">internet connection lost !!</string>
