@@ -1,4 +1,5 @@
 <resources>
+
     <string name="app_name">Seyaha</string>
     <string name="welcome_to_seyaha">"Welcome To\nSeyaha"</string>
     <string name="login_description">the best way to navigate through jordan and discover new places .let\'s get started</string>
@@ -18,4 +19,15 @@
     <string name="facebook_application_id" translatable="false">423812995143662</string>
     <!-- Facebook Application ID, prefixed by 'fb'. Enables Chrome Custom tabs. -->
     <string name="facebook_login_protocol_scheme" translatable="false">fb423812995143662</string>
+
+    <!-- Strings for the (drawer_menu) titles -->
+    <string name="nav_profile">Profile</string>
+    <string name="nav_upcoming_event">Upcoming Event</string>
+    <string name="nav_help_feedback">Help &amp; Feedback</string>
+    <string name="nav_logout">Log Out</string>
+
+    <!-- Strings for the (ActionBarDrawerToggle) -->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
 </resources>

@@ -4,17 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Bundle;
-import android.view.View;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,11 +33,6 @@ public class OverviewActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mManger);
         mRecyclerView.setAdapter(adapter);
 
-
-
-
-
-
 }
     private Tour initilizeData()
     {
@@ -66,7 +52,6 @@ public class OverviewActivity extends AppCompatActivity {
        return mTour;
 
     }
-
 
 
 }

@@ -10,7 +10,7 @@
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:id="@+id/place_pic_overview"
-        android:src="@drawable/petra_hd"
+        android:src="@drawable/wadi_rum"
         android:background="@drawable/corners"
         android:scaleType="centerCrop"
         app:layout_constraintLeft_toLeftOf="parent"
