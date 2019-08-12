@@ -1,19 +1,28 @@
 package com.example.seyaha;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.navigation.NavigationView;
+
 import java.util.ArrayList;
 
-public class TourActivity extends AppCompatActivity {
+public class TourActivity extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "TourActivity";
+    private DrawerLayout mDrawerLayout;
 
     ArrayList<Tour> tours = new ArrayList<Tour>();
     RecyclerView mRecyclerView;
@@ -24,10 +33,23 @@ public class TourActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tour);
-        Toolbar toolbar = findViewById(R.id.toolbar);
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(null);
         TextView tv = findViewById(R.id.toolbar_title);
         tv.setText("Tours");
+
+        mDrawerLayout = findViewById(R.id.drawer_layout);
+        NavigationView mNavigationView = findViewById(R.id.nav_view);
+        mNavigationView.setNavigationItemSelectedListener(this);
+        mNavigationView.setItemIconTintList(null);
+
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        mDrawerLayout.addDrawerListener(toggle);
+        toggle.getDrawerArrowDrawable().setColor(Color.BLACK);
+        toggle.syncState();
 
         initalizeTours();
         TourAdapter mAdapter = new TourAdapter(tours);
@@ -35,10 +57,6 @@ public class TourActivity extends AppCompatActivity {
         mManger = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mManger);
         mRecyclerView.setAdapter(mAdapter);
-
-        //ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        //drawer.addDrawerListener(toggle);
-        //toggle.syncState();
 
     }
 
@@ -69,6 +87,10 @@ public class TourActivity extends AppCompatActivity {
     @Override
     public void onBackPressed()
     {
+        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+            mDrawerLayout.closeDrawer(GravityCompat.START);
+        }
+
         if(close%2==0)
         {
             mToast(getResources().getString(R.string.close),1);
@@ -84,13 +106,25 @@ public class TourActivity extends AppCompatActivity {
     {
         Toast.makeText(this,msg,duration).show();
     }
-/*
-    @Override
-    public void onBackPressed() {
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
+
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        switch (menuItem.getItemId()){
+            case R.id.nav_profile:
+                Toast.makeText(this, "Comming Soon..", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.nav_upcoming_event:
+                Toast.makeText(this, "Comming Soon..", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.nav_help_feedback:
+                Toast.makeText(this, "Comming Soon..", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.nav_logout:
+                Toast.makeText(this, "Comming Soon..", Toast.LENGTH_SHORT).show();
+                break;
         }
-    }*/
+
+        mDrawerLayout.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
 }

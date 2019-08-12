@@ -21,7 +21,6 @@ public class ConnectionDetector {
                     if (info[i].getState() == NetworkInfo.State.CONNECTED) {
                         return true;
                     }
-
         }
         return false;
     }
