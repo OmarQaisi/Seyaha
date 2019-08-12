@@ -13,7 +13,7 @@
     <string name="close">Press again to Quit </string>
     <string name="waiting">Please Wait ...</string>
     <string name="retry">Retry</string>
-    <string name="lost_internet">internet connection lost !!</string>
+    <string name="lost_internet">internet connection lost.</string>
     <string name="check_connection">Please check your internet connection ..</string>
 
     <string name="facebook_application_id" translatable="false">423812995143662</string>

@@ -65,7 +65,7 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.ViewHo
               @Override
               public void onClick(View v) {
 
-                  addClickEffect(v);
+                  Tour.addClickEffect(v);
               }
           });
 
@@ -96,10 +96,5 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.ViewHo
         }
     }
 
-    private void addClickEffect(View view)
-    {
-        Animation animation1 = new AlphaAnimation(0.3f, 1.0f);
-        animation1.setDuration(500);
-        view.startAnimation(animation1);
-    }
+
 }
