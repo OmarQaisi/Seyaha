@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="196dp"
+    android:layout_height="210dp"
     android:orientation="vertical"
-    android:background="@drawable/wadi_rum"
+    android:background="@drawable/nav_drawer_background"
     android:gravity="start">
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -11,10 +11,10 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="96dp"
         android:layout_height="96dp"
-        android:src="@drawable/wadi_rum"
+        android:src="@drawable/profile_pic"
         app:civ_border_width="2dp"
         app:civ_border_color="#FFF"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="40dp"
         android:layout_marginLeft="16dp"
         android:layout_marginBottom="12dp"/>
 

@@ -23,6 +23,7 @@
 
     <!-- Strings for the (drawer_menu) titles -->
     <string name="nav_profile">Profile</string>
+    <string name="nav_tour">Tours</string>
     <string name="nav_upcoming_event">Upcoming Event</string>
     <string name="nav_help_feedback">Help &amp; Feedback</string>
     <string name="nav_logout">Log Out</string>

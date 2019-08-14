@@ -4,9 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import android.Manifest;
+
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -79,14 +77,14 @@ public class SplashScreenActivity extends AppCompatActivity {
             @Override
             public void run()
             {
-                Intent i=new Intent(SplashScreenActivity.this, TourActivity.class);
+                Intent i=new Intent(SplashScreenActivity.this, MainActivity.class);
                 startActivity(i);
             }
         },2000);
     }
     private void start_activity()
     {
-        Intent i=new Intent(SplashScreenActivity.this, TourActivity.class);
+        Intent i=new Intent(SplashScreenActivity.this, MainActivity.class);
         startActivity(i);
     }
     private void checkInternet()

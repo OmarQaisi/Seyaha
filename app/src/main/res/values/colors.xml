@@ -16,4 +16,7 @@
     
     <color name="gray_text_view">#C9C9C9</color>
     <color name="light_grey_shade">#F0F0F0</color>
+
+    <color name="background_gray">#E0E0E0</color>
+
 </resources>
