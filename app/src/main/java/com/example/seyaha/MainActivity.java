@@ -27,7 +27,8 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
 
     private DrawerLayout mDrawerLayout;
 
-
+    private Toolbar mToolbar;
+    private TextView mTextView;
 
     private FirebaseAuth mFirebaseAuth;
     private  FirebaseAuth.AuthStateListener mFirebaseAuthListner;
@@ -39,19 +40,15 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_drawer);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(null);
-        TextView tv = findViewById(R.id.toolbar_title);
-        tv.setText("Tours");
+        mToolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
 
         mDrawerLayout = findViewById(R.id.drawer_layout);
         NavigationView mNavigationView = findViewById(R.id.nav_view);
         mNavigationView.setNavigationItemSelectedListener(this);
         mNavigationView.setItemIconTintList(null);
 
-
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawerLayout.addDrawerListener(toggle);
         toggle.getDrawerArrowDrawable().setColor(Color.BLACK);
         toggle.syncState();
@@ -59,7 +56,9 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
 
         if(savedInstanceState == null){
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new TourFragment()).commit();
-            mNavigationView.setCheckedItem(R.id.nav_tour);}
+            mNavigationView.setCheckedItem(R.id.nav_tour);
+            changeToolbarTitle(getString(R.string.nav_tour));
+        }
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseAuthListner=new FirebaseAuth.AuthStateListener() {
@@ -101,7 +100,12 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()){
             case R.id.nav_profile:
-                Toast.makeText(this, "Comming Soon..", Toast.LENGTH_SHORT).show();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new ProfileFragment()).commit();
+                changeToolbarTitle(getString(R.string.nav_profile));
+                break;
+            case R.id.nav_tour:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new TourFragment()).commit();
+                changeToolbarTitle(getString(R.string.nav_tour));
                 break;
             case R.id.nav_upcoming_event:
                 Toast.makeText(this, "Comming Soon..", Toast.LENGTH_SHORT).show();
@@ -117,6 +121,11 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
 
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void changeToolbarTitle(String str){
+        mTextView = mToolbar.findViewById(R.id.toolbar_title);
+        mTextView.setText(str);
     }
 
 }
