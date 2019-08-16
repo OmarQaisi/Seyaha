@@ -64,7 +64,8 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 Tour.addClickEffect(v);
             }
         });

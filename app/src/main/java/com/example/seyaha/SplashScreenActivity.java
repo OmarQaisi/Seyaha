@@ -14,6 +14,8 @@ import android.os.Handler;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.firebase.ui.auth.AuthMethodPickerLayout;
 import com.firebase.ui.auth.AuthUI;
@@ -39,6 +41,8 @@ public class SplashScreenActivity extends AppCompatActivity {
     private final  int RC_SIGN_IN=1;
     private boolean internet_checked=false;
     private boolean flag=false;
+
+
 
     private void printKeyHash() {
         // Add code to print out the key hash

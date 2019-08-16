@@ -10,6 +10,8 @@
         <item>Treatment</item>
         <item>WonderLand</item>
     </array>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">YOUR_KEY_HERE</string>
+
     <string name="loading">Loading..</string>
     <string name="close">Press again to Quit </string>
     <string name="waiting">Please Wait ...</string>

@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DetailedActivity">
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/ViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="290dp"
+        android:layout_alignParentTop="true"
+        android:overScrollMode="never"
+        android:clipToPadding="false"
+        android:foregroundGravity="center">
+    </androidx.viewpager.widget.ViewPager>
+
+    <ScrollView
+        android:id="@+id/scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/ViewPager">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/linear_places"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ViewPager"
+                android:gravity="bottom"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:id="@+id/info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Information About"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/dark_grey"/>
+                <TextView
+                    android:id="@+id/place_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PLACE"
+                    android:textSize="24sp"
+                    android:layout_marginLeft="4dp"
+                    android:textColor="@color/light_grey"
+                    />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/cost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cost"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:textSize="18sp"
+                    android:textColor="@color/colorPrimary"/>
+                <TextView
+                    android:id="@+id/temp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/cost"
+                    android:text="Temp"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_marginTop="10dp"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/air"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/temp"
+                    android:text="Air quality"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_marginTop="10dp"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/interact"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/air"
+                    android:text="Interact"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_marginTop="10dp"
+                    android:textSize="16sp"/>
+                <TextView
+                    android:id="@+id/safety"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/interact"
+                    android:text="Safety"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_marginTop="10dp"
+                    android:textSize="16sp"/>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/recommendationPlace"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ViewPager"
+                android:gravity="bottom"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:id="@+id/reco"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Recommendations for"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/dark_grey"/>
+                <TextView
+                    android:id="@+id/place_reco"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PLACE"
+                    android:textSize="24sp"
+                    android:layout_marginLeft="4dp"
+                    android:textColor="@color/light_grey"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:weightSum="4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/season"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_day"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_location"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ViewPager"
+                android:gravity="bottom"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:id="@+id/location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Location for"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/dark_grey"/>
+                <TextView
+                    android:id="@+id/location_place"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PLACE"
+                    android:textSize="24sp"
+                    android:layout_marginLeft="4dp"
+                    android:textColor="@color/light_grey"
+                    />
+            </LinearLayout>
+
+            <fragment
+                android:id="@+id/map"
+                android:layout_marginTop="5dp"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                />
+
+            <TextView
+                android:id="@+id/nearby_place"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Near By :"
+                android:layout_marginLeft="20dp"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/dark_grey"/>
+            <LinearLayout
+                android:weightSum="2"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="60dp"
+                android:layout_marginTop="10dp">
+
+                <Button
+                    android:text="Meals"
+                    android:layout_weight="1"
+                    android:drawableRight="@drawable/ic_day"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+
+                <Button
+                    android:text="Hotels"
+                    android:layout_weight="1"
+                    android:drawableRight="@drawable/ic_day"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+
+
+
+    </ScrollView>
+
+</RelativeLayout>
