@@ -22,15 +22,17 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
-    private static final String TAG = "anas";
+    private static final String TAG = "SplashScreenActivity";
 
     CoordinatorLayout coordinatorLayout;
     Snackbar snackbar;
@@ -64,8 +66,6 @@ public class SplashScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-
-
 
         printKeyHash();
 
@@ -110,14 +110,15 @@ public class SplashScreenActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 user = firebaseAuth.getCurrentUser();
                 if (user == null) {
-
                     flag = true;
 
                     List <AuthUI.IdpConfig> providers = Arrays.asList(new AuthUI.IdpConfig.FacebookBuilder().build(), new AuthUI.IdpConfig.GoogleBuilder().build());
                     AuthMethodPickerLayout customLayout = new AuthMethodPickerLayout.Builder(R.layout.activity_login).setGoogleButtonId(R.id.gmail_btn).setFacebookButtonId(R.id.facbook_btn).build();
-
                     startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder().setAvailableProviders(providers).setIsSmartLockEnabled(false).setTheme(R.style.AppThemeFirebaseAuth).setAuthMethodPickerLayout(customLayout).build(), RC_SIGN_IN);
-                } else {
+                }
+                else
+                    {
+
                     if (flag)
                     {
                         start_activity();
@@ -168,7 +169,9 @@ public class SplashScreenActivity extends AppCompatActivity {
         if(requestCode==RESULT_OK)
         {
             Log.d(TAG, "onActivityResult: intered ");
-            start_activity();
+
+
+           start_activity();
         }
         else if(resultCode==RESULT_CANCELED)
         {

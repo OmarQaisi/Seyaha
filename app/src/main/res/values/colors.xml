@@ -19,4 +19,7 @@
 
     <color name="background_gray">#E0E0E0</color>
 
+    <color name="green_great">#1DFF78</color>
+    <color name="orange_good">#FFD11A</color>
+    <color name="red_bad">#FF2454</color>
 </resources>

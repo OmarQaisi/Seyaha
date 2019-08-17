@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,19 +20,30 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
+import com.squareup.picasso.Picasso;
 
 import java.util.Arrays;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout mDrawerLayout;
 
+
     private Toolbar mToolbar;
     private TextView mTextView;
 
+    NavigationView mNavigationView;
+
+
+
     private FirebaseAuth mFirebaseAuth;
     private  FirebaseAuth.AuthStateListener mFirebaseAuthListner;
+
+    List<? extends UserInfo> profile;
 
     int close=0;
 
@@ -43,12 +55,14 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
+
         mDrawerLayout = findViewById(R.id.drawer_layout);
-        NavigationView mNavigationView = findViewById(R.id.nav_view);
+        mNavigationView = findViewById(R.id.nav_view);
         mNavigationView.setNavigationItemSelectedListener(this);
         mNavigationView.setItemIconTintList(null);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+
         mDrawerLayout.addDrawerListener(toggle);
         toggle.getDrawerArrowDrawable().setColor(Color.BLACK);
         toggle.syncState();
@@ -123,9 +137,17 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         return true;
     }
 
+
     public void changeToolbarTitle(String str){
         mTextView = mToolbar.findViewById(R.id.toolbar_title);
         mTextView.setText(str);
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mFirebaseAuth.addAuthStateListener(mFirebaseAuthListner);
     }
 
 }

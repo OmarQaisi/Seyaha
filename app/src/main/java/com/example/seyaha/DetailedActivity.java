@@ -6,6 +6,9 @@ import androidx.viewpager.widget.ViewPager;
 import android.animation.ArgbEvaluator;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -28,6 +31,12 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
     viewPagerAdapter adapter;
     Integer []colors=null;
     ArgbEvaluator argbEvaluator=new ArgbEvaluator();
+
+    ImageButton seasonImg,timeToGoImg,estimationImg;
+    TextView seasonTv,timeToGoTv,ageTv,estimationTv;
+
+    int seasonImgResource,timeToGoImgResource,estimationImgResource;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +46,76 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         mapFragment.getMapAsync(this);
         run_viewPager();
 
+        seasonImg=findViewById(R.id.prefered_season_image_button);
+        seasonTv=findViewById(R.id.prefered_season_text_view);
+        seasonImg.setTag(seasonTv.getText()+"");
+        seasonImgResource=R.drawable.ic_summer;
+
+        timeToGoImg=findViewById(R.id.prefered_time_to_go);
+        timeToGoTv=findViewById(R.id.prefered_time_to_go_tv);
+        timeToGoImg.setTag(timeToGoTv.getText()+"");
+        timeToGoImgResource=R.drawable.ic_day;
+
+        estimationImg=findViewById(R.id.prefered_average_time_img);
+        estimationTv=findViewById(R.id.prefered_average_time_tv);
+        estimationImg.setTag(estimationTv.getText()+"");
+        estimationImgResource=R.drawable.ic_sand_clock;
+        seasonImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                if(seasonImg.getTag()!="none")
+                {
+                    seasonImg.setImageResource(android.R.color.transparent);
+                    seasonImg.setTag("none");
+                    seasonTv.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                        seasonTv.setVisibility(View.INVISIBLE);
+                        seasonImg.setTag(seasonTv.getText()+"");
+                        seasonImg.setImageResource(seasonImgResource);
+                }
+            }
+        });
+
+        timeToGoImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+             if(timeToGoImg.getTag()!="none")
+             {
+                 timeToGoImg.setImageResource(android.R.color.transparent);
+                 timeToGoTv.setVisibility(View.VISIBLE);
+                 timeToGoImg.setTag("none");
+             }
+             else
+             {
+                 timeToGoImg.setImageResource(timeToGoImgResource);
+                 timeToGoTv.setVisibility(View.INVISIBLE);
+                 timeToGoImg.setTag(timeToGoTv.getText()+"");
+             }
+            }
+        });
+
+        estimationImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                if(estimationImg.getTag()!="none")
+                {
+                    estimationImg.setImageResource(android.R.color.transparent);
+                    estimationTv.setVisibility(View.VISIBLE);
+                    estimationImg.setTag("none");
+                }
+                else
+                {
+                    estimationImg.setImageResource(estimationImgResource);
+                    estimationTv.setVisibility(View.INVISIBLE);
+                    estimationImg.setTag(estimationTv.getText()+"");
+                }
+            }
+        });
 
     }
 
@@ -54,7 +133,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         viewPager.setPadding(100,0,100,0);
         Integer [] colorsTemp={getResources().getColor(R.color.colorAccent),getResources().getColor(R.color.light_grey),getResources().getColor(R.color.dark_grey)};
         colors=colorsTemp;
-        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels)
             {
@@ -69,8 +148,10 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
             }
 
             @Override
-            public void onPageSelected(int position) {
+            public void onPageSelected(int position)
+            {
 
+                    
             }
 
             @Override

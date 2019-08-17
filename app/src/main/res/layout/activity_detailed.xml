@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -58,59 +57,247 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                xmlns:app="http://schemas.android.com/apk/res-auto">
 
-                <TextView
-                    android:id="@+id/cost"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Cost"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
-                    android:textSize="18sp"
-                    android:textColor="@color/colorPrimary"/>
-                <TextView
-                    android:id="@+id/temp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/cost"
-                    android:text="Temp"
-                    android:layout_marginLeft="10dp"
-                    android:textColor="@color/colorPrimary"
-                    android:layout_marginTop="10dp"
-                    android:textSize="16sp"/>
 
-                <TextView
-                    android:id="@+id/air"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/temp"
-                    android:text="Air quality"
-                    android:layout_marginLeft="10dp"
-                    android:textColor="@color/colorPrimary"
-                    android:layout_marginTop="10dp"
-                    android:textSize="16sp"/>
+                    <LinearLayout
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:weightSum="5"
+                        android:id="@+id/cost_linear"
+                        android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/interact"
-                    android:layout_width="wrap_content"
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/ic_cost"
+                            android:layout_gravity="center"
+                            />
+
+                         <TextView
+                          android:id="@+id/cost"
+                          android:layout_width="100dp"
+                          android:layout_height="match_parent"
+                          android:text="Cost"
+                             android:layout_weight="2"
+                             android:gravity="left"
+                          android:layout_gravity="center"
+                          android:layout_marginLeft="5dp"
+                          android:textSize="18sp"
+                          android:textColor="@color/colorPrimary"/>
+
+
+                        <FrameLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
+                                android:layout_width="200dp"
+                                android:layout_height="30dp"
+                                app:rcProgress="100"
+                                app:rcSecondaryProgress="0"
+                                app:rcMax="100"
+                                app:rcRadius="0dp"
+                                android:layout_weight="2"
+                                android:id="@+id/cost_progress"
+                                app:rcBackgroundPadding="0dp"
+                                app:rcReverse="false"
+                                android:layout_marginLeft="20dp"
+                                android:layout_alignParentRight="true"
+                                app:rcProgressColor="@color/green_great"
+                                app:rcSecondaryProgressColor="@android:color/transparent"
+                                app:rcBackgroundColor="@color/background_gray" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@android:color/white"
+                                android:id="@+id/cost_tv"
+                                android:text="$200"
+                                android:textSize="18sp"
+                                android:layout_gravity="center"/>
+                        </FrameLayout>
+
+                    </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/air"
-                    android:text="Interact"
-                    android:layout_marginLeft="10dp"
-                    android:textColor="@color/colorPrimary"
-                    android:layout_marginTop="10dp"
-                    android:textSize="16sp"/>
-                <TextView
-                    android:id="@+id/safety"
-                    android:layout_width="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:weightSum="5"
+                    android:layout_below="@id/cost_linear"
+                    android:id="@+id/temp_linear"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_weight="1"
+                        android:src="@drawable/ic_temperature"
+                        android:layout_gravity="center"/>
+
+                    <TextView
+                        android:id="@+id/temp"
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:text="Temp"
+                        android:layout_weight="2"
+                        android:gravity="left"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="5dp"
+                        android:textSize="18sp"
+                        android:textColor="@color/colorPrimary"/>
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
+                            android:layout_width="200dp"
+                            android:layout_height="30dp"
+                            app:rcProgress="60"
+                            app:rcSecondaryProgress="0"
+                            app:rcMax="100"
+                            app:rcRadius="0dp"
+                            android:layout_weight="2"
+                            android:id="@+id/te_progress"
+                            app:rcBackgroundPadding="0dp"
+                            app:rcReverse="false"
+                            android:layout_marginLeft="20dp"
+                            android:layout_alignParentRight="true"
+                            app:rcProgressColor="@color/orange_good"
+                            app:rcSecondaryProgressColor="@android:color/transparent"
+                            app:rcBackgroundColor="@color/background_gray" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@android:color/white"
+                            android:id="@+id/temp_tv"
+                            android:text="30C"
+                            android:textSize="18sp"
+                            android:layout_gravity="center"/>
+                    </FrameLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/interact"
-                    android:text="Safety"
-                    android:layout_marginLeft="10dp"
-                    android:textColor="@color/colorPrimary"
-                    android:layout_marginTop="10dp"
-                    android:textSize="16sp"/>
+                    android:layout_marginTop="20dp"
+                    android:weightSum="5"
+                    android:layout_below="@id/temp_linear"
+                    android:id="@+id/air_quality_linear"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_weight="1"
+                        android:src="@drawable/ic_air_quality"
+                        android:layout_gravity="center"/>
+
+                    <TextView
+                        android:id="@+id/air_quality"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:text="Air quality"
+                        android:layout_weight="2"
+                        android:gravity="left"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="5dp"
+                        android:textSize="18sp"
+                        android:textColor="@color/colorPrimary"/>
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
+                            android:layout_width="200dp"
+                            android:layout_height="30dp"
+                            app:rcProgress="30"
+                            app:rcSecondaryProgress="0"
+                            app:rcMax="100"
+                            app:rcRadius="0dp"
+                            android:layout_weight="2"
+                            android:id="@+id/air_quality_progress"
+                            app:rcBackgroundPadding="0dp"
+                            app:rcReverse="false"
+                            android:layout_marginLeft="20dp"
+                            android:layout_alignParentRight="true"
+                            app:rcProgressColor="@color/red_bad"
+                            app:rcSecondaryProgressColor="@android:color/transparent"
+                            app:rcBackgroundColor="@color/background_gray" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@android:color/white"
+                            android:id="@+id/air_quality_tv"
+                            android:text="62"
+                            android:textSize="18sp"
+                            android:layout_gravity="center"/>
+                    </FrameLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:weightSum="5"
+                    android:layout_below="@id/air_quality_linear"
+                    android:id="@+id/internet_linear"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_weight="1"
+                        android:src="@drawable/ic_internet"
+                        android:layout_gravity="center"/>
+
+                    <TextView
+                        android:id="@+id/internet"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:text="Internet"
+                        android:layout_weight="2"
+                        android:gravity="left"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="5dp"
+                        android:textSize="18sp"
+                        android:textColor="@color/colorPrimary"/>
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
+                            android:layout_width="200dp"
+                            android:layout_height="30dp"
+                            app:rcProgress="60"
+                            app:rcSecondaryProgress="0"
+                            app:rcMax="100"
+                            app:rcRadius="0dp"
+                            android:layout_weight="2"
+                            android:id="@+id/internet_progress"
+                            app:rcBackgroundPadding="0dp"
+                            app:rcReverse="false"
+                            android:layout_marginLeft="20dp"
+                            android:layout_alignParentRight="true"
+                            app:rcProgressColor="@color/orange_good"
+                            app:rcSecondaryProgressColor="@android:color/transparent"
+                            app:rcBackgroundColor="@color/background_gray" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@android:color/white"
+                            android:id="@+id/internet_tv"
+                            android:text="Good"
+                            android:textSize="18sp"
+                            android:layout_gravity="center"/>
+                    </FrameLayout>
+                </LinearLayout>
+
+
+
+
 
             </RelativeLayout>
 
@@ -146,14 +333,155 @@
             <LinearLayout
                 android:orientation="horizontal"
                 android:weightSum="4"
+                android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
-                <Button
-                    android:id="@+id/season"
+                   <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_day"/>
+                    android:layout_marginLeft="10dp"
+                       android:layout_weight="1"
+                    android:orientation="vertical">
+
+                       <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_height="wrap_content">
+                           <ImageButton
+                            android:layout_width="75dp"
+                            android:layout_height="75dp"
+                            android:id="@+id/prefered_season_image_button"
+                            android:background="@drawable/circle"
+                            android:src="@drawable/ic_summer"/>
+                            <TextView
+                              android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:layout_gravity="center"
+                                android:textSize="18sp"
+                                android:textColor="@android:color/white"
+                              android:id="@+id/prefered_season_text_view"
+                              android:visibility="invisible"
+                              android:text="Summer"
+                              android:clickable="false"/>
+                      </FrameLayout>
+
+                      <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:text="season"
+                          android:textSize="18sp"
+                       android:layout_gravity="center"/>
+                   </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_height="wrap_content">
+                        <ImageButton
+                            android:layout_width="75dp"
+                            android:layout_height="75dp"
+                            android:id="@+id/prefered_time_to_go"
+                            android:background="@drawable/circle"
+                            android:src="@drawable/ic_day"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:id="@+id/prefered_time_to_go_tv"
+                            android:visibility="invisible"
+                            android:textSize="18sp"
+                            android:textColor="@android:color/white"
+                            android:text="Day"
+                            android:clickable="false"/>
+                    </FrameLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Time"
+                        android:textSize="18sp"
+                        android:layout_gravity="center"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_height="wrap_content">
+                        <ImageButton
+                            android:layout_width="75dp"
+                            android:layout_height="75dp"
+                            android:id="@+id/prefered_age_img"
+                            android:background="@drawable/circle"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:id="@+id/prefered_age_tv"
+                            android:text="+13"
+                            android:textSize="30sp"
+                            android:textColor="@android:color/white"
+                            android:clickable="false"/>
+                    </FrameLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Age"
+                        android:textSize="18sp"
+                        android:layout_gravity="center"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:orientation="vertical">
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content">
+                        <ImageButton
+                            android:layout_width="75dp"
+                            android:layout_height="75dp"
+                            android:id="@+id/prefered_average_time_img"
+                            android:background="@drawable/circle"
+                            android:src="@drawable/ic_sand_clock"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:id="@+id/prefered_average_time_tv"
+                            android:visibility="invisible"
+                            android:textSize="18sp"
+                            android:textColor="@android:color/white"
+                            android:text="2Hrs"
+                            android:clickable="false"/>
+                    </FrameLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="estimation"
+                        android:textSize="18sp"
+                        android:layout_gravity="center"
+                        tools:ignore="HardcodedText" />
+                </LinearLayout>
 
             </LinearLayout>
 
