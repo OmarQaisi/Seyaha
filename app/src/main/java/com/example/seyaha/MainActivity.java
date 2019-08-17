@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,21 +14,17 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.firebase.ui.auth.AuthMethodPickerLayout;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserInfo;
 import com.squareup.picasso.Picasso;
-
-import java.util.Arrays;
-import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MainActivity extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener {
 
+public class MainActivity extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener {
+    private static final String TAG = "MainActivity";
     private DrawerLayout mDrawerLayout;
 
 
@@ -38,12 +33,13 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
 
     NavigationView mNavigationView;
 
-
+    //nav_header
+    private CircleImageView mNavProfileAvatar;
+    private TextView mNavDisplayName;
+    private TextView mNavEmail;
 
     private FirebaseAuth mFirebaseAuth;
     private  FirebaseAuth.AuthStateListener mFirebaseAuthListner;
-
-    List<? extends UserInfo> profile;
 
     int close=0;
 
@@ -52,14 +48,24 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_drawer);
 
+        Intent intent = getIntent();
+        Bundle mBundle = intent.getBundleExtra("user");
+        User mUser = (User) mBundle.getSerializable("user");
+
         mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
-
 
         mDrawerLayout = findViewById(R.id.drawer_layout);
         mNavigationView = findViewById(R.id.nav_view);
         mNavigationView.setNavigationItemSelectedListener(this);
         mNavigationView.setItemIconTintList(null);
+
+        mNavProfileAvatar = mNavigationView.getHeaderView(0).findViewById(R.id.nav_user_avatar);
+        Picasso.get().load(mUser.imageURL).fit().into(mNavProfileAvatar);
+        mNavDisplayName = mNavigationView.getHeaderView(0).findViewById(R.id.nav_user_name);
+        mNavDisplayName.setText(mUser.displayName+"");
+        mNavEmail = mNavigationView.getHeaderView(0).findViewById(R.id.nav_user_email);
+        mNavEmail.setText(mUser.email+"");
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
 

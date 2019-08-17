@@ -3,34 +3,41 @@ package com.example.seyaha;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-
-import java.util.Map;
+import java.util.List;
 
 public class Tour {
 
-    public String[] ImageURLs;
-    public Map<String, String> categories;
-    public String[] placeNames;
-    public double rating;
-    public int comments;
-    public String title, desc;
+    public String titleAR;
+    public String titleEN;
+    public String categoriesAR;
+    public String categoriesEN;
+    public String[] imageURLs;
+    public List<Place> places;
+    public double ratingsNum;
+    public int commentsNum;
+    public List<Comment> comments;
 
-
-    public Tour(String[] imageURLs, Map<String, String> categories, String[] placeNames) {
-        ImageURLs = imageURLs;
-        this.categories = categories;
-        this.placeNames = placeNames;
-    }
-
-    public Tour(String[] imageURLs, double rating, int comments, String title, String desc) {
-        ImageURLs = imageURLs;
-        this.rating = rating;
+    public Tour(String titleAR, String titleEN, String descAR, String descEN, String[] imageURLs, List<Place> places, double ratingsNum, int commentsNum, List<Comment> comments) {
+        this.titleAR = titleAR;
+        this.titleEN = titleEN;
+        this.categoriesAR = descAR;
+        this.categoriesEN = descEN;
+        this.imageURLs = imageURLs;
+        this.places = places;
+        this.ratingsNum = ratingsNum;
+        this.commentsNum = commentsNum;
         this.comments = comments;
-        this.title = title;
-        this.desc = desc;
     }
 
-    public String makeDesc(String[] categories)
+    public Tour(String[] imagesURL, double rating, int comment, String title, String desc){
+        imageURLs = imagesURL;
+        ratingsNum = rating;
+        commentsNum = comment;
+        titleEN = title;
+        categoriesEN = desc;
+    }
+
+    public String makeCategories(String[] categories)
     {
         String result="";
         for(int i=0;i<categories.length;i++)

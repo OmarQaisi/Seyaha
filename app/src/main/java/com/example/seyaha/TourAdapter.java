@@ -52,21 +52,21 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
 
         Tour tour = mTours.get(position);
 
-        holder.mTitle.setText(tour.title);
+        holder.mTitle.setText(tour.titleEN);
 
-        holder.mDescription.setText(tour.desc);
+        holder.mDescription.setText(tour.categoriesEN);
 
-        holder.mRating.setText(tour.rating+"");
+        holder.mRating.setText(tour.ratingsNum+"");
 
-        holder.mComments.setText(tour.comments+"");
+        holder.mComments.setText(tour.commentsNum+"");
         colorDrawable =new ColorDrawable(Color.GRAY);
-        Picasso.get().load(tour.ImageURLs[0]).placeholder(colorDrawable).fit().into(holder.img1);
+        Picasso.get().load(tour.imageURLs[0]).placeholder(colorDrawable).fit().into(holder.img1);
         holder.img1.setClipToOutline(true);
 
-        Picasso.get().load(tour.ImageURLs[1]).placeholder(colorDrawable).fit().into(holder.img2);
+        Picasso.get().load(tour.imageURLs[1]).placeholder(colorDrawable).fit().into(holder.img2);
         holder.img2.setClipToOutline(true);
 
-        Picasso.get().load(tour.ImageURLs[2]).placeholder(colorDrawable).fit().into(holder.img3);
+        Picasso.get().load(tour.imageURLs[2]).placeholder(colorDrawable).fit().into(holder.img3);
         holder.img3.setClipToOutline(true);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
