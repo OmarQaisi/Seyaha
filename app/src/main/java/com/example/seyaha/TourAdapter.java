@@ -1,5 +1,6 @@
 package com.example.seyaha;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -8,9 +9,12 @@ import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -43,7 +47,7 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
-    public void onBindViewHolder(ImageViewHolder holder , int position)
+    public void onBindViewHolder(final ImageViewHolder holder , int position)
     {
 
         Tour tour = mTours.get(position);
@@ -81,8 +85,27 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
                 context.startActivity(i);
             }
         });
-
-
+        holder.alertDialog=holder.builder.create();
+        holder.mClost_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.alertDialog.dismiss();
+            }
+        });
+        holder.mRate_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.alertDialog.show();
+            }
+        });
+        holder.post_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context,holder.editText.getText().toString()+"",Toast.LENGTH_LONG).show();
+                holder.alertDialog.dismiss();
+            }
+        });
+    holder.alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     }
 
     @Override
@@ -95,13 +118,25 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
     {
         ImageView img1, img2, img3;
         TextView mTitle, mDescription, mRating, mComments;
-        ImageButton mShare_btn,mComment_btn,mRate_btn;
+        ImageButton mShare_btn,mComment_btn,mRate_btn,mClost_btn;
+        Button post_btn;
+        LayoutInflater vi;
+        View mView;
+        EditText editText;
+        AlertDialog.Builder builder;
+        AlertDialog alertDialog;
 
         @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         public ImageViewHolder(View itemView)
         {
             super(itemView);
-
+             vi = (LayoutInflater) itemView.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+             mView=vi.inflate(R.layout.custom_rating_dialog,null,false);
+             post_btn=mView.findViewById(R.id.post_btn);
+             mClost_btn=mView.findViewById(R.id.close_btn);
+             editText=mView.findViewById(R.id.comment_post);
+            builder=new AlertDialog.Builder(itemView.getContext());
+            builder.setView(mView);
             mTitle = itemView.findViewById(R.id.title_txt);
             mDescription = itemView.findViewById(R.id.desc);
             mRating = itemView.findViewById(R.id.rate_num);

@@ -3,6 +3,7 @@ package com.example.seyaha;
 import androidx.annotation.DrawableRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import android.animation.ArgbEvaluator;
@@ -178,7 +179,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         LatLng sydney = new LatLng(31.9539, 35.9106);
         LatLng bau = new LatLng(32.0250, 35.7167);
         MarkerOptions my_own_marker = new MarkerOptions().position(bau).title("My Nightmare");
-        my_own_marker.icon((bitmapDescriptorFromVector(this, R.drawable.ic_gps)));
+        my_own_marker.icon((getBitmapDescriptor(R.drawable.ic_gps)));
         mMap.addMarker(my_own_marker);
         // mMap.addMarker(new MarkerOptions().position(sydney).title("third circle"));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(bau, 16.0f));
@@ -187,16 +188,13 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
 
     }
 
-    private BitmapDescriptor bitmapDescriptorFromVector(Context context, @DrawableRes int vectorDrawableResourceId) {
-        Drawable background = ContextCompat.getDrawable(context, R.drawable.ic_gps);
-        background.setBounds(0, 0, background.getIntrinsicWidth(), background.getIntrinsicHeight());
-        Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorDrawableResourceId);
-        vectorDrawable.setBounds(40, 20, vectorDrawable.getIntrinsicWidth() + 40, vectorDrawable.getIntrinsicHeight() + 20);
-        Bitmap bitmap = Bitmap.createBitmap(background.getIntrinsicWidth(), background.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+    private BitmapDescriptor getBitmapDescriptor(@DrawableRes int id) {
+        Drawable vectorDrawable = ResourcesCompat.getDrawable(getResources(), id, null);
+        Bitmap bitmap = Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(),
+                vectorDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
-        background.draw(canvas);
+        vectorDrawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
         vectorDrawable.draw(canvas);
         return BitmapDescriptorFactory.fromBitmap(bitmap);
-
     }
 }

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@drawable/alert_corners"
+    android:layout_margin="10dp"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:id="@+id/profile_linear"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/prof_pic"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/profile_pic"
+           />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="Omar Al-Qaisi"
+            android:textSize="24sp"
+            android:textColor="@color/colorAccent"
+            android:layout_marginBottom="8dp"
+            />
+    </LinearLayout>
+
+    <RatingBar
+        android:id="@+id/rating_bar"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/profile_linear"
+        android:layout_marginTop="15dp"
+        android:numStars="5"
+        android:stepSize="0.5"
+        android:isIndicator="false"
+        android:rating="5.0"
+        android:focusable="true"
+        />
+    <EditText
+        android:id="@+id/comment_post"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rating_bar"
+        android:layout_marginTop="15dp"
+        android:hint="share your experience about the tour"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:textSize="16sp"
+        android:gravity="center"/>
+
+    <Button
+        android:id="@+id/post_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Post"
+        android:layout_below="@id/comment_post"
+        android:layout_marginTop="7dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/button_radius"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginBottom="7dp"
+        />
+    <ImageButton
+        android:id="@+id/close_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_close_black_24dp"
+        android:background="#00000000"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="5dp"
+        />
+</RelativeLayout>
