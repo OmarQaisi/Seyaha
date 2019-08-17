@@ -3,6 +3,10 @@
     package="com.example.seyaha">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <permission
+        android:name="com.example.barcodelibrary.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature"/>
+    <uses-permission android:name="com.example.barcodelibrary.permission.MAPS_RECEIVE"/>
 
     <application
         android:allowBackup="true"
@@ -11,12 +15,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DetailedActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".DetailedActivity"
+            android:screenOrientation="portrait">
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -44,7 +45,11 @@
         <activity
             android:name=".SplashScreenActivity"
             android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".MainActivity"

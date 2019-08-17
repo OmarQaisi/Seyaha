@@ -1,5 +1,7 @@
 package com.example.seyaha;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -21,12 +23,14 @@ import java.util.List;
 public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolder> {
     public static List<Tour> mTours;
     ColorDrawable colorDrawable;
+    Context context;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @NonNull
     @Override
     public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i)
     {
+        context=viewGroup.getContext();
         View view= LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.tour_item,viewGroup,false);
         ImageViewHolder imageViewHolder=new ImageViewHolder(view);
         return imageViewHolder;
@@ -61,7 +65,6 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
         Picasso.get().load(tour.ImageURLs[2]).placeholder(colorDrawable).fit().into(holder.img3);
         holder.img3.setClipToOutline(true);
 
-
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
@@ -69,6 +72,16 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
                 Tour.addClickEffect(v);
             }
         });
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                Tour.addClickEffect(view);
+                Intent i=new Intent(context,DetailedActivity.class);
+                context.startActivity(i);
+            }
+        });
+
 
     }
 
