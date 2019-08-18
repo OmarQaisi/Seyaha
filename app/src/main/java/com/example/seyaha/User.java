@@ -18,11 +18,14 @@ public class User implements Serializable {
         this.imageURL = userImageURL;
         this.intrests = userIntrests;
         this.isAdmin = isAdmin;
-
     }
+
+    public User(){}
 
     public User(String userDisplayName, String userImageURL) {
         this.displayName = userDisplayName;
         this.imageURL = userImageURL;
     }
+
+
 }

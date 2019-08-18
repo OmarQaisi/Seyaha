@@ -1,12 +1,11 @@
 package com.example.seyaha;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toolbar;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -22,6 +21,7 @@ public class TourFragment extends Fragment {
     ArrayList<Tour> tours = new ArrayList<Tour>();
     RecyclerView mRecyclerView;
     RecyclerView.LayoutManager mManger;
+    FloatingActionButton addTourBtn;
 
     @Nullable
     @Override
@@ -36,7 +36,18 @@ public class TourFragment extends Fragment {
         mRecyclerView.setLayoutManager(mManger);
         mRecyclerView.setAdapter(mAdapter);
 
-        FloatingActionButton addTourBtn=mView.findViewById(R.id.add_tour_btn);
+        addTourBtn = mView.findViewById(R.id.add_tour_btn);
+        FirestoreQueries.getUser(new FirestoreQueries.FirestoreCallback() {
+            @SuppressLint("RestrictedApi")
+            @Override
+            public void onCallback(User user) {
+                if(user.isAdmin)
+                    addTourBtn.show();
+                else
+                    addTourBtn.setVisibility(View.INVISIBLE);
+            }
+        });
+
         addTourBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)

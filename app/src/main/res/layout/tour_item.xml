@@ -99,7 +99,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/line"
         android:layout_marginTop="6dp"
-        android:layout_marginLeft="36dp" />
+        android:layout_marginLeft="36dp"/>
 
     <ImageButton
         android:id="@+id/star"

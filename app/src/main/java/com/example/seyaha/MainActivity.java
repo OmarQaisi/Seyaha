@@ -3,7 +3,11 @@ package com.example.seyaha;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -38,6 +42,8 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     private FirebaseAuth mFirebaseAuth;
     private  FirebaseAuth.AuthStateListener mFirebaseAuthListner;
 
+    private User mUser;
+
     int close=0;
 
     @Override
@@ -47,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
 
         Intent intent = getIntent();
         Bundle mBundle = intent.getBundleExtra("user");
-        User mUser = (User) mBundle.getSerializable("user");
+        mUser = (User) mBundle.getSerializable("user");
 
         mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
@@ -115,6 +121,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     {
         Toast.makeText(this,msg,duration).show();
     }
+
 
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()){
