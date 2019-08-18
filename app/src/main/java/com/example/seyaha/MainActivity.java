@@ -3,11 +3,7 @@ package com.example.seyaha;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -42,8 +38,6 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     private FirebaseAuth mFirebaseAuth;
     private  FirebaseAuth.AuthStateListener mFirebaseAuthListner;
 
-    private User mUser;
-
     int close=0;
 
     @Override
@@ -51,9 +45,17 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_drawer);
 
-        Intent intent = getIntent();
-        Bundle mBundle = intent.getBundleExtra("user");
-        mUser = (User) mBundle.getSerializable("user");
+        FirestoreQueries.getUser(new FirestoreQueries.FirestoreCallback() {
+            @Override
+            public void onCallback(User user) {
+                mNavProfileAvatar = mNavigationView.getHeaderView(0).findViewById(R.id.nav_user_avatar);
+                Picasso.get().load(user.imageURL).fit().into(mNavProfileAvatar);
+                mNavDisplayName = mNavigationView.getHeaderView(0).findViewById(R.id.nav_user_name);
+                mNavDisplayName.setText(user.displayName+"");
+                mNavEmail = mNavigationView.getHeaderView(0).findViewById(R.id.nav_user_email);
+                mNavEmail.setText(user.email+"");
+            }
+        });
 
         mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
@@ -62,13 +64,6 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         mNavigationView = findViewById(R.id.nav_view);
         mNavigationView.setNavigationItemSelectedListener(this);
         mNavigationView.setItemIconTintList(null);
-
-        mNavProfileAvatar = mNavigationView.getHeaderView(0).findViewById(R.id.nav_user_avatar);
-        Picasso.get().load(mUser.imageURL).fit().into(mNavProfileAvatar);
-        mNavDisplayName = mNavigationView.getHeaderView(0).findViewById(R.id.nav_user_name);
-        mNavDisplayName.setText(mUser.displayName+"");
-        mNavEmail = mNavigationView.getHeaderView(0).findViewById(R.id.nav_user_email);
-        mNavEmail.setText(mUser.email+"");
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
 
@@ -112,7 +107,6 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         }
         else
         {
-            //finish();
             moveTaskToBack(true);
         }
         close++;

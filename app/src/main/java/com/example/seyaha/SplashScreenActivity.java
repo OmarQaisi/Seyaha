@@ -41,6 +41,8 @@ public class SplashScreenActivity extends AppCompatActivity {
     private final int RC_SIGN_IN = 1;
     private boolean internet_checked = false;
 
+    private boolean flag = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,11 +55,8 @@ public class SplashScreenActivity extends AppCompatActivity {
 
     }
 
-    private void start_activity(User user) {
+    private void start_activity() {
         Intent intent = new Intent(SplashScreenActivity.this, MainActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("user",user);
-        intent.putExtra("user",bundle);
         startActivity(intent);
     }
 
@@ -76,13 +75,14 @@ public class SplashScreenActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 user = firebaseAuth.getCurrentUser();
                 if (user == null) {
+                    flag = true;
                     List<AuthUI.IdpConfig> providers = Arrays.asList(new AuthUI.IdpConfig.FacebookBuilder().build(), new AuthUI.IdpConfig.GoogleBuilder().build());
                     AuthMethodPickerLayout customLayout = new AuthMethodPickerLayout.Builder(R.layout.activity_login).setGoogleButtonId(R.id.gmail_btn).setFacebookButtonId(R.id.facbook_btn).build();
                     startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder().setAvailableProviders(providers).setIsSmartLockEnabled(false).setTheme(R.style.AppThemeFirebaseAuth).setAuthMethodPickerLayout(customLayout).build(), RC_SIGN_IN);
 
                 } else {
-                    setFireStore();
-
+                    if(!flag)
+                        setUser();
                 }
             }
         };
@@ -124,7 +124,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         if (resultCode == RESULT_OK) {
             Log.d(TAG, "onActivityResult: intered ");
-            setFireStore();
+            setUser();
 
         } else if (resultCode == RESULT_CANCELED) {
             Toast.makeText(this, "sign in canceled", Toast.LENGTH_SHORT).show();
@@ -132,7 +132,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         }
     }
 
-    protected void setFireStore(){
+    protected void setUser(){
 
         List<String> intrests = new ArrayList<String>();
         final User mUser = new User(mFirebaseAuth.getCurrentUser().getDisplayName(),
@@ -147,12 +147,8 @@ public class SplashScreenActivity extends AppCompatActivity {
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
             if (queryDocumentSnapshots.isEmpty())
                 users.add(mUser);
-            else{
-                mUser.isAdmin = (boolean) queryDocumentSnapshots.getDocuments().get(0).get("isAdmin");
-                Log.d(TAG, "onSuccess: "+queryDocumentSnapshots.getDocuments().get(0).get("isAdmin"));
-                Log.d(TAG, "onSuccess: ALREADY REGISTERED");
-            }
-            start_activity(mUser);
+
+            start_activity();
             }
         });
     }

@@ -1,9 +1,8 @@
 package com.example.seyaha;
 
-import java.io.Serializable;
 import java.util.List;
 
-public class User implements Serializable {
+public class User {
 
     public String displayName;
     public String email;
