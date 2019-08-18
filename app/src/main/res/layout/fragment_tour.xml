@@ -20,6 +20,7 @@
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginBottom="20dp"
         android:id="@+id/add_tour_btn"
+        android:visibility="invisible"
         android:background="@color/dark_blue"
         android:layout_marginRight="20dp"
        />
