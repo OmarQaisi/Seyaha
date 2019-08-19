@@ -30,7 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="Description"
+                android:text="@string/detailed_activity_description"
                 android:textSize="24sp"
                 android:textColor="@color/colorPrimary"
                 android:layout_marginTop="10dp"
@@ -59,7 +59,7 @@
                     android:id="@+id/info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Information About"
+                    android:text="@string/detailed_activity_information_about"
                     android:layout_marginLeft="20dp"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -101,7 +101,7 @@
                           android:id="@+id/cost"
                           android:layout_width="wrap_content"
                           android:layout_height="match_parent"
-                          android:text="Cost"
+                          android:text="@string/detailed_activity_cost"
                           android:layout_column="1"
                           android:layout_row="0"
                           android:gravity="left"
@@ -155,7 +155,7 @@
                         android:layout_height="match_parent"
                         android:layout_row="1"
                         android:layout_column="1"
-                        android:text="Temp"
+                        android:text="@string/detailed_activity_temp"
                         android:layout_gravity="center"
                         android:textSize="18sp"
                         android:textColor="@color/colorPrimary"/>
@@ -202,7 +202,7 @@
                         android:id="@+id/air_quality"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Air quality"
+                        android:text="@string/detailed_activity_air_quality"
                         android:layout_row="2"
                         android:layout_column="1"
                         android:layout_gravity="center"
@@ -252,7 +252,7 @@
                         android:id="@+id/internet"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Internet"
+                        android:text="@string/detailed_activity_internet"
                         android:layout_row="3"
                         android:layout_column="1"
                         android:layout_gravity="center"
@@ -301,7 +301,7 @@
                     android:id="@+id/reco"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Recommendations for"
+                    android:text="@string/detailed_activity_recommendations_for"
                     android:layout_marginLeft="20dp"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -355,7 +355,7 @@
                       <TextView
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
-                       android:text="season"
+                       android:text="@string/detailed_activity_season"
                           android:textSize="18sp"
                        android:layout_gravity="center"/>
                    </LinearLayout>
@@ -392,7 +392,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Time"
+                        android:text="@string/detailed_activity_time"
                         android:textSize="18sp"
                         android:layout_gravity="center"/>
                 </LinearLayout>
@@ -427,7 +427,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Age"
+                        android:text="@string/detailed_activity_age"
                         android:textSize="18sp"
                         android:layout_gravity="center"/>
                 </LinearLayout>
@@ -464,7 +464,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="estimation"
+                        android:text="@string/detailed_activity_estimation"
                         android:textSize="18sp"
                         android:layout_gravity="center"
                         tools:ignore="HardcodedText" />
@@ -485,7 +485,7 @@
                     android:id="@+id/location"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Location for"
+                    android:text="@string/detailed_activity_location_for"
                     android:layout_marginLeft="20dp"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -513,7 +513,7 @@
                 android:id="@+id/nearby_place"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Near By :"
+                android:text="@string/detailed_activity_near_by"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
                 android:textSize="18sp"
@@ -530,7 +530,7 @@
                 <Button
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:text="Meals"
+                    android:text="@string/detailed_activity_restaurants"
                     android:layout_weight="1"
                     android:padding="3dp"
                     android:layout_marginLeft="3dp"
@@ -542,7 +542,7 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Hotels"
+                    android:text="@string/detailed_activity_hotels"
                     android:layout_weight="1"
                     android:padding="3dp"
                     android:drawableRight="@drawable/ic_hotel"
@@ -550,10 +550,10 @@
                     android:layout_marginRight="4dp"
                     android:textAllCaps="false"
                     android:background="@drawable/new_corners"
-
                     />
+
                 <Button
-                    android:text="Gas Station"
+                    android:text="@string/detailed_activity_gas_station"
                     android:layout_weight="1"
                     android:drawableRight="@drawable/ic_fuel"
                     android:layout_width="wrap_content"
@@ -562,7 +562,6 @@
                     android:padding="3dp"
                     android:layout_marginRight="3dp"
                     android:textAllCaps="false"
-
                     />
 
             </LinearLayout>

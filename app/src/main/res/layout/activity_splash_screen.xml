@@ -3,15 +3,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/wadi_rum"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".SplashScreenActivity">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:id="@+id/coordinator">
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        android:id="@+id/coordinator"/>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/splash_screen_logo"
+        android:src="@drawable/ic_logo_with_text"
+        android:layout_centerInParent="true"
+        />
+    <com.agrawalsuneet.dotsloader.loaders.LinearDotsLoader
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:loader_animDur="300"
+        app:loader_noOfDots="3"
+        app:loader_circleRadius="10dp"
+        app:loader_defaultColor="@color/background_gray"
+        app:loader_selectedColor="@color/blue_logo"
+        app:loader_dotsDist="10dp"
+        app:loader_expandOnSelect="false"
+        app:loader_isSingleDir="true"
+        app:loader_selectedRadius="10dp"
+        app:loader_showRunningShadow="true"
+        android:layout_below="@id/splash_screen_logo"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        app:loader_firstShadowColor="@color/blue_logo_transparent"
+        app:loader_secondShadowColor="@color/blue_logo_transparent"/>
 
 </RelativeLayout>

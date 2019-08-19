@@ -1,8 +1,8 @@
 <resources>
 
     <string name="app_name">Seyaha</string>
-    <string name="welcome_to_seyaha">"Welcome To\nSeyaha"</string>
-    <string name="login_description">the best way to navigate through jordan and discover new places .let\'s get started</string>
+    <string name="login_welcome">"Welcome"</string>
+    <string name="login_description">"the best way to navigate through\nJordan and discover new places"</string>
     <string name="login_continue">continue with :</string>
 
     <string name="close">Press again to Quit </string>
@@ -34,6 +34,24 @@
     <string name="bad_internet">Bad</string>
     <string name="good_internet">Good</string>
     <string name="great_internet">Great</string>
+    <string name="alert_rating_hint">"Share Your Experience about this tour"</string>
+    <string name="alert_rating_post">Post</string>
+    <string name="detailed_activity_description">Description</string>
+    <string name="detailed_activity_information_about">Information About</string>
+    <string name="detailed_activity_cost">Cost</string>
+    <string name="detailed_activity_temp">Temp</string>
+    <string name="detailed_activity_air_quality">Air quality</string>
+    <string name="detailed_activity_internet">Internet</string>
+    <string name="detailed_activity_recommendations_for">Recommendations for</string>
+    <string name="detailed_activity_season">season</string>
+    <string name="detailed_activity_time">Time</string>
+    <string name="detailed_activity_age">Age</string>
+    <string name="detailed_activity_estimation">estimation</string>
+    <string name="detailed_activity_location_for">Location for</string>
+    <string name="detailed_activity_near_by">Near By :</string>
+    <string name="detailed_activity_restaurants">Restaurants</string>
+    <string name="detailed_activity_hotels">Hotels</string>
+    <string name="detailed_activity_gas_station">Gas Station</string>
 
 
 </resources>

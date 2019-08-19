@@ -22,4 +22,11 @@
     <color name="green_great">#1DFF78</color>
     <color name="orange_good">#FFD11A</color>
     <color name="red_bad">#FF2454</color>
+
+
+    <color name="blue_logo">#2343BA</color>
+    <color name="yello_logo">#F4C230</color>
+    <color name="red_logo">#DC001A</color>
+
+    <color name="blue_logo_transparent">#202343BA</color>
 </resources>

@@ -1,104 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/wadi_rum"
-        android:scaleType="centerCrop"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:adjustViewBounds="true"
-        android:cropToPadding="true"
-        />
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/welcome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/welcome_to_seyaha"
-        android:layout_marginBottom="90dp"
-        android:shadowDx="0"
-        android:shadowDy="0"
-        android:shadowRadius="50"
-        android:shadowColor="@color/white_login_screen"
+        android:fontFamily="@font/cairo"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:fontFamily="monospace"
-        android:textColor="@color/white_login_screen"
-        android:textSize="54sp"
-        android:gravity="center_horizontal"
-        />
+        android:text="@string/login_welcome"
+        android:textSize="44sp"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/blue_logo"
+        app:layout_constraintLeft_toLeftOf="parent"/>
     <TextView
-        android:id="@+id/disc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/login_description"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@id/cont"
+        android:id="@+id/under_welcome"
+        android:textColor="@color/dark_grey"
         app:layout_constraintTop_toBottomOf="@id/welcome"
         app:layout_constraintRight_toRightOf="parent"
-        android:textColor="@color/white_login_screen"
-        android:layout_marginTop="8dp"
-        android:gravity="center_horizontal"/>
-
-    <TextView
-        android:id="@+id/cont"
+        android:textSize="14sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:text="@string/login_description"
+        android:textAlignment="center"
+        />
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="15dp"
-        android:layout_marginTop="50dp"
-        android:text="@string/login_continue"
-        android:textColor="@color/white_login_screen"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/gmail_btn"
+        app:layout_constraintTop_toBottomOf="@id/under_welcome"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
-
-    <Button
-        android:id="@+id/gmail_btn"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/gmail_btn_shape"
-        android:fontFamily="monospace"
-        android:text="GMAIL"
-        android:textAlignment="center"
-        android:textColor="@color/white_login_screen"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/facbook_btn"
+        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/login_illustration"
+        android:src="@drawable/ic_login_illustration"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/login_continue"
+        app:layout_constraintTop_toBottomOf="@id/login_illustration"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        android:textSize="18sp"
+        android:textColor="@color/dark_grey"
+        android:text="@string/login_continue"/>
 
 
     <Button
         android:id="@+id/facbook_btn"
-        android:layout_width="match_parent"
+        android:layout_width="250dp"
         android:layout_height="50dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/facebook_btn_shape"
+        android:drawableLeft="@drawable/ic_facebook_icon"
         android:fontFamily="monospace"
-        android:text="Facebook"
+        android:paddingLeft="30dp"
+        android:paddingRight="70dp"
+        android:text="facebook"
+        android:textAlignment="center"
+        android:textColor="@color/white_login_screen"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/gmail_btn"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+
+    <Button
+        android:id="@+id/gmail_btn"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/gmail_btn_shape"
+        android:drawableLeft="@drawable/ic_google_icon"
+        android:fontFamily="monospace"
+        android:paddingLeft="30dp"
+        android:paddingRight="70dp"
+        android:text="gmail"
         android:textColor="@color/white_login_screen"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
