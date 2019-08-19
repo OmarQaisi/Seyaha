@@ -71,7 +71,6 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         mapFragment.getMapAsync(this);
         run_viewPager();
 
-
         costProgressBar=findViewById(R.id.cost_progress);
         tempProgressBar=findViewById(R.id.temp_progress);
         airQualityProgressBar=findViewById(R.id.air_quality_progress);
@@ -81,8 +80,8 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         airQualityTv=findViewById(R.id.air_quality_tv);
         internetTv=findViewById(R.id.internet_tv);
 
-      createCostProgress("500");
-      createTempProgress("50");
+       createCostProgress("150");
+       createTempProgress("22");
 
 
         seasonImg=findViewById(R.id.prefered_season_image_button);
@@ -230,28 +229,20 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         {
             costProgressBar.setProgress(100);
             costProgressBar.setProgressColor(Color.GREEN);
-            costTv.setText(cost);
+            costTv.setText("$"+cost);
 
         }
         else if(result>100 && result<=250)
         {
-           tempProgressBar.setProgress(60);
-            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) tempTv.getLayoutParams();
-            params.rightMargin=60;
-            tempTv.setText(cost);
+            tempProgressBar.setProgress(60);
+            tempTv.setText("$"+cost);
             tempProgressBar.setProgressColor(Color.rgb(255,165,0));
         }
         else
         {
             costProgressBar.setProgress(30);
             costProgressBar.setProgressColor(Color.RED);
-
-            FrameLayout.LayoutParams params=(FrameLayout.LayoutParams) costTv.getLayoutParams();
-            params.gravity=Gravity.LEFT;
-            params.leftMargin=100;
-            params.topMargin=20;
-            costTv.setLayoutParams(params);
-            costTv.setText(cost);
+            costTv.setText("$"+cost);
         }
 
     }
@@ -263,19 +254,12 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         {
             tempProgressBar.setProgress(30);
             tempProgressBar.setProgressColor(Color.RED);
-            FrameLayout.LayoutParams params=(FrameLayout.LayoutParams) tempTv.getLayoutParams();
-            params.gravity=Gravity.LEFT;
-            params.leftMargin=80;
-            params.topMargin=20;
-            tempTv.setLayoutParams(params);
             tempTv.setText(getResources().getString(R.string.cold)+temp+"\u2103");
 
         }
         else  if(result>10 && result<=18)
         {
             tempProgressBar.setProgress(60);
-            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) tempTv.getLayoutParams();
-            params.rightMargin=60;
             tempTv.setText(getResources().getString(R.string.normal)+temp+"\u2103");
             tempProgressBar.setProgressColor(Color.rgb(255,165,0));
         }
@@ -289,11 +273,6 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         {
             tempProgressBar.setProgress(30);
             tempProgressBar.setProgressColor(Color.RED);
-            FrameLayout.LayoutParams params=(FrameLayout.LayoutParams) tempTv.getLayoutParams();
-            params.gravity=Gravity.LEFT;
-            params.leftMargin=70;
-            params.topMargin=20;
-            tempTv.setLayoutParams(params);
             tempTv.setText(getResources().getString(R.string.hot)+temp+"\u2103");
         }
 

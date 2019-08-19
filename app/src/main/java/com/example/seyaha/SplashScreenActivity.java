@@ -147,7 +147,6 @@ public class SplashScreenActivity extends AppCompatActivity {
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
             if (queryDocumentSnapshots.isEmpty())
                 users.add(mUser);
-
             start_activity();
             }
         });

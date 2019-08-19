@@ -76,57 +76,56 @@
                     />
             </LinearLayout>
 
-            <RelativeLayout
+            <GridLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:rowCount="4"
+                android:columnCount="3"
+                android:layout_marginRight="20dp"
+                android:useDefaultMargins="true"
                 xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-                    <LinearLayout
-                     android:layout_width="match_parent"
-                     android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:weightSum="5"
-                        android:id="@+id/cost_linear"
-                        android:orientation="horizontal">
+
 
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:layout_weight="1"
+                            android:layout_column="0"
+                            android:layout_row="0"
                             android:src="@drawable/ic_cost"
                             android:layout_gravity="center"
                             />
 
                          <TextView
                           android:id="@+id/cost"
-                          android:layout_width="100dp"
+                          android:layout_width="wrap_content"
                           android:layout_height="match_parent"
                           android:text="Cost"
-                             android:layout_weight="2"
-                             android:gravity="left"
+                          android:layout_column="1"
+                          android:layout_row="0"
+                          android:gravity="left"
                           android:layout_gravity="center"
-                          android:layout_marginLeft="5dp"
                           android:textSize="18sp"
                           android:textColor="@color/colorPrimary"/>
 
 
                         <FrameLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:layout_width="210dp"
+                            android:layout_height="wrap_content"
+                            android:layout_row="0"
+                            android:layout_column="2">
                             <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
-                                android:layout_width="200dp"
+                                android:layout_width="match_parent"
                                 android:layout_height="30dp"
                                 app:rcProgress="100"
                                 app:rcSecondaryProgress="0"
                                 app:rcMax="100"
-                                app:rcRadius="0dp"
-                                android:layout_weight="2"
+                                app:rcRadius="15dp"
                                 android:id="@+id/cost_progress"
                                 app:rcBackgroundPadding="0dp"
                                 app:rcReverse="false"
-                                android:layout_marginLeft="20dp"
-                                android:layout_alignParentRight="true"
                                 app:rcSecondaryProgressColor="@android:color/transparent"
                                 app:rcBackgroundColor="@color/background_gray" />
                             <TextView
@@ -139,52 +138,44 @@
                                 android:layout_gravity="center"/>
                         </FrameLayout>
 
-                    </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:weightSum="5"
-                    android:layout_below="@id/cost_linear"
-                    android:id="@+id/temp_linear"
-                    android:orientation="horizontal">
+
+
 
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:layout_weight="1"
+                        android:layout_column="0"
+                        android:layout_row="1"
                         android:src="@drawable/ic_temperature"
                         android:layout_gravity="center"/>
 
                     <TextView
                         android:id="@+id/temp"
-                        android:layout_width="100dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_row="1"
+                        android:layout_column="1"
                         android:text="Temp"
-                        android:layout_weight="2"
-                        android:gravity="left"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
                         android:textSize="18sp"
                         android:textColor="@color/colorPrimary"/>
 
                     <FrameLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_width="210dp"
+                        android:layout_height="wrap_content"
+                        android:layout_row="1"
+                        android:layout_column="2">
                         <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
-                            android:layout_width="200dp"
+                            android:layout_width="match_parent"
                             android:layout_height="30dp"
                             app:rcProgress="60"
                             app:rcSecondaryProgress="0"
                             app:rcMax="100"
-                            app:rcRadius="0dp"
-                            android:layout_weight="2"
+                            app:rcRadius="15dp"
                             android:id="@+id/temp_progress"
                             app:rcBackgroundPadding="0dp"
                             app:rcReverse="false"
-                            android:layout_marginLeft="20dp"
-                            android:layout_alignParentRight="true"
                             app:rcProgressColor="@color/orange_good"
                             app:rcSecondaryProgressColor="@android:color/transparent"
                             app:rcBackgroundColor="@color/background_gray" />
@@ -197,52 +188,43 @@
                             android:textSize="14sp"
                             android:layout_gravity="center"/>
                     </FrameLayout>
-                </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:weightSum="5"
-                    android:layout_below="@id/temp_linear"
-                    android:id="@+id/air_quality_linear"
-                    android:orientation="horizontal">
+
 
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:layout_weight="1"
+                        android:layout_row="2"
+                        android:layout_column="0"
                         android:src="@drawable/ic_air_quality"
                         android:layout_gravity="center"/>
 
                     <TextView
                         android:id="@+id/air_quality"
-                        android:layout_width="100dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Air quality"
-                        android:layout_weight="2"
-                        android:gravity="left"
+                        android:layout_row="2"
+                        android:layout_column="1"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
                         android:textSize="18sp"
                         android:textColor="@color/colorPrimary"/>
 
                     <FrameLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_width="210dp"
+                        android:layout_height="wrap_content"
+                        android:layout_row="2"
+                        android:layout_column="2">
                         <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
-                            android:layout_width="200dp"
+                            android:layout_width="match_parent"
                             android:layout_height="30dp"
                             app:rcProgress="30"
                             app:rcSecondaryProgress="0"
                             app:rcMax="100"
-                            app:rcRadius="0dp"
-                            android:layout_weight="2"
+                            app:rcRadius="15dp"
                             android:id="@+id/air_quality_progress"
                             app:rcBackgroundPadding="0dp"
                             app:rcReverse="false"
-                            android:layout_marginLeft="20dp"
-                            android:layout_alignParentRight="true"
                             app:rcProgressColor="@color/red_bad"
                             app:rcSecondaryProgressColor="@android:color/transparent"
                             app:rcBackgroundColor="@color/background_gray" />
@@ -255,52 +237,44 @@
                             android:textSize="14sp"
                             android:layout_gravity="center"/>
                     </FrameLayout>
-                </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:weightSum="5"
-                    android:layout_below="@id/air_quality_linear"
-                    android:id="@+id/internet_linear"
-                    android:orientation="horizontal">
+
+
 
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:layout_weight="1"
+                        android:layout_column="0"
+                        android:layout_row="3"
                         android:src="@drawable/ic_internet"
                         android:layout_gravity="center"/>
 
                     <TextView
                         android:id="@+id/internet"
-                        android:layout_width="100dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Internet"
-                        android:layout_weight="2"
-                        android:gravity="left"
+                        android:layout_row="3"
+                        android:layout_column="1"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
                         android:textSize="18sp"
                         android:textColor="@color/colorPrimary"/>
 
                     <FrameLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_width="210dp"
+                        android:layout_height="wrap_content"
+                        android:layout_row="3"
+                        android:layout_column="2">
                         <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
-                            android:layout_width="200dp"
+                            android:layout_width="match_parent"
                             android:layout_height="30dp"
-                            app:rcProgress="60"
+                            app:rcProgress="100"
                             app:rcSecondaryProgress="0"
                             app:rcMax="100"
-                            app:rcRadius="0dp"
-                            android:layout_weight="2"
+                            app:rcRadius="15dp"
                             android:id="@+id/internet_progress"
                             app:rcBackgroundPadding="0dp"
                             app:rcReverse="false"
-                            android:layout_marginLeft="20dp"
-                            android:layout_alignParentRight="true"
                             app:rcProgressColor="@color/orange_good"
                             app:rcSecondaryProgressColor="@android:color/transparent"
                             app:rcBackgroundColor="@color/background_gray" />
@@ -313,13 +287,7 @@
                             android:textSize="14sp"
                             android:layout_gravity="center"/>
                     </FrameLayout>
-                </LinearLayout>
-
-
-
-
-
-            </RelativeLayout>
+            </GridLayout>
 
             <LinearLayout
                 android:id="@+id/recommendationPlace"
