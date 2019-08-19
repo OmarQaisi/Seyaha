@@ -1,5 +1,6 @@
 package com.example.seyaha;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -32,6 +35,16 @@ public class TourFragment extends Fragment {
         mManger = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mManger);
         mRecyclerView.setAdapter(mAdapter);
+
+        FloatingActionButton addTourBtn=mView.findViewById(R.id.add_tour_btn);
+        addTourBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent=new Intent(getActivity(),AddTourActivity.class);
+                startActivity(intent);
+            }
+        });
 
         return mView;
     }

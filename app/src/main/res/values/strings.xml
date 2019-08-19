@@ -33,4 +33,16 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
+
+    <!-- Strings for the(Detailed activity) -->
+
+
+    <string name="cold">"Cold:"</string>
+    <string name="perfect">"Perfect:"</string>
+    <string name="hot">"Hot:"</string>
+    <string name="too_hot">"Too hot:"</string>
+    <string name="too_cold">"Too cold:"</string>
+    <string name="normal">"Normal:"</string>
+
+
 </resources>
