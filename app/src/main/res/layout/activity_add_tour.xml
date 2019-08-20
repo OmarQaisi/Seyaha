@@ -3,27 +3,55 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".AddTourActivity">
 
     <EditText
+        android:layout_marginTop="15dp"
         android:id="@+id/titleE"
-        android:text="title_English"
+        android:hint="Title_English"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/stroke_edittext"
+        app:met_floatingLabel="highlight"
+        app:met_textColorHint="@color/blue_logo"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         />
     <EditText
         android:id="@+id/titleA"
-        android:text="title_Arabic"
+        app:met_textColorHint="@color/blue_logo"
+        app:met_floatingLabel="highlight"
+        android:hint="Title_arabic"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:paddingRight="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_height="40dp"
+        android:paddingLeft="10dp"
+        android:background="@drawable/stroke_edittext"
         android:layout_below="@id/titleE"
-        android:layout_marginTop="3dp"
+        android:layout_marginTop="10dp"
         />
+    <TextView
+        android:id="@+id/places"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/titleA"
+        android:layout_centerHorizontal="true"
+        android:text="Places"
+        android:layout_marginTop="10dp"
+        android:textSize="20sp"
+        android:textColor="@color/blue_logo"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fav_categories_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/titleA">
+        android:layout_below="@id/places"
+       android:layout_marginTop="3dp">
+
     </androidx.recyclerview.widget.RecyclerView>
 
     <Button

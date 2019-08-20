@@ -2,6 +2,7 @@ package com.example.seyaha;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -19,12 +20,14 @@ public class AddTourActivity extends AppCompatActivity
     List<Place> mPlaces;
     Tour addTour;
     List<Place>chosen_place;
-
+        EditText titleAR,titleEN;
     GridLayoutManager gridLayoutManager;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_tour);
+        titleAR=findViewById(R.id.titleA);
+        titleEN=findViewById(R.id.titleE);
         recyclerView=(RecyclerView)findViewById(R.id.fav_categories_rv);
         gridLayoutManager=new GridLayoutManager(this,3);
         recyclerView.setLayoutManager(gridLayoutManager);
@@ -45,16 +48,20 @@ public class AddTourActivity extends AppCompatActivity
     }
     public void addTour(View v)
     {
-
         try
         {
-
-            if(adminPlaceAdapter.chosen_places!=null)
+            if(adminPlaceAdapter.chosen_places.size()!=0)
                 {
                   chosen_place=adminPlaceAdapter.chosen_places;
+                  if(Text_checker())
                   addTour=new Tour("TitleAR","TitleEN",Cat_AR(chosen_place),Cat_EN(chosen_place)
                           ,images(chosen_place),mPlaces,0,0,new ArrayList <Comment>());
                 }
+            else
+            {
+                Toast.makeText(this,"please chose a place please",Toast.LENGTH_LONG).show();
+
+            }
 
 
     }
@@ -95,6 +102,20 @@ public class AddTourActivity extends AppCompatActivity
         }
 
         return  URLs;
+    }
+    private boolean Text_checker()
+    {
+        if(titleEN.getText().toString().isEmpty()||titleEN.getText().toString().equalsIgnoreCase(""))
+        {
+            titleEN.setError("please add this feild");
+            return false;
+        }
+        else if(titleAR.getText().toString().isEmpty()||titleAR.getText().toString().equalsIgnoreCase(""))
+        {
+            titleAR.setError("please add this feild");
+            return false;
+        }
+        return true;
     }
 
 }
