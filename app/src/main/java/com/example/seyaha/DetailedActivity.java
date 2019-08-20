@@ -168,9 +168,9 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
     private void run_viewPager() {
         String desc = "Observe the comments made about you by your parents, friends, teachers or you may directly ask them. Note these points on a paper and try to make a sample of description";
         models = new ArrayList <>();
-        models.add(new viewPagerModel(R.drawable.wadi_rum));
         models.add(new viewPagerModel(R.drawable.nav_drawer_background));
-        models.add(new viewPagerModel(R.drawable.profile_pic));
+        models.add(new viewPagerModel(R.drawable.nav_drawer_background));
+        models.add(new viewPagerModel(R.drawable.nav_drawer_background));
 
         adapter = new viewPagerAdapter(models, this);
         viewPager = findViewById(R.id.ViewPager);

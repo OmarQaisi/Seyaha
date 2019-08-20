@@ -26,6 +26,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolder> {
     public static List<Tour> mTours;
     ColorDrawable colorDrawable;
@@ -82,20 +84,15 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Tour.addClickEffect(v);
-            }
-        });
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
             public void onClick(View view) {
                 Tour.addClickEffect(view);
                 Intent i = new Intent(context, DetailedActivity.class);
                 context.startActivity(i);
             }
         });
+
         holder.alertDialog = holder.builder.create();
-        holder.mClost_btn.setOnClickListener(new View.OnClickListener() {
+        holder.mCancel_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 holder.alertDialog.dismiss();
@@ -116,6 +113,14 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
         });
         holder.alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
+        FirestoreQueries.getUser(new FirestoreQueries.FirestoreUserCallback() {
+            @Override
+            public void onCallback(User user) {
+                holder.ratingName.setText(user.displayName);
+                Picasso.get().load(user.imageURL).fit().into(holder.ratingPic);
+            }
+        });
+
         holder.mArrowDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -131,9 +136,10 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
 
     public static class ImageViewHolder extends RecyclerView.ViewHolder {
         ImageView img1, img2, img3;
-        TextView mTitle, mDescription, mRating, mComments;
-        ImageButton mShare_btn, mComment_btn, mRate_btn, mArrowDown, mClost_btn;
-        Button post_btn;
+        CircleImageView ratingPic;
+        TextView mTitle, mDescription, mRating, mComments, ratingName;
+        ImageButton mShare_btn, mComment_btn, mRate_btn, mArrowDown;
+        Button post_btn, mCancel_btn;
         LayoutInflater vi;
         View mView;
         EditText editText;
@@ -146,7 +152,9 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
             vi = (LayoutInflater) itemView.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             mView = vi.inflate(R.layout.custom_rating_dialog, null, false);
             post_btn = mView.findViewById(R.id.post_btn);
-            mClost_btn = mView.findViewById(R.id.close_btn);
+            mCancel_btn = mView.findViewById(R.id.cancel_btn);
+            ratingPic = mView.findViewById(R.id.rating_pic);
+            ratingName = mView.findViewById(R.id.rating_name);
             editText = mView.findViewById(R.id.comment_post);
             builder = new AlertDialog.Builder(itemView.getContext());
             builder.setView(mView);
