@@ -52,6 +52,12 @@
     <string name="detailed_activity_restaurants">Restaurants</string>
     <string name="detailed_activity_hotels">Hotels</string>
     <string name="detailed_activity_gas_station">Gas Station</string>
+    <string name="summer_season">Summer</string>
+    <string name="winter_season">Winter</string>
+    <string name="spring_season">spring</string>
+    <string name="autumn_season">autumn</string>
+    <string name="day_time">Day</string>
+    <string name="night_time">Night</string>
 
 
 </resources>

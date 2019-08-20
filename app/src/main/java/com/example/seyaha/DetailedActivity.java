@@ -71,6 +71,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         mapFragment.getMapAsync(this);
         run_viewPager();
 
+        //information about the place find view by id
         costProgressBar=findViewById(R.id.cost_progress);
         tempProgressBar=findViewById(R.id.temp_progress);
         airQualityProgressBar=findViewById(R.id.air_quality_progress);
@@ -80,26 +81,31 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         airQualityTv=findViewById(R.id.air_quality_tv);
         internetTv=findViewById(R.id.internet_tv);
 
+        //recommendations about the place find view by id
+        seasonImg=findViewById(R.id.prefered_season_image_button);
+        seasonTv=findViewById(R.id.prefered_season_text_view);
+        timeToGoImg=findViewById(R.id.prefered_time_to_go);
+        timeToGoTv=findViewById(R.id.prefered_time_to_go_tv);
+        ageTv=findViewById(R.id.prefered_age_tv);
+        estimationImg=findViewById(R.id.prefered_average_time_img);
+        estimationTv=findViewById(R.id.prefered_average_time_tv);
+
        createCostProgress("150");
        createTempProgress("40");
        createAirQualityProgress("20");
        createInternetProgress(0);
+       setSeason(4);
+       setTimeToGo(2);
+       setAge("6-15");
+       setEstimatedTime("2-4");
 
 
-        seasonImg=findViewById(R.id.prefered_season_image_button);
-        seasonTv=findViewById(R.id.prefered_season_text_view);
-        seasonImg.setTag(seasonTv.getText()+"");
-        seasonImgResource=R.drawable.ic_summer;
 
-        timeToGoImg=findViewById(R.id.prefered_time_to_go);
-        timeToGoTv=findViewById(R.id.prefered_time_to_go_tv);
-        timeToGoImg.setTag(timeToGoTv.getText()+"");
-        timeToGoImgResource=R.drawable.ic_day;
 
-        estimationImg=findViewById(R.id.prefered_average_time_img);
-        estimationTv=findViewById(R.id.prefered_average_time_tv);
-        estimationImg.setTag(estimationTv.getText()+"");
-        estimationImgResource=R.drawable.ic_sand_clock;
+
+
+
+
         seasonImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
@@ -317,5 +323,71 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
                 internetTv.setText(getResources().getString(R.string.great_internet));
                 break;
         }
+    }
+
+    private void setSeason(int season)
+    {
+       switch (season)
+       {
+           case 1:
+           seasonTv.setText(getResources().getString(R.string.summer_season));
+               seasonImg.setTag(seasonTv.getText()+"");
+               seasonImgResource=R.drawable.ic_summer;
+               seasonImg.setImageResource(seasonImgResource);
+           break;
+
+           case 2:
+           seasonTv.setText(getResources().getString(R.string.winter_season));
+           seasonImgResource=R.drawable.ic_winter;
+           seasonImg.setImageResource(seasonImgResource);
+           seasonImg.setTag(seasonTv.getText()+"");
+           break;
+
+           case 3:
+            seasonTv.setText(getResources().getString(R.string.spring_season));
+            seasonImgResource=R.drawable.ic_spring;
+            seasonImg.setImageResource(seasonImgResource);
+            seasonImg.setTag(seasonTv.getText()+"");
+           break;
+
+           case 4:
+               seasonTv.setText(getResources().getString(R.string.autumn_season));
+               seasonImgResource=R.drawable.ic_autumn;
+               seasonImg.setImageResource(seasonImgResource);
+               seasonImg.setTag(seasonTv.getText()+"");
+           break;
+       }
+    }
+
+    private  void setTimeToGo(int time)
+    {
+        switch (time)
+        {
+            case 1:
+                timeToGoTv.setText(getResources().getString(R.string.day_time));
+                timeToGoImg.setTag(timeToGoTv.getText()+"");
+                timeToGoImgResource=R.drawable.ic_day;
+                timeToGoImg.setImageResource(timeToGoImgResource);
+                break;
+
+            case 2:
+                timeToGoTv.setText(getResources().getString(R.string.night_time));
+                timeToGoImg.setTag(timeToGoTv.getText()+"");
+                timeToGoImgResource=R.drawable.ic_night;
+                timeToGoImg.setImageResource(timeToGoImgResource);
+                break;
+        }
+    }
+
+    private void setAge(String age)
+    {
+        ageTv.setText(age);
+    }
+
+    private void setEstimatedTime(String estimatedTime)
+    {
+        estimationTv.setText(estimatedTime);
+        estimationImg.setTag(estimationTv.getText()+"");
+        estimationImgResource=R.drawable.ic_sand_clock;
     }
 }
