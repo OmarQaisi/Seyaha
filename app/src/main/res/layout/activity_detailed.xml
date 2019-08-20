@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".DetailedActivity">
 
     <androidx.viewpager.widget.ViewPager
@@ -11,6 +12,7 @@
         android:layout_height="250dp"
         android:layout_alignParentTop="true"
         android:overScrollMode="never"
+        android:elevation="4dp"
         android:clipToPadding="false"
         android:foregroundGravity="center">
     </androidx.viewpager.widget.ViewPager>
@@ -69,9 +71,9 @@
                     android:id="@+id/place_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Place"
+                    android:text="Petra"
                     android:textSize="24sp"
-                    android:fontFamily="@font/montserrat_light"
+                    android:fontFamily="@font/montserrat_bold"
                     android:layout_marginLeft="4dp"
                     android:textColor="@color/blue_logo"
                     />
@@ -94,9 +96,8 @@
                           android:text="@string/detailed_activity_cost"
                           android:layout_column="0"
                           android:layout_row="0"
-                          android:layout_marginTop="5dp"
-                          android:layout_gravity="left"
-                             android:fontFamily="@font/montserrat_medium"
+                          android:layout_gravity="bottom"
+                          android:fontFamily="@font/montserrat_medium"
                           android:textSize="18sp"
                           android:textColor="@android:color/black"/>
 
@@ -122,7 +123,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/blue_logo"
+                                android:textColor="@android:color/black"
                                 android:id="@+id/cost_tv"
                                 android:fontFamily="@font/montserrat_light"
                                 android:text="$200"
@@ -137,10 +138,9 @@
                         android:layout_height="wrap_content"
                         android:layout_row="1"
                         android:layout_column="0"
-                        android:layout_marginTop="5dp"
                         android:text="@string/detailed_activity_temp"
                         android:fontFamily="@font/montserrat_medium"
-                        android:layout_gravity="left"
+                        android:layout_gravity="bottom"
                         android:textSize="16sp"
                         android:textColor="@android:color/black"/>
 
@@ -166,7 +166,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/blue_logo"
+                            android:textColor="@android:color/black"
                             android:id="@+id/temp_tv"
                             android:text="30C"
                             android:fontFamily="@font/montserrat_light"
@@ -181,8 +181,7 @@
                         android:text="@string/detailed_activity_air_quality"
                         android:layout_row="2"
                         android:layout_column="0"
-                        android:layout_gravity="left"
-                        android:layout_marginTop="5dp"
+                        android:layout_gravity="bottom"
                         android:fontFamily="@font/montserrat_medium"
                         android:textSize="16sp"
                         android:textColor="@android:color/black"/>
@@ -209,7 +208,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/blue_logo"
+                            android:textColor="@android:color/black"
                             android:id="@+id/air_quality_tv"
                             android:text="62"
                             android:fontFamily="@font/montserrat_light"
@@ -224,8 +223,7 @@
                         android:text="@string/detailed_activity_internet"
                         android:layout_row="3"
                         android:layout_column="0"
-                        android:layout_marginTop="5dp"
-                        android:layout_gravity="left"
+                        android:layout_gravity="bottom"
                         android:textSize="16sp"
                         android:fontFamily="@font/montserrat_medium"
                         android:textColor="@android:color/black"/>
@@ -252,7 +250,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/blue_logo"
+                            android:textColor="@android:color/black"
                             android:id="@+id/internet_tv"
                             android:text="Good"
                             android:fontFamily="@font/montserrat_light"
@@ -283,8 +281,8 @@
                     android:id="@+id/place_reco"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Place"
-                    android:fontFamily="@font/montserrat_light"
+                    android:text="Petra"
+                    android:fontFamily="@font/montserrat_bold"
                     android:textSize="24sp"
                     android:layout_marginLeft="4dp"
                     android:textColor="@color/blue_logo"
@@ -304,36 +302,33 @@
                        android:layout_weight="1"
                     android:orientation="vertical">
 
-                       <FrameLayout
-                        android:layout_width="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_height="wrap_content">
-                           <ImageButton
-                            android:layout_width="75dp"
-                            android:layout_height="75dp"
-                            android:id="@+id/prefered_season_image_button"
-                            android:background="@drawable/circle"
-                            android:src="@drawable/ic_summer"/>
-                            <TextView
-                              android:layout_width="wrap_content"
-                              android:layout_height="wrap_content"
-                              android:layout_gravity="center"
-                                android:textSize="18sp"
-                                android:fontFamily="@font/montserrat_light"
-                                android:textColor="@android:color/white"
-                              android:id="@+id/prefered_season_text_view"
-                              android:visibility="invisible"
-                              android:text="Summer"
-                              android:clickable="false"/>
-                      </FrameLayout>
-
+                       <com.wajahatkarim3.easyflipview.EasyFlipView
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           app:flipOnTouch="true"
+                           app:flipEnabled="true"
+                           app:flipDuration="400"
+                           android:layout_gravity="center"
+                           app:flipFrom="right"
+                           app:flipType="horizontal"
+                           android:id="@+id/season_btn"
+                           app:autoFlipBack="false"
+                           >
+                           <!-- Back Layout Goes Here -->
+                           <include layout="@layout/back_view_recommendations"
+                               android:id="@+id/back_season"/>
+                           <!-- Front Layout Goes Here -->
+                           <include layout="@layout/front_view_recommendations"
+                               android:id="@+id/front_season"/>
+                       </com.wajahatkarim3.easyflipview.EasyFlipView>
                       <TextView
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
                        android:text="@string/detailed_activity_season"
-                          android:fontFamily="@font/montserrat_light"
-                          android:textSize="18sp"
-                          android:textColor="@color/blue_logo"
+                          android:fontFamily="@font/montserrat_medium"
+                          android:textSize="16sp"
+                          android:layout_marginTop="5dp"
+                          android:textColor="@android:color/black"
                        android:layout_gravity="center"/>
                    </LinearLayout>
 
@@ -344,36 +339,34 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <FrameLayout
+                    <com.wajahatkarim3.easyflipview.EasyFlipView
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:flipOnTouch="true"
+                        app:flipEnabled="true"
+                        app:flipDuration="400"
                         android:layout_gravity="center"
-                        android:layout_height="wrap_content">
-                        <ImageButton
-                            android:layout_width="75dp"
-                            android:layout_height="75dp"
-                            android:id="@+id/prefered_time_to_go"
-                            android:background="@drawable/circle"
-                            android:src="@drawable/ic_day"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:id="@+id/prefered_time_to_go_tv"
-                            android:visibility="invisible"
-                            android:fontFamily="@font/montserrat_light"
-                            android:textSize="18sp"
-                            android:textColor="@android:color/white"
-                            android:text="Day"
-                            android:clickable="false"/>
-                    </FrameLayout>
+                        app:flipFrom="right"
+                        app:flipType="horizontal"
+                        android:id="@+id/time_btn"
+                        app:autoFlipBack="false"
+                        >
+                        <!-- Back Layout Goes Here -->
+                        <include layout="@layout/back_view_recommendations"
+                            android:id="@+id/back_time"/>
+                        <!-- Front Layout Goes Here -->
+                        <include layout="@layout/front_view_recommendations"
+                            android:id="@+id/front_time"/>
+                    </com.wajahatkarim3.easyflipview.EasyFlipView>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/detailed_activity_time"
-                        android:fontFamily="@font/montserrat_light"
-                        android:textColor="@color/blue_logo"
-                        android:textSize="18sp"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp"
+                        android:layout_marginTop="5dp"
                         android:layout_gravity="center"/>
                 </LinearLayout>
 
@@ -384,34 +377,34 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <FrameLayout
+                    <com.wajahatkarim3.easyflipview.EasyFlipView
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:flipOnTouch="true"
+                        app:flipEnabled="true"
+                        app:flipDuration="400"
                         android:layout_gravity="center"
-                        android:layout_height="wrap_content">
-                        <ImageButton
-                            android:layout_width="75dp"
-                            android:layout_height="75dp"
-                            android:id="@+id/prefered_age_img"
-                            android:background="@drawable/circle"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:id="@+id/prefered_age_tv"
-                            android:text="+13"
-                            android:fontFamily="@font/montserrat_light"
-                            android:textSize="30sp"
-                            android:textColor="@android:color/white"
-                            android:clickable="false"/>
-                    </FrameLayout>
+                        app:flipFrom="right"
+                        app:flipType="horizontal"
+                        android:id="@+id/age_btn"
+                        app:autoFlipBack="false"
+                        >
+                        <!-- Back Layout Goes Here -->
+                        <include layout="@layout/back_view_recommendations"
+                            android:id="@+id/back_age"/>
+                        <!-- Front Layout Goes Here -->
+                        <include layout="@layout/back_view_recommendations"
+                            android:id="@+id/front_ag"/>
+                    </com.wajahatkarim3.easyflipview.EasyFlipView>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/detailed_activity_age"
-                        android:fontFamily="@font/montserrat_light"
-                        android:textColor="@color/blue_logo"
-                        android:textSize="18sp"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp"
+                        android:layout_marginTop="5dp"
                         android:layout_gravity="center"/>
                 </LinearLayout>
 
@@ -421,38 +414,35 @@
                     android:layout_marginLeft="10dp"
                     android:orientation="vertical">
 
-                    <FrameLayout
+                    <com.wajahatkarim3.easyflipview.EasyFlipView
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:flipOnTouch="true"
+                        app:flipEnabled="true"
+                        app:flipDuration="400"
                         android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content">
-                        <ImageButton
-                            android:layout_width="75dp"
-                            android:layout_height="75dp"
-                            android:id="@+id/prefered_average_time_img"
-                            android:background="@drawable/circle"
-                            android:src="@drawable/ic_sand_clock"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:id="@+id/prefered_average_time_tv"
-                            android:visibility="invisible"
-                            android:fontFamily="@font/montserrat_light"
-                            android:textSize="18sp"
-                            android:textColor="@android:color/white"
-                            android:text="2Hrs"
-                            android:clickable="false"/>
-                    </FrameLayout>
+                        app:flipFrom="right"
+                        app:flipType="horizontal"
+                        android:id="@+id/estimated_btn"
+                        app:autoFlipBack="false"
+                        >
+                        <!-- Back Layout Goes Here -->
+                        <include layout="@layout/back_view_recommendations"
+                            android:id="@+id/back_estimated"/>
+                        <!-- Front Layout Goes Here -->
+                        <include layout="@layout/front_view_recommendations"
+                            android:id="@+id/front_estimated"/>
+                    </com.wajahatkarim3.easyflipview.EasyFlipView>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/detailed_activity_estimation"
-                        android:textSize="18sp"
-                        android:fontFamily="@font/montserrat_light"
-                        android:textColor="@color/blue_logo"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:textColor="@android:color/black"
                         android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
                         tools:ignore="HardcodedText" />
                 </LinearLayout>
 
@@ -480,8 +470,8 @@
                     android:id="@+id/location_place"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Place"
-                    android:fontFamily="@font/montserrat_light"
+                    android:text="Petra"
+                    android:fontFamily="@font/montserrat_bold"
                     android:textSize="24sp"
                     android:layout_marginLeft="4dp"
                     android:textColor="@color/blue_logo"
@@ -494,6 +484,7 @@
                 android:name="com.google.android.gms.maps.SupportMapFragment"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
+                android:layout_marginBottom="20dp"
                 />
         </LinearLayout>
 

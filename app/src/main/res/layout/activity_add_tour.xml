@@ -56,32 +56,33 @@
 
     <Button
         android:text="Publish"
-        android:layout_width="wrap_content"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:textColor="@android:color/white"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:id="@+id/add_tour_btn"
         android:onClick="addTour"
-        android:textSize="18sp"
+        android:textSize="14sp"
         android:layout_marginBottom="15dp"
         android:layout_marginRight="15dp"
         android:fontFamily="@font/montserrat_medium"
-        android:padding="10dp"
+        android:padding="5dp"
         android:layout_marginLeft="10dp"
         android:background="@drawable/button_radius"/>
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/white"
+        android:textColor="@color/blue_logo"
         android:layout_alignParentBottom="true"
-        android:layout_marginRight="15dp"
+        android:layout_marginRight="5dp"
         android:layout_toLeftOf="@id/add_tour_btn"
         android:fontFamily="@font/montserrat_medium"
-        android:textSize="18sp"
+        android:textSize="14sp"
+        android:background="@drawable/button_border_radius"
         android:text="Reset"
-        android:padding="10dp"
+        android:padding="5dp"
         android:layout_marginBottom="15dp"
         />
 

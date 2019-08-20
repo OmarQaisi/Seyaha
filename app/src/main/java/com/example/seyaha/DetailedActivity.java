@@ -14,6 +14,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
@@ -25,6 +26,7 @@ import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.wajahatkarim3.easyflipview.EasyFlipView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,11 +41,11 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
     Integer []colors=null;
     ArgbEvaluator argbEvaluator=new ArgbEvaluator();
 
-    ImageButton seasonImg,timeToGoImg,estimationImg;
-    TextView seasonTv,timeToGoTv,ageTv,estimationTv,costTv,tempTv,airQualityTv,internetTv;
+    EasyFlipView seasonFlip,timeToGoFlip,estimationFlip,ageFlip;
+    TextView seasonTv,timeToGoTv,ageTv1,ageTv2,estimationTv,costTv,tempTv,airQualityTv,internetTv;
     RoundCornerProgressBar costProgressBar,tempProgressBar,airQualityProgressBar,internetProgressBar;
-
-
+    View frontLayoutSeason,backLayoutSeason,frontLayoutTime,backLayouTime,frontLayoutAge,backLayoutAge,frontLayoutEstimated,backLayoutEstimated;
+    ImageView seasonImg,timeToGoImg,estimationImg;
 
     int seasonImgResource,timeToGoImgResource,estimationImgResource;
 
@@ -71,86 +73,25 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         internetTv=findViewById(R.id.internet_tv);
 
         //recommendations about the place find view by id
-        seasonImg=findViewById(R.id.prefered_season_image_button);
-        seasonTv=findViewById(R.id.prefered_season_text_view);
-        timeToGoImg=findViewById(R.id.prefered_time_to_go);
-        timeToGoTv=findViewById(R.id.prefered_time_to_go_tv);
-        ageTv=findViewById(R.id.prefered_age_tv);
-        estimationImg=findViewById(R.id.prefered_average_time_img);
-        estimationTv=findViewById(R.id.prefered_average_time_tv);
-
-       setCostProgress("150");
-       setTempProgress("40");
-       setAirQualityProgress("20");
-       setInternetProgress(0);
-       setSeason(4);
-       setTimeToGo(2);
-       setAge("6-15");
-       setEstimatedTime("2-4");
+        seasonFlip=findViewById(R.id.season_btn);
+        timeToGoFlip=findViewById(R.id.time_btn);
+        ageFlip=findViewById(R.id.age_btn);
+        estimationFlip=findViewById(R.id.estimated_btn);
 
 
 
+         setCostProgress("150");
+         setTempProgress("40");
+         setAirQualityProgress("20");
+          setInternetProgress(0);
+
+         setSeason(1);
+         setTimeToGo(1);
+         setAge("16+");
+         setEstimatedTime("2hrs");
 
 
 
-
-
-        seasonImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                if(seasonImg.getTag()!="none")
-                {
-                    seasonImg.setImageResource(android.R.color.transparent);
-                    seasonImg.setTag("none");
-                    seasonTv.setVisibility(View.VISIBLE);
-                }
-                else
-                {
-                        seasonTv.setVisibility(View.INVISIBLE);
-                        seasonImg.setTag(seasonTv.getText()+"");
-                        seasonImg.setImageResource(seasonImgResource);
-                }
-            }
-        });
-
-        timeToGoImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-             if(timeToGoImg.getTag()!="none")
-             {
-                 timeToGoImg.setImageResource(android.R.color.transparent);
-                 timeToGoTv.setVisibility(View.VISIBLE);
-                 timeToGoImg.setTag("none");
-             }
-             else
-             {
-                 timeToGoImg.setImageResource(timeToGoImgResource);
-                 timeToGoTv.setVisibility(View.INVISIBLE);
-                 timeToGoImg.setTag(timeToGoTv.getText()+"");
-             }
-            }
-        });
-
-        estimationImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                if(estimationImg.getTag()!="none")
-                {
-                    estimationImg.setImageResource(android.R.color.transparent);
-                    estimationTv.setVisibility(View.VISIBLE);
-                    estimationImg.setTag("none");
-                }
-                else
-                {
-                    estimationImg.setImageResource(estimationImgResource);
-                    estimationTv.setVisibility(View.INVISIBLE);
-                    estimationImg.setTag(estimationTv.getText()+"");
-                }
-            }
-        });
 
     }
 
@@ -216,7 +157,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
 
 
         int result=Integer.parseInt(cost);
-        costTv.setText("$"+cost);
+        costTv.setText(cost+"JD");
         if(result<=100)
         {
             costProgressBar.setProgress(100);
@@ -249,12 +190,12 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         {
             tempProgressBar.setProgressColor(Color.RED);
             tempProgressBar.setProgress(result);
-            tempTv.setText(getResources().getString(R.string.cold)+temp+"\u2103");
+            tempTv.setText(getResources().getString(R.string.cold)+temp+"\u2103"+"(now)");
 
         }
         else  if(result>10 && result<=18)
         {
-            tempTv.setText(getResources().getString(R.string.normal)+temp+"\u2103");
+            tempTv.setText(getResources().getString(R.string.normal)+temp+"\u2103"+"(now)");
             tempProgressBar.setProgress(result);
             tempProgressBar.setProgressColor(Color.rgb(255,165,0));
         }
@@ -262,13 +203,13 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         {
             tempProgressBar.setProgressColor(Color.GREEN);
             tempProgressBar.setProgress(55);
-            tempTv.setText(getResources().getString(R.string.perfect)+temp+"\u2103");
+            tempTv.setText(getResources().getString(R.string.perfect)+temp+"\u2103"+"(now)");
         }
         else
         {
             tempProgressBar.setProgressColor(Color.RED);
             tempProgressBar.setProgress(55-result);
-            tempTv.setText(getResources().getString(R.string.hot)+temp+"\u2103");
+            tempTv.setText(getResources().getString(R.string.hot)+temp+"\u2103"+"(now)");
         }
 
         ObjectAnimator progressAnimator;
@@ -281,7 +222,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
 
     private void setAirQualityProgress(String airQuality)
     {
-        airQualityTv.setText(airQuality+"\u00B5"+"g/m3");
+        airQualityTv.setText(airQuality+"\u00B5"+"g/m3"+"(now)");
         int result=Integer.parseInt(airQuality);
         airQualityProgressBar.setProgress(100-result);
         if(result<=25)
@@ -330,69 +271,75 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         progressAnimator.start();
     }
 
-    private void setSeason(int season)
+   private void setSeason(int season)
     {
+
+        frontLayoutSeason=seasonFlip.findViewById(R.id.front_season);
+        backLayoutSeason=seasonFlip.findViewById(R.id.back_season);
+        seasonTv=backLayoutSeason.findViewById(R.id.back_text);
+        seasonImg=frontLayoutSeason.findViewById(R.id.front_icon);
        switch (season)
        {
+           case 0:
+             seasonTv.setText(getResources().getString(R.string.summer_season));
+             seasonImg.setImageResource(R.drawable.ic_summer);
+           break;
+
            case 1:
-           seasonTv.setText(getResources().getString(R.string.summer_season));
-               seasonImg.setTag(seasonTv.getText()+"");
-               seasonImgResource=R.drawable.ic_summer;
-               seasonImg.setImageResource(seasonImgResource);
+               seasonTv.setText(getResources().getString(R.string.winter_season));
+               seasonImg.setImageResource(R.drawable.ic_winter);
            break;
 
            case 2:
-           seasonTv.setText(getResources().getString(R.string.winter_season));
-           seasonImgResource=R.drawable.ic_winter;
-           seasonImg.setImageResource(seasonImgResource);
-           seasonImg.setTag(seasonTv.getText()+"");
+               seasonTv.setText(getResources().getString(R.string.spring_season));
+               seasonImg.setImageResource(R.drawable.ic_spring);
            break;
 
            case 3:
-            seasonTv.setText(getResources().getString(R.string.spring_season));
-            seasonImgResource=R.drawable.ic_spring;
-            seasonImg.setImageResource(seasonImgResource);
-            seasonImg.setTag(seasonTv.getText()+"");
-           break;
-
-           case 4:
                seasonTv.setText(getResources().getString(R.string.autumn_season));
-               seasonImgResource=R.drawable.ic_autumn;
-               seasonImg.setImageResource(seasonImgResource);
-               seasonImg.setTag(seasonTv.getText()+"");
+               seasonImg.setImageResource(R.drawable.ic_autumn);
            break;
        }
     }
 
     private  void setTimeToGo(int time)
     {
+        frontLayoutTime=findViewById(R.id.front_time);
+        backLayouTime=findViewById(R.id.back_time);
+        timeToGoTv=backLayouTime.findViewById(R.id.back_text);
+        timeToGoImg=frontLayoutTime.findViewById(R.id.front_icon);
+
         switch (time)
         {
-            case 1:
+            case 0:
                 timeToGoTv.setText(getResources().getString(R.string.day_time));
-                timeToGoImg.setTag(timeToGoTv.getText()+"");
-                timeToGoImgResource=R.drawable.ic_day;
-                timeToGoImg.setImageResource(timeToGoImgResource);
+                timeToGoImg.setImageResource(R.drawable.ic_day);
                 break;
 
-            case 2:
+            case 1:
                 timeToGoTv.setText(getResources().getString(R.string.night_time));
-                timeToGoImg.setTag(timeToGoTv.getText()+"");
-                timeToGoImgResource=R.drawable.ic_night;
-                timeToGoImg.setImageResource(timeToGoImgResource);
+               timeToGoImg.setImageResource(R.drawable.ic_night);
                 break;
         }
     }
 
     private void setAge(String age)
     {
-        ageTv.setText(age);
+        frontLayoutAge=findViewById(R.id.front_ag);
+        backLayoutAge=findViewById(R.id.back_age);
+        ageTv1=backLayoutAge.findViewById(R.id.back_text);
+        ageTv2=frontLayoutAge.findViewById(R.id.back_text);
+        ageTv1.setText(age);
+        ageTv2.setText(age);
     }
 
     private void setEstimatedTime(String estimatedTime)
     {
+        frontLayoutEstimated=findViewById(R.id.front_estimated);
+        backLayoutEstimated=findViewById(R.id.back_estimated);
+        estimationTv=backLayoutEstimated.findViewById(R.id.back_text);
+        estimationImg=frontLayoutEstimated.findViewById(R.id.front_icon);
         estimationTv.setText(estimatedTime);
-        estimationImg.setTag(estimationTv.getText()+"");
-        estimationImgResource=R.drawable.ic_sand_clock;
+        estimationImg.setImageResource(R.drawable.ic_sand_clock);
     }
 }
