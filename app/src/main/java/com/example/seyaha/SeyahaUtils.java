@@ -7,8 +7,12 @@ import android.content.res.Configuration;
 
 import java.util.Locale;
 
+
 public class SeyahaUtils
 {
+
+
+
     public static Boolean checkInternetConnectivity(Activity context) {
         ConnectionDetector connectionCheck = new ConnectionDetector(context);
 
