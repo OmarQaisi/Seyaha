@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,7 +40,7 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.tour_item, viewGroup, false);
         ImageViewHolder imageViewHolder = new ImageViewHolder(view);
 
-        FirestoreQueries.getUser(new FirestoreQueries.FirestoreCallback() {
+        FirestoreQueries.getUser(new FirestoreQueries.FirestoreUserCallback() {
             @Override
             public void onCallback(User user) {
                 if (user.isAdmin)

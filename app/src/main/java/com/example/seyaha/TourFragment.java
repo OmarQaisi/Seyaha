@@ -37,7 +37,7 @@ public class TourFragment extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
 
         addTourBtn = mView.findViewById(R.id.add_tour_btn);
-        FirestoreQueries.getUser(new FirestoreQueries.FirestoreCallback() {
+        FirestoreQueries.getUser(new FirestoreQueries.FirestoreUserCallback() {
             @SuppressLint("RestrictedApi")
             @Override
             public void onCallback(User user) {

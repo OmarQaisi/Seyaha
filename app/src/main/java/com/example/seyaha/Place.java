@@ -1,5 +1,7 @@
 package com.example.seyaha;
 
+import androidx.annotation.NonNull;
+
 public class Place {
 
 
@@ -15,12 +17,12 @@ public class Place {
     public double longitude;
     public String nameAR;
     public String nameEN;
-    public int recommendedAge;
+    public String recommendedAge;
     public int recommendedSeason;
     public int recommendedTime;
 
 
-    public Place(String categoryAR, String categoryEN, int cost, String descAR, String descEN, int estimatedTime, String imageURL, int internet, double latitude, double longitude, String nameAR, String nameEN, int recommendedAge, int recommendedSeason, int recommendedTime) {
+    public Place(String categoryAR, String categoryEN, int cost, String descAR, String descEN, int estimatedTime, String imageURL, int internet, double latitude, double longitude, String nameAR, String nameEN, String recommendedAge, int recommendedSeason, int recommendedTime) {
         this.categoryAR = categoryAR;
         this.categoryEN = categoryEN;
         this.cost = cost;
@@ -36,5 +38,28 @@ public class Place {
         this.recommendedAge = recommendedAge;
         this.recommendedSeason = recommendedSeason;
         this.recommendedTime = recommendedTime;
+    }
+
+    public Place(){}
+
+    @Override
+    public String toString() {
+        return "Place{" +
+                "categoryAR='" + categoryAR + '\'' +
+                ", categoryEN='" + categoryEN + '\'' +
+                ", cost=" + cost +
+                ", descAR='" + descAR + '\'' +
+                ", descEN='" + descEN + '\'' +
+                ", estimatedTime=" + estimatedTime +
+                ", imageURL='" + imageURL + '\'' +
+                ", internet=" + internet +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", nameAR='" + nameAR + '\'' +
+                ", nameEN='" + nameEN + '\'' +
+                ", recommendedAge='" + recommendedAge + '\'' +
+                ", recommendedSeason=" + recommendedSeason +
+                ", recommendedTime=" + recommendedTime +
+                '}';
     }
 }
