@@ -27,14 +27,13 @@
 
 
     <!-- Strings for the(Detailed activity) -->
-
-
     <string name="cold">"Cold:"</string>
     <string name="perfect">"Perfect:"</string>
     <string name="hot">"Hot:"</string>
-    <string name="too_hot">"Too hot:"</string>
-    <string name="too_cold">"Too cold:"</string>
     <string name="normal">"Normal:"</string>
+    <string name="bad_internet">Bad</string>
+    <string name="good_internet">Good</string>
+    <string name="great_internet">Great</string>
 
 
 </resources>

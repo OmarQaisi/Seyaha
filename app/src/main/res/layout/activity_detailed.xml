@@ -34,7 +34,6 @@
                 android:textSize="24sp"
                 android:textColor="@color/colorPrimary"
                 android:layout_marginTop="10dp"
-                android:textStyle="bold"
                 />
 
             <TextView
@@ -77,13 +76,13 @@
             </LinearLayout>
 
             <GridLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:rowCount="4"
-                android:columnCount="3"
-                android:layout_marginRight="20dp"
-                android:useDefaultMargins="true"
-                xmlns:app="http://schemas.android.com/apk/res-auto">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:rowCount="4"
+            android:columnCount="3"
+            android:layout_marginRight="20dp"
+            android:useDefaultMargins="true"
+            xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
 
@@ -124,7 +123,7 @@
                                 app:rcMax="100"
                                 app:rcRadius="15dp"
                                 android:id="@+id/cost_progress"
-                                app:rcBackgroundPadding="0dp"
+                                app:rcBackgroundPadding="2dp"
                                 app:rcReverse="false"
                                 app:rcSecondaryProgressColor="@android:color/transparent"
                                 app:rcBackgroundColor="@color/background_gray" />
@@ -169,12 +168,12 @@
                         <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
                             android:layout_width="match_parent"
                             android:layout_height="30dp"
-                            app:rcProgress="60"
+                            app:rcProgress="55"
                             app:rcSecondaryProgress="0"
-                            app:rcMax="100"
+                            app:rcMax="50"
                             app:rcRadius="15dp"
                             android:id="@+id/temp_progress"
-                            app:rcBackgroundPadding="0dp"
+                            app:rcBackgroundPadding="2dp"
                             app:rcReverse="false"
                             app:rcProgressColor="@color/orange_good"
                             app:rcSecondaryProgressColor="@android:color/transparent"
@@ -223,7 +222,7 @@
                             app:rcMax="100"
                             app:rcRadius="15dp"
                             android:id="@+id/air_quality_progress"
-                            app:rcBackgroundPadding="0dp"
+                            app:rcBackgroundPadding="2dp"
                             app:rcReverse="false"
                             app:rcProgressColor="@color/red_bad"
                             app:rcSecondaryProgressColor="@android:color/transparent"
@@ -273,7 +272,7 @@
                             app:rcMax="100"
                             app:rcRadius="15dp"
                             android:id="@+id/internet_progress"
-                            app:rcBackgroundPadding="0dp"
+                            app:rcBackgroundPadding="2dp"
                             app:rcReverse="false"
                             app:rcProgressColor="@color/orange_good"
                             app:rcSecondaryProgressColor="@android:color/transparent"

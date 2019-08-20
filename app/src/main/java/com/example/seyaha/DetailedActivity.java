@@ -81,7 +81,9 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         internetTv=findViewById(R.id.internet_tv);
 
        createCostProgress("150");
-       createTempProgress("22");
+       createTempProgress("40");
+       createAirQualityProgress("20");
+       createInternetProgress(0);
 
 
         seasonImg=findViewById(R.id.prefered_season_image_button);
@@ -224,25 +226,22 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
     {
 
         int result=Integer.parseInt(cost);
-
+        costTv.setText("$"+cost);
         if(result<=100)
         {
             costProgressBar.setProgress(100);
             costProgressBar.setProgressColor(Color.GREEN);
-            costTv.setText("$"+cost);
-
         }
         else if(result>100 && result<=250)
         {
-            tempProgressBar.setProgress(60);
-            tempTv.setText("$"+cost);
-            tempProgressBar.setProgressColor(Color.rgb(255,165,0));
+            costProgressBar.setProgress(60);
+            costProgressBar.setProgressColor(Color.rgb(255,165,0));
         }
         else
         {
             costProgressBar.setProgress(30);
             costProgressBar.setProgressColor(Color.RED);
-            costTv.setText("$"+cost);
+
         }
 
     }
@@ -250,33 +249,73 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
     private void createTempProgress(String temp)
     {
         int result=Integer.parseInt(temp);
+
         if(result<=10)
         {
-            tempProgressBar.setProgress(30);
             tempProgressBar.setProgressColor(Color.RED);
+            tempProgressBar.setProgress(result);
             tempTv.setText(getResources().getString(R.string.cold)+temp+"\u2103");
 
         }
         else  if(result>10 && result<=18)
         {
-            tempProgressBar.setProgress(60);
             tempTv.setText(getResources().getString(R.string.normal)+temp+"\u2103");
+            tempProgressBar.setProgress(result);
             tempProgressBar.setProgressColor(Color.rgb(255,165,0));
         }
         else if(result>18 && result<=30)
         {
-            tempProgressBar.setProgress(100);
             tempProgressBar.setProgressColor(Color.GREEN);
+            tempProgressBar.setProgress(55);
             tempTv.setText(getResources().getString(R.string.perfect)+temp+"\u2103");
         }
         else
         {
-            tempProgressBar.setProgress(30);
             tempProgressBar.setProgressColor(Color.RED);
+            tempProgressBar.setProgress(55-result);
             tempTv.setText(getResources().getString(R.string.hot)+temp+"\u2103");
         }
 
     }
 
+    private void createAirQualityProgress(String airQuality)
+    {
+        airQualityTv.setText(airQuality+"\u00B5"+"g/m3");
+        int result=Integer.parseInt(airQuality);
+        airQualityProgressBar.setProgress(100-result);
+        if(result<=25)
+        {
+            airQualityProgressBar.setProgressColor(Color.GREEN);
+        }
+        else if(result>25 && result<=50)
+        {
+            airQualityProgressBar.setProgressColor( Color.rgb(255,165,0));
+        }
+        else
+        {
+         airQualityProgressBar.setProgressColor(Color.RED);
+        }
+    }
 
+    private void createInternetProgress(int internet)
+    {
+        switch (internet)
+        {
+            case 0:
+                internetProgressBar.setProgressColor(Color.RED);
+                internetProgressBar.setProgress(30);
+                internetTv.setText(getResources().getString(R.string.bad_internet));
+                break;
+            case 1:
+                internetProgressBar.setProgressColor(Color.rgb(255,165,0));
+                internetProgressBar.setProgress(60);
+                internetTv.setText(getResources().getString(R.string.good_internet));
+                break;
+            case 2:
+                internetProgressBar.setProgressColor(Color.GREEN);
+                internetProgressBar.setProgress(100);
+                internetTv.setText(getResources().getString(R.string.great_internet));
+                break;
+        }
+    }
 }
