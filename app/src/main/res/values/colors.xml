@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#000000</color>
     <color name="colorPrimaryDark">#000000</color>
-    <color name="colorAccent">#3acce1</color>
+    <color name="colorAccent">#808080</color>
 
 
     <color name="white_login_screen">#ffffff</color>
@@ -27,6 +27,9 @@
     <color name="blue_logo">#2343BA</color>
     <color name="yello_logo">#F4C230</color>
     <color name="red_logo">#DC001A</color>
+
+    <color name="gold">#DAA520</color>
+    <color name="gray">#808080</color>
 
     <color name="blue_logo_transparent">#202343BA</color>
 </resources>

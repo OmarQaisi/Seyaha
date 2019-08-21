@@ -36,6 +36,7 @@
     <string name="great_internet">Great</string>
     <string name="alert_rating_hint">"Share Your Experience about this tour"</string>
     <string name="alert_rating_post">Post</string>
+    <string name="alert_rating_cancel">Cancel</string>
     <string name="detailed_activity_description">Description</string>
     <string name="detailed_activity_information_about">Information About</string>
     <string name="detailed_activity_cost">Cost</string>
