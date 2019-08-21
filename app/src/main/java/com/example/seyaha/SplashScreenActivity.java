@@ -123,7 +123,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK) {
-            Log.d(TAG, "onActivityResult: intered ");
+            Log.d(TAG, "onActivityResult: entered ");
             setUser();
 
         } else if (resultCode == RESULT_CANCELED) {

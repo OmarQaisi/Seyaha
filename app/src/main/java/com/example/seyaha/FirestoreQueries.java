@@ -24,7 +24,7 @@ public class FirestoreQueries {
     //Firebase
     private static FirebaseAuth mFirebaseAuth;
     private static FirebaseFirestore mFirebaseFirestore;
-    private static CollectionReference users, places;
+    private static CollectionReference users, places, tours;
 
     public static void getUser(final FirestoreUserCallback firestoreCallback){
         mFirebaseAuth = FirebaseAuth.getInstance();
@@ -61,7 +61,25 @@ public class FirestoreQueries {
                     Log.d(TAG, "Error getting documents: ", task.getException());
             }
         });
+    }
 
+    public static void getTours(final FirestoreTourCallback firestoreTourCallback){
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseFirestore = FirebaseFirestore.getInstance();
+        tours = mFirebaseFirestore.collection("tours");
+        tours.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    List<Tour> mTours = new ArrayList<Tour>();
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        mTours.add(document.toObject(Tour.class));
+                    }
+                    firestoreTourCallback.onCallback(mTours);
+                }else
+                    Log.d(TAG, "Error getting documents: ", task.getException());
+            }
+        });
     }
 
     protected interface FirestoreUserCallback {
@@ -70,5 +88,9 @@ public class FirestoreQueries {
 
     protected interface FirestorePlaceCallback {
         void onCallback(List<Place> places);
+    }
+
+    protected interface FirestoreTourCallback {
+        void onCallback(List<Tour> tours);
     }
 }

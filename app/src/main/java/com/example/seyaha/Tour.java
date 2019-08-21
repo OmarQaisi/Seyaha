@@ -7,51 +7,66 @@ import java.util.List;
 
 public class Tour {
 
-    public String titleAR;
-    public String titleEN;
-    public String categoriesAR;
-    public String categoriesEN;
-    public String[] imageURLs;
+    public List<String> categoriesAR;
+    public List<String> categoriesEN;
+    public List<Comment> comments;
+    public int commentsNum;
+    public List<String> imageURLs;
     public List<Place> places;
     public double ratingsNum;
-    public int commentsNum;
-    public List<Comment> comments;
+    public String titleAR;
+    public String titleEN;
 
-    public Tour(String titleAR, String titleEN, String descAR, String descEN, String[] imageURLs, List<Place> places, double ratingsNum, int commentsNum, List<Comment> comments) {
-        this.titleAR = titleAR;
-        this.titleEN = titleEN;
-        this.categoriesAR = descAR;
-        this.categoriesEN = descEN;
+
+    public Tour(List<String> categoriesAR, List<String> categoriesEN, List<Comment> comments, int commentsNum, List<String> imageURLs, List<Place> places, double ratingsNum, String titleAR, String titleEN) {
+        this.categoriesAR = categoriesAR;
+        this.categoriesEN = categoriesEN;
+        this.comments = comments;
+        this.commentsNum = commentsNum;
         this.imageURLs = imageURLs;
         this.places = places;
         this.ratingsNum = ratingsNum;
-        this.commentsNum = commentsNum;
-        this.comments = comments;
+        this.titleAR = titleAR;
+        this.titleEN = titleEN;
     }
 
-    public Tour(String[] imagesURL, double rating, int comment, String title, String desc){
-        imageURLs = imagesURL;
-        ratingsNum = rating;
-        commentsNum = comment;
-        titleEN = title;
-        categoriesEN = desc;
-    }
+    public Tour() {}
 
-    public String makeCategories(String[] categories)
+    public String makeEnglishDescription(List<String> categoriesEN)
     {
-        String result="";
-        for(int i=0;i<categories.length;i++)
+        String result="Categories: ";
+        for(int i=0;i<categoriesEN.size();i++)
         {
             if(i==0) {
-                result += i;
+                result += categoriesEN.get(i);
             }
-            else if(i==categories.length-1)
+            else if(i==categoriesEN.size()-1)
             {
-                result+="and "+i+".";
+                result+=" and "+categoriesEN.get(i)+".";
             }
             else
             {
-                result+=", "+i;
+                result+=", "+categoriesEN.get(i);
+            }
+        }
+        return result;
+    }
+
+    public String makeArabicDescription(List<String> categoriesAR)
+    {
+        String result="";
+        for(int i=0;i<categoriesAR.size();i++)
+        {
+            if(i==0) {
+                result += categoriesAR.get(i);
+            }
+            else if(i==categoriesAR.size()-1)
+            {
+                result+=" و "+categoriesAR.get(i)+".";
+            }
+            else
+            {
+                result+=" ,"+categoriesAR.get(i);
             }
         }
         return result;

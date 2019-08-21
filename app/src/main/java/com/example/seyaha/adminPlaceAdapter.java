@@ -1,6 +1,6 @@
 package com.example.seyaha;
 
-import android.app.AlertDialog;
+
 import android.content.Context;
 
 import android.graphics.Color;
@@ -11,9 +11,6 @@ import android.view.LayoutInflater;
 
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,10 +25,10 @@ import java.util.List;
 
 public class adminPlaceAdapter extends RecyclerView.Adapter<adminPlaceAdapter.ImageViewHolder> {
     public static List<Place> mPlace;
-    public static List<Place>chosen_places;
+    public static List<Place> chosen_places;
     ColorDrawable colorDrawable;
     Context context;
-    int counter[];
+    static int counter[];
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @NonNull
@@ -55,9 +52,8 @@ public class adminPlaceAdapter extends RecyclerView.Adapter<adminPlaceAdapter.Im
     public void onBindViewHolder(final ImageViewHolder holder, final int position)
     {
         counter=new int[mPlace.size()];
-        Place place= mPlace.get(position);
         colorDrawable = new ColorDrawable(Color.GRAY);
-        chosen_places=new ArrayList <Place>();
+        chosen_places = new ArrayList <Place>();
 
         Picasso.get().load(mPlace.get(position).imageURL).placeholder(colorDrawable).fit().into(holder.circle);
         holder.circle.setClipToOutline(true);
