@@ -21,6 +21,7 @@
         android:id="@+id/under_welcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat_medium"
         android:text="@string/login_description"
         android:textAlignment="center"
         android:textColor="@color/dark_grey"
@@ -36,7 +37,9 @@
         android:src="@drawable/ic_login_illustration"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/under_welcome" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
 
     <TextView
         android:id="@+id/login_continue"
@@ -44,10 +47,13 @@
         android:layout_height="wrap_content"
         android:text="@string/login_continue"
         android:textColor="@color/dark_grey"
+        android:fontFamily="@font/montserrat_medium"
         android:textSize="18sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/login_illustration" />
+        app:layout_constraintBottom_toTopOf="@id/facbook_btn"
+        android:layout_marginBottom="10dp"
+         />
 
 
     <Button

@@ -8,7 +8,7 @@
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/ViewPager"
         android:layout_width="match_parent"
-        android:layout_height="290dp"
+        android:layout_height="250dp"
         android:layout_alignParentTop="true"
         android:overScrollMode="never"
         android:clipToPadding="false"
@@ -32,7 +32,8 @@
                 android:layout_marginLeft="10dp"
                 android:text="@string/detailed_activity_description"
                 android:textSize="24sp"
-                android:textColor="@color/colorPrimary"
+                android:fontFamily="@font/montserrat_medium"
+                android:textColor="@android:color/black"
                 android:layout_marginTop="10dp"
                 />
 
@@ -43,7 +44,7 @@
                 android:textSize="15sp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_gravity="center"
+                android:fontFamily="@font/montserrat_light"
                 android:text="Observe the comments made about you by your parents, friends, teachers or you may directly ask them. Note these points on a paper and try to make a sample of description."
                 android:textColor="@color/colorPrimary"/>
             <LinearLayout
@@ -60,18 +61,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/detailed_activity_information_about"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="10dp"
                     android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/dark_grey"/>
+                    android:fontFamily="@font/montserrat_medium"
+                    android:textColor="@android:color/black"/>
                 <TextView
                     android:id="@+id/place_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="PLACE"
+                    android:text="Place"
                     android:textSize="24sp"
+                    android:fontFamily="@font/montserrat_light"
                     android:layout_marginLeft="4dp"
-                    android:textColor="@color/light_grey"
+                    android:textColor="@color/blue_logo"
                     />
             </LinearLayout>
 
@@ -81,48 +83,38 @@
             android:rowCount="4"
             android:columnCount="3"
             android:layout_marginRight="20dp"
+            android:layout_marginLeft="10dp"
             android:useDefaultMargins="true"
             xmlns:app="http://schemas.android.com/apk/res-auto">
-
-
-
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:layout_weight="1"
-                            android:layout_column="0"
-                            android:layout_row="0"
-                            android:src="@drawable/ic_cost"
-                            android:layout_gravity="center"
-                            />
 
                          <TextView
                           android:id="@+id/cost"
                           android:layout_width="wrap_content"
-                          android:layout_height="match_parent"
+                          android:layout_height="wrap_content"
                           android:text="@string/detailed_activity_cost"
-                          android:layout_column="1"
+                          android:layout_column="0"
                           android:layout_row="0"
-                          android:gravity="left"
-                          android:layout_gravity="center"
+                          android:layout_marginTop="5dp"
+                          android:layout_gravity="left"
+                             android:fontFamily="@font/montserrat_medium"
                           android:textSize="18sp"
-                          android:textColor="@color/colorPrimary"/>
+                          android:textColor="@android:color/black"/>
 
 
                         <FrameLayout
                             android:layout_width="210dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="30dp"
                             android:layout_row="0"
-                            android:layout_column="2">
+                            android:layout_column="1">
                             <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
                                 android:layout_width="match_parent"
-                                android:layout_height="30dp"
+                                android:layout_height="10dp"
                                 app:rcProgress="100"
                                 app:rcSecondaryProgress="0"
                                 app:rcMax="100"
-                                app:rcRadius="15dp"
+                                app:rcRadius="0dp"
                                 android:id="@+id/cost_progress"
+                                android:layout_gravity="bottom"
                                 app:rcBackgroundPadding="2dp"
                                 app:rcReverse="false"
                                 app:rcSecondaryProgressColor="@android:color/transparent"
@@ -130,50 +122,43 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textColor="@android:color/white"
+                                android:textColor="@color/blue_logo"
                                 android:id="@+id/cost_tv"
+                                android:fontFamily="@font/montserrat_light"
                                 android:text="$200"
                                 android:textSize="14sp"
-                                android:layout_gravity="center"/>
+                                android:layout_gravity="top"/>
                         </FrameLayout>
 
-
-
-
-
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_column="0"
-                        android:layout_row="1"
-                        android:src="@drawable/ic_temperature"
-                        android:layout_gravity="center"/>
 
                     <TextView
                         android:id="@+id/temp"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_row="1"
-                        android:layout_column="1"
+                        android:layout_column="0"
+                        android:layout_marginTop="5dp"
                         android:text="@string/detailed_activity_temp"
-                        android:layout_gravity="center"
-                        android:textSize="18sp"
-                        android:textColor="@color/colorPrimary"/>
+                        android:fontFamily="@font/montserrat_medium"
+                        android:layout_gravity="left"
+                        android:textSize="16sp"
+                        android:textColor="@android:color/black"/>
 
                     <FrameLayout
                         android:layout_width="210dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="30dp"
                         android:layout_row="1"
-                        android:layout_column="2">
+                        android:layout_column="1">
                         <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
                             android:layout_width="match_parent"
-                            android:layout_height="30dp"
+                            android:layout_height="10dp"
                             app:rcProgress="55"
                             app:rcSecondaryProgress="0"
                             app:rcMax="50"
-                            app:rcRadius="15dp"
+                            app:rcRadius="0dp"
                             android:id="@+id/temp_progress"
                             app:rcBackgroundPadding="2dp"
+                            android:layout_gravity="bottom"
                             app:rcReverse="false"
                             app:rcProgressColor="@color/orange_good"
                             app:rcSecondaryProgressColor="@android:color/transparent"
@@ -181,22 +166,13 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@android:color/white"
+                            android:textColor="@color/blue_logo"
                             android:id="@+id/temp_tv"
                             android:text="30C"
+                            android:fontFamily="@font/montserrat_light"
                             android:textSize="14sp"
-                            android:layout_gravity="center"/>
+                            android:layout_gravity="top"/>
                     </FrameLayout>
-
-
-
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_row="2"
-                        android:layout_column="0"
-                        android:src="@drawable/ic_air_quality"
-                        android:layout_gravity="center"/>
 
                     <TextView
                         android:id="@+id/air_quality"
@@ -204,49 +180,42 @@
                         android:layout_height="wrap_content"
                         android:text="@string/detailed_activity_air_quality"
                         android:layout_row="2"
-                        android:layout_column="1"
-                        android:layout_gravity="center"
-                        android:textSize="18sp"
-                        android:textColor="@color/colorPrimary"/>
+                        android:layout_column="0"
+                        android:layout_gravity="left"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:textSize="16sp"
+                        android:textColor="@android:color/black"/>
 
                     <FrameLayout
                         android:layout_width="210dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="30dp"
                         android:layout_row="2"
-                        android:layout_column="2">
+                        android:layout_column="1">
                         <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
                             android:layout_width="match_parent"
-                            android:layout_height="30dp"
+                            android:layout_height="10dp"
                             app:rcProgress="30"
                             app:rcSecondaryProgress="0"
                             app:rcMax="100"
-                            app:rcRadius="15dp"
+                            app:rcRadius="0dp"
                             android:id="@+id/air_quality_progress"
                             app:rcBackgroundPadding="2dp"
                             app:rcReverse="false"
+                            android:layout_gravity="bottom"
                             app:rcProgressColor="@color/red_bad"
                             app:rcSecondaryProgressColor="@android:color/transparent"
                             app:rcBackgroundColor="@color/background_gray" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@android:color/white"
+                            android:textColor="@color/blue_logo"
                             android:id="@+id/air_quality_tv"
                             android:text="62"
+                            android:fontFamily="@font/montserrat_light"
                             android:textSize="14sp"
-                            android:layout_gravity="center"/>
+                            android:layout_gravity="top"/>
                     </FrameLayout>
-
-
-
-
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_column="0"
-                        android:layout_row="3"
-                        android:src="@drawable/ic_internet"
-                        android:layout_gravity="center"/>
 
                     <TextView
                         android:id="@+id/internet"
@@ -254,23 +223,26 @@
                         android:layout_height="wrap_content"
                         android:text="@string/detailed_activity_internet"
                         android:layout_row="3"
-                        android:layout_column="1"
-                        android:layout_gravity="center"
-                        android:textSize="18sp"
-                        android:textColor="@color/colorPrimary"/>
+                        android:layout_column="0"
+                        android:layout_marginTop="5dp"
+                        android:layout_gravity="left"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:textColor="@android:color/black"/>
 
                     <FrameLayout
                         android:layout_width="210dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="30dp"
                         android:layout_row="3"
-                        android:layout_column="2">
+                        android:layout_column="1">
                         <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
                             android:layout_width="match_parent"
-                            android:layout_height="30dp"
+                            android:layout_height="10dp"
                             app:rcProgress="100"
                             app:rcSecondaryProgress="0"
                             app:rcMax="100"
-                            app:rcRadius="15dp"
+                            app:rcRadius="0dp"
+                            android:layout_gravity="bottom"
                             android:id="@+id/internet_progress"
                             app:rcBackgroundPadding="2dp"
                             app:rcReverse="false"
@@ -280,11 +252,12 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@android:color/white"
+                            android:textColor="@color/blue_logo"
                             android:id="@+id/internet_tv"
                             android:text="Good"
+                            android:fontFamily="@font/montserrat_light"
                             android:textSize="14sp"
-                            android:layout_gravity="center"/>
+                            android:layout_gravity="top"/>
                     </FrameLayout>
             </GridLayout>
 
@@ -302,18 +275,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/detailed_activity_recommendations_for"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="10dp"
                     android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/dark_grey"/>
+                    android:fontFamily="@font/montserrat_medium"
+                    android:textColor="@android:color/black"/>
                 <TextView
                     android:id="@+id/place_reco"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="PLACE"
+                    android:text="Place"
+                    android:fontFamily="@font/montserrat_light"
                     android:textSize="24sp"
                     android:layout_marginLeft="4dp"
-                    android:textColor="@color/light_grey"
+                    android:textColor="@color/blue_logo"
                     />
             </LinearLayout>
 
@@ -345,6 +319,7 @@
                               android:layout_height="wrap_content"
                               android:layout_gravity="center"
                                 android:textSize="18sp"
+                                android:fontFamily="@font/montserrat_light"
                                 android:textColor="@android:color/white"
                               android:id="@+id/prefered_season_text_view"
                               android:visibility="invisible"
@@ -356,7 +331,9 @@
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
                        android:text="@string/detailed_activity_season"
+                          android:fontFamily="@font/montserrat_light"
                           android:textSize="18sp"
+                          android:textColor="@color/blue_logo"
                        android:layout_gravity="center"/>
                    </LinearLayout>
 
@@ -383,6 +360,7 @@
                             android:layout_gravity="center"
                             android:id="@+id/prefered_time_to_go_tv"
                             android:visibility="invisible"
+                            android:fontFamily="@font/montserrat_light"
                             android:textSize="18sp"
                             android:textColor="@android:color/white"
                             android:text="Day"
@@ -393,6 +371,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/detailed_activity_time"
+                        android:fontFamily="@font/montserrat_light"
+                        android:textColor="@color/blue_logo"
                         android:textSize="18sp"
                         android:layout_gravity="center"/>
                 </LinearLayout>
@@ -419,6 +399,7 @@
                             android:layout_gravity="center"
                             android:id="@+id/prefered_age_tv"
                             android:text="+13"
+                            android:fontFamily="@font/montserrat_light"
                             android:textSize="30sp"
                             android:textColor="@android:color/white"
                             android:clickable="false"/>
@@ -428,6 +409,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/detailed_activity_age"
+                        android:fontFamily="@font/montserrat_light"
+                        android:textColor="@color/blue_logo"
                         android:textSize="18sp"
                         android:layout_gravity="center"/>
                 </LinearLayout>
@@ -455,6 +438,7 @@
                             android:layout_gravity="center"
                             android:id="@+id/prefered_average_time_tv"
                             android:visibility="invisible"
+                            android:fontFamily="@font/montserrat_light"
                             android:textSize="18sp"
                             android:textColor="@android:color/white"
                             android:text="2Hrs"
@@ -466,6 +450,8 @@
                         android:layout_height="wrap_content"
                         android:text="@string/detailed_activity_estimation"
                         android:textSize="18sp"
+                        android:fontFamily="@font/montserrat_light"
+                        android:textColor="@color/blue_logo"
                         android:layout_gravity="center"
                         tools:ignore="HardcodedText" />
                 </LinearLayout>
@@ -486,18 +472,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/detailed_activity_location_for"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:fontFamily="@font/montserrat_medium"
                     android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/dark_grey"/>
+                    android:textColor="@android:color/black"/>
                 <TextView
                     android:id="@+id/location_place"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="PLACE"
+                    android:text="Place"
+                    android:fontFamily="@font/montserrat_light"
                     android:textSize="24sp"
                     android:layout_marginLeft="4dp"
-                    android:textColor="@color/light_grey"
+                    android:textColor="@color/blue_logo"
                     />
             </LinearLayout>
 
@@ -508,70 +495,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 />
-
-            <TextView
-                android:id="@+id/nearby_place"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/detailed_activity_near_by"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="@color/dark_grey"/>
-            <LinearLayout
-                android:weightSum="3"
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="10dp">
-
-                <Button
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:text="@string/detailed_activity_restaurants"
-                    android:layout_weight="1"
-                    android:padding="3dp"
-                    android:layout_marginLeft="3dp"
-                    android:textAllCaps="false"
-                    android:drawableRight="@drawable/ic_meal"
-                    android:background="@drawable/new_corners"
-                    />
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/detailed_activity_hotels"
-                    android:layout_weight="1"
-                    android:padding="3dp"
-                    android:drawableRight="@drawable/ic_hotel"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    android:textAllCaps="false"
-                    android:background="@drawable/new_corners"
-                    />
-
-                <Button
-                    android:text="@string/detailed_activity_gas_station"
-                    android:layout_weight="1"
-                    android:drawableRight="@drawable/ic_fuel"
-                    android:layout_width="wrap_content"
-                    android:background="@drawable/new_corners"
-                    android:layout_height="wrap_content"
-                    android:padding="3dp"
-                    android:layout_marginRight="3dp"
-                    android:textAllCaps="false"
-                    />
-
-            </LinearLayout>
-
-
         </LinearLayout>
-
-
-
-
 
     </ScrollView>
 

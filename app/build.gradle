@@ -33,7 +33,7 @@ dependencies {
     implementation 'com.akexorcist:RoundCornerProgressBar:2.0.3'
     implementation 'com.agrawalsuneet.androidlibs:dotsloader:1.4'
     implementation 'com.rengwuxian.materialedittext:library:2.1.4'
-
+    implementation 'com.wajahatkarim3.EasyFlipView:EasyFlipView:2.1.2'
 
     // Firebase
     implementation 'com.google.firebase:firebase-firestore:20.2.0'

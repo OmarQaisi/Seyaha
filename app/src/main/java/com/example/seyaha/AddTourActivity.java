@@ -1,7 +1,6 @@
 package com.example.seyaha;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -43,8 +42,6 @@ public class AddTourActivity extends AppCompatActivity
                 recyclerView.setAdapter(adminPlaceAdapter);
             }
         });
-
-
     }
     public void addTour(View v)
     {

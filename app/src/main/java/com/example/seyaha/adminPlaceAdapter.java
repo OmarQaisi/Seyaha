@@ -95,25 +95,6 @@ public class adminPlaceAdapter extends RecyclerView.Adapter<adminPlaceAdapter.Im
             circle=itemView.findViewById(R.id.round_img);
             checkable=itemView.findViewById(R.id.img_correct);
             place_name_admin=itemView.findViewById(R.id.place_name_admin);
-           /* vi = (LayoutInflater) itemView.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            mView = vi.inflate(R.layout.custom_rating_dialog, null, false);
-            post_btn = mView.findViewById(R.id.post_btn);
-            mClost_btn = mView.findViewById(R.id.close_btn);
-            editText = mView.findViewById(R.id.comment_post);
-            builder = new AlertDialog.Builder(itemView.getContext());
-            builder.setView(mView);
-            mTitle = itemView.findViewById(R.id.title_txt);
-            mDescription = itemView.findViewById(R.id.desc);
-            mRating = itemView.findViewById(R.id.rate_num);
-            mArrowDown = itemView.findViewById(R.id.arrowDown);
-            mComments = itemView.findViewById(R.id.comment_num);
-            img1 = itemView.findViewById(R.id.img1);
-            img2 = itemView.findViewById(R.id.img2);
-            img3 = itemView.findViewById(R.id.img3);
-            mShare_btn = itemView.findViewById(R.id.share_btn);
-            mComment_btn = itemView.findViewById(R.id.comment_btn);
-            mRate_btn = itemView.findViewById(R.id.star);
-*/
         }
 
     }

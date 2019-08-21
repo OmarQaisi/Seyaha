@@ -2,43 +2,32 @@ package com.example.seyaha;
 
 import androidx.annotation.DrawableRes;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import android.animation.ArgbEvaluator;
-import android.content.Context;
+import android.animation.ObjectAnimator;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import br.com.felix.horizontalbargraph.HorizontalBar;
-import br.com.felix.horizontalbargraph.model.BarItem;
 
 public class DetailedActivity extends AppCompatActivity implements OnMapReadyCallback {
     private GoogleMap mMap;
@@ -90,10 +79,10 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         estimationImg=findViewById(R.id.prefered_average_time_img);
         estimationTv=findViewById(R.id.prefered_average_time_tv);
 
-       createCostProgress("150");
-       createTempProgress("40");
-       createAirQualityProgress("20");
-       createInternetProgress(0);
+       setCostProgress("150");
+       setTempProgress("40");
+       setAirQualityProgress("20");
+       setInternetProgress(0);
        setSeason(4);
        setTimeToGo(2);
        setAge("6-15");
@@ -176,16 +165,10 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         viewPager = findViewById(R.id.ViewPager);
         viewPager.setAdapter(adapter);
         viewPager.setPadding(100, 0, 100, 0);
-        Integer[] colorsTemp = {getResources().getColor(R.color.colorAccent), getResources().getColor(R.color.light_grey), getResources().getColor(R.color.dark_grey)};
-        colors = colorsTemp;
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                if (position < (adapter.getCount() - 1) && position < (colors.length) - 1) {
-                    viewPager.setBackgroundColor((Integer) argbEvaluator.evaluate(positionOffset, colors[position], colors[position + 1]));
-                } else {
-                    viewPager.setBackgroundColor(colors[colors.length - 1]);
-                }
+
             }
 
             @Override
@@ -228,8 +211,9 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
 
-    private void createCostProgress(String cost)
+    private void setCostProgress(String cost)
     {
+
 
         int result=Integer.parseInt(cost);
         costTv.setText("$"+cost);
@@ -249,10 +233,15 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
             costProgressBar.setProgressColor(Color.RED);
 
         }
+        ObjectAnimator progressAnimator;
+        progressAnimator = ObjectAnimator.ofFloat(costProgressBar, "progress", 0.0f,costProgressBar.getProgress());
+        progressAnimator.setDuration(1000);
+        progressAnimator.setStartDelay(300);
+        progressAnimator.start();
 
     }
 
-    private void createTempProgress(String temp)
+    private void setTempProgress(String temp)
     {
         int result=Integer.parseInt(temp);
 
@@ -282,9 +271,15 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
             tempTv.setText(getResources().getString(R.string.hot)+temp+"\u2103");
         }
 
+        ObjectAnimator progressAnimator;
+        progressAnimator = ObjectAnimator.ofFloat(tempProgressBar, "progress", 0.0f,tempProgressBar.getProgress());
+        progressAnimator.setDuration(1000);
+        progressAnimator.setStartDelay(300);
+        progressAnimator.start();
+
     }
 
-    private void createAirQualityProgress(String airQuality)
+    private void setAirQualityProgress(String airQuality)
     {
         airQualityTv.setText(airQuality+"\u00B5"+"g/m3");
         int result=Integer.parseInt(airQuality);
@@ -301,9 +296,14 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         {
          airQualityProgressBar.setProgressColor(Color.RED);
         }
+        ObjectAnimator progressAnimator;
+        progressAnimator = ObjectAnimator.ofFloat(airQualityProgressBar, "progress", 0.0f,airQualityProgressBar.getProgress());
+        progressAnimator.setDuration(1000);
+        progressAnimator.setStartDelay(300);
+        progressAnimator.start();
     }
 
-    private void createInternetProgress(int internet)
+    private void setInternetProgress(int internet)
     {
         switch (internet)
         {
@@ -323,6 +323,11 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
                 internetTv.setText(getResources().getString(R.string.great_internet));
                 break;
         }
+        ObjectAnimator progressAnimator;
+        progressAnimator = ObjectAnimator.ofFloat(internetProgressBar, "progress", 0.0f,internetProgressBar.getProgress());
+        progressAnimator.setDuration(1000);
+        progressAnimator.setStartDelay(300);
+        progressAnimator.start();
     }
 
     private void setSeason(int season)
