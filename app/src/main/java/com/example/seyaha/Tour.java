@@ -12,18 +12,20 @@ public class Tour {
     public List<Comment> comments;
     public int commentsNum;
     public List<String> imageURLs;
+    public int numOfPeopleWhoRated;
     public List<Place> places;
     public double ratingsNum;
     public String titleAR;
     public String titleEN;
 
 
-    public Tour(List<String> categoriesAR, List<String> categoriesEN, List<Comment> comments, int commentsNum, List<String> imageURLs, List<Place> places, double ratingsNum, String titleAR, String titleEN) {
+    public Tour(List<String> categoriesAR, List<String> categoriesEN, List<Comment> comments, int commentsNum, List<String> imageURLs, int numOfPeopleWhoRated, List<Place> places, double ratingsNum, String titleAR, String titleEN) {
         this.categoriesAR = categoriesAR;
         this.categoriesEN = categoriesEN;
         this.comments = comments;
         this.commentsNum = commentsNum;
         this.imageURLs = imageURLs;
+        this.numOfPeopleWhoRated = numOfPeopleWhoRated;
         this.places = places;
         this.ratingsNum = ratingsNum;
         this.titleAR = titleAR;

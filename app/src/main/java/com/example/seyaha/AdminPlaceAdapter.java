@@ -23,7 +23,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public class adminPlaceAdapter extends RecyclerView.Adapter<adminPlaceAdapter.ImageViewHolder> {
+public class AdminPlaceAdapter extends RecyclerView.Adapter<AdminPlaceAdapter.ImageViewHolder> {
     public static List<Place> mPlace;
     public static List<Place> chosen_places;
     ColorDrawable colorDrawable;
@@ -41,7 +41,7 @@ public class adminPlaceAdapter extends RecyclerView.Adapter<adminPlaceAdapter.Im
         return imageViewHolder;
     }
 
-    public adminPlaceAdapter (Context context,List<Place> place)
+    public AdminPlaceAdapter(Context context, List<Place> place)
     {
         mPlace= place;
         this.context=context;

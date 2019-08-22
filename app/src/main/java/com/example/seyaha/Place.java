@@ -1,7 +1,5 @@
 package com.example.seyaha;
 
-import androidx.annotation.NonNull;
-
 public class Place {
 
 

@@ -50,19 +50,19 @@ public class AddTourActivity extends AppCompatActivity {
             public void onCallback(List<Place> places) {
                 mPlaces = places;
 
-                adminPlaceAdapter adminPlaceAdapter = new adminPlaceAdapter(AddTourActivity.this, mPlaces);
+                AdminPlaceAdapter adminPlaceAdapter = new AdminPlaceAdapter(AddTourActivity.this, mPlaces);
                 recyclerView.setAdapter(adminPlaceAdapter);
             }
         });
     }
 
     public void addTour(View v) {
-        if (adminPlaceAdapter.chosen_places.size() >= 3) {
-            chosen_place = adminPlaceAdapter.chosen_places;
-            Log.d("boss", adminPlaceAdapter.chosen_places.size()+"");
+        if (AdminPlaceAdapter.chosen_places.size() >= 3) {
+            chosen_place = AdminPlaceAdapter.chosen_places;
+            Log.d("boss", AdminPlaceAdapter.chosen_places.size()+"");
             if (Text_checker()){
                 List<Comment> comments = new ArrayList<Comment>();
-                mTour = new Tour(makeCategoryArabic(chosen_place), makeCategoryEnglish(chosen_place), comments, 0, images(chosen_place), chosen_place, 0.0, titleAR.getText().toString().trim(), titleEN.getText().toString().trim());
+                mTour = new Tour(makeCategoryArabic(chosen_place), makeCategoryEnglish(chosen_place), comments, 0, images(chosen_place), 0, chosen_place, 0.0, titleAR.getText().toString().trim(), titleEN.getText().toString().trim());
 
                 mFirebaseFirestore = FirebaseFirestore.getInstance();
                 tours = mFirebaseFirestore.collection("tours");
@@ -122,10 +122,10 @@ public class AddTourActivity extends AppCompatActivity {
     }
 
     public void resetPlaces(View view) {
-        //adminPlaceAdapter.chosen_places.clear();
+        //AdminPlaceAdapter.chosen_places.clear();
 
-        //for (int i=0; i<adminPlaceAdapter.counter.length;i++){
-            //adminPlaceAdapter.counter[i] = 0;
+        //for (int i=0; i<AdminPlaceAdapter.counter.length;i++){
+            //AdminPlaceAdapter.counter[i] = 0;
         //}
     }
 }
