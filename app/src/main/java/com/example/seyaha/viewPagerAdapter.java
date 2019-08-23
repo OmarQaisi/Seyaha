@@ -5,27 +5,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class viewPagerAdapter extends PagerAdapter
 {
-private List<viewPagerModel>models;
+private List<String> imageUrls;
 private LayoutInflater layoutInflater;
 private Context context;
 
-public viewPagerAdapter(List<viewPagerModel>models,Context context)
+public viewPagerAdapter(List<String>imageUrls,Context context)
 {
-    this.models=models;
+    this.imageUrls =imageUrls;
     this.context=context;
 }
     @Override
     public int getCount() {
-        return models.size();
+        return imageUrls.size();
     }
 
     @Override
@@ -40,7 +41,7 @@ public viewPagerAdapter(List<viewPagerModel>models,Context context)
     View view=layoutInflater.inflate(R.layout.viewpager_item,container,false);
         ImageView imageView;
         imageView=view.findViewById(R.id.viewPager_img);
-        imageView.setImageResource(models.get(position).getImage());
+        Picasso.get().load(imageUrls.get(position)).fit().into(imageView);
         container.addView(view,0);
         return view;
     }

@@ -80,5 +80,4 @@ public class Tour {
         animation1.setDuration(500);
         view.startAnimation(animation1);
     }
-
 }

@@ -5,15 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.viewpager.widget.ViewPager;
 
-import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -34,20 +33,20 @@ import java.util.List;
 public class DetailedActivity extends AppCompatActivity implements OnMapReadyCallback {
     private GoogleMap mMap;
     ViewPager viewPager;
-    List <viewPagerModel> models;
-    Tour tour;
+    List <String> imageUrls;
+    List<Place> mPlace;
     viewPagerAdapter adapter;
+    double latitude,longitude;
+    String placeName;
 
-    Integer []colors=null;
-    ArgbEvaluator argbEvaluator=new ArgbEvaluator();
 
+    SupportMapFragment mapFragment;
     EasyFlipView seasonFlip,timeToGoFlip,estimationFlip,ageFlip;
-    TextView seasonTv,timeToGoTv,ageTv1,ageTv2,estimationTv,costTv,tempTv,airQualityTv,internetTv;
+    TextView seasonTv,timeToGoTv,ageTv1,ageTv2,estimationTv,costTv,tempTv,airQualityTv,internetTv,placeNameInfo, placeNameRecommendations,placeNameLocation,description;
     RoundCornerProgressBar costProgressBar,tempProgressBar,airQualityProgressBar,internetProgressBar;
     View frontLayoutSeason,backLayoutSeason,frontLayoutTime,backLayouTime,frontLayoutAge,backLayoutAge,frontLayoutEstimated,backLayoutEstimated;
     ImageView seasonImg,timeToGoImg,estimationImg;
 
-    int seasonImgResource,timeToGoImgResource,estimationImgResource;
 
 
 
@@ -58,11 +57,17 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         setContentView(R.layout.activity_detailed);
 
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
-        run_viewPager();
+        mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
 
-        //information about the place find view by id
+
+
+        //text views and description deceleration
+        placeNameRecommendations =findViewById(R.id.place_name_recommendations);
+        placeNameInfo=findViewById(R.id.place_name_information_about);
+        placeNameLocation=findViewById(R.id.place_name_location);
+        description=findViewById(R.id.description_tv);
+
+        //information about the place deceleration
         costProgressBar=findViewById(R.id.cost_progress);
         tempProgressBar=findViewById(R.id.temp_progress);
         airQualityProgressBar=findViewById(R.id.air_quality_progress);
@@ -71,49 +76,85 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         tempTv=findViewById(R.id.temp_tv);
         airQualityTv=findViewById(R.id.air_quality_tv);
         internetTv=findViewById(R.id.internet_tv);
-
-        //recommendations about the place find view by id
+        //recommendations about the place deceleration
         seasonFlip=findViewById(R.id.season_btn);
         timeToGoFlip=findViewById(R.id.time_btn);
         ageFlip=findViewById(R.id.age_btn);
         estimationFlip=findViewById(R.id.estimated_btn);
 
 
-
-         setCostProgress("150");
-         setTempProgress("40");
-         setAirQualityProgress("20");
-          setInternetProgress(0);
-
-         setSeason(1);
-         setTimeToGo(1);
-         setAge("16+");
-         setEstimatedTime("2hrs");
+        Intent i=getIntent();
+        mPlace=(List<Place>)i.getSerializableExtra("places");
 
 
+        latitude=mPlace.get(0).latitude;
+        longitude=mPlace.get(0).longitude;
+        placeName=mPlace.get(0).nameEN;
 
+        mapFragment.getMapAsync(this);
+
+        run_viewPager();
+
+        setCostProgress(mPlace.get(0).cost);
+        setTempProgress("40");
+        setAirQualityProgress("20");
+        setInternetProgress(mPlace.get(0).internet);
+
+        setSeason(mPlace.get(0).recommendedSeason);
+        setTimeToGo(mPlace.get(0).recommendedTime);
+        setAge(mPlace.get(0).recommendedAge);
+        setEstimatedTime(mPlace.get(0).estimatedTime);
+
+        description.setText(mPlace.get(0).descEN);
+        placeNameRecommendations.setText(mPlace.get(0).nameEN);
+        placeNameInfo.setText(mPlace.get(0).nameEN);
+        placeNameLocation.setText(mPlace.get(0).nameEN);
 
     }
 
     private void run_viewPager() {
-        String desc = "Observe the comments made about you by your parents, friends, teachers or you may directly ask them. Note these points on a paper and try to make a sample of description";
-        models = new ArrayList <>();
-        models.add(new viewPagerModel(R.drawable.nav_drawer_background));
-        models.add(new viewPagerModel(R.drawable.nav_drawer_background));
-        models.add(new viewPagerModel(R.drawable.nav_drawer_background));
+        imageUrls = new ArrayList <>();
 
-        adapter = new viewPagerAdapter(models, this);
+        for(int i=0;i<mPlace.size();i++)
+        {
+            imageUrls.add(mPlace.get(i).imageURL);
+        }
+
+        adapter = new viewPagerAdapter(imageUrls, this);
         viewPager = findViewById(R.id.ViewPager);
         viewPager.setAdapter(adapter);
         viewPager.setPadding(100, 0, 100, 0);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels)
+            {
 
             }
 
             @Override
-            public void onPageSelected(int position) {
+            public void onPageSelected(int position)
+            {
+                setCostProgress(mPlace.get(position).cost);
+                setTempProgress("40");
+                setAirQualityProgress("20");
+                setInternetProgress(mPlace.get(position).internet);
+
+                setSeason(mPlace.get(position).recommendedSeason);
+                setTimeToGo(mPlace.get(position).recommendedTime);
+                setAge(mPlace.get(position).recommendedAge);
+                setEstimatedTime(mPlace.get(position).estimatedTime);
+
+                description.setText(mPlace.get(position).descEN);
+                placeNameRecommendations.setText(mPlace.get(position).nameEN);
+                placeNameInfo.setText(mPlace.get(position).nameEN);
+                placeNameLocation.setText(mPlace.get(position).nameEN);
+
+
+                latitude=mPlace.get(position).latitude;
+                longitude=mPlace.get(position).longitude;
+                placeName=mPlace.get(position).nameEN;
+                mapFragment.getMapAsync(DetailedActivity.this);
+
 
             }
 
@@ -129,14 +170,13 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(31.9539, 35.9106);
-        LatLng bau = new LatLng(32.0250, 35.7167);
-        MarkerOptions my_own_marker = new MarkerOptions().position(bau).title("My Nightmare");
+
+        LatLng googleMapPlace = new LatLng(latitude, longitude);
+        MarkerOptions my_own_marker = new MarkerOptions().position(googleMapPlace).title(placeName);
         my_own_marker.icon((getBitmapDescriptor(R.drawable.ic_gps)));
         mMap.addMarker(my_own_marker);
         // mMap.addMarker(new MarkerOptions().position(sydney).title("third circle"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(bau, 16.0f));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(googleMapPlace, 16.0f));
        // mMap.animateCamera(CameraUpdateFactory.zoomIn());
         //mMap.animateCamera(CameraUpdateFactory.zoomOut());
 
@@ -152,18 +192,16 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
 
-    private void setCostProgress(String cost)
+    private void setCostProgress(int cost)
     {
 
-
-        int result=Integer.parseInt(cost);
         costTv.setText(cost+"JD");
-        if(result<=100)
+        if(cost<=20)
         {
             costProgressBar.setProgress(100);
             costProgressBar.setProgressColor(Color.GREEN);
         }
-        else if(result>100 && result<=250)
+        else if(cost>20 && cost<=60)
         {
             costProgressBar.setProgress(60);
             costProgressBar.setProgressColor(Color.rgb(255,165,0));
@@ -172,7 +210,6 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         {
             costProgressBar.setProgress(30);
             costProgressBar.setProgressColor(Color.RED);
-
         }
         ObjectAnimator progressAnimator;
         progressAnimator = ObjectAnimator.ofFloat(costProgressBar, "progress", 0.0f,costProgressBar.getProgress());
@@ -333,13 +370,13 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         ageTv2.setText(age);
     }
 
-    private void setEstimatedTime(String estimatedTime)
+    private void setEstimatedTime(int estimatedTime)
     {
         frontLayoutEstimated=findViewById(R.id.front_estimated);
         backLayoutEstimated=findViewById(R.id.back_estimated);
         estimationTv=backLayoutEstimated.findViewById(R.id.back_text);
         estimationImg=frontLayoutEstimated.findViewById(R.id.front_icon);
-        estimationTv.setText(estimatedTime);
+        estimationTv.setText(estimatedTime+"Hrs");
         estimationImg.setImageResource(R.drawable.ic_sand_clock);
     }
 }

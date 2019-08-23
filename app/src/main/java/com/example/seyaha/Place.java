@@ -1,6 +1,8 @@
 package com.example.seyaha;
 
-public class Place {
+import java.io.Serializable;
+
+public class Place implements Serializable {
 
 
     public String categoryAR;

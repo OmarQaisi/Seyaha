@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
+import java.io.Serializable;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -61,7 +62,7 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
-    public void onBindViewHolder(final ImageViewHolder holder, int position) {
+    public void onBindViewHolder(final ImageViewHolder holder, final int position) {
 
         Tour tour = mTours.get(position);
 
@@ -87,6 +88,7 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
             public void onClick(View view) {
                 Tour.addClickEffect(view);
                 Intent i = new Intent(context, DetailedActivity.class);
+                i.putExtra("places", (Serializable) mTours.get(position).places);
                 context.startActivity(i);
             }
         });
