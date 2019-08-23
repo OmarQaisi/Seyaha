@@ -82,183 +82,183 @@
             </LinearLayout>
 
             <GridLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:rowCount="4"
-            android:columnCount="3"
-            android:layout_marginRight="20dp"
-            android:layout_marginLeft="10dp"
-            android:useDefaultMargins="true"
-            xmlns:app="http://schemas.android.com/apk/res-auto">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:rowCount="4"
+                android:columnCount="3"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="10dp"
+                android:useDefaultMargins="true"
+                xmlns:app="http://schemas.android.com/apk/res-auto">
 
-                         <TextView
-                          android:id="@+id/cost"
-                          android:layout_width="wrap_content"
-                          android:layout_height="wrap_content"
-                          android:text="@string/detailed_activity_cost"
-                          android:layout_column="0"
-                          android:layout_row="0"
-                          android:layout_gravity="bottom"
-                          android:fontFamily="@font/montserrat_medium"
-                          android:textSize="18sp"
-                          android:textColor="@android:color/black"/>
-
-
-                        <FrameLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="30dp"
-                            android:layout_row="0"
-                            android:layout_column="1">
-                            <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
-                                android:layout_width="210dp"
-                                android:layout_height="10dp"
-                                app:rcProgress="100"
-                                app:rcSecondaryProgress="0"
-                                app:rcMax="100"
-                                app:rcRadius="0dp"
-                                android:id="@+id/cost_progress"
-                                android:layout_gravity="bottom"
-                                app:rcBackgroundPadding="2dp"
-                                app:rcReverse="false"
-                                app:rcSecondaryProgressColor="@android:color/transparent"
-                                app:rcBackgroundColor="@color/background_gray" />
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textColor="@android:color/black"
-                                android:id="@+id/cost_tv"
-                                android:fontFamily="@font/montserrat_light"
-                                android:text="$200"
-                                android:textSize="14sp"
-                                android:layout_gravity="top"/>
-                        </FrameLayout>
+                <TextView
+                    android:id="@+id/cost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/detailed_activity_cost"
+                    android:layout_column="0"
+                    android:layout_row="0"
+                    android:layout_gravity="bottom"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:textSize="18sp"
+                    android:textColor="@android:color/black"/>
 
 
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_row="0"
+                    android:layout_column="1">
+                    <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
+                        android:layout_width="210dp"
+                        android:layout_height="10dp"
+                        app:rcProgress="100"
+                        app:rcSecondaryProgress="0"
+                        app:rcMax="100"
+                        app:rcRadius="0dp"
+                        android:id="@+id/cost_progress"
+                        android:layout_gravity="bottom"
+                        app:rcBackgroundPadding="2dp"
+                        app:rcReverse="false"
+                        app:rcSecondaryProgressColor="@android:color/transparent"
+                        app:rcBackgroundColor="@color/background_gray" />
                     <TextView
-                        android:id="@+id/temp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_row="1"
-                        android:layout_column="0"
-                        android:text="@string/detailed_activity_temp"
-                        android:fontFamily="@font/montserrat_medium"
+                        android:textColor="@android:color/black"
+                        android:id="@+id/cost_tv"
+                        android:fontFamily="@font/montserrat_light"
+                        android:text="$200"
+                        android:textSize="14sp"
+                        android:layout_gravity="top"/>
+                </FrameLayout>
+
+
+                <TextView
+                    android:id="@+id/temp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_row="1"
+                    android:layout_column="0"
+                    android:text="@string/detailed_activity_temp"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:layout_gravity="bottom"
+                    android:textSize="16sp"
+                    android:textColor="@android:color/black"/>
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_row="1"
+                    android:layout_column="1">
+                    <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
+                        android:layout_width="210dp"
+                        android:layout_height="10dp"
+                        app:rcProgress="55"
+                        app:rcSecondaryProgress="0"
+                        app:rcMax="50"
+                        app:rcRadius="0dp"
+                        android:id="@+id/temp_progress"
+                        app:rcBackgroundPadding="2dp"
                         android:layout_gravity="bottom"
-                        android:textSize="16sp"
-                        android:textColor="@android:color/black"/>
-
-                    <FrameLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="30dp"
-                        android:layout_row="1"
-                        android:layout_column="1">
-                        <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
-                            android:layout_width="210dp"
-                            android:layout_height="10dp"
-                            app:rcProgress="55"
-                            app:rcSecondaryProgress="0"
-                            app:rcMax="50"
-                            app:rcRadius="0dp"
-                            android:id="@+id/temp_progress"
-                            app:rcBackgroundPadding="2dp"
-                            android:layout_gravity="bottom"
-                            app:rcReverse="false"
-                            app:rcProgressColor="@color/orange_good"
-                            app:rcSecondaryProgressColor="@android:color/transparent"
-                            app:rcBackgroundColor="@color/background_gray" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@android:color/black"
-                            android:id="@+id/temp_tv"
-                            android:text="30C"
-                            android:fontFamily="@font/montserrat_light"
-                            android:textSize="14sp"
-                            android:layout_gravity="top"/>
-                    </FrameLayout>
-
+                        app:rcReverse="false"
+                        app:rcProgressColor="@color/orange_good"
+                        app:rcSecondaryProgressColor="@android:color/transparent"
+                        app:rcBackgroundColor="@color/background_gray" />
                     <TextView
-                        android:id="@+id/air_quality"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/detailed_activity_air_quality"
-                        android:layout_row="2"
-                        android:layout_column="0"
+                        android:textColor="@android:color/black"
+                        android:id="@+id/temp_tv"
+                        android:text="30C"
+                        android:fontFamily="@font/montserrat_light"
+                        android:textSize="14sp"
+                        android:layout_gravity="top"/>
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/air_quality"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/detailed_activity_air_quality"
+                    android:layout_row="2"
+                    android:layout_column="0"
+                    android:layout_gravity="bottom"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:textSize="16sp"
+                    android:textColor="@android:color/black"/>
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_row="2"
+                    android:layout_column="1">
+                    <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
+                        android:layout_width="210dp"
+                        android:layout_height="10dp"
+                        app:rcProgress="30"
+                        app:rcSecondaryProgress="0"
+                        app:rcMax="100"
+                        app:rcRadius="0dp"
+                        android:id="@+id/air_quality_progress"
+                        app:rcBackgroundPadding="2dp"
+                        app:rcReverse="false"
                         android:layout_gravity="bottom"
-                        android:fontFamily="@font/montserrat_medium"
-                        android:textSize="16sp"
-                        android:textColor="@android:color/black"/>
-
-                    <FrameLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="30dp"
-                        android:layout_row="2"
-                        android:layout_column="1">
-                        <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
-                            android:layout_width="210dp"
-                            android:layout_height="10dp"
-                            app:rcProgress="30"
-                            app:rcSecondaryProgress="0"
-                            app:rcMax="100"
-                            app:rcRadius="0dp"
-                            android:id="@+id/air_quality_progress"
-                            app:rcBackgroundPadding="2dp"
-                            app:rcReverse="false"
-                            android:layout_gravity="bottom"
-                            app:rcProgressColor="@color/red_bad"
-                            app:rcSecondaryProgressColor="@android:color/transparent"
-                            app:rcBackgroundColor="@color/background_gray" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@android:color/black"
-                            android:id="@+id/air_quality_tv"
-                            android:text="62"
-                            android:fontFamily="@font/montserrat_light"
-                            android:textSize="14sp"
-                            android:layout_gravity="top"/>
-                    </FrameLayout>
-
+                        app:rcProgressColor="@color/red_bad"
+                        app:rcSecondaryProgressColor="@android:color/transparent"
+                        app:rcBackgroundColor="@color/background_gray" />
                     <TextView
-                        android:id="@+id/internet"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/detailed_activity_internet"
-                        android:layout_row="3"
-                        android:layout_column="0"
-                        android:layout_gravity="bottom"
-                        android:textSize="16sp"
-                        android:fontFamily="@font/montserrat_medium"
-                        android:textColor="@android:color/black"/>
+                        android:textColor="@android:color/black"
+                        android:id="@+id/air_quality_tv"
+                        android:text="62"
+                        android:fontFamily="@font/montserrat_light"
+                        android:textSize="14sp"
+                        android:layout_gravity="top"/>
+                </FrameLayout>
 
-                    <FrameLayout
+                <TextView
+                    android:id="@+id/internet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/detailed_activity_internet"
+                    android:layout_row="3"
+                    android:layout_column="0"
+                    android:layout_gravity="bottom"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:textColor="@android:color/black"/>
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_row="3"
+                    android:layout_column="1">
+                    <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
+                        android:layout_width="210dp"
+                        android:layout_height="10dp"
+                        app:rcProgress="100"
+                        app:rcSecondaryProgress="0"
+                        app:rcMax="100"
+                        app:rcRadius="0dp"
+                        android:layout_gravity="bottom"
+                        android:id="@+id/internet_progress"
+                        app:rcBackgroundPadding="2dp"
+                        app:rcReverse="false"
+                        app:rcProgressColor="@color/orange_good"
+                        app:rcSecondaryProgressColor="@android:color/transparent"
+                        app:rcBackgroundColor="@color/background_gray" />
+                    <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="30dp"
-                        android:layout_row="3"
-                        android:layout_column="1">
-                        <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
-                            android:layout_width="210dp"
-                            android:layout_height="10dp"
-                            app:rcProgress="100"
-                            app:rcSecondaryProgress="0"
-                            app:rcMax="100"
-                            app:rcRadius="0dp"
-                            android:layout_gravity="bottom"
-                            android:id="@+id/internet_progress"
-                            app:rcBackgroundPadding="2dp"
-                            app:rcReverse="false"
-                            app:rcProgressColor="@color/orange_good"
-                            app:rcSecondaryProgressColor="@android:color/transparent"
-                            app:rcBackgroundColor="@color/background_gray" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@android:color/black"
-                            android:id="@+id/internet_tv"
-                            android:text="Good"
-                            android:fontFamily="@font/montserrat_light"
-                            android:textSize="14sp"
-                            android:layout_gravity="top"/>
-                    </FrameLayout>
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/black"
+                        android:id="@+id/internet_tv"
+                        android:text="Good"
+                        android:fontFamily="@font/montserrat_light"
+                        android:textSize="14sp"
+                        android:layout_gravity="top"/>
+                </FrameLayout>
             </GridLayout>
 
             <LinearLayout
@@ -297,42 +297,42 @@
                 android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                   <LinearLayout
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                       android:layout_weight="1"
+                    android:layout_weight="1"
                     android:orientation="vertical">
 
-                       <com.wajahatkarim3.easyflipview.EasyFlipView
-                           android:layout_width="wrap_content"
-                           android:layout_height="wrap_content"
-                           app:flipOnTouch="true"
-                           app:flipEnabled="true"
-                           app:flipDuration="400"
-                           android:layout_gravity="center"
-                           app:flipFrom="right"
-                           app:flipType="horizontal"
-                           android:id="@+id/season_btn"
-                           app:autoFlipBack="false"
-                           >
-                           <!-- Back Layout Goes Here -->
-                           <include layout="@layout/back_view_recommendations"
-                               android:id="@+id/back_season"/>
-                           <!-- Front Layout Goes Here -->
-                           <include layout="@layout/front_view_recommendations"
-                               android:id="@+id/front_season"/>
-                       </com.wajahatkarim3.easyflipview.EasyFlipView>
-                      <TextView
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:text="@string/detailed_activity_season"
-                          android:fontFamily="@font/montserrat_medium"
-                          android:textSize="16sp"
-                          android:layout_marginTop="5dp"
-                          android:textColor="@android:color/black"
-                       android:layout_gravity="center"/>
-                   </LinearLayout>
+                    <com.wajahatkarim3.easyflipview.EasyFlipView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:flipOnTouch="true"
+                        app:flipEnabled="true"
+                        app:flipDuration="400"
+                        android:layout_gravity="center"
+                        app:flipFrom="right"
+                        app:flipType="horizontal"
+                        android:id="@+id/season_btn"
+                        app:autoFlipBack="false"
+                        >
+                        <!-- Back Layout Goes Here -->
+                        <include layout="@layout/back_view_recommendations"
+                            android:id="@+id/back_season"/>
+                        <!-- Front Layout Goes Here -->
+                        <include layout="@layout/front_view_recommendations"
+                            android:id="@+id/front_season"/>
+                    </com.wajahatkarim3.easyflipview.EasyFlipView>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/detailed_activity_season"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:textSize="16sp"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@android:color/black"
+                        android:layout_gravity="center"/>
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
