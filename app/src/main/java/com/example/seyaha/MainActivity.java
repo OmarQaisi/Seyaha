@@ -1,6 +1,9 @@
 package com.example.seyaha;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -8,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -17,6 +21,9 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
+
+import java.util.Locale;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
@@ -24,10 +31,9 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     private static final String TAG = "MainActivity";
     private DrawerLayout mDrawerLayout;
 
-
     private Toolbar mToolbar;
     private TextView mTextView;
-
+    public  String lan="null";
     NavigationView mNavigationView;
 
     //nav_header
@@ -72,7 +78,8 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         toggle.syncState();
 
 
-        if(savedInstanceState == null){
+        if(savedInstanceState == null)
+        {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new TourFragment()).commit();
             mNavigationView.setCheckedItem(R.id.nav_tour);
             changeToolbarTitle(getString(R.string.nav_tour));
@@ -137,6 +144,12 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
                 AuthUI.getInstance().signOut(this);
                 mFirebaseAuth.addAuthStateListener(mFirebaseAuthListner);
                 break;
+            case  R.id.english :
+                selectyourlanguage(2);
+                break;
+            case R.id.arabic :
+                selectyourlanguage(1);
+                break;
         }
 
         mDrawerLayout.closeDrawer(GravityCompat.START);
@@ -154,6 +167,41 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     protected void onResume() {
         super.onResume();
         mFirebaseAuth.addAuthStateListener(mFirebaseAuthListner);
+    }
+    public void selectyourlanguage(int i)
+    {
+        final String [] listitem={"Arabic","English"};
+        if(i!=0)
+        {
+            switch (i)
+            {
+                case (1) :
+                    {
+                        setLocale("ar");
+                        recreate();
+                    }
+                    break;
+                case (2) : {
+                    setLocale("en");
+                    recreate();
+                }
+                break;
+            }
+        }
+
+    }
+
+    private void setLocale(String lang)
+    {
+        Locale locale =new Locale(lang);
+        Locale.setDefault(locale);
+        Configuration conf=new Configuration();
+        conf.locale=locale;
+        getBaseContext().getResources().updateConfiguration(conf,getBaseContext().getResources().getDisplayMetrics());
+        SharedPreferences.Editor pref=getSharedPreferences("settings",MODE_PRIVATE).edit();
+        pref.putString("my_lang",lang);
+        pref.apply();
+
     }
 
 }

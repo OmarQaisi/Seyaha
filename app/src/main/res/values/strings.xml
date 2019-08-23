@@ -20,6 +20,10 @@
     <string name="nav_upcoming_event">Upcoming Event</string>
     <string name="nav_help_feedback">Help &amp; Feedback</string>
     <string name="nav_logout">Log Out</string>
+    <string name="english">English</string>
+    <string name="arabic">Arabic</string>
+    <string name="lang">Language</string>
+
 
     <!-- Strings for the (ActionBarDrawerToggle) -->
     <string name="navigation_drawer_open">Open navigation drawer</string>

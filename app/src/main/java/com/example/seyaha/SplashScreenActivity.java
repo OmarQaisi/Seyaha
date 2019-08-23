@@ -2,10 +2,14 @@ package com.example.seyaha;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -24,6 +28,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
@@ -39,16 +44,16 @@ public class SplashScreenActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mFirebaseAuthListner;
     private FirebaseUser user;
     private final int RC_SIGN_IN = 1;
+    public  String lan="null";
     private boolean internet_checked = false;
-
     private boolean flag = false;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loadLocale();
         setContentView(R.layout.activity_splash_screen);
-
         coordinatorLayout = findViewById(R.id.coordinator);
         checkInternet();
         firebaseLogin();
@@ -151,5 +156,34 @@ public class SplashScreenActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void setLocale(String lang)
+    {
+        Locale locale =new Locale(lang);
+        Locale.setDefault(locale);
+        Configuration conf=new Configuration();
+        conf.locale=locale;
+        getBaseContext().getResources().updateConfiguration(conf,getBaseContext().getResources().getDisplayMetrics());
+        SharedPreferences.Editor pref=getSharedPreferences("settings",MODE_PRIVATE).edit();
+        pref.putString("my_lang",lang);
+        pref.apply();
+
+    }
+    public void loadLocale()
+    {
+        SharedPreferences pref=  getSharedPreferences("settings",MODE_PRIVATE);
+        String lang= pref.getString("my_lang","en");
+        if(lang.equals("ar"))
+        {
+            lan="ar";
+        }
+        else
+        {
+            lan="en";
+        }
+        setLocale(lang);
+
+    }
+
 
 }

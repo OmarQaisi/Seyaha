@@ -30,7 +30,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
         android:background="@drawable/stroke_edittext"
-        android:digits="غظضذخثتشرقصجفعسنملةىكيطئءؤحزوهدبا "
+        android:digits="ابتثجحخدذرزسشصضطظعغفقكلمنهوي"
         android:hint="Title_arabic"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"

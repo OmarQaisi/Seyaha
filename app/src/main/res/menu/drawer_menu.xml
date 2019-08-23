@@ -13,7 +13,7 @@
         <item
             android:id="@+id/nav_tour"
             android:icon="@drawable/ic_tour"
-            android:title="@string/nav_tour"/>
+            android:title="@string/nav_tour" />
         <item
             android:id="@+id/nav_upcoming_event"
             android:icon="@drawable/ic_calendar"
@@ -25,8 +25,23 @@
             android:title="@string/nav_help_feedback" />
     </group>
 
-    <group
-        android:id="@+id/menu_bottom">
+
+    <item
+        android:title="@string/lang">
+        <menu
+            android:checkableBehavior="single">
+            <item
+                android:id="@+id/english"
+                android:title="@string/english"
+                android:icon="@drawable/ic_united_kingdom"/>
+            <item
+                android:id="@+id/arabic"
+                android:title="@string/arabic"
+                android:icon="@drawable/ic_jordan"/>
+
+        </menu>
+    </item>
+    <group android:id="@+id/menu_bottom">
         <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_logout"
