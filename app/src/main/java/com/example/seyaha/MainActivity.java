@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
 
         mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
+        getSupportActionBar().setTitle(null);
 
         mDrawerLayout = findViewById(R.id.drawer_layout);
         mNavigationView = findViewById(R.id.nav_view);
@@ -74,7 +75,6 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
 
         mDrawerLayout.addDrawerListener(toggle);
-        toggle.getDrawerArrowDrawable().setColor(Color.BLACK);
         toggle.syncState();
 
 

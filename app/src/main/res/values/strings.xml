@@ -63,6 +63,7 @@
     <string name="autumn_season">autumn</string>
     <string name="day_time">Day</string>
     <string name="night_time">Night</string>
+    <string name="detailed_activity_title">Detailed</string>
 
 
 </resources>

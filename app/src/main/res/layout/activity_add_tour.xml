@@ -2,58 +2,70 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/add_tour_relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AddTourActivity">
 
-    <EditText
-        android:id="@+id/titleE"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginRight="10dp"
-        android:background="@drawable/stroke_edittext"
-        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
-        android:hint="Title_English"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        app:met_floatingLabel="highlight"
-        app:met_textColorHint="@color/blue_logo" />
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
 
-    <EditText
-        android:id="@+id/titleA"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textlayout1"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_below="@id/titleE"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="10dp"
-        android:background="@drawable/stroke_edittext"
-        android:digits="ابتثجحخدذرزسشصضطظعغفقكلمنهوي"
-        android:hint="Title_arabic"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        app:met_floatingLabel="highlight"
-        app:met_textColorHint="@color/blue_logo" />
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:layout_margin="10dp"
+        app:boxStrokeColor="@color/blue_logo">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/titleE"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
+            android:hint="English Title" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textlayout2"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textlayout1"
+        android:layout_margin="10dp"
+        app:boxStrokeColor="@color/blue_logo">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/titleA"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
+            android:hint="@string/english" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <TextView
         android:id="@+id/places"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/titleA"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:text="Places"
-        android:textColor="@color/blue_logo"
-        android:textSize="20sp" />
+        android:layout_below="@id/textlayout2"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="Select places:"
+        android:textColor="@android:color/black"
+        android:textSize="18sp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fav_categories_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/places"
-        android:layout_marginTop="3dp">
+        android:layout_marginTop="8dp">
 
     </androidx.recyclerview.widget.RecyclerView>
 
@@ -69,24 +81,9 @@
         android:background="@drawable/button_radius"
         android:fontFamily="@font/montserrat_medium"
         android:onClick="addTour"
-        android:padding="5dp"
         android:text="Publish"
         android:textColor="@android:color/white"
         android:textSize="14sp" />
 
-    <Button
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginRight="5dp"
-        android:layout_marginBottom="15dp"
-        android:layout_toLeftOf="@id/add_tour_btn"
-        android:background="@drawable/button_border_radius"
-        android:fontFamily="@font/montserrat_medium"
-        android:onClick="resetPlaces"
-        android:padding="5dp"
-        android:text="Reset"
-        android:textColor="@color/blue_logo"
-        android:textSize="14sp" />
 
 </RelativeLayout>
