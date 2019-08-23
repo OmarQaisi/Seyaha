@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +23,12 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
@@ -30,9 +37,11 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolder> {
+    private static final String TAG = "TourAdapter";
     public static List<Tour> mTours;
     ColorDrawable colorDrawable;
     Context context;
+    FirebaseFirestore db;
     int id = 0;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -64,7 +73,7 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
     @Override
     public void onBindViewHolder(final ImageViewHolder holder, final int position) {
 
-        Tour tour = mTours.get(position);
+        final Tour tour = mTours.get(position);
 
         if(SplashScreenActivity.lan.equalsIgnoreCase("ar"))
         {
@@ -132,7 +141,7 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
         holder.mArrowDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createPopupMenu(context, v);
+                createPopupMenu(context, v, tour);
             }
         });
     }
@@ -181,12 +190,35 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
 
     }
 
-    public void createPopupMenu(final Context context, View view) {
+    public void removeTour(Tour tour){
+        mTours.remove(tour);
+        notifyDataSetChanged();
+    }
+
+    public void createPopupMenu(final Context context, View view, final Tour tour) {
+        db = FirebaseFirestore.getInstance();
         PopupMenu mPopupMenu = new PopupMenu(context, view);
         mPopupMenu.getMenuInflater().inflate(id, mPopupMenu.getMenu());
         mPopupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             public boolean onMenuItemClick(MenuItem item) {
-                Toast.makeText(context, item.getTitle(), Toast.LENGTH_SHORT).show();
+                switch (item.getItemId()){
+                    case R.id.overview_tour:
+                        // code the overview here
+                        break;
+                    case R.id.delete_tour:
+                        db.collection("tours").document(tour.tourId).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if(task.isSuccessful()){
+                                    Log.d(TAG, "Deleted Tour.");
+                                    removeTour(tour);
+                                }else
+                                    Log.d(TAG, "Failed!!");
+
+                            }
+                        });
+                        break;
+                }
                 return true;
             }
         });

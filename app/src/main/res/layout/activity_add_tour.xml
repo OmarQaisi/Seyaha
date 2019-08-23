@@ -8,7 +8,7 @@
     tools:context=".AddTourActivity">
 
     <include
-        android:id="@+id/toolbar"
+        android:id="@+id/add_tour_toolbar"
         layout="@layout/toolbar" />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -16,7 +16,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar"
+        android:layout_below="@+id/add_tour_toolbar"
         android:layout_margin="10dp"
         app:boxStrokeColor="@color/blue_logo">
 

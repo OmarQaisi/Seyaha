@@ -13,14 +13,18 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -28,6 +32,7 @@ import java.util.List;
 
 public class AddTourActivity extends AppCompatActivity {
 
+    private static final String TAG = "AddTourActivity";
     RecyclerView recyclerView;
     List<Place> mPlaces;
     Tour mTour;
@@ -44,14 +49,13 @@ public class AddTourActivity extends AppCompatActivity {
 
     //Firebase
     private FirebaseFirestore mFirebaseFirestore;
-    private CollectionReference tours;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_tour);
 
-        mToolbar = findViewById(R.id.toolbar);
+        mToolbar = findViewById(R.id.add_tour_toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle(null);
         mTextView = mToolbar.findViewById(R.id.toolbar_title);
@@ -112,15 +116,20 @@ public class AddTourActivity extends AppCompatActivity {
             chosen_place = AdminPlaceAdapter.chosen_places;
             Log.d("boss", AdminPlaceAdapter.chosen_places.size()+"");
             if (Text_checker()){
-                List<Comment> comments = new ArrayList<Comment>();
-                mTour = new Tour(makeCategoryArabic(chosen_place), makeCategoryEnglish(chosen_place), comments, 0, images(chosen_place), 0, chosen_place, 0.0, titleAR.getText().toString().trim(), titleEN.getText().toString().trim());
-
                 mFirebaseFirestore = FirebaseFirestore.getInstance();
-                tours = mFirebaseFirestore.collection("tours");
-                tours.add(mTour);
-
+                DocumentReference newTourRef = mFirebaseFirestore.collection("tours").document();
+                List<Comment> comments = new ArrayList<Comment>();
+                mTour = new Tour(makeCategoryArabic(chosen_place), makeCategoryEnglish(chosen_place), comments, 0, images(chosen_place), 0, chosen_place, 0.0, titleAR.getText().toString().trim(), titleEN.getText().toString().trim(), newTourRef.getId());
+                newTourRef.set(mTour).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful())
+                            Log.d(TAG, "onComplete: "+" Created a new Tour!");
+                        else
+                            Log.d(TAG, "Failed!!");
+                    }
+                });
                 flag = true;
-
             }
             if(flag){
                 Intent intent = new Intent(this, MainActivity.class);

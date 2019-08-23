@@ -14,14 +14,15 @@
     <string name="facebook_application_id" translatable="false">423812995143662</string>
     <!-- Facebook Application ID, prefixed by 'fb'. Enables Chrome Custom tabs. -->
     <string name="facebook_login_protocol_scheme" translatable="false">fb423812995143662</string>
-    <string name="arabic">العربية</string>
+
     <string name="lang">اللغة</string>
     <string name="desc">التفاصيل</string>
     <string name="title">العنوان</string>
     <string name="JD">دينار</string>
+    
     <!-- Strings for the (drawer_menu) titles -->
     <string name="english">انجليزية</string>
-
+    <string name="arabic">العربية</string>
     <string name="nav_profile">الملف الشخصي</string>
     <string name="nav_tour">الرحلات</string>
     <string name="nav_upcoming_event">اخر الأحداث</string>
@@ -31,6 +32,8 @@
     <!-- Strings for the (ActionBarDrawerToggle) -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+
+
     <string name="select_places">اختر الأماكن:</string>
 
     <!-- Strings for the(Detailed activity) -->
@@ -77,6 +80,6 @@
     <string name="toast_places">الرجاء اختيار 3 أماكن على الأقل لعمل رحلة.</string>
     <string name="upcomingevent">الحدث القادم</string>
     <string name="helpandfeedback">المساعدة</string>
-    <string name="detailed_activity_title">التفاصيل</string>
+    <string name="detailed_activity_title">تفاصيل الرحلة</string>
 
 </resources>

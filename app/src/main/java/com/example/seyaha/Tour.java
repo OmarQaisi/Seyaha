@@ -17,9 +17,10 @@ public class Tour {
     public double ratingsNum;
     public String titleAR;
     public String titleEN;
+    public String tourId;
 
 
-    public Tour(List<String> categoriesAR, List<String> categoriesEN, List<Comment> comments, int commentsNum, List<String> imageURLs, int numOfPeopleWhoRated, List<Place> places, double ratingsNum, String titleAR, String titleEN) {
+    public Tour(List<String> categoriesAR, List<String> categoriesEN, List<Comment> comments, int commentsNum, List<String> imageURLs, int numOfPeopleWhoRated, List<Place> places, double ratingsNum, String titleAR, String titleEN, String tourId) {
         this.categoriesAR = categoriesAR;
         this.categoriesEN = categoriesEN;
         this.comments = comments;
@@ -30,6 +31,7 @@ public class Tour {
         this.ratingsNum = ratingsNum;
         this.titleAR = titleAR;
         this.titleEN = titleEN;
+        this.tourId = tourId;
     }
 
     public Tour() {}

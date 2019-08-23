@@ -36,8 +36,9 @@
     <string name="upcomingevent">Upcoming Event</string>
     <string name="helpandfeedback">Help &amp; Feedback</string>
     <string name="publish">Publish</string>
-    <string name="create_tour">Create Tour:</string>
+    <string name="create_tour">Create Tour</string>
     <string name="toast_places">please choose atleast 3 places to create a Tour.</string>
+
     <!-- Strings for the (ActionBarDrawerToggle) -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -76,7 +77,7 @@
     <string name="autumn_season">autumn</string>
     <string name="day_time">Day</string>
     <string name="night_time">Night</string>
-    <string name="detailed_activity_title">Detailed</string>
+    <string name="detailed_activity_title">Tour Details</string>
 
 
 </resources>

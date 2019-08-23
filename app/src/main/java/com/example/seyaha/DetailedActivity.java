@@ -17,6 +17,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -46,6 +47,10 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
     double latitude,longitude;
     String placeName;
 
+    private Toolbar mToolbar;
+    private TextView mTextView;
+
+
      ScrollView scrollView;
     SupportMapFragment mapFragment;
     FrameLayout seasonFlip,timeToGoFlip,estimationFlip,ageFlip;
@@ -66,10 +71,17 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         setContentView(R.layout.activity_detailed);
 
 
-        Toolbar mToolbar = findViewById(R.id.toolbar);
+        mToolbar = findViewById(R.id.detailed_toolbar);
         setSupportActionBar(mToolbar);
-        TextView toolbarTextView=findViewById(R.id.toolbar_title);
-        toolbarTextView.setText(R.string.detailed_activity_title);
+        getSupportActionBar().setTitle(null);
+        mTextView = findViewById(R.id.toolbar_title);
+        mTextView.setText(R.string.detailed_activity_title);
+
+        // add back arrow to toolbar
+        if (getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
 
 
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -513,4 +525,15 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         mSetRightOut = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.out_animation);
         mSetLeftIn = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.in_animation);
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // handle arrow click here
+        if (item.getItemId() == android.R.id.home) {
+            finish(); // close this activity and return to preview activity (if there is any)
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 }
