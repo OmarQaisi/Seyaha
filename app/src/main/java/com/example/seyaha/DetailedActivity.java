@@ -2,9 +2,12 @@ package com.example.seyaha;
 
 import androidx.annotation.DrawableRes;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.viewpager.widget.ViewPager;
 
+import android.animation.AnimatorInflater;
+import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -12,8 +15,13 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
@@ -25,7 +33,6 @@ import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.wajahatkarim3.easyflipview.EasyFlipView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,15 +46,17 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
     double latitude,longitude;
     String placeName;
 
-
+     ScrollView scrollView;
     SupportMapFragment mapFragment;
-    EasyFlipView seasonFlip,timeToGoFlip,estimationFlip,ageFlip;
-    TextView seasonTv,timeToGoTv,ageTv1,ageTv2,estimationTv,costTv,tempTv,airQualityTv,internetTv,placeNameInfo, placeNameRecommendations,placeNameLocation,description;
+    FrameLayout seasonFlip,timeToGoFlip,estimationFlip,ageFlip;
+    TextView seasonTv,timeToGoTv,ageTv1,ageTv2,estimationTv,costTv,tempTv,airQualityTv,internetTv,placeNameInfo, placeNameRecommendations,placeNameLocation,description,placeNameTitle;
     RoundCornerProgressBar costProgressBar,tempProgressBar,airQualityProgressBar,internetProgressBar;
     View frontLayoutSeason,backLayoutSeason,frontLayoutTime,backLayouTime,frontLayoutAge,backLayoutAge,frontLayoutEstimated,backLayoutEstimated;
     ImageView seasonImg,timeToGoImg,estimationImg;
 
-
+    private AnimatorSet mSetRightOut;
+    private AnimatorSet mSetLeftIn;
+    private boolean[] mIsBackVisible = {false,false,false,false};
 
 
 
@@ -57,8 +66,13 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         setContentView(R.layout.activity_detailed);
 
 
-        mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        Toolbar mToolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        TextView toolbarTextView=findViewById(R.id.toolbar_title);
+        toolbarTextView.setText(R.string.detailed_activity_title);
 
+
+        mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
 
 
         //text views and description deceleration
@@ -66,6 +80,8 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         placeNameInfo=findViewById(R.id.place_name_information_about);
         placeNameLocation=findViewById(R.id.place_name_location);
         description=findViewById(R.id.description_tv);
+        scrollView=findViewById(R.id.scrollview);
+        placeNameTitle=findViewById(R.id.place_name_title);
 
         //information about the place deceleration
         costProgressBar=findViewById(R.id.cost_progress);
@@ -83,8 +99,16 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         estimationFlip=findViewById(R.id.estimated_btn);
 
 
+        loadAnimations();
+
+
+
         Intent i=getIntent();
         mPlace=(List<Place>)i.getSerializableExtra("places");
+
+
+        description.setMovementMethod(new ScrollingMovementMethod());
+        placeNameTitle.setText(mPlace.get(0).nameEN);
 
 
         latitude=mPlace.get(0).latitude;
@@ -110,6 +134,29 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         placeNameInfo.setText(mPlace.get(0).nameEN);
         placeNameLocation.setText(mPlace.get(0).nameEN);
 
+
+        scrollView.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                description.getParent().requestDisallowInterceptTouchEvent(false);
+
+                return false;
+            }
+        });
+
+        description.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                description.getParent().requestDisallowInterceptTouchEvent(true);
+
+                return false;
+            }
+        });
+
     }
 
     private void run_viewPager() {
@@ -128,7 +175,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels)
             {
-
+                //System.out.println(positionOffset);
             }
 
             @Override
@@ -154,12 +201,14 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
                 longitude=mPlace.get(position).longitude;
                 placeName=mPlace.get(position).nameEN;
                 mapFragment.getMapAsync(DetailedActivity.this);
-
+                placeNameTitle.setText(mPlace.get(position).nameEN);
 
             }
 
             @Override
-            public void onPageScrollStateChanged(int state) {
+            public void onPageScrollStateChanged(int state)
+            {
+                System.out.println(state);
 
             }
         });
@@ -283,6 +332,8 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
 
     private void setInternetProgress(int internet)
     {
+        ObjectAnimator progressAnimator;
+
         switch (internet)
         {
             case 0:
@@ -301,7 +352,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
                 internetTv.setText(getResources().getString(R.string.great_internet));
                 break;
         }
-        ObjectAnimator progressAnimator;
+
         progressAnimator = ObjectAnimator.ofFloat(internetProgressBar, "progress", 0.0f,internetProgressBar.getProgress());
         progressAnimator.setDuration(1000);
         progressAnimator.setStartDelay(300);
@@ -315,6 +366,14 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         backLayoutSeason=seasonFlip.findViewById(R.id.back_season);
         seasonTv=backLayoutSeason.findViewById(R.id.back_text);
         seasonImg=frontLayoutSeason.findViewById(R.id.front_icon);
+        changeCameraDistance(frontLayoutSeason,backLayoutSeason);
+
+        seasonFlip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                flipCard(frontLayoutSeason,backLayoutSeason, mIsBackVisible,0);
+            }
+        });
        switch (season)
        {
            case 0:
@@ -345,6 +404,13 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         backLayouTime=findViewById(R.id.back_time);
         timeToGoTv=backLayouTime.findViewById(R.id.back_text);
         timeToGoImg=frontLayoutTime.findViewById(R.id.front_icon);
+        changeCameraDistance(frontLayoutTime,backLayouTime);
+        timeToGoFlip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                flipCard(frontLayoutTime,backLayouTime, mIsBackVisible,1);
+            }
+        });
 
         switch (time)
         {
@@ -366,8 +432,18 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         backLayoutAge=findViewById(R.id.back_age);
         ageTv1=backLayoutAge.findViewById(R.id.back_text);
         ageTv2=frontLayoutAge.findViewById(R.id.back_text);
+        ageTv2.setTextSize(20);
+        ageTv1.setTextSize(20);
         ageTv1.setText(age);
         ageTv2.setText(age);
+
+        changeCameraDistance(frontLayoutAge,backLayoutAge);
+        ageFlip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                flipCard(frontLayoutAge,backLayoutAge, mIsBackVisible,2);
+            }
+        });
     }
 
     private void setEstimatedTime(int estimatedTime)
@@ -378,5 +454,42 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         estimationImg=frontLayoutEstimated.findViewById(R.id.front_icon);
         estimationTv.setText(estimatedTime+"Hrs");
         estimationImg.setImageResource(R.drawable.ic_sand_clock);
+
+        changeCameraDistance(frontLayoutEstimated,backLayoutEstimated);
+        estimationFlip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                flipCard(frontLayoutEstimated,backLayoutEstimated, mIsBackVisible,3);
+            }
+        });
+    }
+
+    public void flipCard(View front,View back,boolean mIsBackVisible[],int position) {
+
+        if (!mIsBackVisible[position]) {
+            mSetRightOut.setTarget(front);
+            mSetLeftIn.setTarget(back);
+            mSetRightOut.start();
+            mSetLeftIn.start();
+            mIsBackVisible[position] = true;
+        } else {
+            mSetRightOut.setTarget(back);
+            mSetLeftIn.setTarget(front);
+            mSetRightOut.start();
+            mSetLeftIn.start();
+            mIsBackVisible[position] = false;
+        }
+    }
+
+    private void changeCameraDistance(View front,View back) {
+        int distance = 8000;
+        float scale = getResources().getDisplayMetrics().density * distance;
+        front.setCameraDistance(scale);
+        back.setCameraDistance(scale);
+    }
+
+    private void loadAnimations() {
+        mSetRightOut = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.out_animation);
+        mSetLeftIn = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.in_animation);
     }
 }

@@ -187,7 +187,7 @@ public class AddTourActivity extends AppCompatActivity {
     public void onDestroy()
     {
         super.onDestroy();
-        softKeyboard.unRegisterSoftKeyboardCallback();
+       // softKeyboard.unRegisterSoftKeyboardCallback();
     }
 
 }
