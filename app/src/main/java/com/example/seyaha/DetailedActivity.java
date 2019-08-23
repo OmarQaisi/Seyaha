@@ -108,8 +108,6 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
 
 
         description.setMovementMethod(new ScrollingMovementMethod());
-        placeNameTitle.setText(mPlace.get(0).nameEN);
-
 
         latitude=mPlace.get(0).latitude;
         longitude=mPlace.get(0).longitude;
@@ -129,10 +127,23 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         setAge(mPlace.get(0).recommendedAge);
         setEstimatedTime(mPlace.get(0).estimatedTime);
 
-        description.setText(mPlace.get(0).descEN);
-        placeNameRecommendations.setText(mPlace.get(0).nameEN);
-        placeNameInfo.setText(mPlace.get(0).nameEN);
-        placeNameLocation.setText(mPlace.get(0).nameEN);
+        if(SplashScreenActivity.lan.equalsIgnoreCase("ar"))
+        {
+            description.setText(mPlace.get(0).descAR);
+            placeNameRecommendations.setText(mPlace.get(0).nameAR);
+            placeNameInfo.setText(mPlace.get(0).nameAR);
+            placeNameLocation.setText(mPlace.get(0).nameAR);
+            placeNameTitle.setText(mPlace.get(0).nameAR);
+
+        }
+        else
+        {
+            placeNameTitle.setText(mPlace.get(0).nameEN);
+            description.setText(mPlace.get(0).descEN);
+            placeNameRecommendations.setText(mPlace.get(0).nameEN);
+            placeNameInfo.setText(mPlace.get(0).nameEN);
+            placeNameLocation.setText(mPlace.get(0).nameEN);
+        }
 
 
         scrollView.setOnTouchListener(new View.OnTouchListener() {
@@ -190,12 +201,22 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
                 setTimeToGo(mPlace.get(position).recommendedTime);
                 setAge(mPlace.get(position).recommendedAge);
                 setEstimatedTime(mPlace.get(position).estimatedTime);
-
-                description.setText(mPlace.get(position).descEN);
-                placeNameRecommendations.setText(mPlace.get(position).nameEN);
-                placeNameInfo.setText(mPlace.get(position).nameEN);
-                placeNameLocation.setText(mPlace.get(position).nameEN);
-
+                if(SplashScreenActivity.lan.equalsIgnoreCase("ar"))
+                {
+                    description.setText(mPlace.get(position).descAR);
+                    placeNameRecommendations.setText(mPlace.get(position).nameAR);
+                    placeNameInfo.setText(mPlace.get(position).nameAR);
+                    placeNameLocation.setText(mPlace.get(position).nameAR);
+                    placeNameTitle.setText(mPlace.get(position).nameAR);
+                }
+                else
+                {
+                    description.setText(mPlace.get(position).descEN);
+                    placeNameRecommendations.setText(mPlace.get(position).nameEN);
+                    placeNameInfo.setText(mPlace.get(position).nameEN);
+                    placeNameLocation.setText(mPlace.get(position).nameEN);
+                    placeNameTitle.setText(mPlace.get(position).nameEN);
+                }
 
                 latitude=mPlace.get(position).latitude;
                 longitude=mPlace.get(position).longitude;
@@ -244,7 +265,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
     private void setCostProgress(int cost)
     {
 
-        costTv.setText(cost+"JD");
+        costTv.setText(cost+" "+getResources().getString(R.string.JD));
         if(cost<=20)
         {
             costProgressBar.setProgress(100);

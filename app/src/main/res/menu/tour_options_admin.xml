@@ -3,9 +3,9 @@
 
     <item
         android:id = "@+id/overview_tour"
-        android:title = "Tour OverView" />
+        android:title = "@string/tour_overview" />
     <item
         android:id = "@+id/delete_tour"
-        android:title = "Delete Tour" />
+        android:title = "@string/delete_tour" />
 
 </menu>

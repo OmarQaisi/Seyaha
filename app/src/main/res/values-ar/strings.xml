@@ -16,21 +16,22 @@
     <string name="facebook_login_protocol_scheme" translatable="false">fb423812995143662</string>
     <string name="arabic">العربية</string>
     <string name="lang">اللغة</string>
-
-
+    <string name="desc">التفاصيل</string>
+    <string name="title">العنوان</string>
+    <string name="JD">دينار</string>
     <!-- Strings for the (drawer_menu) titles -->
     <string name="english">انجليزية</string>
 
     <string name="nav_profile">الملف الشخصي</string>
     <string name="nav_tour">الرحلات</string>
-    <string name="nav_upcoming_event">Upcoming Event</string>
-    <string name="nav_help_feedback">Help &amp; Feedback</string>
+    <string name="nav_upcoming_event">اخر الأحداث</string>
+    <string name="nav_help_feedback">المساعدة</string>
     <string name="nav_logout">تسجيل الخروج</string>
 
     <!-- Strings for the (ActionBarDrawerToggle) -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
+    <string name="select_places">اختر الأماكن:</string>
 
     <!-- Strings for the(Detailed activity) -->
     <string name="cold">"بارد:"</string>
@@ -43,14 +44,14 @@
     <string name="alert_rating_hint">"شاركنا تجربتك لهذه الرحلة"</string>
     <string name="alert_rating_post">تم</string>
     <string name="alert_rating_cancel">الغاء</string>
-    <string name="detailed_activity_description">التفصيل</string>
+    <string name="detailed_activity_description">حول</string>
     <string name="detailed_activity_information_about">معلومات حول:</string>
     <string name="detailed_activity_cost">السعر</string>
     <string name="detailed_activity_temp">الحرارة</string>
     <string name="detailed_activity_air_quality">جودة الهواء</string>
     <string name="detailed_activity_internet">انترنت</string>
     <string name="detailed_activity_recommendations_for">اقتراحات حول</string>
-    <string name="detailed_activity_season">موسم</string>
+    <string name="detailed_activity_season">الموسم</string>
     <string name="detailed_activity_time">الوقت</string>
     <string name="detailed_activity_age">العمر</string>
     <string name="detailed_activity_estimation">الوقت المتوقع</string>
@@ -65,6 +66,17 @@
     <string name="autumn_season">الخريف</string>
     <string name="day_time">صباح</string>
     <string name="night_time">مساء</string>
-
+    <string name="delete_tour">حذف الرحلة</string>
+    <string name="tour_overview">نظرة عامة</string>
+    <string name="reset">اعادة</string>
+    <string name="publish">نشر</string>
+    <string name="create_tour">انشاء رحلة</string>
+    <string name="title_english">العنوان بالانجليزية</string>
+    <string name="title_arabic">العنوان بالعربية</string>
+    <string name="places">الأماكن</string>
+    <string name="toast_places">الرجاء اختيار 3 أماكن على الأقل لعمل رحلة.</string>
+    <string name="upcomingevent">الحدث القادم</string>
+    <string name="helpandfeedback">المساعدة</string>
+    <string name="detailed_activity_title">التفاصيل</string>
 
 </resources>

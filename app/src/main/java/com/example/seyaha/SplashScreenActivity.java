@@ -44,7 +44,7 @@ public class SplashScreenActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mFirebaseAuthListner;
     private FirebaseUser user;
     private final int RC_SIGN_IN = 1;
-    public  String lan="null";
+    public static  String lan="null";
     private boolean internet_checked = false;
     private boolean flag = false;
 

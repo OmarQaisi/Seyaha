@@ -55,7 +55,7 @@ public class AddTourActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle(null);
         mTextView = mToolbar.findViewById(R.id.toolbar_title);
-        mTextView.setText("Create Tour");
+        mTextView.setText(getString(R.string.create_tour));
 
         // add back arrow to toolbar
         if (getSupportActionBar() != null){
@@ -129,7 +129,7 @@ public class AddTourActivity extends AppCompatActivity {
 
 
         } else {
-            Toast.makeText(this, "please choose atleast 3 places to create a Tour.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.toast_places), Toast.LENGTH_LONG).show();
 
         }
     }

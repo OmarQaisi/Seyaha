@@ -35,6 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:text="@string/detailed_activity_description"
                 android:textSize="24sp"
                 android:id="@+id/place_name_title"
@@ -52,6 +53,7 @@
                 android:id="@+id/description_tv"
                 android:scrollbars="vertical"
                 android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/montserrat_light"
                 android:text="Observe the comments made about you by your parents, friends, teachers or you may directly ask them. Note these points on a paper and try to make a sample of description."
@@ -71,6 +73,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/detailed_activity_information_about"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:textSize="18sp"
                     android:fontFamily="@font/montserrat_medium"
                     android:textColor="@android:color/black"/>
@@ -82,6 +85,7 @@
                     android:textSize="24sp"
                     android:fontFamily="@font/montserrat_bold"
                     android:layout_marginLeft="4dp"
+                    android:layout_marginStart="4dp"
                     android:textColor="@color/blue_logo"
                     />
             </LinearLayout>
@@ -90,7 +94,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="20dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -104,7 +110,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/detailed_activity_cost"
                         android:layout_marginTop="10dp"
-                        android:layout_gravity="bottom"
+                        android:layout_gravity="start"
                         android:fontFamily="@font/montserrat_medium"
                         android:textSize="16sp"
                         android:textColor="@android:color/black"/>
@@ -116,7 +122,7 @@
                         android:layout_marginTop="10dp"
                         android:text="@string/detailed_activity_temp"
                         android:fontFamily="@font/montserrat_medium"
-                        android:layout_gravity="bottom"
+                        android:layout_gravity="start"
                         android:textSize="16sp"
                         android:textColor="@android:color/black"/>
 
@@ -125,7 +131,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/detailed_activity_air_quality"
-                        android:layout_gravity="bottom"
+                        android:layout_gravity="start"
                         android:layout_marginTop="10dp"
                         android:fontFamily="@font/montserrat_medium"
                         android:textSize="16sp"
@@ -136,7 +142,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/detailed_activity_internet"
-                        android:layout_gravity="bottom"
+                        android:layout_gravity="start"
                         android:textSize="16sp"
                         android:layout_marginTop="10dp"
                         android:fontFamily="@font/montserrat_medium"
@@ -146,7 +152,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -227,7 +234,6 @@
                         app:rcSecondaryProgressColor="@android:color/transparent"
                         app:rcBackgroundColor="@color/background_gray" />
 
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -253,9 +259,6 @@
                         app:rcProgressColor="@color/orange_good"
                         app:rcSecondaryProgressColor="@android:color/transparent"
                         app:rcBackgroundColor="@color/background_gray" />
-
-
-
                 </LinearLayout>
 
             </LinearLayout>
@@ -274,6 +277,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/detailed_activity_recommendations_for"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:textSize="18sp"
                     android:fontFamily="@font/montserrat_medium"
                     android:textColor="@android:color/black"/>
@@ -285,6 +289,7 @@
                     android:fontFamily="@font/montserrat_bold"
                     android:textSize="24sp"
                     android:layout_marginLeft="4dp"
+                    android:layout_marginStart="4dp"
                     android:textColor="@color/blue_logo"
                     />
             </LinearLayout>
@@ -300,6 +305,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
@@ -330,6 +336,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
@@ -362,6 +369,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
@@ -394,6 +402,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:orientation="vertical">
 
                     <FrameLayout
@@ -438,6 +447,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/detailed_activity_location_for"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:fontFamily="@font/montserrat_medium"
                     android:textSize="18sp"
                     android:textColor="@android:color/black"/>
@@ -449,6 +459,7 @@
                     android:fontFamily="@font/montserrat_bold"
                     android:textSize="24sp"
                     android:layout_marginLeft="4dp"
+                    android:layout_marginStart="4dp"
                     android:textColor="@color/blue_logo"
                     />
             </LinearLayout>

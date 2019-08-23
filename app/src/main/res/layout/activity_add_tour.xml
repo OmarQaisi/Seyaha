@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
-            android:hint="English Title" />
+            android:hint="@string/title_english" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -42,8 +42,8 @@
             android:id="@+id/titleA"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
-            android:hint="@string/english" />
+            android:digits="غظضذخثتشرقصجفعسنملةىكيطئءؤحزوهدبا "
+            android:hint="@string/title_arabic" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -54,9 +54,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/textlayout2"
         android:layout_marginLeft="12dp"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/montserrat_medium"
-        android:text="Select places:"
+        android:text="@string/select_places"
         android:textColor="@android:color/black"
         android:textSize="18sp" />
 
@@ -81,7 +82,7 @@
         android:background="@drawable/button_radius"
         android:fontFamily="@font/montserrat_medium"
         android:onClick="addTour"
-        android:text="Publish"
+        android:text="@string/publish"
         android:textColor="@android:color/white"
         android:textSize="14sp" />
 

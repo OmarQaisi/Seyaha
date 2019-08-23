@@ -178,15 +178,17 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
                 case (1) :
                     {
                         setLocale("ar");
-                        recreate();
+                        //recreate();
                     }
                     break;
                 case (2) : {
                     setLocale("en");
-                    recreate();
+                   // recreate();
                 }
                 break;
             }
+            Intent intent=new Intent(MainActivity.this,SplashScreenActivity.class);
+            startActivity(intent);
         }
 
     }

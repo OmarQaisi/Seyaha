@@ -13,9 +13,10 @@
     <string name="facebook_application_id" translatable="false">423812995143662</string>
     <!-- Facebook Application ID, prefixed by 'fb'. Enables Chrome Custom tabs. -->
     <string name="facebook_login_protocol_scheme" translatable="false">fb423812995143662</string>
-
+    <string name="select_places">Select Places:</string>
     <!-- Strings for the (drawer_menu) titles -->
     <string name="nav_profile">Profile</string>
+
     <string name="nav_tour">Tours</string>
     <string name="nav_upcoming_event">Upcoming Event</string>
     <string name="nav_help_feedback">Help &amp; Feedback</string>
@@ -23,8 +24,20 @@
     <string name="english">English</string>
     <string name="arabic">Arabic</string>
     <string name="lang">Language</string>
-
-
+    <string name="desc">Desc</string>
+    <string name="title">Title</string>
+    <string name="JD">JD</string>
+    <string name="delete_tour">Delete Tour</string>
+    <string name="tour_overview">Tour OverView</string>
+    <string name="reset">Reset</string>
+    <string name="title_english">Title_English</string>
+    <string name="title_arabic">Title_Arabic</string>
+    <string name="places">Places</string>
+    <string name="upcomingevent">Upcoming Event</string>
+    <string name="helpandfeedback">Help &amp; Feedback</string>
+    <string name="publish">Publish</string>
+    <string name="create_tour">Create Tour:</string>
+    <string name="toast_places">please choose atleast 3 places to create a Tour.</string>
     <!-- Strings for the (ActionBarDrawerToggle) -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

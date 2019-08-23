@@ -57,7 +57,15 @@ public class AdminPlaceAdapter extends RecyclerView.Adapter<AdminPlaceAdapter.Im
 
         Picasso.get().load(mPlace.get(position).imageURL).placeholder(colorDrawable).fit().into(holder.circle);
         holder.circle.setClipToOutline(true);
-        holder.place_name_admin.setText(mPlace.get(position).nameEN);
+        if(SplashScreenActivity.lan.equalsIgnoreCase("ar"))
+        {
+            holder.place_name_admin.setText(mPlace.get(position).nameAR);
+        }
+        else
+        {
+            holder.place_name_admin.setText(mPlace.get(position).nameEN);
+        }
+
         holder.circle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)

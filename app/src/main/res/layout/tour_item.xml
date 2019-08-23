@@ -14,11 +14,12 @@
         android:id="@+id/title_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="title"
+        android:text="@string/title"
         android:textColor="@android:color/black"
         android:textSize="20sp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="2dp"/>
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginLeft="10dp" />
 
     <ImageButton
         android:id="@+id/arrowDown"
@@ -26,8 +27,10 @@
         android:src="@drawable/ic_keyboard_arrow_down"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_marginTop="2dp"
+        android:layout_marginEnd="6dp"
+        android:layout_alignParentRight="true"
         android:layout_marginRight="6dp" />
 
     <TextView
@@ -35,9 +38,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/title_txt"
-        android:layout_marginLeft="10dp"
-        android:text="Desc"
-        android:layout_marginTop="4dp" />
+        android:layout_marginStart="10dp"
+        android:text="@string/desc"
+        android:layout_marginTop="4dp"
+        android:layout_marginLeft="10dp" />
 
     <LinearLayout
         android:id="@+id/linear"
@@ -66,8 +70,9 @@
             android:scaleType="centerCrop"
             android:layout_below="@id/desc"
             android:layout_toRightOf="@id/img1"
-            android:layout_marginLeft="10dp"
-            android:src="@drawable/ic_launcher_background" />
+            android:layout_marginStart="10dp"
+            android:src="@drawable/ic_launcher_background"
+            android:layout_marginLeft="10dp" />
 
         <ImageView
             android:id="@+id/img3"
@@ -79,6 +84,7 @@
             android:src="@drawable/ic_launcher_background"
             android:layout_below="@id/desc"
             android:layout_toRightOf="@id/img2"
+            android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp" />
     </LinearLayout>
 
@@ -87,8 +93,8 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#C0C0C0"
-        android:layout_marginRight="32dp"
-        android:layout_marginLeft="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
         android:layout_below="@id/linear" />
 
     <ImageButton
@@ -98,8 +104,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/line"
+        android:layout_alignParentLeft="true"
         android:layout_marginTop="6dp"
-        android:layout_marginLeft="36dp"/>
+        android:layout_marginLeft="30dp"/>
 
     <ImageButton
         android:id="@+id/star"
@@ -133,8 +140,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/line"
         android:layout_toLeftOf="@id/rate_num"
-        android:layout_marginRight="18dp"
-        android:layout_marginTop="8dp" />
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"/>
 
     <TextView
         android:id="@+id/comment_num"

@@ -66,10 +66,16 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
 
         Tour tour = mTours.get(position);
 
-        holder.mTitle.setText(tour.titleEN);
-
-        holder.mDescription.setText(tour.makeEnglishDescription(tour.categoriesEN));
-
+        if(SplashScreenActivity.lan.equalsIgnoreCase("ar"))
+        {
+            holder.mTitle.setText(tour.titleAR);
+            holder.mDescription.setText(tour.makeArabicDescription(tour.categoriesAR));
+        }
+        else
+        {
+            holder.mTitle.setText(tour.titleEN);
+            holder.mDescription.setText(tour.makeEnglishDescription(tour.categoriesEN));
+        }
         holder.mRating.setText(tour.ratingsNum + "");
 
         holder.mComments.setText(tour.commentsNum + "");
