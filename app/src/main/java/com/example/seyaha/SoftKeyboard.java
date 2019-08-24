@@ -109,7 +109,6 @@ public class SoftKeyboard implements View.OnFocusChangeListener
             {
                 initEditTexts((ViewGroup) v);
             }
-
             if(v instanceof EditText)
             {
                 EditText editText = (EditText) v;
@@ -217,7 +216,8 @@ public class SoftKeyboard implements View.OnFocusChangeListener
                         try
                         {
                             wait(500);
-                        } catch (InterruptedException e)
+                        }
+                        catch (InterruptedException e)
                         {
                             // TODO Auto-generated catch block
                             e.printStackTrace();

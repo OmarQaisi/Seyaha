@@ -22,13 +22,16 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
@@ -139,19 +142,35 @@ public class SplashScreenActivity extends AppCompatActivity {
 
     protected void setUser(){
 
-        List<String> intrests = new ArrayList<String>();
-        final User mUser = new User(mFirebaseAuth.getCurrentUser().getDisplayName(),
-                mFirebaseAuth.getCurrentUser().getEmail(),
-                mFirebaseAuth.getCurrentUser().getPhotoUrl().toString()+"?height=500",
-                intrests,
-                false);
+
+
         mFirebaseFirestore = FirebaseFirestore.getInstance();
         users = mFirebaseFirestore.collection("users");
-        users.whereEqualTo("email", mUser.email).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        users.whereEqualTo("email",  mFirebaseAuth.getCurrentUser().getEmail()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-            if (queryDocumentSnapshots.isEmpty())
-                users.add(mUser);
+                List<String> intrests = new ArrayList<>();
+                List<String> toursCommentedOn=new ArrayList<>();
+                User mUser=null;
+            if (queryDocumentSnapshots.isEmpty()) {
+
+                DocumentReference newUserRefernce=users.document();
+                mUser = new User(mFirebaseAuth.getCurrentUser().getDisplayName(),
+                        mFirebaseAuth.getCurrentUser().getEmail(),
+                        mFirebaseAuth.getCurrentUser().getPhotoUrl().toString() + "?height=500",
+                        intrests,
+                        false,
+                        toursCommentedOn,
+                        newUserRefernce.getId());
+
+                newUserRefernce.set(mUser).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+
+                    }
+                });
+            }
+
             start_activity();
             }
         });

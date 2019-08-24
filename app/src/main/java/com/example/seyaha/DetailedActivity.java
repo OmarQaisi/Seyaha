@@ -213,16 +213,14 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
                 setTimeToGo(mPlace.get(position).recommendedTime);
                 setAge(mPlace.get(position).recommendedAge);
                 setEstimatedTime(mPlace.get(position).estimatedTime);
-                if(SplashScreenActivity.lan.equalsIgnoreCase("ar"))
-                {
+                if(SplashScreenActivity.lan.equalsIgnoreCase("ar")){
                     description.setText(mPlace.get(position).descAR);
                     placeNameRecommendations.setText(mPlace.get(position).nameAR);
                     placeNameInfo.setText(mPlace.get(position).nameAR);
                     placeNameLocation.setText(mPlace.get(position).nameAR);
                     placeNameTitle.setText(mPlace.get(position).nameAR);
                 }
-                else
-                {
+                else {
                     description.setText(mPlace.get(position).descEN);
                     placeNameRecommendations.setText(mPlace.get(position).nameEN);
                     placeNameInfo.setText(mPlace.get(position).nameEN);
@@ -234,7 +232,12 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
                 longitude=mPlace.get(position).longitude;
                 placeName=mPlace.get(position).nameEN;
                 mapFragment.getMapAsync(DetailedActivity.this);
-                placeNameTitle.setText(mPlace.get(position).nameEN);
+
+
+                scrollView.fullScroll(View.FOCUS_UP);
+                description.scrollTo(0,0);
+
+
 
             }
 
@@ -259,7 +262,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         mMap.addMarker(my_own_marker);
         // mMap.addMarker(new MarkerOptions().position(sydney).title("third circle"));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(googleMapPlace, 16.0f));
-       // mMap.animateCamera(CameraUpdateFactory.zoomIn());
+
         //mMap.animateCamera(CameraUpdateFactory.zoomOut());
 
     }

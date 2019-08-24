@@ -127,6 +127,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginRight="3dp"
         android:layout_toLeftOf="@id/star"
+        android:maxLength="4"
         android:text="4.5"
         android:textColor="#9B9B9B"
         android:textSize="15sp"
