@@ -265,11 +265,6 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
         mTours.remove(tour);
         notifyDataSetChanged();
     }
-    private void move_to_overView(Context context)
-    {
-
-
-    }
 
     public void createPopupMenu(final Context context, final View view, final Tour tour, final int position) {
         db = FirebaseFirestore.getInstance();
@@ -282,7 +277,6 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
                         Intent i=new Intent(context,OverviewActivity.class);
                         i.putExtra("places", (Serializable) mTours.get(position).places);
                         context.startActivity(i);
-
                         break;
                     case R.id.delete_tour:
                         db.collection("tours").document(tour.tourId).delete().addOnCompleteListener(new OnCompleteListener<Void>() {

@@ -1,10 +1,47 @@
 <resources>
-
+    <array name="interestsEN">
+        <item>climbing</item>
+        <item>diving</item>
+        <item>cycling</item>
+        <item>walking</item>
+        <item>safari-desert</item>
+        <item>safari-adventure</item>
+        <item>religon</item>
+        <item>nature</item>
+        <item>historical</item>
+        <item>treatment</item>
+        <item>camping</item>
+        <item>sightseeing</item>
+        <item>Sporting</item>
+        <item>culture</item>
+        <item>swimming</item>
+        <item>Sporting</item>
+        <item>desert</item>
+    </array>
+    <array name="interestsAR">
+        <item>التسلق</item>
+        <item>غوص</item>
+        <item>ركوب الدراجات</item>
+        <item>المشي</item>
+        <item>سفاري الصحراء</item>
+        <item>سفاري</item>
+        <item>ديني</item>
+        <item>طبيعة</item>
+        <item>تاريخي</item>
+        <item>علاج</item>
+        <item>تخييم</item>
+        <item>معالم المدينة</item>
+        <item>رياضي</item>
+        <item>حضاره</item>
+        <item>سباحة</item>
+        <item>رياضي</item>
+        <item>صحراء</item>
+    </array>
     <string name="app_name">Seyaha</string>
     <string name="login_welcome">"Welcome"</string>
     <string name="login_description">"the best way to navigate through\nJordan and discover new places"</string>
     <string name="login_continue">continue with :</string>
-
+    <string name="done">Save</string>
     <string name="close">Press again to Quit </string>
     <string name="retry">Retry</string>
     <string name="lost_internet">internet connection lost.</string>
@@ -42,7 +79,7 @@
     <!-- Strings for the (ActionBarDrawerToggle) -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
+    <string name="save">You Saved Interests Successfully.</string>
 
     <!-- Strings for the(Detailed activity) -->
     <string name="cold">"Cold:"</string>
@@ -76,5 +113,6 @@
     <string name="detailed_activity_title">Tour Details</string>
     <string name="reviews_comments_dialog">Reviews</string>
    <string name="already_rated">You have already rated this tour!!</string>
+    <string name="interests">Select your interests:</string>
 
 </resources>

@@ -1,7 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-</LinearLayout>
+    <RelativeLayout
+        android:id="@+id/rel1"
+        android:layout_width="match_parent"
+        android:layout_height="280dp"
+        android:background="@drawable/gradiant_bg">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/prof_img"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/nav_drawer_background"/>
+
+        <TextView
+            android:id="@+id/prof_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_below="@id/prof_img"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:text="Anas Rasheed"
+            android:textColor="@color/white_login_screen"/>
+
+        <TextView
+            android:id="@+id/prof_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/prof_name"
+            android:layout_marginTop="5dp"
+            android:layout_centerHorizontal="true"
+            android:text="anasrasheed64@gmail.com"
+            android:textSize="17sp"
+            android:textColor="@color/white_login_screen"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/rel1"
+        android:background="@color/white_login_screen"
+        android:layout_marginTop="2dp">
+
+        <TextView
+            android:id="@+id/selector"
+            android:text="@string/interests"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true"
+            android:textSize="20sp"
+            android:textColor="#63C9FF"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv"
+                android:background="@color/white_login_screen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/selector"
+                android:layout_marginTop="5dp">
+
+            </androidx.recyclerview.widget.RecyclerView>
+        <Button
+            android:id="@+id/confirm_interests"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/button_radius"
+            android:fontFamily="@font/montserrat_medium"
+            android:onClick="addTour"
+            android:text="@string/done"
+            android:textColor="@android:color/white"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
