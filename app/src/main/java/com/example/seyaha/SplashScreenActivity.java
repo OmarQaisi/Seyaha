@@ -17,7 +17,9 @@ import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthMethodPickerLayout;
 import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -141,9 +143,6 @@ public class SplashScreenActivity extends AppCompatActivity {
     }
 
     protected void setUser(){
-
-
-
         mFirebaseFirestore = FirebaseFirestore.getInstance();
         users = mFirebaseFirestore.collection("users");
         users.whereEqualTo("email",  mFirebaseAuth.getCurrentUser().getEmail()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -163,10 +162,13 @@ public class SplashScreenActivity extends AppCompatActivity {
                         toursCommentedOn,
                         newUserRefernce.getId());
 
-                newUserRefernce.set(mUser).addOnSuccessListener(new OnSuccessListener<Void>() {
+                newUserRefernce.set(mUser).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
-                    public void onSuccess(Void aVoid) {
-
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful())
+                            Log.d(TAG, "onComplete: "+" new user registered");
+                        else
+                            Log.d(TAG, "Failed!!");
                     }
                 });
             }

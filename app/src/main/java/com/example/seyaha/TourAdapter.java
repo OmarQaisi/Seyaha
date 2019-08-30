@@ -1,7 +1,9 @@
 package com.example.seyaha;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -15,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -62,9 +65,8 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
 
         FirestoreQueries.getUser(new FirestoreQueries.FirestoreUserCallback() {
             @Override
-            public void onCallback(User user)
-            {
-                mUser=user;
+            public void onCallback(User user) {
+                mUser = user;
                 if (user.isAdmin)
                     id = R.menu.tour_options_admin;
                 else
@@ -85,13 +87,10 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
 
         final Tour tour = mTours.get(position);
 
-        if(SplashScreenActivity.lan.equalsIgnoreCase("ar"))
-        {
+        if (SplashScreenActivity.lan.equalsIgnoreCase("ar")) {
             holder.mTitle.setText(tour.titleAR);
             holder.mDescription.setText(tour.makeArabicDescription(tour.categoriesAR));
-        }
-        else
-        {
+        } else {
             holder.mTitle.setText(tour.titleEN);
             holder.mDescription.setText(tour.makeEnglishDescription(tour.categoriesEN));
         }
@@ -128,7 +127,7 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
         holder.mRate_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                        holder.alertDialog.show();
+                holder.alertDialog.show();
             }
         });
         holder.post_btn.setOnClickListener(new View.OnClickListener() {
@@ -150,15 +149,12 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
                     });
 
 
-                }
-                catch (Exception e)
-                {
-                    Log.e(TAG, "onClick: ",e);
+                } catch (Exception e) {
+                    Log.e(TAG, "onClick: ", e);
                 }
             }
 
-                });
-
+        });
 
 
         holder.alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -168,10 +164,8 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
             public void onCallback(User user) {
                 holder.ratingName.setText(user.displayName);
                 Picasso.get().load(user.imageURL).fit().into(holder.ratingPic);
-                for(String n : user.toursCommentedOn)
-                {
-                    if(n.equals(mTours.get(position).tourId))
-                    {
+                for (String n : user.toursCommentedOn) {
+                    if (n.equals(mTours.get(position).tourId)) {
                         holder.mRate_btn.setImageResource(R.drawable.ic_star_filled);
                         holder.mRate_btn.setClickable(false);
                         break;
@@ -184,6 +178,25 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
             @Override
             public void onClick(View v) {
                 createPopupMenu(context, v, tour);
+            }
+        });
+
+        holder.mComment_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    Tour tour = mTours.get(position);
+                    List<Comment> comments = tour.comments;
+                    CommentAdapter adapter = new CommentAdapter(context, comments);
+                    Dialog commentsDialog = new Dialog(context);
+                    commentsDialog.setContentView(R.layout.comments_dialog);
+                    holder.commentsListView.setAdapter(adapter);
+
+                    commentsDialog.show();
+                } catch (Exception e) {
+                    Log.e(TAG, "onClick: ", e);
+                }
+
             }
         });
     }
@@ -201,23 +214,26 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
         Button post_btn, mCancel_btn;
         LayoutInflater vi;
         View mView;
+        View commentsDialogView;
         EditText editText;
         AlertDialog.Builder builder;
         AlertDialog alertDialog;
         RatingBar ratingBar;
-
+        ListView commentsListView;
 
         @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         public ImageViewHolder(View itemView) {
             super(itemView);
             vi = (LayoutInflater) itemView.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             mView = vi.inflate(R.layout.custom_rating_dialog, null, false);
+            commentsDialogView = vi.inflate(R.layout.comments_dialog, null, false);
+            commentsListView = commentsDialogView.findViewById(R.id.comments_listview);
             post_btn = mView.findViewById(R.id.post_btn);
             mCancel_btn = mView.findViewById(R.id.cancel_btn);
             ratingPic = mView.findViewById(R.id.rating_pic);
             ratingName = mView.findViewById(R.id.rating_name);
             editText = mView.findViewById(R.id.comment_post);
-            ratingBar=mView.findViewById(R.id.rating_bar);
+            ratingBar = mView.findViewById(R.id.rating_bar);
             builder = new AlertDialog.Builder(itemView.getContext());
             builder.setView(mView);
             mTitle = itemView.findViewById(R.id.title_txt);
@@ -235,7 +251,7 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
 
     }
 
-    public void removeTour(Tour tour){
+    public void removeTour(Tour tour) {
         mTours.remove(tour);
         notifyDataSetChanged();
     }
@@ -246,7 +262,7 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
         mPopupMenu.getMenuInflater().inflate(id, mPopupMenu.getMenu());
         mPopupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()){
+                switch (item.getItemId()) {
                     case R.id.overview_tour:
                         // code the overview here
                         break;
@@ -254,10 +270,10 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
                         db.collection("tours").document(tour.tourId).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-                                if(task.isSuccessful()){
+                                if (task.isSuccessful()) {
                                     Log.d(TAG, "Deleted Tour.");
                                     removeTour(tour);
-                                }else
+                                } else
                                     Log.d(TAG, "Failed!!");
 
                             }
@@ -272,35 +288,32 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
     }
 
 
+    private void addComment(List<Comment> comments, Tour tour, EditText editText, RatingBar ratingBar, TextView mRating, TextView mComments, ImageButton mRate_btn, int position) {
 
-    private void addComment(List<Comment> comments,Tour tour,EditText editText,RatingBar ratingBar,TextView mRating,TextView mComments,ImageButton mRate_btn,int position)
-    {
+        final DocumentReference tourReference = db.collection("tours").document(mTours.get(position).tourId);
 
-        final DocumentReference tourReference= db.collection("tours").document(mTours.get(position).tourId);
-
-        Comment mComment=new Comment(mUser,editText.getText().toString(),ratingBar.getRating());
+        Comment mComment = new Comment(mUser, editText.getText().toString(), ratingBar.getRating());
         comments.add(mComment);
-        double ratingsNum=tour.ratingsNum;
-        int commentsNum=tour.commentsNum;
-        int numOfPeopleWhoRated=tour.numOfPeopleWhoRated;
-        ratingsNum=((ratingsNum*numOfPeopleWhoRated)+ratingBar.getRating())/++numOfPeopleWhoRated;
+        double ratingsNum = tour.ratingsNum;
+        int commentsNum = tour.commentsNum;
+        int numOfPeopleWhoRated = tour.numOfPeopleWhoRated;
+        ratingsNum = ((ratingsNum * numOfPeopleWhoRated) + ratingBar.getRating()) / ++numOfPeopleWhoRated;
 
-        if(!(editText.getText().toString().matches("")))
-        {
+        if (!(editText.getText().toString().matches(""))) {
             commentsNum++;
         }
 
-        mRating.setText(ratingsNum+"");
-        mComments.setText(commentsNum+"");
+        mRating.setText(ratingsNum + "");
+        mComments.setText(commentsNum + "");
         mRate_btn.setImageResource(R.drawable.ic_star_filled);
         mRate_btn.setClickable(false);
 
 
-        Map<String,Object> updatedData=new HashMap<>();
-        updatedData.put("comments",comments);
-        updatedData.put("commentsNum",commentsNum);
-        updatedData.put("ratingsNum",ratingsNum);
-        updatedData.put("numOfPeopleWhoRated",numOfPeopleWhoRated);
+        Map<String, Object> updatedData = new HashMap<>();
+        updatedData.put("comments", comments);
+        updatedData.put("commentsNum", commentsNum);
+        updatedData.put("ratingsNum", ratingsNum);
+        updatedData.put("numOfPeopleWhoRated", numOfPeopleWhoRated);
         tourReference.update(updatedData).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
@@ -313,27 +326,27 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
             }
         });
 
-        Map<String,Object> userUpdate=new HashMap<>();
-        List<String> toursCommentedOn=mUser.toursCommentedOn;
+        Map<String, Object> userUpdate = new HashMap<>();
+        List<String> toursCommentedOn = mUser.toursCommentedOn;
         toursCommentedOn.add(mTours.get(position).tourId);
-        userUpdate.put("toursCommentedOn",toursCommentedOn);
+        userUpdate.put("toursCommentedOn", toursCommentedOn);
 
-        DocumentReference userRefernce=db.collection("users").document(mUser.userId);
-               userRefernce.update(userUpdate).addOnSuccessListener(new OnSuccessListener<Void>() {
+        DocumentReference userRefernce = db.collection("users").document(mUser.userId);
+        userRefernce.update(userUpdate).addOnSuccessListener(new OnSuccessListener<Void>() {
 
             @Override
             public void onSuccess(Void aVoid) {
                 Log.d(TAG, "onSuccess: user info updated");
             }
         }).addOnFailureListener(new OnFailureListener() {
-                   @Override
-                   public void onFailure(@NonNull Exception e) {
-                       Log.e(TAG, "onFailure: ",e);
-                   }
-               });
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e(TAG, "onFailure: ", e);
+            }
+        });
 
-               editText.setText("");
-               ratingBar.setRating(0);
+        editText.setText("");
+        ratingBar.setRating(0);
 
     }
 
