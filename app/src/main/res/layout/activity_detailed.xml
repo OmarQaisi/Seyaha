@@ -31,18 +31,32 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
-                android:text="@string/detailed_activity_description"
-                android:textSize="24sp"
-                android:id="@+id/place_name_title"
-                android:fontFamily="@font/montserrat_bold"
-                android:textColor="@android:color/black"
-                android:layout_marginTop="10dp"
-                />
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:text="@string/detailed_activity_description"
+                    android:textSize="24sp"
+                    android:id="@+id/place_name_title"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:textColor="@color/blue_logo"
+                    />
+                <ImageButton
+                    android:id="@+id/text_to_speech"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_speak"/>
+            </LinearLayout>
+
 
             <TextView
                 android:layout_width="match_parent"

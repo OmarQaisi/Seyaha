@@ -14,10 +14,6 @@
             android:id="@+id/nav_tour"
             android:icon="@drawable/ic_tour"
             android:title="@string/nav_tour" />
-        <item
-            android:id="@+id/nav_upcoming_event"
-            android:icon="@drawable/ic_calendar"
-            android:title="@string/upcomingevent" />
 
         <item
             android:id="@+id/nav_help_feedback"
@@ -41,7 +37,13 @@
 
         </menu>
     </item>
+
     <group android:id="@+id/menu_bottom">
+        <item
+            android:id="@+id/nav_upcoming_event"
+            android:icon="@drawable/ic_calendar"
+            android:title="@string/upcomingevent" />
+
         <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_logout"

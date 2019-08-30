@@ -18,6 +18,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.MenuItem;
@@ -46,6 +47,7 @@ import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -69,14 +71,13 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
     private OpenWeatherApi openWeatherApi;
     private double tempApiResult;
 
-    ImageButton zoom_in,zoom_out;
+    ImageButton zoom_in,zoom_out, text_to_speech;
     View map_view;
 
     private Toolbar mToolbar;
     private TextView mTextView;
 
-
-     ScrollView scrollView;
+    ScrollView scrollView;
     SupportMapFragment mapFragment;
     FrameLayout seasonFlip,timeToGoFlip,estimationFlip,ageFlip;
     TextView seasonTv,timeToGoTv,ageTv1,ageTv2,estimationTv,costTv,tempTv,airQualityTv,internetTv,placeNameInfo, placeNameRecommendations,placeNameLocation,description,placeNameTitle;
@@ -200,6 +201,14 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
                 description.getParent().requestDisallowInterceptTouchEvent(true);
 
                 return false;
+            }
+        });
+
+        text_to_speech = findViewById(R.id.text_to_speech);
+        text_to_speech.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
 

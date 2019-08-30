@@ -1,17 +1,15 @@
 package com.example.seyaha;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -40,6 +38,11 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     private CircleImageView mNavProfileAvatar;
     private TextView mNavDisplayName;
     private TextView mNavEmail;
+
+    //fragments_tags
+    private final String TOUR_FRAGMENT_TAG = "tour";
+    private final String PROFILE_FRAGMENT_TAG = "profile";
+    private final String HELP_FEEDBACK_FRAGMENT_TAG = "help_feedback";
 
     private FirebaseAuth mFirebaseAuth;
     private  FirebaseAuth.AuthStateListener mFirebaseAuthListner;
@@ -80,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
 
         if(savedInstanceState == null)
         {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new TourFragment()).commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,new TourFragment(), TOUR_FRAGMENT_TAG).commit();
             mNavigationView.setCheckedItem(R.id.nav_tour);
             changeToolbarTitle(getString(R.string.nav_tour));
         }
@@ -127,18 +130,45 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()){
             case R.id.nav_profile:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new ProfileFragment()).commit();
+                if(getSupportFragmentManager().findFragmentByTag(PROFILE_FRAGMENT_TAG) != null){
+                    getSupportFragmentManager().beginTransaction().show(getSupportFragmentManager().findFragmentByTag(PROFILE_FRAGMENT_TAG)).commit();
+                } else {
+                    getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new ProfileFragment(), PROFILE_FRAGMENT_TAG).commit();
+                }
+                if(getSupportFragmentManager().findFragmentByTag(TOUR_FRAGMENT_TAG) != null)
+                    getSupportFragmentManager().beginTransaction().hide(getSupportFragmentManager().findFragmentByTag(TOUR_FRAGMENT_TAG)).commit();
+                if(getSupportFragmentManager().findFragmentByTag(HELP_FEEDBACK_FRAGMENT_TAG) != null)
+                    getSupportFragmentManager().beginTransaction().hide(getSupportFragmentManager().findFragmentByTag(HELP_FEEDBACK_FRAGMENT_TAG)).commit();
                 changeToolbarTitle(getString(R.string.nav_profile));
                 break;
             case R.id.nav_tour:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new TourFragment()).commit();
+                if(getSupportFragmentManager().findFragmentByTag(TOUR_FRAGMENT_TAG) != null){
+                    getSupportFragmentManager().beginTransaction().show(getSupportFragmentManager().findFragmentByTag(TOUR_FRAGMENT_TAG)).commit();
+                } else {
+                    getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new TourFragment(), TOUR_FRAGMENT_TAG).commit();
+                }
+                if(getSupportFragmentManager().findFragmentByTag(PROFILE_FRAGMENT_TAG) != null)
+                    getSupportFragmentManager().beginTransaction().hide(getSupportFragmentManager().findFragmentByTag(PROFILE_FRAGMENT_TAG)).commit();
+                if(getSupportFragmentManager().findFragmentByTag(HELP_FEEDBACK_FRAGMENT_TAG) != null)
+                    getSupportFragmentManager().beginTransaction().hide(getSupportFragmentManager().findFragmentByTag(HELP_FEEDBACK_FRAGMENT_TAG)).commit();
                 changeToolbarTitle(getString(R.string.nav_tour));
                 break;
-            case R.id.nav_upcoming_event:
-                Toast.makeText(this, "Comming Soon..", Toast.LENGTH_SHORT).show();
-                break;
             case R.id.nav_help_feedback:
-                Toast.makeText(this, "Comming Soon..", Toast.LENGTH_SHORT).show();
+                if(getSupportFragmentManager().findFragmentByTag(HELP_FEEDBACK_FRAGMENT_TAG) != null){
+                    getSupportFragmentManager().beginTransaction().show(getSupportFragmentManager().findFragmentByTag(HELP_FEEDBACK_FRAGMENT_TAG)).commit();
+                } else {
+                    getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new HelpFeedbackFragment(), HELP_FEEDBACK_FRAGMENT_TAG).commit();
+                }
+                if(getSupportFragmentManager().findFragmentByTag(PROFILE_FRAGMENT_TAG) != null)
+                    getSupportFragmentManager().beginTransaction().hide(getSupportFragmentManager().findFragmentByTag(PROFILE_FRAGMENT_TAG)).commit();
+                if(getSupportFragmentManager().findFragmentByTag(TOUR_FRAGMENT_TAG) != null)
+                    getSupportFragmentManager().beginTransaction().hide(getSupportFragmentManager().findFragmentByTag(TOUR_FRAGMENT_TAG)).commit();
+                changeToolbarTitle(getString(R.string.nav_help_feedback));
+                break;
+            case R.id.nav_upcoming_event:
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse("http://calendar.jo/DefaultNew.aspx"));
+                startActivity(i);
                 break;
             case R.id.nav_logout:
                 AuthUI.getInstance().signOut(this);
