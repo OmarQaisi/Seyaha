@@ -13,45 +13,58 @@ import androidx.annotation.Nullable;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class CommentAdapter extends ArrayAdapter {
+public class CommentAdapter extends ArrayAdapter<Comment> {
 
-    Context mContext;
-    List<Comment> mComments=new ArrayList<>();
-    public CommentAdapter(@NonNull Context context, List<Comment> comments) {
-        super(context,0);
-        mContext=context;
-        mComments=comments;
+
+    int tourPosition;
+
+    public CommentAdapter(@NonNull Context context, List<Comment> comments,int tourPosition) {
+        super(context,0,comments);
+        this.tourPosition=tourPosition;
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent)
     {
-
-        if(convertView==null)
+        View listItem=convertView;
+        if(listItem==null)
         {
-            convertView= LayoutInflater.from(mContext).inflate(R.layout.comment_item,parent,false);
+            listItem= LayoutInflater.from(getContext()).inflate(R.layout.comment_item,parent,false);
         }
-         Comment comment=mComments.get(position);
+         Comment comment=getItem(position);
 
 
-        CircleImageView profilePic=convertView.findViewById(R.id.comment_profile_pic);
+        CircleImageView profilePic=listItem.findViewById(R.id.comment_profile_pic);
         Picasso.get().load(comment.user.imageURL).fit().into(profilePic);
 
-        TextView personName=convertView.findViewById(R.id.comment_person_name);
+        TextView personName=listItem.findViewById(R.id.comment_person_name);
         personName.setText(comment.user.displayName);
 
-        TextView commentText=convertView.findViewById(R.id.comment_main_text);
+        TextView commentText=listItem.findViewById(R.id.comment_main_text);
         commentText.setText(comment.comment);
 
-        RatingBar ratingBar=convertView.findViewById(R.id.comment_rating_bar);
-        ratingBar.setNumStars((int)comment.rating);
+        RatingBar ratingBar=listItem.findViewById(R.id.comment_rating_bar);
+        ratingBar.setRating(comment.rating);
 
-        return convertView;
+        final TextView noOfReviews=listItem.findViewById(R.id.number_of_reviews);
+        FirestoreQueries.getUser(new FirestoreQueries.FirestoreUserCallback() {
+            @Override
+            public void onCallback(User user) {
+               noOfReviews.setText(user.toursCommentedOn.size()+" Reviews");
+            }
+        });
+
+        TextView time=listItem.findViewById(R.id.comment_time);
+        time.setText(comment.time);
+
+        return listItem;
     }
 }

@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+
         <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
             android:id="@+id/comment_profile_pic"
@@ -18,43 +16,71 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:id="@+id/comments_linear"
+            android:layout_toRightOf="@id/comment_profile_pic"
             android:orientation="vertical"
             android:layout_gravity="center">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
+                android:textSize="12sp"
                 android:layout_marginLeft="5dp"
                 android:id="@+id/comment_person_name"
                 android:text="motassem Naqawah"
                 android:textColor="@android:color/black"
                 android:fontFamily="@font/montserrat_medium" />
-            <RatingBar
-                android:id="@+id/comment_rating_bar"
-                style="?android:attr/ratingBarStyleIndicator"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:clickable="false"
-                android:isIndicator="false"
-                android:numStars="5"
-                android:rating="0"
-                android:theme="@style/RatingBar" />
+                android:id="@+id/number_of_reviews"
+                android:layout_marginLeft="5dp"
+                android:textSize="12sp"
+                android:fontFamily="@font/montserrat_light"
+                android:text="3 Reviews"/>
 
         </LinearLayout>
-
-    </LinearLayout>
+    <RatingBar
+        android:id="@+id/comment_rating_bar"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/comment_profile_pic"
+        android:layout_marginTop="5dp"
+        android:layout_alignParentLeft="true"
+        android:clickable="false"
+        android:isIndicator="true"
+        android:numStars="5"
+        android:rating="0"
+        android:layout_marginLeft="10dp"
+        android:progressTint="@color/gold"
+        android:theme="@style/RatingBar" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/comment_profile_pic"
+        android:layout_marginTop="5dp"
+        android:text="30-march"
+        android:id="@+id/comment_time"
+        android:textSize="12sp"
+        android:layout_marginLeft="5dp"
+        android:fontFamily="@font/montserrat_light"
+        android:layout_toRightOf="@id/comment_rating_bar"/>
 
     <TextView android:id="@+id/comment_main_text"
         android:layout_width="wrap_content"
+        android:layout_below="@id/comment_rating_bar"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="15dp"
-        android:textSize="18sp"
-        android:layout_marginRight="30dp"
+        android:layout_alignParentLeft="true"
+        android:textSize="12sp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="10dp"
         android:textColor="@android:color/black"
-        android:fontFamily="@font/montserrat_medium"
+        android:fontFamily="@font/montserrat_light"
         android:text="it was a really nice tour would recommend it to all of my friends"/>
 
-</LinearLayout>
+</RelativeLayout>

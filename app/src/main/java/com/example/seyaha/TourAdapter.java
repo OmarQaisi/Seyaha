@@ -39,7 +39,10 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -181,22 +184,26 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
             }
         });
 
+        final Dialog commentsDialog = new Dialog(context);
+        commentsDialog.setContentView(holder.commentsDialogView);
         holder.mComment_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
-                    Tour tour = mTours.get(position);
-                    List<Comment> comments = tour.comments;
-                    CommentAdapter adapter = new CommentAdapter(context, comments);
-                    Dialog commentsDialog = new Dialog(context);
-                    commentsDialog.setContentView(R.layout.comments_dialog);
-                    holder.commentsListView.setAdapter(adapter);
+                    FirestoreQueries.getTours(new FirestoreQueries.FirestoreTourCallback() {
+                        @Override
+                        public void onCallback(List<Tour> tours) {
+                            Tour tour = tours.get(position);
+                            List<Comment> comments = tour.comments;
+                            CommentAdapter adapter = new CommentAdapter(context, comments,position);
+                            holder.commentsListView.setAdapter(adapter);
+                            commentsDialog.show();
+                        }
+                    });
 
-                    commentsDialog.show();
                 } catch (Exception e) {
                     Log.e(TAG, "onClick: ", e);
                 }
-
             }
         });
     }
@@ -292,15 +299,23 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
 
         final DocumentReference tourReference = db.collection("tours").document(mTours.get(position).tourId);
 
-        Comment mComment = new Comment(mUser, editText.getText().toString(), ratingBar.getRating());
+        String mDate=getCurrentDate();
+
+        Comment mComment = new Comment(mUser, editText.getText().toString(), ratingBar.getRating(),getCurrentDate());
         comments.add(mComment);
         double ratingsNum = tour.ratingsNum;
         int commentsNum = tour.commentsNum;
         int numOfPeopleWhoRated = tour.numOfPeopleWhoRated;
         ratingsNum = ((ratingsNum * numOfPeopleWhoRated) + ratingBar.getRating()) / ++numOfPeopleWhoRated;
 
+        Map<String, Object> updatedData = new HashMap<>();
+        updatedData.put("ratingsNum", ratingsNum);
+        updatedData.put("numOfPeopleWhoRated", numOfPeopleWhoRated);
+
         if (!(editText.getText().toString().matches(""))) {
             commentsNum++;
+            updatedData.put("commentsNum", commentsNum);
+            updatedData.put("comments", comments);
         }
 
         mRating.setText(ratingsNum + "");
@@ -308,12 +323,6 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
         mRate_btn.setImageResource(R.drawable.ic_star_filled);
         mRate_btn.setClickable(false);
 
-
-        Map<String, Object> updatedData = new HashMap<>();
-        updatedData.put("comments", comments);
-        updatedData.put("commentsNum", commentsNum);
-        updatedData.put("ratingsNum", ratingsNum);
-        updatedData.put("numOfPeopleWhoRated", numOfPeopleWhoRated);
         tourReference.update(updatedData).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
@@ -348,6 +357,13 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
         editText.setText("");
         ratingBar.setRating(0);
 
+    }
+
+    private String getCurrentDate() {
+        long millis = System.currentTimeMillis();
+        Date date = new Date(millis);
+        DateFormat format = new SimpleDateFormat("dd MMMM");
+        return format.format(date);
     }
 
 }
