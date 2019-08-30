@@ -234,7 +234,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
                 longitude=mPlace.get(position).longitude;
                 placeName=mPlace.get(position).nameEN;
                 mapFragment.getMapAsync(DetailedActivity.this);
-                placeNameTitle.setText(mPlace.get(position).nameEN);
+
 
             }
 
