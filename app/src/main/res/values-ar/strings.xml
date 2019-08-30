@@ -76,6 +76,7 @@
     <string name="toast_places">الرجاء اختيار 3 أماكن على الأقل لعمل رحلة.</string>
     <string name="upcomingevent">الحدث القادم</string>
     <string name="helpandfeedback">المساعدة</string>
+    <string name="already_rated">لقد قيمت هذه الرحلة من قبل!!</string>
     <string name="detailed_activity_title">تفاصيل الرحلة</string>
     <string name="reviews_comments_dialog">التعليقات</string>
 

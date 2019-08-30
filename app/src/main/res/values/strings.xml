@@ -75,6 +75,6 @@
     <string name="night_time">Night</string>
     <string name="detailed_activity_title">Tour Details</string>
     <string name="reviews_comments_dialog">Reviews</string>
-
+   <string name="already_rated">You have already rated this tour!!</string>
 
 </resources>

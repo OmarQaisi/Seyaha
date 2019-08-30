@@ -1,9 +1,11 @@
 package com.example.seyaha;
 
 import androidx.annotation.DrawableRes;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.res.ResourcesCompat;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.animation.AnimatorInflater;
@@ -14,6 +16,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
@@ -21,9 +24,12 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.ZoomControls;
 
 import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -33,6 +39,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -57,9 +64,13 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
     double latitude,longitude;
     String placeName;
 
+
     private final String APIKEY = "4e4480d5039580a36c576fa58a0c1d3a";
     private OpenWeatherApi openWeatherApi;
     private double tempApiResult;
+
+    ImageButton zoom_in,zoom_out;
+    View map_view;
 
     private Toolbar mToolbar;
     private TextView mTextView;
@@ -83,8 +94,6 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detailed);
-
-
         mToolbar = findViewById(R.id.detailed_toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle(null);
@@ -108,16 +117,15 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
 
 
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-
-
         //text views and description deceleration
         placeNameRecommendations =findViewById(R.id.place_name_recommendations);
         placeNameInfo=findViewById(R.id.place_name_information_about);
         placeNameLocation=findViewById(R.id.place_name_location);
+        zoom_in=findViewById(R.id.zoomin);
+        zoom_out=findViewById(R.id.zoomout);
         description=findViewById(R.id.description_tv);
         scrollView=findViewById(R.id.scrollview);
         placeNameTitle=findViewById(R.id.place_name_title);
-
         //information about the place deceleration
         costProgressBar=findViewById(R.id.cost_progress);
         tempProgressBar=findViewById(R.id.temp_progress);
@@ -132,22 +140,14 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         timeToGoFlip=findViewById(R.id.time_btn);
         ageFlip=findViewById(R.id.age_btn);
         estimationFlip=findViewById(R.id.estimated_btn);
-
-
         loadAnimations();
-
-
-
         Intent i=getIntent();
         mPlace=(List<Place>)i.getSerializableExtra("places");
-
-
         description.setMovementMethod(new ScrollingMovementMethod());
-
         latitude=mPlace.get(0).latitude;
         longitude=mPlace.get(0).longitude;
         placeName=mPlace.get(0).nameEN;
-
+        map_view = mapFragment.getView();
         mapFragment.getMapAsync(this);
 
         run_viewPager();
@@ -281,8 +281,6 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
                 longitude=mPlace.get(position).longitude;
                 placeName=mPlace.get(position).nameEN;
                 mapFragment.getMapAsync(DetailedActivity.this);
-
-
                 scrollView.fullScroll(View.FOCUS_UP);
                 description.scrollTo(0,0);
 
@@ -300,14 +298,26 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
-
         LatLng googleMapPlace = new LatLng(latitude, longitude);
         MarkerOptions my_own_marker = new MarkerOptions().position(googleMapPlace).title(placeName);
-        my_own_marker.icon((getBitmapDescriptor(R.drawable.ic_gps)));
+        my_own_marker.icon((getBitmapDescriptor(R.drawable.ic_pin)));
         mMap.addMarker(my_own_marker);
-        // mMap.addMarker(new MarkerOptions().position(sydney).title("third circle"));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(googleMapPlace, 16.0f));
+        mMap.getUiSettings().setMyLocationButtonEnabled(true);
+        mMap.getUiSettings().setMapToolbarEnabled(true);
+        zoom_out.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mMap.animateCamera(CameraUpdateFactory.zoomOut());
+            }
+        });
+        zoom_in.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mMap.animateCamera(CameraUpdateFactory.zoomIn());
+            }
+        });
+
 
         //mMap.animateCamera(CameraUpdateFactory.zoomOut());
 

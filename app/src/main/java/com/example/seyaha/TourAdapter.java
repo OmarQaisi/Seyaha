@@ -56,6 +56,7 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
     Context context;
     public User mUser;
     FirebaseFirestore db;
+    View view;
     int id = 0;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -63,7 +64,7 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
     @Override
     public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         context = viewGroup.getContext();
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.tour_item, viewGroup, false);
+         view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.tour_item, viewGroup, false);
         ImageViewHolder imageViewHolder = new ImageViewHolder(view);
 
         FirestoreQueries.getUser(new FirestoreQueries.FirestoreUserCallback() {
@@ -96,6 +97,7 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
         } else {
             holder.mTitle.setText(tour.titleEN);
             holder.mDescription.setText(tour.makeEnglishDescription(tour.categoriesEN));
+
         }
         holder.mRating.setText(tour.ratingsNum + "");
 
@@ -165,7 +167,12 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
                     if (n.equals(mTours.get(position).tourId)) {
                         holder.mRate_btn.setImageResource(R.drawable.ic_star_filled);
                         holder.mComment_btn.setImageResource(R.drawable.ic_chat_comment_blue);
-                        holder.mRate_btn.setClickable(false);
+                       holder.mRate_btn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Toast.makeText(context,context.getString(R.string.already_rated),Toast.LENGTH_LONG).show();
+                            }
+                        });
                         break;
                     }
                 }
@@ -175,7 +182,7 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
         holder.mArrowDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createPopupMenu(context, v, tour);
+                createPopupMenu(context, v, tour,position);
             }
         });
 
@@ -258,8 +265,13 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
         mTours.remove(tour);
         notifyDataSetChanged();
     }
+    private void move_to_overView(Context context)
+    {
 
-    public void createPopupMenu(final Context context, View view, final Tour tour) {
+
+    }
+
+    public void createPopupMenu(final Context context, final View view, final Tour tour, final int position) {
         db = FirebaseFirestore.getInstance();
         PopupMenu mPopupMenu = new PopupMenu(context, view);
         mPopupMenu.getMenuInflater().inflate(id, mPopupMenu.getMenu());
@@ -267,7 +279,10 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.overview_tour:
-                        // code the overview here
+                        Intent i=new Intent(context,OverviewActivity.class);
+                        i.putExtra("places", (Serializable) mTours.get(position).places);
+                        context.startActivity(i);
+
                         break;
                     case R.id.delete_tour:
                         db.collection("tours").document(tour.tourId).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -336,7 +351,12 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
         mRating.setText(ratingsNum + "");
         mComments.setText(commentsNum + "");
         mRate_btn.setImageResource(R.drawable.ic_star_filled);
-        mRate_btn.setClickable(false);
+        mRate_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context,context.getString(R.string.already_rated),Toast.LENGTH_LONG).show();
+            }
+        });
 
 
 

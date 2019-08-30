@@ -42,7 +42,7 @@
             android:id="@+id/titleA"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:digits="غظضذخثتشرقصجفعسنملةىكيطئءؤحزوهدبا "
+            android:digits="غظضذخثتشرقصجفعسنملةىكيطئءؤحزوهدباأ "
             android:hint="@string/title_arabic" />
 
     </com.google.android.material.textfield.TextInputLayout>
