@@ -11,6 +11,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
@@ -55,12 +59,15 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
         ratingBar.setRating(comment.rating);
 
         final TextView noOfReviews=listItem.findViewById(R.id.number_of_reviews);
-        FirestoreQueries.getUser(new FirestoreQueries.FirestoreUserCallback() {
-            @Override
-            public void onCallback(User user) {
-               noOfReviews.setText(user.toursCommentedOn.size()+" Reviews");
-            }
-        });
+        FirebaseFirestore  mFirebaseFirestore=FirebaseFirestore.getInstance();
+       CollectionReference users = mFirebaseFirestore.collection("users");
+       users.whereEqualTo("email",comment.user.email).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+           @Override
+           public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+          User mUser= queryDocumentSnapshots.getDocuments().get(0).toObject(User.class);
+          noOfReviews.setText(mUser.toursCommentedOn.size()+" Reviews");
+           }
+       });
 
         TextView time=listItem.findViewById(R.id.comment_time);
         time.setText(comment.time);
