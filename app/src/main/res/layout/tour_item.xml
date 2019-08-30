@@ -136,7 +136,7 @@
     <ImageButton
         android:id="@+id/comment_btn"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:src="@drawable/ic_chat_comment"
+        android:src="@drawable/ic_chat_comment_gray"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/line"

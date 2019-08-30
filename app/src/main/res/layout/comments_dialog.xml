@@ -18,7 +18,7 @@
         android:layout_centerHorizontal="true"
         android:textAlignment="center"
         android:fontFamily="@font/montserrat_bold"
-        android:text="Reviews"
+        android:text="@string/reviews_comments_dialog"
         android:textColor="@android:color/black"
         android:textSize="22sp" />
 </androidx.cardview.widget.CardView>

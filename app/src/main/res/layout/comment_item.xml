@@ -12,6 +12,7 @@
             android:id="@+id/comment_profile_pic"
             android:layout_gravity="center"
             android:layout_marginBottom="2dp"
+            android:layout_alignParentLeft="true"
             android:src="@drawable/ic_launcher_background"/>
         <LinearLayout
             android:layout_width="wrap_content"
@@ -19,6 +20,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="5dp"
             android:id="@+id/comments_linear"
+            android:gravity="left"
             android:layout_toRightOf="@id/comment_profile_pic"
             android:orientation="vertical"
             android:layout_gravity="center">
@@ -39,7 +41,7 @@
                 android:layout_marginLeft="5dp"
                 android:textSize="12sp"
                 android:fontFamily="@font/montserrat_light"
-                android:text="3 Reviews"/>
+                android:text="0 Reviews"/>
 
         </LinearLayout>
     <RatingBar
@@ -52,6 +54,8 @@
         android:layout_alignParentLeft="true"
         android:clickable="false"
         android:isIndicator="true"
+        android:foregroundGravity="left"
+        android:mirrorForRtl="false"
         android:numStars="5"
         android:rating="0"
         android:layout_marginLeft="10dp"

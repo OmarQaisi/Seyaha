@@ -34,11 +34,21 @@ import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class DetailedActivity extends AppCompatActivity implements OnMapReadyCallback {
+    private static final String TAG = "DetailedActivity";
+
     private GoogleMap mMap;
     ViewPager viewPager;
     List <String> imageUrls;
@@ -46,6 +56,10 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
     viewPagerAdapter adapter;
     double latitude,longitude;
     String placeName;
+
+    private final String APIKEY = "4e4480d5039580a36c576fa58a0c1d3a";
+    private OpenWeatherApi openWeatherApi;
+    private double tempApiResult;
 
     private Toolbar mToolbar;
     private TextView mTextView;
@@ -82,6 +96,15 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
+
+
+        //retrofit config
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://api.openweathermap.org/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        openWeatherApi = retrofit.create(OpenWeatherApi.class);
+
 
 
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -130,7 +153,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         run_viewPager();
 
         setCostProgress(mPlace.get(0).cost);
-        setTempProgress("40");
+        getTempApi(mPlace.get(0).latitude, mPlace.get(0).longitude);
         setAirQualityProgress("20");
         setInternetProgress(mPlace.get(0).internet);
 
@@ -182,6 +205,32 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
 
     }
 
+    private void getTempApi(double latitude, double longitude) {
+        Call<JsonObject> call = openWeatherApi.getTemp(latitude, longitude, APIKEY);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+
+                if (!response.isSuccessful()) {
+                    Log.d(TAG, "Code: " + response.code());
+                    return;
+                }
+                JsonObject root = response.body();
+                JsonObject main = root.getAsJsonObject("main");
+                JsonElement element = main.get("temp");
+
+                tempApiResult = element.getAsDouble() - 273.15;
+
+                setTempProgress((int) tempApiResult);
+            }
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.d(TAG, "onFailure: "+t.getMessage());
+            }
+        });
+
+    }
+
     private void run_viewPager() {
         imageUrls = new ArrayList <>();
 
@@ -205,7 +254,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
             public void onPageSelected(int position)
             {
                 setCostProgress(mPlace.get(position).cost);
-                setTempProgress("40");
+                getTempApi(mPlace.get(position).latitude, mPlace.get(position).longitude);
                 setAirQualityProgress("20");
                 setInternetProgress(mPlace.get(position).internet);
 
@@ -237,15 +286,12 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
                 scrollView.fullScroll(View.FOCUS_UP);
                 description.scrollTo(0,0);
 
-
-
             }
 
             @Override
             public void onPageScrollStateChanged(int state)
             {
                 System.out.println(state);
-
             }
         });
 
@@ -304,24 +350,23 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
 
     }
 
-    private void setTempProgress(String temp)
+    private void setTempProgress(int temp)
     {
-        int result=Integer.parseInt(temp);
 
-        if(result<=10)
+        if(temp<=10)
         {
             tempProgressBar.setProgressColor(Color.RED);
-            tempProgressBar.setProgress(result);
+            tempProgressBar.setProgress(temp);
             tempTv.setText(getResources().getString(R.string.cold)+temp+"\u2103"+"(now)");
 
         }
-        else  if(result>10 && result<=18)
+        else  if(temp>10 && temp<=18)
         {
             tempTv.setText(getResources().getString(R.string.normal)+temp+"\u2103"+"(now)");
-            tempProgressBar.setProgress(result);
+            tempProgressBar.setProgress(temp);
             tempProgressBar.setProgressColor(Color.rgb(255,165,0));
         }
-        else if(result>18 && result<=30)
+        else if(temp>18 && temp<=30)
         {
             tempProgressBar.setProgressColor(Color.GREEN);
             tempProgressBar.setProgress(55);
@@ -330,7 +375,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         else
         {
             tempProgressBar.setProgressColor(Color.RED);
-            tempProgressBar.setProgress(55-result);
+            tempProgressBar.setProgress(55-temp);
             tempTv.setText(getResources().getString(R.string.hot)+temp+"\u2103"+"(now)");
         }
 
