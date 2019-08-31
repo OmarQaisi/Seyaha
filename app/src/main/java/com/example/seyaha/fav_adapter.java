@@ -23,6 +23,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -32,6 +34,7 @@ public class fav_adapter extends RecyclerView.Adapter<fav_adapter.ImageViewHolde
     String [] interests;
     String [] interests_ar;
    static List <String> interests_chosen;
+   static HashSet<String> intrests_hashSet;
     FirebaseFirestore db;
     int counter[];
 
@@ -53,6 +56,7 @@ public class fav_adapter extends RecyclerView.Adapter<fav_adapter.ImageViewHolde
         interests = context.getResources().getStringArray(R.array.interestsEN);
         interests_ar=context.getResources().getStringArray(R.array.interestsAR);
         interests_chosen=new ArrayList <String>();
+        intrests_hashSet=new HashSet <>();
         counter=new int[interests.length];
     }
 
@@ -64,13 +68,14 @@ public class fav_adapter extends RecyclerView.Adapter<fav_adapter.ImageViewHolde
             @Override
             public void onCallback(User user) {
                 Log.d("anastt", "onCallback: "+user.displayName+" "+user.intrests.toString());
-                interests_chosen=user.intrests;
-                if(interests_chosen.size()!=0)
+                intrests_hashSet.addAll(user.intrests);
+                if(intrests_hashSet.size()!=0)
                 {
                     Log.d("anasee", "onBindViewHolder: ");
-                   for(int i=0;i<interests_chosen.size();i++)
+                    Iterator<String> i=intrests_hashSet.iterator();
+                   while(i.hasNext())
                    {
-                       if(interests[position].equals(interests_chosen.get(i)))
+                       if(interests[position].equals(i.next()))
                        {
                            holder.checker.setVisibility(View.VISIBLE);
                        }
@@ -93,12 +98,12 @@ public class fav_adapter extends RecyclerView.Adapter<fav_adapter.ImageViewHolde
                 if(counter[position]%2==0)
                 {
                     holder.checker.setVisibility(View.VISIBLE);
-                    interests_chosen.add(interests[position].toString());
+                    intrests_hashSet.add(interests[position].toString());
                 }
                 else
                 {
                     holder.checker.setVisibility(View.INVISIBLE);
-                    interests_chosen.remove(interests[position].toString());
+                    intrests_hashSet.remove(interests[position].toString());
                 }
                 counter[position]++;
             }

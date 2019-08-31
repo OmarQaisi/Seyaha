@@ -22,7 +22,8 @@
     <string name="title">العنوان</string>
     <string name="JD">دينار</string>
     <string name="now">(الان)</string>
-
+    <string name="title_share">هذا التطبيق يستخدم لاكتشاف الأماكن السياحية في الأردن</string>
+    <string name="using">مشاركة باستخدام:</string>
 
     <!-- Strings for the (drawer_menu) titles -->
     <string name="english">انجليزية</string>

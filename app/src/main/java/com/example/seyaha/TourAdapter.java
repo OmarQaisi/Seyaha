@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -195,12 +196,33 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
                             CommentAdapter adapter = new CommentAdapter(context, comments, position);
                             holder.commentsListView.setAdapter(adapter);
                             holder.commentsDialog.show();
+                            holder.commentsDialog.getWindow().setAttributes(holder.lp);
+
                         }
                     });
 
                 } catch (Exception e) {
                     Log.e(TAG, "onClick: ", e);
                 }
+            }
+        });
+        holder.mShare_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myIntent =new Intent(Intent.ACTION_SEND);
+                myIntent.setType("text/plain");
+                String shareSub=context.getString(R.string.title_share);
+                String shareBody=context.getString(R.string.title_share)+"\n https://github.com/OmarQaisi/Seyaha";
+                myIntent.putExtra(Intent.EXTRA_SUBJECT,shareSub);
+                myIntent.putExtra(Intent.EXTRA_TEXT,shareBody);
+                context.startActivity(Intent.createChooser(myIntent,context.getString(R.string.using)));
+            }
+        });
+
+        holder.commentsCancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.commentsDialog.dismiss();
             }
         });
     }
@@ -225,6 +247,8 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
         Dialog commentsDialog;
         RatingBar ratingBar;
         ListView commentsListView;
+        WindowManager.LayoutParams lp;
+        Button commentsCancelBtn;
 
         @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         public ImageViewHolder(View itemView) {
@@ -234,6 +258,10 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
             commentsDialogView = vi.inflate(R.layout.comments_dialog, null, false);
             commentsListView = commentsDialogView.findViewById(R.id.comments_listview);
             commentsDialog = new Dialog(itemView.getContext());
+            lp = new WindowManager.LayoutParams();
+            lp.copyFrom(commentsDialog.getWindow().getAttributes());
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
             commentsDialog.setContentView(commentsDialogView);
             post_btn = mView.findViewById(R.id.post_btn);
             mCancel_btn = mView.findViewById(R.id.cancel_btn);
@@ -254,6 +282,7 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
             mShare_btn = itemView.findViewById(R.id.share_btn);
             mComment_btn = itemView.findViewById(R.id.comment_btn);
             mRate_btn = itemView.findViewById(R.id.star);
+            commentsCancelBtn=commentsDialogView.findViewById(R.id.cancel_btn_comments);
         }
 
     }

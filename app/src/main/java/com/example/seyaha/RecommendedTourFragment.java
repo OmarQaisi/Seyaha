@@ -57,7 +57,7 @@ public class RecommendedTourFragment extends Fragment {
 
         FirestoreQueries.getUser(new FirestoreQueries.FirestoreUserCallback() {
             @Override
-            public void onCallback(User user) {
+            public void onCallback(final User user) {
 
 
                 FirestoreQueries.getTours(new FirestoreQueries.FirestoreTourCallback() {
@@ -65,8 +65,21 @@ public class RecommendedTourFragment extends Fragment {
                     public void onCallback(List<Tour> tours) {
                         mTours=null;
                         mTours = tours;
-                        mTours.remove(tours.get(0));
-                        mAdapter = new TourAdapter(mTours);
+                        ArrayList<String> userKeywords=(ArrayList<String>) user.intrests;
+                        ArrayList<Tour>  recommendedTours=new ArrayList <>();
+                        for(int i=0;i<userKeywords.size();i++)
+                        {
+                            for(int j=0;j<mTours.size();j++)
+                            {
+                                if(mTours.get(j).tourKeywords.contains(userKeywords.get(i)))
+                                {
+                                    if(!recommendedTours.contains(mTours.get(j)))
+                                    recommendedTours.add(mTours.get(j));
+
+                                }
+                            }
+                        }
+                        mAdapter = new TourAdapter(recommendedTours);
                         mManger = new LinearLayoutManager(mView.getContext());
                         mRecyclerViewRecommended = mView.findViewById(R.id.rv_recommended);
                         mRecyclerViewRecommended.setLayoutManager(mManger);

@@ -131,21 +131,21 @@ public class AddTourActivity extends AppCompatActivity {
         return ar;
     }
 
-    private ArrayList<String> makeKeywords(List<Place> mPlaces)
+    private String makeKeywords(List<Place> mPlaces)
     {
-        HashSet<String> tourKeywords= new HashSet<>();
+        String tourKeywords="";
         for(int i=0;i<mPlaces.size();i++)
         {
             String placeKeywords=mPlaces.get(i).keywords.trim();
             String[] placeKeywordsArr=placeKeywords.split(" ");
             for(int j=0;j<placeKeywordsArr.length;j++)
             {
-                tourKeywords.add(placeKeywordsArr[j]);
+                if(!tourKeywords.contains(placeKeywordsArr[j]))
+                   tourKeywords+=placeKeywordsArr[j]+" ";
             }
         }
-        ArrayList<String> result=new ArrayList<>();
-        result.addAll(tourKeywords);
-        return result;
+
+        return tourKeywords;
     }
 
     private ArrayList<String> images(List<Place> mPlaces) {

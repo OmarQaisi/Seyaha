@@ -72,6 +72,7 @@ public class ProfileFragment extends Fragment {
            public void onClick(View view)
            {
                publish_interests();
+               fav_adapter.interests_chosen.clear();
                Toast.makeText(getContext(),getResources().getString(R.string.save),Toast.LENGTH_LONG).show();
            }
        });
@@ -80,7 +81,9 @@ public class ProfileFragment extends Fragment {
     }
     private void publish_interests()
     {
+
         Map<String, Object> updatedData = new HashMap<>();
+        fav_adapter.interests_chosen.addAll(fav_adapter.intrests_hashSet);
         updatedData.put("intrests",fav_adapter.interests_chosen);
         DocumentReference userRefernce = db.collection("users").document(mUser.userId);
         userRefernce.update(updatedData).addOnSuccessListener(new OnSuccessListener<Void>() {
