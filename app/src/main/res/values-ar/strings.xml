@@ -4,7 +4,7 @@
     <string name="app_name">Seyaha</string>
     <string name="done">حفظ</string>
     <string name="login_welcome">"أهلا وسهلا"</string>
-    <string name="login_description">"the best way to navigate through\nJordan and discover new places"</string>
+    <string name="login_description">"أفضل وسيلة للتنقل داخل الاردن \nواستكشاف المعالم والاماكن الجديدة."</string>
     <string name="login_continue">تابع من خلال :</string>
     <string name="save">لقد تم حفظ الاهتمامات بنجاح.</string>
 
@@ -27,7 +27,7 @@
     <string name="arabic">العربية</string>
     <string name="nav_profile">الملف الشخصي</string>
     <string name="nav_tour">الرحلات</string>
-    <string name="nav_upcoming_event">اخر الأحداث</string>
+    <string name="nav_upcoming_event">الأحداث القادمة</string>
     <string name="nav_help_feedback">المساعدة</string>
     <string name="nav_logout">تسجيل الخروج</string>
 
@@ -76,7 +76,6 @@
     <string name="title_arabic">العنوان بالعربية</string>
     <string name="places">الأماكن</string>
     <string name="toast_places">الرجاء اختيار 3 أماكن على الأقل لعمل رحلة.</string>
-    <string name="upcomingevent">الحدث القادم</string>
     <string name="helpandfeedback">المساعدة</string>
     <string name="already_rated">لقد قيمت هذه الرحلة من قبل!!</string>
     <string name="detailed_activity_title">تفاصيل الرحلة</string>

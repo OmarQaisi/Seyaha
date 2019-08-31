@@ -1,11 +1,9 @@
 package com.example.seyaha;
 
 import androidx.annotation.DrawableRes;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.res.ResourcesCompat;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.animation.AnimatorInflater;
@@ -16,9 +14,9 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
-import android.speech.tts.TextToSpeech;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.MenuItem;
@@ -27,10 +25,8 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.ZoomControls;
 
 import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -40,14 +36,12 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -76,6 +70,8 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
 
     private Toolbar mToolbar;
     private TextView mTextView;
+
+    private MediaPlayer mp;
 
     ScrollView scrollView;
     SupportMapFragment mapFragment;
@@ -115,8 +111,6 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
                 .build();
         openWeatherApi = retrofit.create(OpenWeatherApi.class);
 
-
-
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         //text views and description deceleration
         placeNameRecommendations =findViewById(R.id.place_name_recommendations);
@@ -155,8 +149,10 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
 
         setCostProgress(mPlace.get(0).cost);
         getTempApi(mPlace.get(0).latitude, mPlace.get(0).longitude);
-        setAirQualityProgress("20");
+        setAirQualityProgress(mPlace.get(0).airQuality);
         setInternetProgress(mPlace.get(0).internet);
+
+        mp = MediaPlayer.create(getApplicationContext(), getResources().getIdentifier(mPlace.get(0).voiceURL,"raw",getPackageName()));
 
         setSeason(mPlace.get(0).recommendedSeason);
         setTimeToGo(mPlace.get(0).recommendedTime);
@@ -208,7 +204,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         text_to_speech.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                mp.start();
             }
         });
 
@@ -264,8 +260,11 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
             {
                 setCostProgress(mPlace.get(position).cost);
                 getTempApi(mPlace.get(position).latitude, mPlace.get(position).longitude);
-                setAirQualityProgress("20");
+                setAirQualityProgress(mPlace.get(position).airQuality);
                 setInternetProgress(mPlace.get(position).internet);
+
+                mp = MediaPlayer.create(getApplicationContext(), getResources().getIdentifier(mPlace.get(position).voiceURL,"raw",getPackageName()));
+
 
                 setSeason(mPlace.get(position).recommendedSeason);
                 setTimeToGo(mPlace.get(position).recommendedTime);
@@ -406,16 +405,16 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
 
     }
 
-    private void setAirQualityProgress(String airQuality)
+    private void setAirQualityProgress(int airQuality)
     {
         airQualityTv.setText(airQuality+"\u00B5"+"g/m3"+"(now)");
-        int result=Integer.parseInt(airQuality);
-        airQualityProgressBar.setProgress(100-result);
-        if(result<=25)
+
+        airQualityProgressBar.setProgress(100-airQuality);
+        if(airQuality<=25)
         {
             airQualityProgressBar.setProgressColor(Color.GREEN);
         }
-        else if(result>25 && result<=50)
+        else if(airQuality>25 && airQuality<=50)
         {
             airQualityProgressBar.setProgressColor( Color.rgb(255,165,0));
         }

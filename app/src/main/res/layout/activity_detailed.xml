@@ -66,9 +66,11 @@
                 android:maxLines="4"
                 android:id="@+id/description_tv"
                 android:scrollbars="vertical"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginEnd="2dp"
+                android:layout_marginTop="4dp"
                 android:fontFamily="@font/montserrat_light"
                 android:text="Observe the comments made about you by your parents, friends, teachers or you may directly ask them. Note these points on a paper and try to make a sample of description."
                 android:textColor="@color/colorPrimary"/>
@@ -79,16 +81,17 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/ViewPager"
                 android:gravity="bottom"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="4dp">
 
                 <TextView
                     android:id="@+id/info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/detailed_activity_information_about"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginStart="10dp"
-                    android:textSize="18sp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginStart="4dp"
+                    android:textSize="16sp"
                     android:fontFamily="@font/montserrat_medium"
                     android:textColor="@android:color/black"/>
                 <TextView
@@ -96,7 +99,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Petra"
-                    android:textSize="24sp"
+                    android:textSize="20sp"
                     android:fontFamily="@font/montserrat_bold"
                     android:layout_marginLeft="4dp"
                     android:layout_marginStart="4dp"
@@ -290,9 +293,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/detailed_activity_recommendations_for"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginStart="10dp"
-                    android:textSize="18sp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginStart="4dp"
+                    android:textSize="16sp"
                     android:fontFamily="@font/montserrat_medium"
                     android:textColor="@android:color/black"/>
                 <TextView
@@ -301,7 +304,7 @@
                     android:layout_height="wrap_content"
                     android:text="Petra"
                     android:fontFamily="@font/montserrat_bold"
-                    android:textSize="24sp"
+                    android:textSize="20sp"
                     android:layout_marginLeft="4dp"
                     android:layout_marginStart="4dp"
                     android:textColor="@color/blue_logo"
@@ -340,7 +343,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/detailed_activity_season"
                         android:fontFamily="@font/montserrat_medium"
-                        android:textSize="16sp"
+                        android:textSize="15sp"
                         android:layout_marginTop="5dp"
                         android:textColor="@android:color/black"
                         android:layout_gravity="center"/>
@@ -374,9 +377,41 @@
                         android:text="@string/detailed_activity_time"
                         android:fontFamily="@font/montserrat_medium"
                         android:textColor="@android:color/black"
-                        android:textSize="16sp"
+                        android:textSize="15sp"
                         android:layout_marginTop="5dp"
                         android:layout_gravity="center"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:orientation="vertical">
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:id="@+id/estimated_btn"
+                        >
+                        <!-- Back Layout Goes Here -->
+                        <include layout="@layout/back_view_recommendations"
+                            android:id="@+id/back_estimated"/>
+                        <!-- Front Layout Goes Here -->
+                        <include layout="@layout/front_view_recommendations"
+                            android:id="@+id/front_estimated"/>
+                    </FrameLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/detailed_activity_estimation"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:textColor="@android:color/black"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -407,42 +442,12 @@
                         android:text="@string/detailed_activity_age"
                         android:fontFamily="@font/montserrat_medium"
                         android:textColor="@android:color/black"
-                        android:textSize="16sp"
+                        android:textSize="15sp"
                         android:layout_marginTop="5dp"
                         android:layout_gravity="center"/>
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginStart="10dp"
-                    android:orientation="vertical">
 
-                    <FrameLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:id="@+id/estimated_btn"
-                        >
-                        <!-- Back Layout Goes Here -->
-                        <include layout="@layout/back_view_recommendations"
-                            android:id="@+id/back_estimated"/>
-                        <!-- Front Layout Goes Here -->
-                        <include layout="@layout/front_view_recommendations"
-                            android:id="@+id/front_estimated"/>
-                    </FrameLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/detailed_activity_estimation"
-                        android:textSize="16sp"
-                        android:fontFamily="@font/montserrat_medium"
-                        android:textColor="@android:color/black"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="5dp"/>
-                </LinearLayout>
 
             </LinearLayout>
 
@@ -460,10 +465,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/detailed_activity_location_for"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginStart="4dp"
                     android:fontFamily="@font/montserrat_medium"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:textColor="@android:color/black"/>
                 <TextView
                     android:id="@+id/place_name_location"
@@ -471,7 +476,7 @@
                     android:layout_height="wrap_content"
                     android:text="Petra"
                     android:fontFamily="@font/montserrat_bold"
-                    android:textSize="24sp"
+                    android:textSize="20sp"
                     android:layout_marginLeft="4dp"
                     android:layout_marginStart="4dp"
                     android:textColor="@color/blue_logo"

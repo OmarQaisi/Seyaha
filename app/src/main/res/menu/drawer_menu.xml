@@ -42,7 +42,7 @@
         <item
             android:id="@+id/nav_upcoming_event"
             android:icon="@drawable/ic_calendar"
-            android:title="@string/upcomingevent" />
+            android:title="@string/nav_upcoming_event" />
 
         <item
             android:id="@+id/nav_logout"

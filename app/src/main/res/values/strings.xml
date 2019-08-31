@@ -39,7 +39,7 @@
     </array>
     <string name="app_name">Seyaha</string>
     <string name="login_welcome">"Welcome"</string>
-    <string name="login_description">"the best way to navigate through\nJordan and discover new places"</string>
+    <string name="login_description">"the best way to navigate through\nJordan and discover new places."</string>
     <string name="login_continue">continue with :</string>
     <string name="done">Save</string>
     <string name="close">Press again to Quit </string>
@@ -70,7 +70,6 @@
     <string name="title_english">Title_English</string>
     <string name="title_arabic">Title_Arabic</string>
     <string name="places">Places</string>
-    <string name="upcomingevent">Upcoming Event</string>
     <string name="helpandfeedback">Help &amp; Feedback</string>
     <string name="publish">Publish</string>
     <string name="create_tour">Create Tour</string>
@@ -99,10 +98,10 @@
     <string name="detailed_activity_air_quality">Air quality</string>
     <string name="detailed_activity_internet">Internet</string>
     <string name="detailed_activity_recommendations_for">Recommendations for</string>
-    <string name="detailed_activity_season">season</string>
+    <string name="detailed_activity_season">Season</string>
     <string name="detailed_activity_time">Time</string>
     <string name="detailed_activity_age">Age</string>
-    <string name="detailed_activity_estimation">estimation</string>
+    <string name="detailed_activity_estimation">Estimation</string>
     <string name="detailed_activity_location_for">Location for</string>
     <string name="summer_season">Summer</string>
     <string name="winter_season">Winter</string>
