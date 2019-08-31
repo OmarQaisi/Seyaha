@@ -317,31 +317,12 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
             commentsNum++;
             updatedData.put("commentsNum", commentsNum);
             updatedData.put("comments", comments);
-            mComment_btn.setImageResource(R.drawable.ic_chat_comment_blue);
-
-            Map<String, Object> userUpdate = new HashMap<>();
-            List<String> toursCommentedOn = mUser.toursCommentedOn;
-            toursCommentedOn.add(mTours.get(position).tourId);
-            userUpdate.put("toursCommentedOn", toursCommentedOn);
-
-            DocumentReference userRefernce = db.collection("users").document(mUser.userId);
-            userRefernce.update(userUpdate).addOnSuccessListener(new OnSuccessListener<Void>() {
-
-                @Override
-                public void onSuccess(Void aVoid) {
-                    Log.d(TAG, "onSuccess: user info updated");
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Log.e(TAG, "onFailure: ", e);
-                }
-            });
         }
 
         mRating.setText(ratingsNum + "");
         mComments.setText(commentsNum + "");
         mRate_btn.setImageResource(R.drawable.ic_star_filled);
+        mComment_btn.setImageResource(R.drawable.ic_chat_comment_blue);
         mRate_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -360,6 +341,25 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
             @Override
             public void onFailure(@NonNull Exception e) {
                 Log.d(TAG, "onFailure: Failed to update comments");
+            }
+        });
+
+        Map<String, Object> userUpdate = new HashMap<>();
+        List<String> toursCommentedOn = mUser.toursCommentedOn;
+        toursCommentedOn.add(mTours.get(position).tourId);
+        userUpdate.put("toursCommentedOn", toursCommentedOn);
+
+        DocumentReference userRefernce = db.collection("users").document(mUser.userId);
+        userRefernce.update(userUpdate).addOnSuccessListener(new OnSuccessListener<Void>() {
+
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d(TAG, "onSuccess: user info updated");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e(TAG, "onFailure: ", e);
             }
         });
 
