@@ -117,6 +117,6 @@
     <string name="emergency">Emergency</string>
     <string name="ministry_of_tourism">Ministry Of Tourism:</string>
     <string name="contact_us">Contact Us</string>
-    <string name="test_tour">You have not selected your interested yet</string>
+    <string name="test_tour">You have not selected your interests yet.</string>
 
 </resources>
