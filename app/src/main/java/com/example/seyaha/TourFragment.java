@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -23,6 +24,9 @@ public class TourFragment extends Fragment {
     RecyclerView mRecyclerView;
     RecyclerView.LayoutManager mManger;
     FloatingActionButton addTourBtn;
+    SwipeRefreshLayout swipeRefreshLayout ;
+    TourAdapter mAdapter;
+
     View mView;
 
     @Nullable
@@ -30,19 +34,19 @@ public class TourFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         mView = inflater.inflate(R.layout.fragment_tour,container,false);
-
-        FirestoreQueries.getTours(new FirestoreQueries.FirestoreTourCallback() {
+        swipeRefreshLayout = (SwipeRefreshLayout)mView.findViewById(R.id.refresh);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onCallback(List<Tour> tours) {
-                mTours = tours;
-                TourAdapter mAdapter = new TourAdapter(mTours);
-                mRecyclerView = mView.findViewById(R.id.rv);
-                mManger = new LinearLayoutManager(getActivity());
-                mRecyclerView.setLayoutManager(mManger);
-                mRecyclerView.setAdapter(mAdapter);
+            public void onRefresh()
+            {
+
+            firebase_connection();
+            // mAdapter.notifyDataSetChanged();
+
             }
         });
 
+        firebase_connection();
         addTourBtn = mView.findViewById(R.id.add_tour_btn);
         FirestoreQueries.getUser(new FirestoreQueries.FirestoreUserCallback() {
             @SuppressLint("RestrictedApi")
@@ -66,5 +70,26 @@ public class TourFragment extends Fragment {
 
         return mView;
     }
+private void firebase_connection()
+{
+    FirestoreQueries.getTours(new FirestoreQueries.FirestoreTourCallback() {
+        @Override
+        public void onCallback(List<Tour> tours) {
+
+            mAdapter=null;
+            mTours = tours;
+            mAdapter = new TourAdapter(mTours);
+            mRecyclerView = mView.findViewById(R.id.rv);
+            mManger = new LinearLayoutManager(getActivity());
+            mRecyclerView.setLayoutManager(mManger);
+            mRecyclerView.setAdapter(mAdapter);
+            if(swipeRefreshLayout.isRefreshing())
+            {
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        }
+    });
+
+}
 
 }

@@ -12,10 +12,8 @@
         <item>treatment</item>
         <item>camping</item>
         <item>sightseeing</item>
-        <item>Sporting</item>
         <item>culture</item>
         <item>swimming</item>
-        <item>Sporting</item>
         <item>desert</item>
     </array>
     <array name="interestsAR">
@@ -31,10 +29,8 @@
         <item>علاج</item>
         <item>تخييم</item>
         <item>معالم المدينة</item>
-        <item>رياضي</item>
         <item>حضاره</item>
         <item>سباحة</item>
-        <item>رياضي</item>
         <item>صحراء</item>
     </array>
     <string name="app_name">Seyaha</string>
@@ -113,5 +109,6 @@
     <string name="reviews_comments_dialog">Reviews</string>
    <string name="already_rated">You have already rated this tour!!</string>
     <string name="interests">Select your interests:</string>
+    <string name="now">(Now)</string>
 
 </resources>

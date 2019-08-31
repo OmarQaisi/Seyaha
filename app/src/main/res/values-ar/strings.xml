@@ -21,7 +21,9 @@
     <string name="desc">التفاصيل</string>
     <string name="title">العنوان</string>
     <string name="JD">دينار</string>
-    
+    <string name="now">(الان)</string>
+
+
     <!-- Strings for the (drawer_menu) titles -->
     <string name="english">انجليزية</string>
     <string name="arabic">العربية</string>

@@ -376,5 +376,9 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
         DateFormat format = new SimpleDateFormat("dd MMMM");
         return format.format(date);
     }
+    public void clear()
+    {
+        mTours.clear();
+    }
 
 }

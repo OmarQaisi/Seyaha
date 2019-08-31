@@ -182,7 +182,7 @@
                         android:text="$200"
                         android:layout_marginTop="2dp"
                         android:textSize="14sp"
-                        android:layout_gravity="top"/>
+                        android:layout_gravity="top|start"/>
 
                     <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
                         android:layout_width="match_parent"
@@ -207,7 +207,7 @@
                         android:text="30C"
                         android:fontFamily="@font/montserrat_light"
                         android:textSize="14sp"
-                        android:layout_gravity="top"/>
+                        android:layout_gravity="top|start"/>
 
                     <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
                         android:layout_width="match_parent"
@@ -233,7 +233,7 @@
                         android:layout_marginTop="2dp"
                         android:fontFamily="@font/montserrat_light"
                         android:textSize="14sp"
-                        android:layout_gravity="top"/>
+                        android:layout_gravity="top|start"/>
 
 
                     <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
@@ -260,7 +260,7 @@
                         android:layout_marginTop="2dp"
                         android:fontFamily="@font/montserrat_light"
                         android:textSize="14sp"
-                        android:layout_gravity="top"/>
+                        android:layout_gravity="top|start"/>
 
                     <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
                         android:layout_width="match_parent"
