@@ -1,14 +1,11 @@
 package com.example.seyaha;
 
-import android.app.Service;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,7 +20,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -38,9 +34,6 @@ public class AddTourActivity extends AppCompatActivity {
     Tour mTour;
     List<Place> chosen_place;
     TextInputEditText titleAR, titleEN;
-    Button publishButtton;
-    RelativeLayout mRelativeLayout;
-    SoftKeyboard softKeyboard;
     GridLayoutManager gridLayoutManager;
     boolean flag=false;
 
@@ -69,28 +62,6 @@ public class AddTourActivity extends AppCompatActivity {
 
         titleAR = findViewById(R.id.titleA);
         titleEN = findViewById(R.id.titleE);
-        publishButtton = findViewById(R.id.add_tour_btn);
-
-        /*mRelativeLayout =  findViewById(R.id.add_tour_relativeLayout);
-        InputMethodManager mInputMethodManager = (InputMethodManager) getSystemService(Service.INPUT_METHOD_SERVICE);
-
-        //Instantiate and pass a callback
-        softKeyboard = new SoftKeyboard(mRelativeLayout, mInputMethodManager);
-
-        softKeyboard.setSoftKeyboardCallback(new SoftKeyboard.SoftKeyboardChanged()
-        {
-            @Override
-            public void onSoftKeyboardHide()
-            {
-                publishButtton.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onSoftKeyboardShow()
-            {
-                publishButtton.setVisibility(View.INVISIBLE);
-            }
-        });*/
 
         recyclerView = findViewById(R.id.fav_categories_rv);
         gridLayoutManager = new GridLayoutManager(this, 3);
@@ -181,7 +152,6 @@ public class AddTourActivity extends AppCompatActivity {
         return true;
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // handle arrow click here
@@ -190,13 +160,6 @@ public class AddTourActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onDestroy()
-    {
-        super.onDestroy();
-       // softKeyboard.unRegisterSoftKeyboardCallback();
     }
 
 }

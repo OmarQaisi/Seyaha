@@ -17,18 +17,24 @@ import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthMethodPickerLayout;
 import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
@@ -44,7 +50,7 @@ public class SplashScreenActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mFirebaseAuthListner;
     private FirebaseUser user;
     private final int RC_SIGN_IN = 1;
-    public static  String lan="null";
+    public static String lan = "null";
     private boolean internet_checked = false;
     private boolean flag = false;
 
@@ -86,7 +92,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                     startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder().setAvailableProviders(providers).setIsSmartLockEnabled(false).setTheme(R.style.AppThemeFirebaseAuth).setAuthMethodPickerLayout(customLayout).build(), RC_SIGN_IN);
 
                 } else {
-                    if(!flag)
+                    if (!flag)
                         setUser();
                 }
             }
@@ -137,52 +143,84 @@ public class SplashScreenActivity extends AppCompatActivity {
         }
     }
 
-    protected void setUser(){
-
-        List<String> intrests = new ArrayList<String>();
-        final User mUser = new User(mFirebaseAuth.getCurrentUser().getDisplayName(),
-                mFirebaseAuth.getCurrentUser().getEmail(),
-                mFirebaseAuth.getCurrentUser().getPhotoUrl().toString()+"?height=500",
-                intrests,
-                false);
+    protected void setUser() {
         mFirebaseFirestore = FirebaseFirestore.getInstance();
         users = mFirebaseFirestore.collection("users");
-        users.whereEqualTo("email", mUser.email).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        users.whereEqualTo("email", mFirebaseAuth.getCurrentUser().getEmail()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-            if (queryDocumentSnapshots.isEmpty())
-                users.add(mUser);
-            start_activity();
+                List<String> intrests = new ArrayList<>();
+                List<String> toursCommentedOn = new ArrayList<>();
+                User mUser = null;
+                if (queryDocumentSnapshots.isEmpty()) {
+
+                    DocumentReference newUserRefernce = users.document();
+                    mUser = new User(mFirebaseAuth.getCurrentUser().getDisplayName(),
+                            mFirebaseAuth.getCurrentUser().getEmail(),
+                            mFirebaseAuth.getCurrentUser().getPhotoUrl().toString() + "?height=500",
+                            intrests,
+                            false,
+                            toursCommentedOn,
+                            newUserRefernce.getId());
+
+                    newUserRefernce.set(mUser).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful())
+                                Log.d(TAG, "onComplete: " + " new user registered");
+                            else
+                                Log.d(TAG, "Failed!!");
+                        }
+                    });
+                } else {
+                    User user = queryDocumentSnapshots.getDocuments().get(0).toObject(User.class);
+                    if (!user.imageURL.equals(mFirebaseAuth.getCurrentUser().getPhotoUrl().toString()) || !user.displayName.equals(mFirebaseAuth.getCurrentUser().getDisplayName())) {
+                        final DocumentReference userRef = mFirebaseFirestore.collection("users").document(user.userId);
+
+                        Map<String, Object> updatedData = new HashMap<>();
+                        updatedData.put("imageURL", mFirebaseAuth.getCurrentUser().getPhotoUrl().toString() + "?height=500");
+                        updatedData.put("displayName", mFirebaseAuth.getCurrentUser().getDisplayName());
+
+                        userRef.update(updatedData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d(TAG, "onSuccess: user updated successfully");
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.d(TAG, "onFailure: Failed to update user image");
+                            }
+                        });
+
+                    }
+                }
+
+                start_activity();
             }
         });
     }
 
-    private void setLocale(String lang)
-    {
-        Locale locale =new Locale(lang);
+    private void setLocale(String lang) {
+        Locale locale = new Locale(lang);
         Locale.setDefault(locale);
-        Configuration conf=new Configuration();
-        conf.locale=locale;
-        getBaseContext().getResources().updateConfiguration(conf,getBaseContext().getResources().getDisplayMetrics());
-        SharedPreferences.Editor pref=getSharedPreferences("settings",MODE_PRIVATE).edit();
-        pref.putString("my_lang",lang);
+        Configuration conf = new Configuration();
+        conf.locale = locale;
+        getBaseContext().getResources().updateConfiguration(conf, getBaseContext().getResources().getDisplayMetrics());
+        SharedPreferences.Editor pref = getSharedPreferences("settings", MODE_PRIVATE).edit();
+        pref.putString("my_lang", lang);
         pref.apply();
-
     }
-    public void loadLocale()
-    {
-        SharedPreferences pref=  getSharedPreferences("settings",MODE_PRIVATE);
-        String lang= pref.getString("my_lang","en");
-        if(lang.equals("ar"))
-        {
-            lan="ar";
-        }
-        else
-        {
-            lan="en";
+
+    public void loadLocale() {
+        SharedPreferences pref = getSharedPreferences("settings", MODE_PRIVATE);
+        String lang = pref.getString("my_lang", "en");
+        if (lang.equals("ar")) {
+            lan = "ar";
+        } else {
+            lan = "en";
         }
         setLocale(lang);
-
     }
 
 

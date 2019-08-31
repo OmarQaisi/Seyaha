@@ -30,6 +30,6 @@
 
     <color name="gold">#DAA520</color>
     <color name="gray">#808080</color>
-
+    <color name="gold2">#FDFDFD</color>
     <color name="blue_logo_transparent">#202343BA</color>
 </resources>

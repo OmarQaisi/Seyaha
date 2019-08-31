@@ -3,10 +3,12 @@
     package="com.example.seyaha">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <permission
         android:name="com.example.barcodelibrary.permission.MAPS_RECEIVE"
-        android:protectionLevel="signature"/>
-    <uses-permission android:name="com.example.barcodelibrary.permission.MAPS_RECEIVE"/>
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.example.barcodelibrary.permission.MAPS_RECEIVE" />
 
     <application
         android:allowBackup="true"
@@ -14,7 +16,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".OverviewActivity"></activity>
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
@@ -31,6 +36,7 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
@@ -50,12 +56,15 @@
             android:name=".MainActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".AddTourActivity"
-            android:windowSoftInputMode="adjustResize"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".AddTourActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing" />
 
-        <activity android:name=".DetailedActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".DetailedActivity"
+            android:screenOrientation="portrait" />
+
 
     </application>
 

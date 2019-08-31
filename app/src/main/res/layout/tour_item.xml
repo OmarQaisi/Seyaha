@@ -127,6 +127,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginRight="3dp"
         android:layout_toLeftOf="@id/star"
+        android:maxLength="3"
         android:text="4.5"
         android:textColor="#9B9B9B"
         android:textSize="15sp"
@@ -135,7 +136,7 @@
     <ImageButton
         android:id="@+id/comment_btn"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:src="@drawable/ic_chat_comment"
+        android:src="@drawable/ic_chat_comment_gray"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/line"

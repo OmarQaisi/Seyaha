@@ -8,10 +8,7 @@ import android.content.res.Configuration;
 import java.util.Locale;
 
 
-public class SeyahaUtils
-{
-
-
+public class SeyahaUtils {
 
     public static Boolean checkInternetConnectivity(Activity context) {
         ConnectionDetector connectionCheck = new ConnectionDetector(context);
@@ -57,7 +54,5 @@ public class SeyahaUtils
                 Activity.MODE_PRIVATE);
         return prefs.getString(langPref, "0");
     }
-
-
 
 }

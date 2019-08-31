@@ -1,6 +1,7 @@
 package com.example.seyaha;
 
 import java.util.List;
+import java.util.Map;
 
 public class User {
 
@@ -9,14 +10,18 @@ public class User {
     public String imageURL;
     public List<String> intrests;
     public boolean isAdmin;
+    public List<String> toursCommentedOn;
+    public String userId;
 
 
-    public User(String userDisplayName, String userEmail, String userImageURL, List<String> userIntrests, boolean isAdmin) {
-        this.displayName = userDisplayName;
+
+    public User(String userDisplayName, String userEmail, String userImageURL, List<String> userIntrests, boolean isAdmin,List<String> toursCommentedOn,String userId) {        this.displayName = userDisplayName;
         this.email = userEmail;
         this.imageURL = userImageURL;
         this.intrests = userIntrests;
         this.isAdmin = isAdmin;
+        this.toursCommentedOn=toursCommentedOn;
+        this.userId=userId;
     }
 
     public User(){}
@@ -25,6 +30,4 @@ public class User {
         this.displayName = userDisplayName;
         this.imageURL = userImageURL;
     }
-
-
 }

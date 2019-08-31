@@ -59,10 +59,6 @@
     <string name="detailed_activity_age">العمر</string>
     <string name="detailed_activity_estimation">الوقت المتوقع</string>
     <string name="detailed_activity_location_for">موقع </string>
-    <string name="detailed_activity_near_by"></string>
-    <string name="detailed_activity_restaurants">المطاعم</string>
-    <string name="detailed_activity_hotels">الفنادق</string>
-    <string name="detailed_activity_gas_station">كازية</string>
     <string name="summer_season">الصيف</string>
     <string name="winter_season">الشتاء</string>
     <string name="spring_season">الربيع</string>
@@ -80,6 +76,8 @@
     <string name="toast_places">الرجاء اختيار 3 أماكن على الأقل لعمل رحلة.</string>
     <string name="upcomingevent">الحدث القادم</string>
     <string name="helpandfeedback">المساعدة</string>
+    <string name="already_rated">لقد قيمت هذه الرحلة من قبل!!</string>
     <string name="detailed_activity_title">تفاصيل الرحلة</string>
+    <string name="reviews_comments_dialog">التعليقات</string>
 
 </resources>

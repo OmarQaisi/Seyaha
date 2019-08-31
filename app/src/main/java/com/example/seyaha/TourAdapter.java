@@ -1,7 +1,9 @@
 package com.example.seyaha;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -15,6 +17,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,12 +31,21 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -41,7 +54,9 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
     public static List<Tour> mTours;
     ColorDrawable colorDrawable;
     Context context;
+    public User mUser;
     FirebaseFirestore db;
+    View view;
     int id = 0;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -49,12 +64,13 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
     @Override
     public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         context = viewGroup.getContext();
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.tour_item, viewGroup, false);
+         view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.tour_item, viewGroup, false);
         ImageViewHolder imageViewHolder = new ImageViewHolder(view);
 
         FirestoreQueries.getUser(new FirestoreQueries.FirestoreUserCallback() {
             @Override
             public void onCallback(User user) {
+                mUser = user;
                 if (user.isAdmin)
                     id = R.menu.tour_options_admin;
                 else
@@ -75,15 +91,13 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
 
         final Tour tour = mTours.get(position);
 
-        if(SplashScreenActivity.lan.equalsIgnoreCase("ar"))
-        {
+        if (SplashScreenActivity.lan.equalsIgnoreCase("ar")) {
             holder.mTitle.setText(tour.titleAR);
             holder.mDescription.setText(tour.makeArabicDescription(tour.categoriesAR));
-        }
-        else
-        {
+        } else {
             holder.mTitle.setText(tour.titleEN);
             holder.mDescription.setText(tour.makeEnglishDescription(tour.categoriesEN));
+
         }
         holder.mRating.setText(tour.ratingsNum + "");
 
@@ -124,10 +138,24 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
         holder.post_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, holder.editText.getText().toString() + "", Toast.LENGTH_LONG).show();
-                holder.alertDialog.dismiss();
+                db = FirebaseFirestore.getInstance();
+                final DocumentReference tourReference = db.collection("tours").document(mTours.get(position).tourId);
+                tourReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        Tour tour = documentSnapshot.toObject(Tour.class);
+                        List<Comment> comments = new ArrayList<>();
+                        comments = tour.comments;
+                        addComment(comments, tour, holder.editText, holder.ratingBar, holder.mRating, holder.mComments, holder.mRate_btn,holder.mComment_btn, position);
+                        holder.alertDialog.dismiss();
+                    }
+                });
+
             }
+
         });
+
+
         holder.alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         FirestoreQueries.getUser(new FirestoreQueries.FirestoreUserCallback() {
@@ -135,13 +163,47 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
             public void onCallback(User user) {
                 holder.ratingName.setText(user.displayName);
                 Picasso.get().load(user.imageURL).fit().into(holder.ratingPic);
+                for (String n : user.toursCommentedOn) {
+                    if (n.equals(mTours.get(position).tourId)) {
+                        holder.mRate_btn.setImageResource(R.drawable.ic_star_filled);
+                        holder.mComment_btn.setImageResource(R.drawable.ic_chat_comment_blue);
+                       holder.mRate_btn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Toast.makeText(context,context.getString(R.string.already_rated),Toast.LENGTH_LONG).show();
+                            }
+                        });
+                        break;
+                    }
+                }
             }
         });
 
         holder.mArrowDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createPopupMenu(context, v, tour);
+                createPopupMenu(context, v, tour,position);
+            }
+        });
+
+        holder.mComment_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    FirestoreQueries.getTours(new FirestoreQueries.FirestoreTourCallback() {
+                        @Override
+                        public void onCallback(List<Tour> tours) {
+                            Tour tour = tours.get(position);
+                            List<Comment> comments = tour.comments;
+                            CommentAdapter adapter = new CommentAdapter(context, comments, position);
+                            holder.commentsListView.setAdapter(adapter);
+                            holder.commentsDialog.show();
+                        }
+                    });
+
+                } catch (Exception e) {
+                    Log.e(TAG, "onClick: ", e);
+                }
             }
         });
     }
@@ -159,20 +221,29 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
         Button post_btn, mCancel_btn;
         LayoutInflater vi;
         View mView;
+        View commentsDialogView;
         EditText editText;
         AlertDialog.Builder builder;
         AlertDialog alertDialog;
+        Dialog commentsDialog;
+        RatingBar ratingBar;
+        ListView commentsListView;
 
         @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         public ImageViewHolder(View itemView) {
             super(itemView);
             vi = (LayoutInflater) itemView.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             mView = vi.inflate(R.layout.custom_rating_dialog, null, false);
+            commentsDialogView = vi.inflate(R.layout.comments_dialog, null, false);
+            commentsListView = commentsDialogView.findViewById(R.id.comments_listview);
+            commentsDialog = new Dialog(itemView.getContext());
+            commentsDialog.setContentView(commentsDialogView);
             post_btn = mView.findViewById(R.id.post_btn);
             mCancel_btn = mView.findViewById(R.id.cancel_btn);
             ratingPic = mView.findViewById(R.id.rating_pic);
             ratingName = mView.findViewById(R.id.rating_name);
             editText = mView.findViewById(R.id.comment_post);
+            ratingBar = mView.findViewById(R.id.rating_bar);
             builder = new AlertDialog.Builder(itemView.getContext());
             builder.setView(mView);
             mTitle = itemView.findViewById(R.id.title_txt);
@@ -190,31 +261,38 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
 
     }
 
-    public void removeTour(Tour tour){
+    public void removeTour(Tour tour) {
         mTours.remove(tour);
         notifyDataSetChanged();
     }
+    private void move_to_overView(Context context)
+    {
 
-    public void createPopupMenu(final Context context, View view, final Tour tour) {
+
+    }
+
+    public void createPopupMenu(final Context context, final View view, final Tour tour, final int position) {
         db = FirebaseFirestore.getInstance();
         PopupMenu mPopupMenu = new PopupMenu(context, view);
         mPopupMenu.getMenuInflater().inflate(id, mPopupMenu.getMenu());
         mPopupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()){
+                switch (item.getItemId()) {
                     case R.id.overview_tour:
-                        // code the overview here
+                        Intent i=new Intent(context,OverviewActivity.class);
+                        i.putExtra("places", (Serializable) mTours.get(position).places);
+                        context.startActivity(i);
+
                         break;
                     case R.id.delete_tour:
                         db.collection("tours").document(tour.tourId).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-                                if(task.isSuccessful()){
+                                if (task.isSuccessful()) {
                                     Log.d(TAG, "Deleted Tour.");
                                     removeTour(tour);
-                                }else
+                                } else
                                     Log.d(TAG, "Failed!!");
-
                             }
                         });
                         break;
@@ -224,6 +302,88 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
         });
 
         mPopupMenu.show();
+    }
+
+
+    private void addComment(List<Comment> comments, Tour tour, EditText editText, RatingBar ratingBar, TextView mRating, TextView mComments, ImageButton mRate_btn,ImageButton mComment_btn, int position) {
+
+        final DocumentReference tourReference = db.collection("tours").document(mTours.get(position).tourId);
+
+        String mDate = getCurrentDate();
+
+        Comment mComment = new Comment(mUser, editText.getText().toString(), ratingBar.getRating(), getCurrentDate());
+        comments.add(mComment);
+        double ratingsNum = tour.ratingsNum;
+        int commentsNum = tour.commentsNum;
+        int numOfPeopleWhoRated = tour.numOfPeopleWhoRated;
+        ratingsNum = ((ratingsNum * numOfPeopleWhoRated) + ratingBar.getRating()) / ++numOfPeopleWhoRated;
+
+        Map<String, Object> updatedData = new HashMap<>();
+        updatedData.put("ratingsNum", ratingsNum);
+        updatedData.put("numOfPeopleWhoRated", numOfPeopleWhoRated);
+
+        if (!(editText.getText().toString().matches(""))) {
+            commentsNum++;
+            updatedData.put("commentsNum", commentsNum);
+            updatedData.put("comments", comments);
+            mComment_btn.setImageResource(R.drawable.ic_chat_comment_blue);
+
+            Map<String, Object> userUpdate = new HashMap<>();
+            List<String> toursCommentedOn = mUser.toursCommentedOn;
+            toursCommentedOn.add(mTours.get(position).tourId);
+            userUpdate.put("toursCommentedOn", toursCommentedOn);
+
+            DocumentReference userRefernce = db.collection("users").document(mUser.userId);
+            userRefernce.update(userUpdate).addOnSuccessListener(new OnSuccessListener<Void>() {
+
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Log.d(TAG, "onSuccess: user info updated");
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.e(TAG, "onFailure: ", e);
+                }
+            });
+        }
+
+        mRating.setText(ratingsNum + "");
+        mComments.setText(commentsNum + "");
+        mRate_btn.setImageResource(R.drawable.ic_star_filled);
+        mRate_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context,context.getString(R.string.already_rated),Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+
+        tourReference.update(updatedData).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d(TAG, "onSuccess: comments updated successfully");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d(TAG, "onFailure: Failed to update comments");
+            }
+        });
+
+
+
+        editText.setText("");
+        ratingBar.setRating(0);
+
+    }
+
+    private String getCurrentDate() {
+        long millis = System.currentTimeMillis();
+        Date date = new Date(millis);
+        DateFormat format = new SimpleDateFormat("dd MMMM");
+        return format.format(date);
     }
 
 }
