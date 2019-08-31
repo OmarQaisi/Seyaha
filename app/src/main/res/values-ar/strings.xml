@@ -2,9 +2,11 @@
 <resources>
 
     <string name="app_name">Seyaha</string>
+    <string name="done">حفظ</string>
     <string name="login_welcome">"أهلا وسهلا"</string>
-    <string name="login_description">"the best way to navigate through\nJordan and discover new places"</string>
+    <string name="login_description">"أفضل وسيلة للتنقل داخل الاردن \nواستكشاف المعالم والاماكن الجديدة."</string>
     <string name="login_continue">تابع من خلال :</string>
+    <string name="save">لقد تم حفظ الاهتمامات بنجاح.</string>
 
     <string name="close">انقر مجددا للخروج </string>
     <string name="retry">مرة أخرى</string>
@@ -19,13 +21,17 @@
     <string name="desc">التفاصيل</string>
     <string name="title">العنوان</string>
     <string name="JD">دينار</string>
-    
+    <string name="now">(الان)</string>
+    <string name="title_share">هذا التطبيق يستخدم لاكتشاف الأماكن السياحية في الأردن</string>
+    <string name="using">مشاركة باستخدام:</string>
+    <string name="recommended">رحلات تهمك</string>
+    <string name="top_rated">أشهر الرحلات</string>
     <!-- Strings for the (drawer_menu) titles -->
     <string name="english">انجليزية</string>
     <string name="arabic">العربية</string>
     <string name="nav_profile">الملف الشخصي</string>
     <string name="nav_tour">الرحلات</string>
-    <string name="nav_upcoming_event">اخر الأحداث</string>
+    <string name="nav_upcoming_event">الأحداث القادمة</string>
     <string name="nav_help_feedback">المساعدة</string>
     <string name="nav_logout">تسجيل الخروج</string>
 
@@ -74,10 +80,15 @@
     <string name="title_arabic">العنوان بالعربية</string>
     <string name="places">الأماكن</string>
     <string name="toast_places">الرجاء اختيار 3 أماكن على الأقل لعمل رحلة.</string>
-    <string name="upcomingevent">الحدث القادم</string>
     <string name="helpandfeedback">المساعدة</string>
     <string name="already_rated">لقد قيمت هذه الرحلة من قبل!!</string>
     <string name="detailed_activity_title">تفاصيل الرحلة</string>
     <string name="reviews_comments_dialog">التعليقات</string>
+    <string name="interests">اختر اهتماماتك:</string>
+    <string name="emergency">طوارئ</string>
+    <string name="ministry_of_tourism">وزارة السياحة:</string>
+    <string name="contact_us">تواصل معنا:</string>
+    <string name="test_tour">لم تقم باختيار اهتماماتك</string>
+
 
 </resources>

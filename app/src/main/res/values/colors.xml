@@ -2,14 +2,15 @@
 <resources>
     <color name="colorPrimary">#000000</color>
     <color name="colorPrimaryDark">#000000</color>
-    <color name="colorAccent">#808080</color>
+    <color name="colorAccent">#374EA1</color>
 
 
     <color name="white_login_screen">#ffffff</color>
 
     <color name="light_blue">#3acce1</color>
     <color name="dark_blue">#3290A2</color>
-    
+    <color name="colorBrightGreen">#46cbc7</color>
+
 
     <color name="dark_grey">#353a50</color>
     <color name="light_grey">#5B6183</color>
@@ -28,8 +29,9 @@
     <color name="yello_logo">#F4C230</color>
     <color name="red_logo">#DC001A</color>
 
+    <color name="nav_light_blue">#FF8196CC</color>
+
     <color name="gold">#DAA520</color>
     <color name="gray">#808080</color>
-    <color name="gold2">#FDFDFD</color>
     <color name="blue_logo_transparent">#202343BA</color>
 </resources>

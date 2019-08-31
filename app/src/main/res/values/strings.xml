@@ -1,10 +1,43 @@
 <resources>
-
+    <array name="interestsEN">
+        <item>climbing</item>
+        <item>diving</item>
+        <item>cycling</item>
+        <item>walking</item>
+        <item>safari-desert</item>
+        <item>safari-adventure</item>
+        <item>religon</item>
+        <item>nature</item>
+        <item>historical</item>
+        <item>treatment</item>
+        <item>camping</item>
+        <item>sightseeing</item>
+        <item>culture</item>
+        <item>swimming</item>
+        <item>desert</item>
+    </array>
+    <array name="interestsAR">
+        <item>التسلق</item>
+        <item>غوص</item>
+        <item>ركوب الدراجات</item>
+        <item>المشي</item>
+        <item>سفاري الصحراء</item>
+        <item>سفاري</item>
+        <item>ديني</item>
+        <item>طبيعة</item>
+        <item>تاريخي</item>
+        <item>علاج</item>
+        <item>تخييم</item>
+        <item>معالم المدينة</item>
+        <item>حضاره</item>
+        <item>سباحة</item>
+        <item>صحراء</item>
+    </array>
     <string name="app_name">Seyaha</string>
     <string name="login_welcome">"Welcome"</string>
-    <string name="login_description">"the best way to navigate through\nJordan and discover new places"</string>
+    <string name="login_description">"the best way to navigate through\nJordan and discover new places."</string>
     <string name="login_continue">continue with :</string>
-
+    <string name="done">Save</string>
     <string name="close">Press again to Quit </string>
     <string name="retry">Retry</string>
     <string name="lost_internet">internet connection lost.</string>
@@ -33,7 +66,6 @@
     <string name="title_english">Title_English</string>
     <string name="title_arabic">Title_Arabic</string>
     <string name="places">Places</string>
-    <string name="upcomingevent">Upcoming Event</string>
     <string name="helpandfeedback">Help &amp; Feedback</string>
     <string name="publish">Publish</string>
     <string name="create_tour">Create Tour</string>
@@ -42,7 +74,7 @@
     <!-- Strings for the (ActionBarDrawerToggle) -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
+    <string name="save">You Saved Interests Successfully.</string>
 
     <!-- Strings for the(Detailed activity) -->
     <string name="cold">"Cold:"</string>
@@ -62,10 +94,10 @@
     <string name="detailed_activity_air_quality">Air quality</string>
     <string name="detailed_activity_internet">Internet</string>
     <string name="detailed_activity_recommendations_for">Recommendations for</string>
-    <string name="detailed_activity_season">season</string>
+    <string name="detailed_activity_season">Season</string>
     <string name="detailed_activity_time">Time</string>
     <string name="detailed_activity_age">Age</string>
-    <string name="detailed_activity_estimation">estimation</string>
+    <string name="detailed_activity_estimation">Estimation</string>
     <string name="detailed_activity_location_for">Location for</string>
     <string name="summer_season">Summer</string>
     <string name="winter_season">Winter</string>
@@ -76,5 +108,15 @@
     <string name="detailed_activity_title">Tour Details</string>
     <string name="reviews_comments_dialog">Reviews</string>
    <string name="already_rated">You have already rated this tour!!</string>
+    <string name="interests">Select your interests:</string>
+    <string name="now">(Now)</string>
+    <string name="title_share">this app used to discover the tourism places in jordan</string>
+    <string name="using">Share using:</string>
+    <string name="recommended">Recommended</string>
+    <string name="top_rated">Top Rated</string>
+    <string name="emergency">Emergency</string>
+    <string name="ministry_of_tourism">Ministry Of Tourism:</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="test_tour">You have not selected your interests yet.</string>
 
 </resources>

@@ -3,6 +3,8 @@ package com.example.seyaha;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class Tour {
@@ -18,9 +20,10 @@ public class Tour {
     public String titleAR;
     public String titleEN;
     public String tourId;
+    public String tourKeywords;
 
 
-    public Tour(List<String> categoriesAR, List<String> categoriesEN, List<Comment> comments, int commentsNum, List<String> imageURLs, int numOfPeopleWhoRated, List<Place> places, double ratingsNum, String titleAR, String titleEN, String tourId) {
+    public Tour(List<String> categoriesAR, List<String> categoriesEN, List<Comment> comments, int commentsNum, List<String> imageURLs, int numOfPeopleWhoRated, List<Place> places, double ratingsNum, String titleAR, String titleEN, String tourId,String tourKeywords) {
         this.categoriesAR = categoriesAR;
         this.categoriesEN = categoriesEN;
         this.comments = comments;
@@ -32,6 +35,7 @@ public class Tour {
         this.titleAR = titleAR;
         this.titleEN = titleEN;
         this.tourId = tourId;
+        this.tourKeywords=tourKeywords;
     }
 
     public Tour() {}
@@ -82,4 +86,5 @@ public class Tour {
         animation1.setDuration(500);
         view.startAnimation(animation1);
     }
+
 }

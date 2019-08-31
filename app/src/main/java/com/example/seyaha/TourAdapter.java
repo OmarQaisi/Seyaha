@@ -3,7 +3,6 @@ package com.example.seyaha;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -13,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -31,11 +31,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
@@ -51,7 +49,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolder> {
     private static final String TAG = "TourAdapter";
-    public static List<Tour> mTours;
+    public  List<Tour> mTours;
     ColorDrawable colorDrawable;
     Context context;
     public User mUser;
@@ -198,12 +196,33 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
                             CommentAdapter adapter = new CommentAdapter(context, comments, position);
                             holder.commentsListView.setAdapter(adapter);
                             holder.commentsDialog.show();
+                            holder.commentsDialog.getWindow().setAttributes(holder.lp);
+
                         }
                     });
 
                 } catch (Exception e) {
                     Log.e(TAG, "onClick: ", e);
                 }
+            }
+        });
+        holder.mShare_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myIntent =new Intent(Intent.ACTION_SEND);
+                myIntent.setType("text/plain");
+                String shareSub=context.getString(R.string.title_share);
+                String shareBody=context.getString(R.string.title_share)+"\n https://github.com/OmarQaisi/Seyaha";
+                myIntent.putExtra(Intent.EXTRA_SUBJECT,shareSub);
+                myIntent.putExtra(Intent.EXTRA_TEXT,shareBody);
+                context.startActivity(Intent.createChooser(myIntent,context.getString(R.string.using)));
+            }
+        });
+
+        holder.commentsCancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.commentsDialog.dismiss();
             }
         });
     }
@@ -228,6 +247,8 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
         Dialog commentsDialog;
         RatingBar ratingBar;
         ListView commentsListView;
+        WindowManager.LayoutParams lp;
+        Button commentsCancelBtn;
 
         @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         public ImageViewHolder(View itemView) {
@@ -237,6 +258,10 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
             commentsDialogView = vi.inflate(R.layout.comments_dialog, null, false);
             commentsListView = commentsDialogView.findViewById(R.id.comments_listview);
             commentsDialog = new Dialog(itemView.getContext());
+            lp = new WindowManager.LayoutParams();
+            lp.copyFrom(commentsDialog.getWindow().getAttributes());
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
             commentsDialog.setContentView(commentsDialogView);
             post_btn = mView.findViewById(R.id.post_btn);
             mCancel_btn = mView.findViewById(R.id.cancel_btn);
@@ -257,6 +282,7 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
             mShare_btn = itemView.findViewById(R.id.share_btn);
             mComment_btn = itemView.findViewById(R.id.comment_btn);
             mRate_btn = itemView.findViewById(R.id.star);
+            commentsCancelBtn=commentsDialogView.findViewById(R.id.cancel_btn_comments);
         }
 
     }
@@ -264,11 +290,6 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
     public void removeTour(Tour tour) {
         mTours.remove(tour);
         notifyDataSetChanged();
-    }
-    private void move_to_overView(Context context)
-    {
-
-
     }
 
     public void createPopupMenu(final Context context, final View view, final Tour tour, final int position) {
@@ -282,7 +303,6 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
                         Intent i=new Intent(context,OverviewActivity.class);
                         i.putExtra("places", (Serializable) mTours.get(position).places);
                         context.startActivity(i);
-
                         break;
                     case R.id.delete_tour:
                         db.collection("tours").document(tour.tourId).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -326,31 +346,12 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
             commentsNum++;
             updatedData.put("commentsNum", commentsNum);
             updatedData.put("comments", comments);
-            mComment_btn.setImageResource(R.drawable.ic_chat_comment_blue);
-
-            Map<String, Object> userUpdate = new HashMap<>();
-            List<String> toursCommentedOn = mUser.toursCommentedOn;
-            toursCommentedOn.add(mTours.get(position).tourId);
-            userUpdate.put("toursCommentedOn", toursCommentedOn);
-
-            DocumentReference userRefernce = db.collection("users").document(mUser.userId);
-            userRefernce.update(userUpdate).addOnSuccessListener(new OnSuccessListener<Void>() {
-
-                @Override
-                public void onSuccess(Void aVoid) {
-                    Log.d(TAG, "onSuccess: user info updated");
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Log.e(TAG, "onFailure: ", e);
-                }
-            });
         }
 
         mRating.setText(ratingsNum + "");
         mComments.setText(commentsNum + "");
         mRate_btn.setImageResource(R.drawable.ic_star_filled);
+        mComment_btn.setImageResource(R.drawable.ic_chat_comment_blue);
         mRate_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -372,6 +373,25 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
             }
         });
 
+        Map<String, Object> userUpdate = new HashMap<>();
+        List<String> toursCommentedOn = mUser.toursCommentedOn;
+        toursCommentedOn.add(mTours.get(position).tourId);
+        userUpdate.put("toursCommentedOn", toursCommentedOn);
+
+        DocumentReference userRefernce = db.collection("users").document(mUser.userId);
+        userRefernce.update(userUpdate).addOnSuccessListener(new OnSuccessListener<Void>() {
+
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d(TAG, "onSuccess: user info updated");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e(TAG, "onFailure: ", e);
+            }
+        });
+
 
 
         editText.setText("");
@@ -384,6 +404,10 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
         Date date = new Date(millis);
         DateFormat format = new SimpleDateFormat("dd MMMM");
         return format.format(date);
+    }
+    public void clear()
+    {
+        mTours.clear();
     }
 
 }

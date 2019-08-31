@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class Place implements Serializable {
 
 
+    public int airQuality;
     public String categoryAR;
     public String categoryEN;
     public int cost;
@@ -20,9 +21,11 @@ public class Place implements Serializable {
     public String recommendedAge;
     public int recommendedSeason;
     public int recommendedTime;
+    public String voiceURL;
+    public String keywords;
 
-
-    public Place(String categoryAR, String categoryEN, int cost, String descAR, String descEN, int estimatedTime, String imageURL, int internet, double latitude, double longitude, String nameAR, String nameEN, String recommendedAge, int recommendedSeason, int recommendedTime) {
+    public Place(int airQuality, String categoryAR, String categoryEN, int cost, String descAR, String descEN, int estimatedTime, String imageURL, int internet, double latitude, double longitude, String nameAR, String nameEN, String recommendedAge, int recommendedSeason, int recommendedTime, String voiceURL,String keywords) {
+        this.airQuality = airQuality;
         this.categoryAR = categoryAR;
         this.categoryEN = categoryEN;
         this.cost = cost;
@@ -38,6 +41,8 @@ public class Place implements Serializable {
         this.recommendedAge = recommendedAge;
         this.recommendedSeason = recommendedSeason;
         this.recommendedTime = recommendedTime;
+        this.voiceURL = voiceURL;
+        this.keywords=keywords;
     }
 
     public Place(){}
@@ -45,7 +50,8 @@ public class Place implements Serializable {
     @Override
     public String toString() {
         return "Place{" +
-                "categoryAR='" + categoryAR + '\'' +
+                "airQuality=" + airQuality +
+                ", categoryAR='" + categoryAR + '\'' +
                 ", categoryEN='" + categoryEN + '\'' +
                 ", cost=" + cost +
                 ", descAR='" + descAR + '\'' +
@@ -60,6 +66,7 @@ public class Place implements Serializable {
                 ", recommendedAge='" + recommendedAge + '\'' +
                 ", recommendedSeason=" + recommendedSeason +
                 ", recommendedTime=" + recommendedTime +
+                ", voiceURL='" + voiceURL + '\'' +
                 '}';
     }
 }

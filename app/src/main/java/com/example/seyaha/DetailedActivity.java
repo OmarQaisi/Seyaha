@@ -1,11 +1,9 @@
 package com.example.seyaha;
 
 import androidx.annotation.DrawableRes;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.res.ResourcesCompat;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.animation.AnimatorInflater;
@@ -16,7 +14,8 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
+import android.media.MediaPlayer;
+
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
@@ -26,10 +25,8 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.ZoomControls;
 
 import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -39,7 +36,6 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -59,41 +55,42 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
     private GoogleMap mMap;
     ViewPager viewPager;
     List <String> imageUrls;
-    List<Place> mPlace;
+    List <Place> mPlace;
     viewPagerAdapter adapter;
-    double latitude,longitude;
+    double latitude, longitude;
     String placeName;
+    MediaPlayer mp;
 
 
     private final String APIKEY = "4e4480d5039580a36c576fa58a0c1d3a";
     private OpenWeatherApi openWeatherApi;
     private double tempApiResult;
 
-    ImageButton zoom_in,zoom_out;
+    ImageButton zoom_in, zoom_out, text_to_speech;
     View map_view;
 
     private Toolbar mToolbar;
     private TextView mTextView;
 
 
-     ScrollView scrollView;
+    ScrollView scrollView;
     SupportMapFragment mapFragment;
-    FrameLayout seasonFlip,timeToGoFlip,estimationFlip,ageFlip;
-    TextView seasonTv,timeToGoTv,ageTv1,ageTv2,estimationTv,costTv,tempTv,airQualityTv,internetTv,placeNameInfo, placeNameRecommendations,placeNameLocation,description,placeNameTitle;
-    RoundCornerProgressBar costProgressBar,tempProgressBar,airQualityProgressBar,internetProgressBar;
-    View frontLayoutSeason,backLayoutSeason,frontLayoutTime,backLayouTime,frontLayoutAge,backLayoutAge,frontLayoutEstimated,backLayoutEstimated;
-    ImageView seasonImg,timeToGoImg,estimationImg;
+    FrameLayout seasonFlip, timeToGoFlip, estimationFlip, ageFlip;
+    TextView seasonTv, timeToGoTv, ageTv1, ageTv2, estimationTv, costTv, tempTv, airQualityTv, internetTv, placeNameInfo, placeNameRecommendations, placeNameLocation, description, placeNameTitle;
+    RoundCornerProgressBar costProgressBar, tempProgressBar, airQualityProgressBar, internetProgressBar;
+    View frontLayoutSeason, backLayoutSeason, frontLayoutTime, backLayouTime, frontLayoutAge, backLayoutAge, frontLayoutEstimated, backLayoutEstimated;
+    ImageView seasonImg, timeToGoImg, estimationImg;
 
     private AnimatorSet mSetRightOut;
     private AnimatorSet mSetLeftIn;
-    private boolean[] mIsBackVisible = {false,false,false,false};
-
+    private boolean[] mIsBackVisible = {false, false, false, false};
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detailed);
+
         mToolbar = findViewById(R.id.detailed_toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle(null);
@@ -101,52 +98,48 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         mTextView.setText(R.string.detailed_activity_title);
 
         // add back arrow to toolbar
-        if (getSupportActionBar() != null){
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
 
         //retrofit config
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://api.openweathermap.org/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://api.openweathermap.org/").addConverterFactory(GsonConverterFactory.create()).build();
         openWeatherApi = retrofit.create(OpenWeatherApi.class);
-
 
 
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         //text views and description deceleration
-        placeNameRecommendations =findViewById(R.id.place_name_recommendations);
-        placeNameInfo=findViewById(R.id.place_name_information_about);
-        placeNameLocation=findViewById(R.id.place_name_location);
-        zoom_in=findViewById(R.id.zoomin);
-        zoom_out=findViewById(R.id.zoomout);
-        description=findViewById(R.id.description_tv);
-        scrollView=findViewById(R.id.scrollview);
-        placeNameTitle=findViewById(R.id.place_name_title);
+        placeNameRecommendations = findViewById(R.id.place_name_recommendations);
+        placeNameInfo = findViewById(R.id.place_name_information_about);
+        placeNameLocation = findViewById(R.id.place_name_location);
+        zoom_in = findViewById(R.id.zoomin);
+        zoom_out = findViewById(R.id.zoomout);
+        description = findViewById(R.id.description_tv);
+        scrollView = findViewById(R.id.scrollview);
+        placeNameTitle = findViewById(R.id.place_name_title);
         //information about the place deceleration
-        costProgressBar=findViewById(R.id.cost_progress);
-        tempProgressBar=findViewById(R.id.temp_progress);
-        airQualityProgressBar=findViewById(R.id.air_quality_progress);
-        internetProgressBar=findViewById(R.id.internet_progress);
-        costTv=findViewById(R.id.cost_tv);
-        tempTv=findViewById(R.id.temp_tv);
-        airQualityTv=findViewById(R.id.air_quality_tv);
-        internetTv=findViewById(R.id.internet_tv);
+        costProgressBar = findViewById(R.id.cost_progress);
+        tempProgressBar = findViewById(R.id.temp_progress);
+        airQualityProgressBar = findViewById(R.id.air_quality_progress);
+        internetProgressBar = findViewById(R.id.internet_progress);
+        costTv = findViewById(R.id.cost_tv);
+        tempTv = findViewById(R.id.temp_tv);
+        airQualityTv = findViewById(R.id.air_quality_tv);
+        internetTv = findViewById(R.id.internet_tv);
         //recommendations about the place deceleration
-        seasonFlip=findViewById(R.id.season_btn);
-        timeToGoFlip=findViewById(R.id.time_btn);
-        ageFlip=findViewById(R.id.age_btn);
-        estimationFlip=findViewById(R.id.estimated_btn);
+        seasonFlip = findViewById(R.id.season_btn);
+        timeToGoFlip = findViewById(R.id.time_btn);
+        ageFlip = findViewById(R.id.age_btn);
+        estimationFlip = findViewById(R.id.estimated_btn);
         loadAnimations();
-        Intent i=getIntent();
-        mPlace=(List<Place>)i.getSerializableExtra("places");
+        Intent i = getIntent();
+        mPlace = (List <Place>) i.getSerializableExtra("places");
         description.setMovementMethod(new ScrollingMovementMethod());
-        latitude=mPlace.get(0).latitude;
-        longitude=mPlace.get(0).longitude;
-        placeName=mPlace.get(0).nameEN;
+        latitude = mPlace.get(0).latitude;
+        longitude = mPlace.get(0).longitude;
+        placeName = mPlace.get(0).nameEN;
         map_view = mapFragment.getView();
         mapFragment.getMapAsync(this);
 
@@ -154,25 +147,24 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
 
         setCostProgress(mPlace.get(0).cost);
         getTempApi(mPlace.get(0).latitude, mPlace.get(0).longitude);
-        setAirQualityProgress("20");
+        setAirQualityProgress(mPlace.get(0).airQuality);
         setInternetProgress(mPlace.get(0).internet);
+
+        mp = MediaPlayer.create(getApplicationContext(), getResources().getIdentifier(mPlace.get(0).voiceURL,"raw",getPackageName()));
 
         setSeason(mPlace.get(0).recommendedSeason);
         setTimeToGo(mPlace.get(0).recommendedTime);
         setAge(mPlace.get(0).recommendedAge);
         setEstimatedTime(mPlace.get(0).estimatedTime);
 
-        if(SplashScreenActivity.lan.equalsIgnoreCase("ar"))
-        {
+        if (SplashScreenActivity.lan.equalsIgnoreCase("ar")) {
             description.setText(mPlace.get(0).descAR);
             placeNameRecommendations.setText(mPlace.get(0).nameAR);
             placeNameInfo.setText(mPlace.get(0).nameAR);
             placeNameLocation.setText(mPlace.get(0).nameAR);
             placeNameTitle.setText(mPlace.get(0).nameAR);
 
-        }
-        else
-        {
+        } else {
             placeNameTitle.setText(mPlace.get(0).nameEN);
             description.setText(mPlace.get(0).descEN);
             placeNameRecommendations.setText(mPlace.get(0).nameEN);
@@ -203,13 +195,21 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
             }
         });
 
+        text_to_speech = findViewById(R.id.text_to_speech);
+        text_to_speech.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mp.start();
+            }
+        });
+
     }
 
     private void getTempApi(double latitude, double longitude) {
-        Call<JsonObject> call = openWeatherApi.getTemp(latitude, longitude, APIKEY);
-        call.enqueue(new Callback<JsonObject>() {
+        Call <JsonObject> call = openWeatherApi.getTemp(latitude, longitude, APIKEY);
+        call.enqueue(new Callback <JsonObject>() {
             @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+            public void onResponse(Call <JsonObject> call, Response <JsonObject> response) {
 
                 if (!response.isSuccessful()) {
                     Log.d(TAG, "Code: " + response.code());
@@ -223,9 +223,10 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
 
                 setTempProgress((int) tempApiResult);
             }
+
             @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.d(TAG, "onFailure: "+t.getMessage());
+            public void onFailure(Call <JsonObject> call, Throwable t) {
+                Log.d(TAG, "onFailure: " + t.getMessage());
             }
         });
 
@@ -234,8 +235,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
     private void run_viewPager() {
         imageUrls = new ArrayList <>();
 
-        for(int i=0;i<mPlace.size();i++)
-        {
+        for (int i = 0; i < mPlace.size(); i++) {
             imageUrls.add(mPlace.get(i).imageURL);
         }
 
@@ -245,31 +245,31 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         viewPager.setPadding(100, 0, 100, 0);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels)
-            {
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 //System.out.println(positionOffset);
             }
 
             @Override
-            public void onPageSelected(int position)
-            {
+            public void onPageSelected(int position) {
                 setCostProgress(mPlace.get(position).cost);
                 getTempApi(mPlace.get(position).latitude, mPlace.get(position).longitude);
-                setAirQualityProgress("20");
+                setAirQualityProgress(mPlace.get(position).airQuality);
                 setInternetProgress(mPlace.get(position).internet);
+
+                mp = MediaPlayer.create(getApplicationContext(), getResources().getIdentifier(mPlace.get(position).voiceURL,"raw",getPackageName()));
+
 
                 setSeason(mPlace.get(position).recommendedSeason);
                 setTimeToGo(mPlace.get(position).recommendedTime);
                 setAge(mPlace.get(position).recommendedAge);
                 setEstimatedTime(mPlace.get(position).estimatedTime);
-                if(SplashScreenActivity.lan.equalsIgnoreCase("ar")){
+                if (SplashScreenActivity.lan.equalsIgnoreCase("ar")) {
                     description.setText(mPlace.get(position).descAR);
                     placeNameRecommendations.setText(mPlace.get(position).nameAR);
                     placeNameInfo.setText(mPlace.get(position).nameAR);
                     placeNameLocation.setText(mPlace.get(position).nameAR);
                     placeNameTitle.setText(mPlace.get(position).nameAR);
-                }
-                else {
+                } else {
                     description.setText(mPlace.get(position).descEN);
                     placeNameRecommendations.setText(mPlace.get(position).nameEN);
                     placeNameInfo.setText(mPlace.get(position).nameEN);
@@ -277,19 +277,18 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
                     placeNameTitle.setText(mPlace.get(position).nameEN);
                 }
 
-                latitude=mPlace.get(position).latitude;
-                longitude=mPlace.get(position).longitude;
-                placeName=mPlace.get(position).nameEN;
+                latitude = mPlace.get(position).latitude;
+                longitude = mPlace.get(position).longitude;
+                placeName = mPlace.get(position).nameEN;
                 mapFragment.getMapAsync(DetailedActivity.this);
 
                 scrollView.fullScroll(View.FOCUS_UP);
-                description.scrollTo(0,0);
+                description.scrollTo(0, 0);
 
             }
 
             @Override
-            public void onPageScrollStateChanged(int state)
-            {
+            public void onPageScrollStateChanged(int state) {
                 System.out.println(state);
             }
         });
@@ -326,115 +325,94 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
 
     private BitmapDescriptor getBitmapDescriptor(@DrawableRes int id) {
         Drawable vectorDrawable = ResourcesCompat.getDrawable(getResources(), id, null);
-        Bitmap bitmap = Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(),
-                vectorDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Bitmap bitmap = Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         vectorDrawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
         vectorDrawable.draw(canvas);
         return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
 
-    private void setCostProgress(int cost)
-    {
+    private void setCostProgress(int cost) {
 
-        costTv.setText(cost+" "+getResources().getString(R.string.JD));
-        if(cost<=20)
-        {
-            costProgressBar.setProgress(100);
+        costTv.setText(cost + " " + getResources().getString(R.string.JD));
+        costProgressBar.setProgress(costProgressBar.getMax()-cost);
+        if (cost <= 10) {
+
             costProgressBar.setProgressColor(Color.GREEN);
-        }
-        else if(cost>20 && cost<=60)
-        {
-            costProgressBar.setProgress(60);
-            costProgressBar.setProgressColor(Color.rgb(255,165,0));
-        }
-        else
-        {
-            costProgressBar.setProgress(30);
+        } else if (cost > 10 && cost <= 30) {
+            costProgressBar.setProgressColor(Color.rgb(255, 165, 0));
+        } else {
+
             costProgressBar.setProgressColor(Color.RED);
         }
         ObjectAnimator progressAnimator;
-        progressAnimator = ObjectAnimator.ofFloat(costProgressBar, "progress", 0.0f,costProgressBar.getProgress());
+        progressAnimator = ObjectAnimator.ofFloat(costProgressBar, "progress", 0.0f, costProgressBar.getProgress());
         progressAnimator.setDuration(1000);
         progressAnimator.setStartDelay(300);
         progressAnimator.start();
 
     }
 
-    private void setTempProgress(int temp)
-    {
+    private void setTempProgress(int temp) {
 
-        if(temp<=10)
-        {
+        if (temp <=10) {
             tempProgressBar.setProgressColor(Color.RED);
             tempProgressBar.setProgress(temp);
-            tempTv.setText(getResources().getString(R.string.cold)+temp+"\u2103"+"(now)");
+            tempTv.setText(getResources().getString(R.string.cold) + temp + "\u2103" +getString(R.string.now));
 
-        }
-        else  if(temp>10 && temp<=18)
-        {
-            tempTv.setText(getResources().getString(R.string.normal)+temp+"\u2103"+"(now)");
+        } else if (temp > 10 && temp <= 18) {
+            tempTv.setText(getResources().getString(R.string.normal) + temp + "\u2103" +getString(R.string.now));
             tempProgressBar.setProgress(temp);
-            tempProgressBar.setProgressColor(Color.rgb(255,165,0));
-        }
-        else if(temp>18 && temp<=30)
-        {
+            tempProgressBar.setProgressColor(Color.rgb(255, 165, 0));
+        } else if (temp > 18 && temp <= 30) {
             tempProgressBar.setProgressColor(Color.GREEN);
             tempProgressBar.setProgress(55);
-            tempTv.setText(getResources().getString(R.string.perfect)+temp+"\u2103"+"(now)");
-        }
-        else
-        {
+            tempTv.setText(getResources().getString(R.string.perfect) + temp + "\u2103" +getString(R.string.now));
+        } else {
             tempProgressBar.setProgressColor(Color.RED);
-            tempProgressBar.setProgress(55-temp);
-            tempTv.setText(getResources().getString(R.string.hot)+temp+"\u2103"+"(now)");
+            tempProgressBar.setProgress(55 - temp);
+            tempTv.setText(getResources().getString(R.string.hot) + temp + "\u2103" +getString(R.string.now));
         }
 
         ObjectAnimator progressAnimator;
-        progressAnimator = ObjectAnimator.ofFloat(tempProgressBar, "progress", 0.0f,tempProgressBar.getProgress());
+        progressAnimator = ObjectAnimator.ofFloat(tempProgressBar, "progress", 0.0f, tempProgressBar.getProgress());
         progressAnimator.setDuration(1000);
         progressAnimator.setStartDelay(300);
         progressAnimator.start();
 
     }
 
-    private void setAirQualityProgress(String airQuality)
-    {
-        airQualityTv.setText(airQuality+"\u00B5"+"g/m3"+"(now)");
-        int result=Integer.parseInt(airQuality);
-        airQualityProgressBar.setProgress(100-result);
-        if(result<=25)
-        {
+    private void setAirQualityProgress(int airQuality) {
+        airQualityTv.setText(airQuality + "\u00B5" + "g/m3");
+
+        airQualityProgressBar.setProgress(100 - airQuality);
+        if (airQuality <= 25) {
             airQualityProgressBar.setProgressColor(Color.GREEN);
+        } else if (airQuality > 25 && airQuality <= 50) {
+            airQualityProgressBar.setProgressColor(Color.rgb(255, 165, 0));
+        } else {
+            airQualityProgressBar.setProgressColor(Color.RED);
+
         }
-        else if(result>25 && result<=50)
-        {
-            airQualityProgressBar.setProgressColor( Color.rgb(255,165,0));
-        }
-        else
-        {
-         airQualityProgressBar.setProgressColor(Color.RED);
-        }
+
         ObjectAnimator progressAnimator;
-        progressAnimator = ObjectAnimator.ofFloat(airQualityProgressBar, "progress", 0.0f,airQualityProgressBar.getProgress());
+        progressAnimator = ObjectAnimator.ofFloat(airQualityProgressBar, "progress", 0.0f, airQualityProgressBar.getProgress());
         progressAnimator.setDuration(1000);
         progressAnimator.setStartDelay(300);
         progressAnimator.start();
     }
 
-    private void setInternetProgress(int internet)
-    {
+    private void setInternetProgress(int internet) {
         ObjectAnimator progressAnimator;
 
-        switch (internet)
-        {
+        switch (internet) {
             case 0:
                 internetProgressBar.setProgressColor(Color.RED);
                 internetProgressBar.setProgress(30);
                 internetTv.setText(getResources().getString(R.string.bad_internet));
                 break;
             case 1:
-                internetProgressBar.setProgressColor(Color.rgb(255,165,0));
+                internetProgressBar.setProgressColor(Color.rgb(255, 165, 0));
                 internetProgressBar.setProgress(60);
                 internetTv.setText(getResources().getString(R.string.good_internet));
                 break;
@@ -445,118 +423,111 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
                 break;
         }
 
-        progressAnimator = ObjectAnimator.ofFloat(internetProgressBar, "progress", 0.0f,internetProgressBar.getProgress());
+        progressAnimator = ObjectAnimator.ofFloat(internetProgressBar, "progress", 0.0f, internetProgressBar.getProgress());
         progressAnimator.setDuration(1000);
         progressAnimator.setStartDelay(300);
         progressAnimator.start();
     }
 
-   private void setSeason(int season)
-    {
+    private void setSeason(int season) {
 
-        frontLayoutSeason=seasonFlip.findViewById(R.id.front_season);
-        backLayoutSeason=seasonFlip.findViewById(R.id.back_season);
-        seasonTv=backLayoutSeason.findViewById(R.id.back_text);
-        seasonImg=frontLayoutSeason.findViewById(R.id.front_icon);
-        changeCameraDistance(frontLayoutSeason,backLayoutSeason);
+        frontLayoutSeason = seasonFlip.findViewById(R.id.front_season);
+        backLayoutSeason = seasonFlip.findViewById(R.id.back_season);
+        seasonTv = backLayoutSeason.findViewById(R.id.back_text);
+        seasonImg = frontLayoutSeason.findViewById(R.id.front_icon);
+        changeCameraDistance(frontLayoutSeason, backLayoutSeason);
 
         seasonFlip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                flipCard(frontLayoutSeason,backLayoutSeason, mIsBackVisible,0);
+                flipCard(frontLayoutSeason, backLayoutSeason, mIsBackVisible, 0);
             }
         });
-       switch (season)
-       {
-           case 0:
-             seasonTv.setText(getResources().getString(R.string.summer_season));
-             seasonImg.setImageResource(R.drawable.ic_summer);
-           break;
-
-           case 1:
-               seasonTv.setText(getResources().getString(R.string.winter_season));
-               seasonImg.setImageResource(R.drawable.ic_winter);
-           break;
-
-           case 2:
-               seasonTv.setText(getResources().getString(R.string.spring_season));
-               seasonImg.setImageResource(R.drawable.ic_spring);
-           break;
-
-           case 3:
-               seasonTv.setText(getResources().getString(R.string.autumn_season));
-               seasonImg.setImageResource(R.drawable.ic_autumn);
-           break;
-       }
-    }
-
-    private  void setTimeToGo(int time)
-    {
-        frontLayoutTime=findViewById(R.id.front_time);
-        backLayouTime=findViewById(R.id.back_time);
-        timeToGoTv=backLayouTime.findViewById(R.id.back_text);
-        timeToGoImg=frontLayoutTime.findViewById(R.id.front_icon);
-        changeCameraDistance(frontLayoutTime,backLayouTime);
-        timeToGoFlip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                flipCard(frontLayoutTime,backLayouTime, mIsBackVisible,1);
-            }
-        });
-
-        switch (time)
-        {
+        switch (season) {
             case 0:
-                timeToGoTv.setText(getResources().getString(R.string.day_time));
-                timeToGoImg.setImageResource(R.drawable.ic_day);
+                seasonTv.setText(getResources().getString(R.string.summer_season));
+                seasonImg.setImageResource(R.drawable.ic_summer);
                 break;
 
             case 1:
-                timeToGoTv.setText(getResources().getString(R.string.night_time));
-               timeToGoImg.setImageResource(R.drawable.ic_night);
+                seasonTv.setText(getResources().getString(R.string.winter_season));
+                seasonImg.setImageResource(R.drawable.ic_winter);
+                break;
+
+            case 2:
+                seasonTv.setText(getResources().getString(R.string.spring_season));
+                seasonImg.setImageResource(R.drawable.ic_spring);
+                break;
+
+            case 3:
+                seasonTv.setText(getResources().getString(R.string.autumn_season));
+                seasonImg.setImageResource(R.drawable.ic_autumn);
                 break;
         }
     }
 
-    private void setAge(String age)
-    {
-        frontLayoutAge=findViewById(R.id.front_ag);
-        backLayoutAge=findViewById(R.id.back_age);
-        ageTv1=backLayoutAge.findViewById(R.id.back_text);
-        ageTv2=frontLayoutAge.findViewById(R.id.back_text);
+    private void setTimeToGo(int time) {
+        frontLayoutTime = findViewById(R.id.front_time);
+        backLayouTime = findViewById(R.id.back_time);
+        timeToGoTv = backLayouTime.findViewById(R.id.back_text);
+        timeToGoImg = frontLayoutTime.findViewById(R.id.front_icon);
+        changeCameraDistance(frontLayoutTime, backLayouTime);
+        timeToGoFlip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                flipCard(frontLayoutTime, backLayouTime, mIsBackVisible, 1);
+            }
+        });
+
+        switch (time) {
+            case 0:
+                timeToGoTv.setText(getResources().getString(R.string.day_time));
+                break;
+
+            case 1:
+                timeToGoTv.setText(getResources().getString(R.string.night_time));
+                break;
+        }
+        timeToGoImg.setImageResource(R.drawable.ic_day_and_night);
+    }
+
+    private void setAge(String age) {
+        frontLayoutAge = findViewById(R.id.front_ag);
+        backLayoutAge = findViewById(R.id.back_age);
+        ageTv1 = backLayoutAge.findViewById(R.id.back_text);
+        ageTv2 = frontLayoutAge.findViewById(R.id.back_text);
         ageTv2.setTextSize(20);
         ageTv1.setTextSize(20);
         ageTv1.setText(age);
         ageTv2.setText(age);
 
-        changeCameraDistance(frontLayoutAge,backLayoutAge);
+        changeCameraDistance(frontLayoutAge, backLayoutAge);
         ageFlip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                flipCard(frontLayoutAge,backLayoutAge, mIsBackVisible,2);
+                flipCard(frontLayoutAge, backLayoutAge, mIsBackVisible, 2);
             }
         });
     }
 
-    private void setEstimatedTime(int estimatedTime)
-    {
-        frontLayoutEstimated=findViewById(R.id.front_estimated);
-        backLayoutEstimated=findViewById(R.id.back_estimated);
-        estimationTv=backLayoutEstimated.findViewById(R.id.back_text);
-        estimationImg=frontLayoutEstimated.findViewById(R.id.front_icon);
-        estimationTv.setText(estimatedTime+"Hrs");
-        estimationImg.setImageResource(R.drawable.ic_sand_clock);
+    private void setEstimatedTime(int estimatedTime) {
+        frontLayoutEstimated = findViewById(R.id.front_estimated);
+        backLayoutEstimated = findViewById(R.id.back_estimated);
+        estimationTv = backLayoutEstimated.findViewById(R.id.back_text);
+        estimationImg = frontLayoutEstimated.findViewById(R.id.front_icon);
+        estimationTv.setText(estimatedTime + "Hrs");
+        estimationImg.setImageResource(R.drawable.ic_stopwatch);
 
-        changeCameraDistance(frontLayoutEstimated,backLayoutEstimated);
+        changeCameraDistance(frontLayoutEstimated, backLayoutEstimated);
         estimationFlip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                flipCard(frontLayoutEstimated,backLayoutEstimated, mIsBackVisible,3);
+                flipCard(frontLayoutEstimated, backLayoutEstimated, mIsBackVisible, 3);
             }
         });
     }
 
-    public void flipCard(View front,View back,boolean mIsBackVisible[],int position) {
+    public void flipCard(View front, View back, boolean mIsBackVisible[], int position) {
 
         if (!mIsBackVisible[position]) {
             mSetRightOut.setTarget(front);
@@ -573,7 +544,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         }
     }
 
-    private void changeCameraDistance(View front,View back) {
+    private void changeCameraDistance(View front, View back) {
         int distance = 8000;
         float scale = getResources().getDisplayMetrics().density * distance;
         front.setCameraDistance(scale);

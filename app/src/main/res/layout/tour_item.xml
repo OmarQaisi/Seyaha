@@ -58,8 +58,7 @@
             android:layout_height="110dp"
             android:scaleType="centerCrop"
             android:layout_below="@id/desc"
-            android:background="@drawable/corners"
-            android:src="@drawable/ic_launcher_background" />
+            android:background="@drawable/corners"/>
 
         <ImageView
             android:id="@+id/img2"
@@ -71,7 +70,6 @@
             android:layout_below="@id/desc"
             android:layout_toRightOf="@id/img1"
             android:layout_marginStart="10dp"
-            android:src="@drawable/ic_launcher_background"
             android:layout_marginLeft="10dp" />
 
         <ImageView
@@ -81,7 +79,6 @@
             android:layout_height="110dp"
             android:background="@drawable/corners"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_launcher_background"
             android:layout_below="@id/desc"
             android:layout_toRightOf="@id/img2"
             android:layout_marginStart="10dp"
