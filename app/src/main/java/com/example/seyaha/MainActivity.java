@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_drawer);
-
+        language_checker();
         FirestoreQueries.getUser(new FirestoreQueries.FirestoreUserCallback() {
             @Override
             public void onCallback(User user) {
@@ -107,6 +107,14 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         };
 
 
+    }
+
+    private void language_checker()
+    {
+        if(SplashScreenActivity.lan.equalsIgnoreCase("ar"))
+        {
+            setLocale("ar");
+        }
     }
 
     @Override

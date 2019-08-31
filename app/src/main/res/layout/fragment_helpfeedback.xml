@@ -2,161 +2,171 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white_login_screen"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/contact"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="24sp"
-        android:fontFamily="@font/montserrat_bold"
-        android:textColor="@color/blue_logo"
-        android:layout_marginTop="32dp"
-        android:layout_marginLeft="28dp"
-        android:layout_marginStart="28dp"
-        android:text="Contact Us" />
+   <TextView
+       android:id="@+id/contact"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:textSize="24sp"
+       android:fontFamily="@font/montserrat_bold"
+       android:textColor="@color/blue_logo"
+       android:layout_marginTop="32dp"
+       android:layout_marginLeft="28dp"
+       android:layout_marginStart="28dp"
+       android:text="@string/contact_us" />
 
-    <View
-        android:id="@+id/line_view"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/blue_logo"
-        android:layout_marginLeft="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginRight="36dp"
-        android:layout_marginEnd="36dp"
-        android:layout_marginTop="2dp"
-        android:layout_below="@id/contact"/>
+   <View
+       android:id="@+id/line_view"
+       android:layout_width="match_parent"
+       android:layout_height="1dp"
+       android:background="@color/blue_logo"
+       android:layout_marginLeft="24dp"
+       android:layout_marginStart="24dp"
+       android:layout_marginRight="36dp"
+       android:layout_marginEnd="36dp"
+       android:layout_marginTop="2dp"
+       android:layout_below="@id/contact"/>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="22dp"
-        android:layout_marginStart="22dp"
-        android:gravity="center_vertical"
-        android:layout_below="@id/line_view"
-        android:layout_marginTop="28dp">
-        <ImageView
-            android:id="@+id/imgg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_outlined_telephone"/>
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_marginLeft="22dp"
+       android:layout_marginStart="22dp"
+       android:layout_below="@id/line_view"
+       android:layout_marginTop="28dp">
+      <ImageView
+          android:id="@+id/imgg"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentLeft="true"
+          android:layout_alignParentStart="true"
+          android:src="@drawable/ic_outlined_telephone"/>
 
-        <LinearLayout
-            android:id="@+id/lin_1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_toRightOf="@id/imgg">
+      <LinearLayout
+          android:id="@+id/lin_1"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:layout_toEndOf="@id/imgg"
+          android:layout_toRightOf="@id/imgg">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginTop="4dp"
-                android:textSize="16sp"
-                android:textColor="@android:color/black"
-                android:fontFamily="@font/montserrat_medium"
-                android:text="Emergency:" />
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginStart="12dp"
+             android:layout_marginLeft="12dp"
+             android:layout_marginTop="4dp"
+             android:textSize="16sp"
+             android:textColor="@android:color/black"
+             android:fontFamily="@font/montserrat_medium"
+             android:text="@string/emergency" />
 
-            <TextView
-                android:id="@+id/emergency_num"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginStart="12dp"
-                android:layout_marginLeft="12dp"
-                android:text="117777"
-                android:textColorHighlight="@android:color/holo_red_dark"
-                android:textColor="@android:color/holo_red_dark"
-                android:textSize="16sp" />
-        </LinearLayout>
+         <TextView
+             android:id="@+id/emergency_num"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginTop="8dp"
+             android:layout_marginStart="12dp"
+             android:layout_marginLeft="12dp"
+             android:text="117777"
+             android:textColorHighlight="@android:color/holo_red_dark"
+             android:textColor="@android:color/holo_red_dark"
+             android:textSize="16sp" />
+      </LinearLayout>
 
-        <ImageView
-            android:id="@+id/img_mob"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_outlined_telephone"
-            android:layout_below="@id/lin_1"
-            android:layout_marginTop="15dp"/>
-        <LinearLayout
-            android:id="@+id/lin_2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_below="@id/lin_1"
-                android:layout_marginTop="15dp"
-            android:layout_toRightOf="@id/imgg">
+      <ImageView
+          android:id="@+id/img_mob"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:src="@drawable/ic_outlined_telephone"
+          android:layout_alignParentStart="true"
+          android:layout_alignParentLeft="true"
+          android:layout_below="@id/lin_1"
+          android:layout_marginTop="15dp"/>
+      <LinearLayout
+          android:id="@+id/lin_2"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:layout_below="@id/lin_1"
+          android:layout_marginTop="15dp"
+          android:layout_toRightOf="@id/img_mob"
+          android:layout_toEndOf="@id/img_mob">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginLeft="12dp"
-                android:textSize="16sp"
-                android:layout_marginTop="4dp"
-                android:textColor="@android:color/black"
-                android:fontFamily="@font/montserrat_medium"
-                android:text="Ministry Of Tourism :" />
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginStart="12dp"
+             android:layout_marginLeft="12dp"
+             android:textSize="16sp"
+             android:layout_marginTop="4dp"
+             android:textColor="@android:color/black"
+             android:fontFamily="@font/montserrat_medium"
+             android:text="@string/ministry_of_tourism" />
 
-            <TextView
-                android:id="@+id/mot_num"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginStart="12dp"
-                android:layout_marginLeft="12dp"
-                android:textColor="@color/blue_logo"
-                android:textColorHighlight="@color/blue_logo"
-                android:text="064603360"
-                android:textSize="16sp" />
-        </LinearLayout>
+         <TextView
+             android:id="@+id/mot_num"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginTop="8dp"
+             android:layout_marginStart="12dp"
+             android:layout_marginLeft="12dp"
+             android:textColor="@color/blue_logo"
+             android:textColorHighlight="@color/blue_logo"
+             android:text="064603360"
+             android:textSize="16sp" />
+      </LinearLayout>
 
-        <ImageView
-            android:id="@+id/mail_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/lin_2"
-            android:src="@drawable/ic_outlined_mail"
-            android:layout_marginTop="15dp" />
+      <ImageView
+          android:id="@+id/mail_img"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_below="@id/lin_2"
+          android:layout_alignParentLeft="true"
+          android:layout_alignParentStart="true"
+          android:src="@drawable/ic_outlined_mail"
+          android:layout_marginTop="15dp" />
 
-        <LinearLayout
-            android:id="@+id/lin_3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_below="@id/lin_2"
-            android:layout_marginTop="15dp"
-            android:layout_toRightOf="@id/mail_img">
+      <LinearLayout
+          android:id="@+id/lin_3"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:layout_below="@id/lin_2"
+          android:layout_marginTop="15dp"
+          android:layout_toRightOf="@id/mail_img"
+          android:layout_toEndOf="@id/mail_img"
+          >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginTop="4dp"
-            android:textSize="16sp"
-            android:textColor="@android:color/black"
-            android:fontFamily="@font/montserrat_medium"
-            android:text="Ministry Of Tourism:" />
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginStart="12dp"
+             android:layout_marginLeft="12dp"
+             android:layout_marginTop="4dp"
+             android:textSize="16sp"
+             android:textColor="@android:color/black"
+             android:fontFamily="@font/montserrat_medium"
+             android:text="@string/ministry_of_tourism" />
 
-        <TextView
-            android:id="@+id/mot_mail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginLeft="12dp"
-            android:textColor="@color/blue_logo"
-            android:textColorHighlight="@color/blue_logo"
-            android:fontFamily="@font/montserrat_medium"
-            android:text="contact@mota.gov.jo"
-            android:textSize="16sp" />
+         <TextView
+             android:id="@+id/mot_mail"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginTop="8dp"
+             android:layout_marginStart="12dp"
+             android:layout_marginLeft="12dp"
+             android:textColor="@color/blue_logo"
+             android:textColorHighlight="@color/blue_logo"
+             android:fontFamily="@font/montserrat_medium"
+             android:text="contact@mota.gov.jo"
+             android:textSize="16sp" />
 
-        </LinearLayout>
+      </LinearLayout>
 
-    </RelativeLayout>
+   </RelativeLayout>
 
 </RelativeLayout>

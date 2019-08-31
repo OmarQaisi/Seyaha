@@ -18,9 +18,10 @@ public class HelpFeedbackFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View mView = inflater.inflate(R.layout.fragment_helpfeedback, container, false);
+        /*
         emergency_num=mView.findViewById(R.id.emergency_num);
-        mot_num=mView.findViewById(R.id.mot_num);
-        mot_mail=mView.findViewById(R.id.mot_mail);
+       mot_num=mView.findViewById(R.id.mot_num);
+       mot_mail=mView.findViewById(R.id.mot_mail);
 
         emergency_num.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,7 +55,7 @@ public class HelpFeedbackFragment extends Fragment {
 
             }
         });
-
+*/
 
         return mView;
     }

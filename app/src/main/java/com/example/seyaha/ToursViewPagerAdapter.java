@@ -35,11 +35,11 @@ public class ToursViewPagerAdapter extends FragmentPagerAdapter {
         switch (position)
         {
             case 0:
-                return"Top rated";
+                return  context.getString(R.string.top_rated);
             case 1:
-                return "Recommended";
+                return context.getString(R.string.recommended);
 
-                default: return "Top rated";
+                default: return context.getString(R.string.top_rated);
         }
     }
 

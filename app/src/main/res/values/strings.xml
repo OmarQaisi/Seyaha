@@ -112,5 +112,11 @@
     <string name="now">(Now)</string>
     <string name="title_share">this app used to discover the tourism places in jordan</string>
     <string name="using">Share using:</string>
+    <string name="recommended">Recommended</string>
+    <string name="top_rated">Top Rated</string>
+    <string name="emergency">Emergency</string>
+    <string name="ministry_of_tourism">Ministry Of Tourism:</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="test_tour">You have not selected your interested yet</string>
 
 </resources>

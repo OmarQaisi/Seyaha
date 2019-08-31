@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -29,13 +30,14 @@ public class RecommendedTourFragment extends Fragment {
     HashSet<Tour> tourshashSet;
     ArrayList<Tour> recommendedTours = new ArrayList<>();
     static int i;
+    TextView textView;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         mView = inflater.inflate(R.layout.fragment_recommended_tour,container,false);
-
+        textView=mView.findViewById(R.id.test_tour);
 
         firebase_connection();
 
@@ -78,6 +80,10 @@ public class RecommendedTourFragment extends Fragment {
 
                                 }
                             }
+                        }
+                        if(recommendedTours.size()==0)
+                        {
+                            textView.setVisibility(View.VISIBLE);
                         }
                         mAdapter = new TourAdapter(recommendedTours);
                         mManger = new LinearLayoutManager(mView.getContext());

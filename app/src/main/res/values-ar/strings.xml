@@ -24,7 +24,8 @@
     <string name="now">(الان)</string>
     <string name="title_share">هذا التطبيق يستخدم لاكتشاف الأماكن السياحية في الأردن</string>
     <string name="using">مشاركة باستخدام:</string>
-
+    <string name="recommended">رحلات تهمك</string>
+    <string name="top_rated">أشهر الرحلات</string>
     <!-- Strings for the (drawer_menu) titles -->
     <string name="english">انجليزية</string>
     <string name="arabic">العربية</string>
@@ -84,5 +85,10 @@
     <string name="detailed_activity_title">تفاصيل الرحلة</string>
     <string name="reviews_comments_dialog">التعليقات</string>
     <string name="interests">اختر اهتماماتك:</string>
+    <string name="emergency">طوارئ</string>
+    <string name="ministry_of_tourism">وزارة السياحة:</string>
+    <string name="contact_us">تواصل معنا:</string>
+    <string name="test_tour">لم تقم باختيار اهتماماتك</string>
+
 
 </resources>
