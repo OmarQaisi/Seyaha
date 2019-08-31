@@ -43,28 +43,23 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
-        android:weightSum="4">
+        android:weightSum="3">
 
         <View
             android:layout_width="0dp"
-            android:layout_height="10dp"
+            android:layout_height="8dp"
             android:layout_weight="1"
-            android:background="#665EFF"/>
+            android:background="#18255C"/>
         <View
             android:layout_width="0dp"
-            android:layout_height="10dp"
+            android:layout_height="8dp"
             android:layout_weight="1"
-            android:background="#5773FF"/>
+            android:background="#374EA1"/>
         <View
             android:layout_width="0dp"
-            android:layout_height="10dp"
+            android:layout_height="8dp"
             android:layout_weight="1"
-            android:background="#3497FD"/>
-        <View
-            android:layout_width="0dp"
-            android:layout_height="10dp"
-            android:layout_weight="1"
-            android:background="#3ACCE1"/>
+            android:background="#FF8196CC"/>
     </LinearLayout>
 
 </RelativeLayout>

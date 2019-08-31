@@ -15,7 +15,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
-import android.net.Uri;
 
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
@@ -91,19 +90,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detailed);
-        Thread myThread =new Thread(new Runnable() {
-            @Override
-            public void run() {
-                mp = new MediaPlayer();
-                try {
-                    mp.setDataSource(DetailedActivity.this, Uri.parse("https://firebasestorage.googleapis.com/v0/b/seyaha-2efa3.appspot.com/o/down_town.mp3?alt=media&token=dde928b8-4a3c-44f9-9e84-81f03653f706&fbclid=IwAR2zKt5OfDWfK-seKnsNa15_Swll1g__45kL8spsd1BH2YO-D7ynbFlWNXE"));
-                    mp.prepare();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    myThread.start();
+
         mToolbar = findViewById(R.id.detailed_toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle(null);
@@ -494,14 +481,13 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         switch (time) {
             case 0:
                 timeToGoTv.setText(getResources().getString(R.string.day_time));
-                timeToGoImg.setImageResource(R.drawable.ic_day);
                 break;
 
             case 1:
                 timeToGoTv.setText(getResources().getString(R.string.night_time));
-                timeToGoImg.setImageResource(R.drawable.ic_night);
                 break;
         }
+        timeToGoImg.setImageResource(R.drawable.ic_day_and_night);
     }
 
     private void setAge(String age) {
@@ -529,7 +515,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         estimationTv = backLayoutEstimated.findViewById(R.id.back_text);
         estimationImg = frontLayoutEstimated.findViewById(R.id.front_icon);
         estimationTv.setText(estimatedTime + "Hrs");
-        estimationImg.setImageResource(R.drawable.ic_sand_clock);
+        estimationImg.setImageResource(R.drawable.ic_stopwatch);
 
         changeCameraDistance(frontLayoutEstimated, backLayoutEstimated);
         estimationFlip.setOnClickListener(new View.OnClickListener() {
