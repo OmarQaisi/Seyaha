@@ -11,8 +11,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +25,7 @@ public class TourFragment extends Fragment {
     RecyclerView mRecyclerView;
     RecyclerView.LayoutManager mManger;
     FloatingActionButton addTourBtn;
+    ViewPager mViewPager;
     View mView;
 
     @Nullable
@@ -31,38 +34,13 @@ public class TourFragment extends Fragment {
 
         mView = inflater.inflate(R.layout.fragment_tour,container,false);
 
-        FirestoreQueries.getTours(new FirestoreQueries.FirestoreTourCallback() {
-            @Override
-            public void onCallback(List<Tour> tours) {
-                mTours = tours;
-                TourAdapter mAdapter = new TourAdapter(mTours);
-                mRecyclerView = mView.findViewById(R.id.rv);
-                mManger = new LinearLayoutManager(getActivity());
-                mRecyclerView.setLayoutManager(mManger);
-                mRecyclerView.setAdapter(mAdapter);
-            }
-        });
-
-        addTourBtn = mView.findViewById(R.id.add_tour_btn);
-        FirestoreQueries.getUser(new FirestoreQueries.FirestoreUserCallback() {
-            @SuppressLint("RestrictedApi")
-            @Override
-            public void onCallback(User user) {
-                if(user.isAdmin)
-                    addTourBtn.show();
-                else
-                    addTourBtn.setVisibility(View.INVISIBLE);
-            }
-        });
-
-        addTourBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                Intent intent=new Intent(getActivity(),AddTourActivity.class);
-                startActivity(intent);
-            }
-        });
+        TabLayout tabLayout=mView.findViewById(R.id.tablayout);
+         mViewPager=mView.findViewById(R.id.tour_view_pager);
+        tabLayout.addTab(tabLayout.newTab().setText("Recommend"));
+        tabLayout.addTab(tabLayout.newTab().setText("Top rated"));
+        ToursViewPagerAdapter adapter=new ToursViewPagerAdapter(getActivity(),getFragmentManager());
+        mViewPager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(mViewPager);
 
         return mView;
     }

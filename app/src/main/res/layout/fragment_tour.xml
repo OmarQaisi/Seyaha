@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/fragment_tour"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,26 +8,15 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv"
+    <com.google.android.material.tabs.TabLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="vertical"/>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginBottom="20dp"
-        android:id="@+id/add_tour_btn"
-        android:visibility="invisible"
-        android:src="@drawable/ic_add"
-        app:fabCustomSize="64dp"
-        android:scaleType="center"
-        app:maxImageSize="32dp"
-        android:backgroundTint="@color/blue_logo"
-        android:layout_marginRight="20dp" />
+        android:id="@+id/tablayout"
+        app:tabBackground="@color/white_login_screen"
+        />
+    <androidx.viewpager.widget.ViewPager
+        android:layout_width="match_parent"
+        android:id="@+id/tour_view_pager"
+        android:layout_height="match_parent"/>
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
