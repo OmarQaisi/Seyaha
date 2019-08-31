@@ -61,7 +61,7 @@ public class ProfileFragment extends Fragment {
         email.setText(mFirebaseAuth.getCurrentUser().getEmail());
         img=mView.findViewById(R.id.prof_img);
         Picasso.get().load(mFirebaseAuth.getCurrentUser().getPhotoUrl()).placeholder(colorDrawable).into(img);
-            recyclerView=mView.findViewById(R.id.rv);
+            recyclerView=mView.findViewById(R.id.rv_recommended);
         gridLayoutManager = new GridLayoutManager(mView.getContext(), 3);
         recyclerView.setLayoutManager(gridLayoutManager);
         fav_adapter_v=new fav_adapter(getContext());

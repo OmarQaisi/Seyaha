@@ -19,8 +19,12 @@ public class ToursViewPagerAdapter extends FragmentPagerAdapter {
 
         switch (position)
         {
-            default:
+            case 0:
                 return new TopRatedTourFragment();
+            case 1:
+                return new RecommendedTourFragment();
+                default:
+                    return new TopRatedTourFragment();
         }
     }
 
@@ -34,8 +38,9 @@ public class ToursViewPagerAdapter extends FragmentPagerAdapter {
                 return"Top rated";
             case 1:
                 return "Recommended";
+
+                default: return "Top rated";
         }
-        return super.getPageTitle(position);
     }
 
     @Override

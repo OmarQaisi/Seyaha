@@ -82,7 +82,7 @@
 
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv"
+            android:id="@+id/rv_recommended"
             android:layout_below="@+id/confirm_interests"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

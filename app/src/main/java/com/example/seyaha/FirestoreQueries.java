@@ -11,16 +11,18 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class FirestoreQueries {
 
     private static final String TAG = "FirestoreQueries";
-
+   static List<Tour> mTours = new ArrayList<Tour>();
     //Firebase
     private static FirebaseAuth mFirebaseAuth;
     private static FirebaseFirestore mFirebaseFirestore;
@@ -67,7 +69,7 @@ public class FirestoreQueries {
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseFirestore = FirebaseFirestore.getInstance();
         tours = mFirebaseFirestore.collection("tours");
-        tours.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        tours.orderBy("ratingsNum", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){

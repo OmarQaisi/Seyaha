@@ -48,7 +48,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolder> {
     private static final String TAG = "TourAdapter";
-    public static List<Tour> mTours;
+    public  List<Tour> mTours;
     ColorDrawable colorDrawable;
     Context context;
     public User mUser;

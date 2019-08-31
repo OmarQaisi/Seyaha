@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,13 +36,12 @@ public class TopRatedTourFragment extends Fragment {
 
         firebase_connection();
 
-        swipeRefreshLayout = (SwipeRefreshLayout) mView.findViewById(R.id.refresh);
+        swipeRefreshLayout = (SwipeRefreshLayout) mView.findViewById(R.id.refresh_top_rated);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
 
                 firebase_connection();
-                // mAdapter.notifyDataSetChanged();
 
             }
         });
@@ -80,8 +78,8 @@ public class TopRatedTourFragment extends Fragment {
                 mAdapter = null;
                 mTours = tours;
                 mAdapter = new TourAdapter(mTours);
-                mRecyclerView = mView.findViewById(R.id.rv);
-                mManger = new LinearLayoutManager(getActivity());
+                mRecyclerView = mView.findViewById(R.id.rv_top_rated);
+                mManger = new LinearLayoutManager(mView.getContext());
                 mRecyclerView.setLayoutManager(mManger);
                 mRecyclerView.setAdapter(mAdapter);
                 if (swipeRefreshLayout.isRefreshing()) {

@@ -22,9 +22,9 @@ public class Place implements Serializable {
     public int recommendedSeason;
     public int recommendedTime;
     public String voiceURL;
+    public String keywords;
 
-
-    public Place(int airQuality, String categoryAR, String categoryEN, int cost, String descAR, String descEN, int estimatedTime, String imageURL, int internet, double latitude, double longitude, String nameAR, String nameEN, String recommendedAge, int recommendedSeason, int recommendedTime, String voiceURL) {
+    public Place(int airQuality, String categoryAR, String categoryEN, int cost, String descAR, String descEN, int estimatedTime, String imageURL, int internet, double latitude, double longitude, String nameAR, String nameEN, String recommendedAge, int recommendedSeason, int recommendedTime, String voiceURL,String keywords) {
         this.airQuality = airQuality;
         this.categoryAR = categoryAR;
         this.categoryEN = categoryEN;
@@ -42,6 +42,7 @@ public class Place implements Serializable {
         this.recommendedSeason = recommendedSeason;
         this.recommendedTime = recommendedTime;
         this.voiceURL = voiceURL;
+        this.keywords=keywords;
     }
 
     public Place(){}

@@ -22,6 +22,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class AddTourActivity extends AppCompatActivity {
@@ -88,7 +89,7 @@ public class AddTourActivity extends AppCompatActivity {
                 mFirebaseFirestore = FirebaseFirestore.getInstance();
                 DocumentReference newTourRef = mFirebaseFirestore.collection("tours").document();
                 List<Comment> comments = new ArrayList<Comment>();
-                mTour = new Tour(makeCategoryArabic(chosen_place), makeCategoryEnglish(chosen_place), comments, 0, images(chosen_place), 0, chosen_place, 0.0, titleAR.getText().toString().trim(), titleEN.getText().toString().trim(), newTourRef.getId());
+                mTour = new Tour(makeCategoryArabic(chosen_place), makeCategoryEnglish(chosen_place), comments, 0, images(chosen_place), 0, chosen_place, 0.0, titleAR.getText().toString().trim(), titleEN.getText().toString().trim(), newTourRef.getId(),makeKeywords(chosen_place));
                 newTourRef.set(mTour).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
@@ -128,6 +129,23 @@ public class AddTourActivity extends AppCompatActivity {
                 ar.add(mPlaces.get(i).categoryAR);
         }
         return ar;
+    }
+
+    private ArrayList<String> makeKeywords(List<Place> mPlaces)
+    {
+        HashSet<String> tourKeywords= new HashSet<>();
+        for(int i=0;i<mPlaces.size();i++)
+        {
+            String placeKeywords=mPlaces.get(i).keywords.trim();
+            String[] placeKeywordsArr=placeKeywords.split(" ");
+            for(int j=0;j<placeKeywordsArr.length;j++)
+            {
+                tourKeywords.add(placeKeywordsArr[j]);
+            }
+        }
+        ArrayList<String> result=new ArrayList<>();
+        result.addAll(tourKeywords);
+        return result;
     }
 
     private ArrayList<String> images(List<Place> mPlaces) {

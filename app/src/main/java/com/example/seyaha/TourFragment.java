@@ -27,10 +27,9 @@ public class TourFragment extends Fragment {
 
         TabLayout tabLayout=mView.findViewById(R.id.tablayout);
          mViewPager=mView.findViewById(R.id.tour_view_pager);
-        ToursViewPagerAdapter adapter=new ToursViewPagerAdapter(getActivity(),getFragmentManager());
+        ToursViewPagerAdapter adapter=new ToursViewPagerAdapter(mView.getContext(),getFragmentManager());
         mViewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(mViewPager);
-
 
         return mView;
     }
