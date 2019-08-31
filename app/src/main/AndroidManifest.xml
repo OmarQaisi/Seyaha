@@ -3,6 +3,7 @@
     package="com.example.seyaha">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <permission
         android:name="com.example.barcodelibrary.permission.MAPS_RECEIVE"
