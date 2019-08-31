@@ -24,7 +24,7 @@ public class TourFragment extends Fragment {
     RecyclerView mRecyclerView;
     RecyclerView.LayoutManager mManger;
     FloatingActionButton addTourBtn;
-    SwipeRefreshLayout swipeRefreshLayout ;
+    SwipeRefreshLayout swipeRefreshLayout;
     TourAdapter mAdapter;
 
     View mView;
@@ -33,15 +33,14 @@ public class TourFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        mView = inflater.inflate(R.layout.fragment_tour,container,false);
-        swipeRefreshLayout = (SwipeRefreshLayout)mView.findViewById(R.id.refresh);
+        mView = inflater.inflate(R.layout.fragment_tour, container, false);
+        swipeRefreshLayout = (SwipeRefreshLayout) mView.findViewById(R.id.refresh);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onRefresh()
-            {
+            public void onRefresh() {
 
-            firebase_connection();
-            // mAdapter.notifyDataSetChanged();
+                firebase_connection();
+                // mAdapter.notifyDataSetChanged();
 
             }
         });
@@ -52,7 +51,7 @@ public class TourFragment extends Fragment {
             @SuppressLint("RestrictedApi")
             @Override
             public void onCallback(User user) {
-                if(user.isAdmin)
+                if (user.isAdmin)
                     addTourBtn.show();
                 else
                     addTourBtn.setVisibility(View.INVISIBLE);
@@ -61,35 +60,33 @@ public class TourFragment extends Fragment {
 
         addTourBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
-                Intent intent=new Intent(getActivity(),AddTourActivity.class);
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), AddTourActivity.class);
                 startActivity(intent);
             }
         });
 
         return mView;
     }
-private void firebase_connection()
-{
-    FirestoreQueries.getTours(new FirestoreQueries.FirestoreTourCallback() {
-        @Override
-        public void onCallback(List<Tour> tours) {
 
-            mAdapter=null;
-            mTours = tours;
-            mAdapter = new TourAdapter(mTours);
-            mRecyclerView = mView.findViewById(R.id.rv);
-            mManger = new LinearLayoutManager(getActivity());
-            mRecyclerView.setLayoutManager(mManger);
-            mRecyclerView.setAdapter(mAdapter);
-            if(swipeRefreshLayout.isRefreshing())
-            {
-                swipeRefreshLayout.setRefreshing(false);
+    private void firebase_connection() {
+        FirestoreQueries.getTours(new FirestoreQueries.FirestoreTourCallback() {
+            @Override
+            public void onCallback(List<Tour> tours) {
+
+                mAdapter = null;
+                mTours = tours;
+                mAdapter = new TourAdapter(mTours);
+                mRecyclerView = mView.findViewById(R.id.rv);
+                mManger = new LinearLayoutManager(getActivity());
+                mRecyclerView.setLayoutManager(mManger);
+                mRecyclerView.setAdapter(mAdapter);
+                if (swipeRefreshLayout.isRefreshing()) {
+                    swipeRefreshLayout.setRefreshing(false);
+                }
             }
-        }
-    });
+        });
 
-}
+    }
 
 }

@@ -2,30 +2,33 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/rel1"
         android:layout_width="match_parent"
-        android:layout_height="280dp"
+        android:layout_height="200dp"
         android:background="@drawable/gradiant_bg">
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/prof_img"
-            android:layout_width="130dp"
-            android:layout_height="130dp"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            app:civ_border_width="2dp"
+            app:civ_border_color="#FFF"
+            android:layout_marginTop="24dp"
             android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_marginTop="10dp"
             android:src="@drawable/nav_drawer_background"/>
 
         <TextView
             android:id="@+id/prof_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:layout_below="@id/prof_img"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="5dp"
+            android:fontFamily="@font/montserrat_medium"
             android:text="Anas Rasheed"
             android:textColor="@color/white_login_screen"/>
 
@@ -35,9 +38,11 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/prof_name"
             android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
             android:layout_centerHorizontal="true"
             android:text="anasrasheed64@gmail.com"
-            android:textSize="17sp"
+            android:fontFamily="@font/montserrat_medium"
+            android:textSize="14sp"
             android:textColor="@color/white_login_screen"/>
     </RelativeLayout>
 
@@ -51,10 +56,11 @@
         <TextView
             android:id="@+id/selector"
             android:text="@string/interests"
+            android:fontFamily="@font/montserrat_bold"
             android:textStyle="bold"
             android:layout_centerHorizontal="true"
             android:textSize="20sp"
-            android:textColor="#63C9FF"
+            android:textColor="@color/blue_logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             />

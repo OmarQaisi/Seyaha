@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +36,8 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     public  String lan="null";
     NavigationView mNavigationView;
 
+    //back_press
+    boolean doubleBackToExitPressedOnce = false;
 
     //nav_header
     private CircleImageView mNavProfileAvatar;
@@ -113,15 +116,21 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
             mDrawerLayout.closeDrawer(GravityCompat.START);
         }
 
-        if(close%2==0)
-        {
-            mToast(getResources().getString(R.string.close),1);
-        }
-        else
-        {
+        if (doubleBackToExitPressedOnce) {
             moveTaskToBack(true);
+            return;
         }
-        close++;
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, getResources().getString(R.string.close), Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 1000);
     }
     private void mToast(String msg,int duration)
     {
