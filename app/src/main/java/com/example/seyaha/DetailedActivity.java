@@ -347,14 +347,14 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
     private void setCostProgress(int cost) {
 
         costTv.setText(cost + " " + getResources().getString(R.string.JD));
-        if (cost <= 20) {
-            costProgressBar.setProgress(100);
+        costProgressBar.setProgress(costProgressBar.getMax()-cost);
+        if (cost <= 10) {
+
             costProgressBar.setProgressColor(Color.GREEN);
-        } else if (cost > 20 && cost <= 60) {
-            costProgressBar.setProgress(60);
+        } else if (cost > 10 && cost <= 30) {
             costProgressBar.setProgressColor(Color.rgb(255, 165, 0));
         } else {
-            costProgressBar.setProgress(30);
+
             costProgressBar.setProgressColor(Color.RED);
         }
         ObjectAnimator progressAnimator;
@@ -367,7 +367,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
 
     private void setTempProgress(int temp) {
 
-        if (temp <= 10) {
+        if (temp <=10) {
             tempProgressBar.setProgressColor(Color.RED);
             tempProgressBar.setProgress(temp);
             tempTv.setText(getResources().getString(R.string.cold) + temp + "\u2103" +getString(R.string.now));

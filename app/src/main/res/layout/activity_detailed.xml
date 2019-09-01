@@ -189,7 +189,7 @@
                         android:layout_height="10dp"
                         app:rcProgress="100"
                         app:rcSecondaryProgress="0"
-                        app:rcMax="100"
+                        app:rcMax="80"
                         app:rcRadius="0dp"
                         android:id="@+id/cost_progress"
                         android:layout_gravity="bottom"
