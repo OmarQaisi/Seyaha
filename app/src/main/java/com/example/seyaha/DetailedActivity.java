@@ -318,9 +318,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
             }
         });
 
-
         //mMap.animateCamera(CameraUpdateFactory.zoomOut());
-
     }
 
     private BitmapDescriptor getBitmapDescriptor(@DrawableRes int id) {
@@ -337,12 +335,10 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         costTv.setText(cost + " " + getResources().getString(R.string.JD));
         costProgressBar.setProgress(costProgressBar.getMax()-cost);
         if (cost <= 10) {
-
             costProgressBar.setProgressColor(Color.GREEN);
         } else if (cost > 10 && cost <= 30) {
             costProgressBar.setProgressColor(Color.rgb(255, 165, 0));
         } else {
-
             costProgressBar.setProgressColor(Color.RED);
         }
         ObjectAnimator progressAnimator;

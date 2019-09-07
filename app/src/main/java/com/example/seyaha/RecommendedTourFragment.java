@@ -55,8 +55,6 @@ public class RecommendedTourFragment extends Fragment {
 
     private void firebase_connection() {
 
-
-
         FirestoreQueries.getUser(new FirestoreQueries.FirestoreUserCallback() {
             @Override
             public void onCallback(final User user) {
@@ -85,6 +83,11 @@ public class RecommendedTourFragment extends Fragment {
                         {
                             textView.setVisibility(View.VISIBLE);
                         }
+                        else
+                        {
+                            textView.setVisibility(View.INVISIBLE);
+
+                        }
                         mAdapter = new TourAdapter(recommendedTours);
                         mManger = new LinearLayoutManager(mView.getContext());
                         mRecyclerViewRecommended = mView.findViewById(R.id.rv_recommended);
@@ -95,14 +98,8 @@ public class RecommendedTourFragment extends Fragment {
                         }
                     }
                 });
-
-
             }
         });
-
-
     }
-
-
 
 }
