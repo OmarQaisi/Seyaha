@@ -33,5 +33,25 @@
         android:backgroundTint="@color/blue_logo"
         android:layout_marginRight="20dp" />
 
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/place_name_et"
+        app:layout_constraintBottom_toTopOf="@id/add_place_btn"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginBottom="20dp"
+        android:id="@+id/add_place_btn"
+        android:src="@drawable/ic_add"
+        app:fabCustomSize="64dp"
+        android:scaleType="center"
+        app:maxImageSize="32dp"
+        android:backgroundTint="@color/blue_logo"
+        android:layout_marginRight="20dp" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
