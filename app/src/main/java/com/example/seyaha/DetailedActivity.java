@@ -145,7 +145,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
 
         run_viewPager();
 
-        setCostProgress(mPlace.get(0).cost);
+        setCostProgress(mPlace.get(0).cost.activities);
         getTempApi(mPlace.get(0).latitude, mPlace.get(0).longitude);
         setAirQualityProgress(mPlace.get(0).airQuality);
         setInternetProgress(mPlace.get(0).internet);
@@ -251,7 +251,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
 
             @Override
             public void onPageSelected(int position) {
-                setCostProgress(mPlace.get(position).cost);
+                setCostProgress(mPlace.get(position).cost.activities);
                 getTempApi(mPlace.get(position).latitude, mPlace.get(position).longitude);
                 setAirQualityProgress(mPlace.get(position).airQuality);
                 setInternetProgress(mPlace.get(position).internet);
