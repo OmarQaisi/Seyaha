@@ -120,7 +120,8 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:layout_marginRight="7dp">
                     <TextView
                         android:id="@+id/cost"
                         android:layout_width="wrap_content"
@@ -165,12 +166,59 @@
                         android:fontFamily="@font/montserrat_medium"
                         android:textColor="@android:color/black"/>
                 </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_gravity="bottom"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="10dp"
+                    android:weightSum="4"
+                    android:layout_marginLeft="5dp">
 
+                    <ImageButton
+                        android:onClick="cost_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_more_information"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:layout_marginTop="1dp"
+                        android:layout_weight="1"
+                        android:layout_gravity="bottom"
+                        />
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:src="@drawable/ic_more_information"
+                        android:layout_marginTop="1dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:layout_gravity="bottom"/>
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_more_information"
+                        android:layout_weight="1"
+                        android:layout_marginTop="1dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:layout_gravity="bottom"/>
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_more_information"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:layout_marginTop="3dp"
+                        android:layout_weight="1"
+                        android:layout_gravity="bottom"
+                        />
+                </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginStart="10dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginEnd="20dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -189,7 +237,7 @@
                         android:layout_height="10dp"
                         app:rcProgress="100"
                         app:rcSecondaryProgress="0"
-                        app:rcMax="100"
+                        app:rcMax="80"
                         app:rcRadius="0dp"
                         android:id="@+id/cost_progress"
                         android:layout_gravity="bottom"
@@ -518,7 +566,6 @@
                         android:backgroundTint="#e3FDFDFD"
                         android:padding="12dp"
                         android:src="@drawable/ic_minus"
-
                         />
                 </LinearLayout>
 

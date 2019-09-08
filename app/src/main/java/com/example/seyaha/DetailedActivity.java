@@ -1,9 +1,12 @@
 package com.example.seyaha;
 
 import androidx.annotation.DrawableRes;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.res.ResourcesCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.animation.AnimatorInflater;
@@ -25,9 +28,16 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -43,11 +53,6 @@ import com.google.gson.JsonObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DetailedActivity extends AppCompatActivity implements OnMapReadyCallback {
     private static final String TAG = "DetailedActivity";
@@ -61,7 +66,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
     String placeName;
     MediaPlayer mp;
 
-
+    AlertDialog alertDialog;
     private final String APIKEY = "4e4480d5039580a36c576fa58a0c1d3a";
     private OpenWeatherApi openWeatherApi;
     private double tempApiResult;
@@ -200,6 +205,49 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
             @Override
             public void onClick(View v) {
                 mp.start();
+            }
+        });
+
+    }
+
+    public void cost_btn(View view)
+    {
+        show_cost_dialog();
+    }
+    private void show_cost_dialog()
+    {
+        ImageButton close;
+        AlertDialog.Builder builder =new AlertDialog.Builder(this);
+        View mView=getLayoutInflater().inflate(R.layout.cost_popup,null);
+        builder.setView(mView);
+        close=mView.findViewById(R.id.close_btn);
+        RecyclerView recyclerView=mView.findViewById(R.id.rv);
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        List<String> names=new ArrayList<>();
+        List<Integer> value=new ArrayList<>();
+        names.add("transportation cost : ");
+        names.add("food cost : ");
+        names.add("Activities cost : ");
+        names.add("entries  fees cost : ");
+        names.add("3 star hotels cost : ");
+        names.add("4 star hotels cost : ");
+        names.add("5 star hotels cost : ");
+        value.add(10);
+        value.add(5);
+        value.add(50);
+        value.add(2);
+        value.add(40);
+        value.add(60);
+        value.add(80);
+        recyclePopupAdapter adapter=new recyclePopupAdapter(this,names,value);
+        recyclerView.setAdapter(adapter);
+          alertDialog=builder.create();
+        alertDialog.show();
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.cancel();
             }
         });
 
