@@ -3,94 +3,148 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:card_view="http://schemas.android.com/tools"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:id="@+id/rel1"
+    <com.github.florent37.arclayout.ArcLayout
+        android:id="@+id/arc_layout"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="@drawable/gradiant_bg">
+        android:layout_height="190dp"
+        app:arc_cropDirection="cropOutside"
+        app:arc_height="65dp"
+        app:arc_position="bottom"
+        android:elevation="8dp">
 
-        <TextView
-            android:id="@+id/prof_name"
+        <RelativeLayout
+            android:id="@+id/rel1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/gradiant_bg">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/nav_drawer_background"
+                android:scaleType="centerCrop"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/gradiant_bg"/>
+
+            <TextView
+                android:id="@+id/prof_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/prof_img"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/montserrat_medium"
+                android:text="Anas Rasheed"
+                android:textColor="@color/white_login_screen"
+                android:textSize="20sp" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/prof_img"
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="24dp"
+                android:src="@drawable/nav_drawer_background"
+                app:civ_border_color="#FFF"
+                app:civ_border_width="2dp" />
+        </RelativeLayout>
+
+    </com.github.florent37.arclayout.ArcLayout>
+
+    <Button
+        android:id="@+id/save_interests"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_profile_clear_save"
+        android:layout_marginTop="180dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:text="@string/save_interests"
+        android:textColor="@color/blue_logo"
+        android:textSize="14sp" />
+
+    <Button
+        android:id="@+id/clear_interests"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_profile_clear_save"
+        android:layout_marginTop="180dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:text="@string/clear_interests"
+        android:textColor="@color/blue_logo"
+        android:textSize="14sp" />
+
+    <me.rishabhkhanna.customtogglebutton.CustomToggleButton
+        android:id="@+id/notification_button"
+        android:layout_width="wrap_content"
+        android:minWidth="120dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="200dp"
+        app:checkedTextColor="@android:color/white"
+        app:uncheckedTextColor="@color/blue_logo"
+        app:checkedColor="@color/blue_logo"
+        android:checked="true"
+        app:uncheckedColor="@color/blue_logo"
+        android:textSize="16sp"
+        app:radius="20dp"
+        android:fontFamily="@font/montserrat_medium"
+        android:textOn="@string/notification"
+        android:textOff="@string/notification" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:padding="16dp"
+        app:cardCornerRadius="12dp"
+        android:elevation="12dp"
+        android:layout_below="@id/notification_button"
+        android:layout_centerHorizontal="true">
+
+
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/prof_img"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="5dp"
-            android:fontFamily="@font/montserrat_medium"
-            android:text="Anas Rasheed"
-            android:textColor="@color/white_login_screen"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/prof_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/prof_name"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="@font/montserrat_medium"
-            android:text="anasrasheed64@gmail.com"
-            android:textColor="@color/white_login_screen"
-            android:textSize="14sp" />
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/prof_img"
-            android:layout_width="110dp"
-            android:layout_height="110dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="24dp"
-            android:src="@drawable/nav_drawer_background"
-            app:civ_border_color="#FFF"
-            app:civ_border_width="2dp" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/rel1"
-        android:background="@color/white_login_screen">
-
+            android:background="@color/white_login_screen">
 
             <TextView
                 android:id="@+id/selector"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_bold"
-                android:layout_marginTop="8dp"
-                android:layout_marginLeft="6dp"
-                android:layout_marginStart="6dp"
+                android:layout_centerHorizontal="true"
+                android:padding="8dp"
                 android:text="@string/interests"
                 android:textColor="@color/blue_logo"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/confirm_interests"
-                android:layout_width="wrap_content"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_recommended"
+                android:layout_below="@+id/selector"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@null"
-                android:fontFamily="@font/montserrat_bold"
-                android:onClick="addTour"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:text="@string/done"
-                android:textColor="@color/blue_logo"
-                android:textSize="14sp" />
+                android:layout_margin="8dp"
+                android:background="@color/white_login_screen">
+            </androidx.recyclerview.widget.RecyclerView>
 
+        </RelativeLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_recommended"
-            android:layout_below="@+id/confirm_interests"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:background="@color/white_login_screen">
+    </androidx.cardview.widget.CardView>
 
-        </androidx.recyclerview.widget.RecyclerView>
-
-    </RelativeLayout>
 
 </RelativeLayout>

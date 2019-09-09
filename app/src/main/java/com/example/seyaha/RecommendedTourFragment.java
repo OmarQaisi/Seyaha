@@ -41,7 +41,7 @@ public class RecommendedTourFragment extends Fragment {
 
         firebase_connection();
 
-        swipeRefreshLayout =mView.findViewById(R.id.refresh_recommended);
+        swipeRefreshLayout = mView.findViewById(R.id.refresh_recommended);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

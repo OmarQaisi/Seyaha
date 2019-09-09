@@ -39,7 +39,7 @@ public class TopRatedTourFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        mView = inflater.inflate(R.layout.fragment_top_rated_tour,container,false);
+        mView = inflater.inflate(R.layout.fragment_top_rated_tour, container, false);
 
         firebase_connection();
 
@@ -58,7 +58,7 @@ public class TopRatedTourFragment extends Fragment {
             @SuppressLint("RestrictedApi")
             @Override
             public void onCallback(User user) {
-                if(user.isAdmin)
+                if (user.isAdmin)
                     addTourBtn.show();
                 else
                     addTourBtn.setVisibility(View.INVISIBLE);
@@ -67,27 +67,24 @@ public class TopRatedTourFragment extends Fragment {
 
         addTourBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
-                Intent intent=new Intent(getActivity(),AddTourActivity.class);
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), AddTourActivity.class);
                 startActivity(intent);
             }
         });
 
 
-        final EditText addPlaceEt=mView.findViewById(R.id.place_name_et);
-        FloatingActionButton addPlaceBtn=mView.findViewById(R.id.add_place_btn);
+        final EditText addPlaceEt = mView.findViewById(R.id.place_name_et);
+        FloatingActionButton addPlaceBtn = mView.findViewById(R.id.add_place_btn);
         addPlaceBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
-              FirebaseFirestore  mFirebaseFirestore = FirebaseFirestore.getInstance();
-                DocumentReference reference=mFirebaseFirestore.collection("places").document(addPlaceEt.getText().toString());
-                reference.set(new Place(0,"","",new Cost(0,0,0,0,new ArrayList<SleepingPlace>()),"","",0,"",0,0,0,"","","",0,0,"","")).addOnCompleteListener(new OnCompleteListener<Void>() {
+            public void onClick(View v) {
+                FirebaseFirestore mFirebaseFirestore = FirebaseFirestore.getInstance();
+                DocumentReference reference = mFirebaseFirestore.collection("places").document(addPlaceEt.getText().toString());
+                reference.set(new Place(0, "", "", new Cost(0, 0, 0, 0, new ArrayList<SleepingPlace>()), "", "", 0, "", 0, 0, 0, "", "", "", 0, 0, "", "")).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful())
-                        {
+                        if (task.isSuccessful()) {
                             Log.d("TopRatedTour", "new places is added to the firestore");
                         }
                     }
@@ -104,7 +101,6 @@ public class TopRatedTourFragment extends Fragment {
         FirestoreQueries.getTours(new FirestoreQueries.FirestoreTourCallback() {
             @Override
             public void onCallback(List<Tour> tours) {
-
                 mAdapter = null;
                 mTours = tours;
                 mAdapter = new TourAdapter(mTours);

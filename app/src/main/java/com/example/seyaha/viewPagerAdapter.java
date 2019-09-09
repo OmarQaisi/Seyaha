@@ -13,17 +13,16 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class viewPagerAdapter extends PagerAdapter
-{
-private List<String> imageUrls;
-private LayoutInflater layoutInflater;
-private Context context;
+public class viewPagerAdapter extends PagerAdapter {
+    private List<String> imageUrls;
+    private LayoutInflater layoutInflater;
+    private Context context;
 
-public viewPagerAdapter(List<String>imageUrls,Context context)
-{
-    this.imageUrls =imageUrls;
-    this.context=context;
-}
+    public viewPagerAdapter(List<String> imageUrls, Context context) {
+        this.imageUrls = imageUrls;
+        this.context = context;
+    }
+
     @Override
     public int getCount() {
         return imageUrls.size();
@@ -37,17 +36,17 @@ public viewPagerAdapter(List<String>imageUrls,Context context)
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
-    layoutInflater=LayoutInflater.from(context);
-    View view=layoutInflater.inflate(R.layout.viewpager_item,container,false);
+        layoutInflater = LayoutInflater.from(context);
+        View view = layoutInflater.inflate(R.layout.viewpager_item, container, false);
         ImageView imageView;
-        imageView=view.findViewById(R.id.viewPager_img);
+        imageView = view.findViewById(R.id.viewPager_img);
         Picasso.get().load(imageUrls.get(position)).fit().into(imageView);
-        container.addView(view,0);
+        container.addView(view, 0);
         return view;
     }
 
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-        container.removeView((View)object);
-}
+        container.removeView((View) object);
+    }
 }
