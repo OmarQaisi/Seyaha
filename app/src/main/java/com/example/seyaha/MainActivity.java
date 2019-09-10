@@ -109,7 +109,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         };
 
-
     }
 
     private void language_checker() {
@@ -151,6 +150,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_profile:
                 if (getSupportFragmentManager().findFragmentByTag(PROFILE_FRAGMENT_TAG) != null) {
                     getSupportFragmentManager().beginTransaction().show(getSupportFragmentManager().findFragmentByTag(PROFILE_FRAGMENT_TAG)).commit();
+                    fav_adapter.intrests_hashSet.clear();
+                    ProfileFragment.fav_adapter_v.notifyDataSetChanged();
                 } else {
                     getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new ProfileFragment(), PROFILE_FRAGMENT_TAG).commit();
                 }

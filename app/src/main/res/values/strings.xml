@@ -42,7 +42,8 @@
     <string name="clear_interests">Clear</string>
 
     <string name="save">You\'ve saved your Interests successfully</string>
-    <string name="save_size_check">please pick one interest atleast!!</string>
+    <string name="save_size_check">please pick one interest atleast !!</string>
+    <string name="save_size_check2">pick a new/another interest before saving !!</string>
 
     <string name="notification">Notification</string>
     <string name="notification_on">Notification Enabled</string>
@@ -128,5 +129,7 @@
     <string name="ministry_of_tourism">Ministry Of Tourism:</string>
     <string name="contact_us">Contact Us</string>
     <string name="test_tour">You have not selected your interests yet.</string>
+    <string name="overview_activity_title">Tour Overview</string>
+
 
 </resources>
