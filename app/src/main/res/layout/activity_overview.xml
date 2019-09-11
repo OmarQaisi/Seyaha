@@ -6,12 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".OverviewActivity">
 
+    <include layout="@layout/toolbar"
+        android:id="@+id/overview_toolbar"/>
+
     <fragment
         android:id="@+id/map"
-        android:layout_marginTop="5dp"
         android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_below="@+id/overview_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="20dp"
-        />
+        android:layout_height="match_parent" />
+
 </RelativeLayout>

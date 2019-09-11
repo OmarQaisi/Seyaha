@@ -60,5 +60,11 @@ dependencies {
 
     //Circle ImageView
     implementation 'de.hdodenhof:circleimageview:3.0.0'
+
+    //ArcLayout
+    implementation 'com.github.florent37:arclayout:1.0.5'
+
+    //Custom Toggle Button
+    implementation 'me.rishabhkhanna:CustomToggle:1.0.0'
 }
 apply plugin: 'com.google.gms.google-services'

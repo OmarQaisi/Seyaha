@@ -2,11 +2,21 @@
 <resources>
 
     <string name="app_name">Seyaha</string>
-    <string name="done">حفظ</string>
+
+    <string name="save_interests">حفظ</string>
+    <string name="clear_interests">مسح</string>
+
+    <string name="save">لقد تم حفظ الاهتمامات بنجاح</string>
+    <string name="save_size_check">قم باختيار اهتمام واحد على اﻷقل !!</string>
+    <string name="save_size_check2">قم باختيار اهتمام جديد قبل الحفظ !!</string>
+
+    <string name="notification">اﻹشعارات</string>
+    <string name="notification_on">تم تفعيل اﻹشعارات</string>
+    <string name="notification_off">تم إيقاف اﻹشعارات</string>
+
     <string name="login_welcome">"أهلا وسهلا"</string>
     <string name="login_description">"أفضل وسيلة للتنقل داخل الاردن \nواستكشاف المعالم والاماكن الجديدة."</string>
     <string name="login_continue">تابع من خلال :</string>
-    <string name="save">لقد تم حفظ الاهتمامات بنجاح.</string>
 
     <string name="close">انقر مجددا للخروج </string>
     <string name="retry">مرة أخرى</string>
@@ -88,7 +98,7 @@
     <string name="emergency">طوارئ</string>
     <string name="ministry_of_tourism">وزارة السياحة:</string>
     <string name="contact_us">تواصل معنا:</string>
-    <string name="test_tour">لم تقم باختيار اهتماماتك</string>
-
+    <string name="test_tour">لم تقم باختيار اهتماماتك حتى الآن.</string>
+    <string name="overview_activity_title">نظرة عامة على الرحلة</string>
 
 </resources>
