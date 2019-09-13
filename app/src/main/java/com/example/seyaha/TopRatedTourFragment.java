@@ -90,7 +90,6 @@ public class TopRatedTourFragment extends Fragment {
                     }
                 });
 
-
             }
         });
 

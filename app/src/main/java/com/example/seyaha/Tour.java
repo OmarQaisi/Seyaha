@@ -38,6 +38,7 @@ public class Tour {
         this.tourKeywords=tourKeywords;
     }
 
+
     public Tour() {}
 
     public String makeEnglishDescription(List<String> categoriesEN)

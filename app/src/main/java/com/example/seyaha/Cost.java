@@ -21,5 +21,4 @@ public Cost(){}
         this.overNightStay = overNightStay;
     }
 
-
 }

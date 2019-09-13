@@ -25,6 +25,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public class fav_adapter extends RecyclerView.Adapter<fav_adapter.ImageViewHolder> {
+    private static final String TAG = "fav_adapter";
     Context context;
     String[] interests;
     String[] interests_ar;
@@ -40,6 +41,7 @@ public class fav_adapter extends RecyclerView.Adapter<fav_adapter.ImageViewHolde
         context = viewGroup.getContext();
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.interests_cat, viewGroup, false);
         ImageViewHolder imageViewHolder = new ImageViewHolder(view);
+
 
         return imageViewHolder;
     }
@@ -59,8 +61,10 @@ public class fav_adapter extends RecyclerView.Adapter<fav_adapter.ImageViewHolde
         FirestoreQueries.getUser(new FirestoreQueries.FirestoreUserCallback() {
             @Override
             public void onCallback(User user) {
+                Log.d(TAG, "onCallback: " + user.displayName + " " + user.intrests.toString());
                 intrests_hashSet.addAll(user.intrests);
                 if (intrests_hashSet.size() != 0) {
+                    Log.d(TAG, "onBindViewHolder: ");
                     Iterator<String> i = intrests_hashSet.iterator();
                     while (i.hasNext()) {
                         if (interests[position].equals(i.next())) {
@@ -77,6 +81,7 @@ public class fav_adapter extends RecyclerView.Adapter<fav_adapter.ImageViewHolde
             holder.category.setText(interests[position].trim());
         }
 
+        holder.checker.setVisibility(View.INVISIBLE);
         holder.category.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -114,8 +119,8 @@ public class fav_adapter extends RecyclerView.Adapter<fav_adapter.ImageViewHolde
 
     }
 
-    public void clearInterests() {
-        Arrays.fill(counter, 0);
+    public void clearInterests(){
+        Arrays.fill(counter,0);
         notifyDataSetChanged();
     }
 

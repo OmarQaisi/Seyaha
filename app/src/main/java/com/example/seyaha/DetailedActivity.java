@@ -25,6 +25,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -50,11 +51,16 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import org.w3c.dom.Text;
+
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
-public class DetailedActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class DetailedActivity extends AppCompatActivity implements OnMapReadyCallback, View.OnClickListener {
     private static final String TAG = "DetailedActivity";
 
     private GoogleMap mMap;
@@ -65,19 +71,14 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
     double latitude, longitude;
     String placeName;
     MediaPlayer mp;
-
     AlertDialog alertDialog;
     private final String APIKEY = "4e4480d5039580a36c576fa58a0c1d3a";
     private OpenWeatherApi openWeatherApi;
-    private double tempApiResult;
-
+    private double tempApiResult,min,max;
     ImageButton zoom_in, zoom_out, text_to_speech;
     View map_view;
-
     private Toolbar mToolbar;
     private TextView mTextView;
-
-
     ScrollView scrollView;
     SupportMapFragment mapFragment;
     FrameLayout seasonFlip, timeToGoFlip, estimationFlip, ageFlip;
@@ -85,10 +86,12 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
     RoundCornerProgressBar costProgressBar, tempProgressBar, airQualityProgressBar, internetProgressBar;
     View frontLayoutSeason, backLayoutSeason, frontLayoutTime, backLayouTime, frontLayoutAge, backLayoutAge, frontLayoutEstimated, backLayoutEstimated;
     ImageView seasonImg, timeToGoImg, estimationImg;
-
+    TextView num_of_person;
     private AnimatorSet mSetRightOut;
     private AnimatorSet mSetLeftIn;
     private boolean[] mIsBackVisible = {false, false, false, false};
+    int i=1,avaragecost=0,size;;
+    static int real_position=0;
 
 
     @Override
@@ -101,19 +104,14 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         getSupportActionBar().setTitle(null);
         mTextView = findViewById(R.id.toolbar_title);
         mTextView.setText(R.string.detailed_activity_title);
-
         // add back arrow to toolbar
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
-
-
         //retrofit config
         Retrofit retrofit = new Retrofit.Builder().baseUrl("http://api.openweathermap.org/").addConverterFactory(GsonConverterFactory.create()).build();
         openWeatherApi = retrofit.create(OpenWeatherApi.class);
-
-
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         //text views and description deceleration
         placeNameRecommendations = findViewById(R.id.place_name_recommendations);
@@ -154,9 +152,13 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         getTempApi(mPlace.get(0).latitude, mPlace.get(0).longitude);
         setAirQualityProgress(mPlace.get(0).airQuality);
         setInternetProgress(mPlace.get(0).internet);
-
-        mp = MediaPlayer.create(getApplicationContext(), getResources().getIdentifier(mPlace.get(0).voiceURL,"raw",getPackageName()));
-
+            try {
+                mp = MediaPlayer.create(getApplicationContext(), getResources().getIdentifier(mPlace.get(0).voiceURL, "raw", getPackageName()));
+            }
+            catch (Exception e)
+            {
+                Log.d("place_name", ""+mPlace.get(0).nameEN+" \n"+e);
+            }
         setSeason(mPlace.get(0).recommendedSeason);
         setTimeToGo(mPlace.get(0).recommendedTime);
         setAge(mPlace.get(0).recommendedAge);
@@ -216,31 +218,42 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
     }
     private void show_cost_dialog()
     {
-        ImageButton close;
+        Button close,apply;
+        ImageButton plus,minus;
         AlertDialog.Builder builder =new AlertDialog.Builder(this);
         View mView=getLayoutInflater().inflate(R.layout.cost_popup,null);
         builder.setView(mView);
-        close=mView.findViewById(R.id.close_btn);
+        close=mView.findViewById(R.id.cancel_btn);
+        apply=mView.findViewById(R.id.apply);
         RecyclerView recyclerView=mView.findViewById(R.id.rv);
+        plus=mView.findViewById(R.id.plus);
+        plus.setOnClickListener(this);
+        minus=mView.findViewById(R.id.minus);
+        minus.setOnClickListener(this);
+        num_of_person=mView.findViewById(R.id.num_of_person);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         List<String> names=new ArrayList<>();
-        List<Integer> value=new ArrayList<>();
-        names.add("transportation cost : ");
-        names.add("food cost : ");
-        names.add("Activities cost : ");
-        names.add("entries  fees cost : ");
-        names.add("3 star hotels cost : ");
-        names.add("4 star hotels cost : ");
-        names.add("5 star hotels cost : ");
-        value.add(10);
-        value.add(5);
-        value.add(50);
-        value.add(2);
-        value.add(40);
-        value.add(60);
-        value.add(80);
-        recyclePopupAdapter adapter=new recyclePopupAdapter(this,names,value);
+        final List<Integer> value=new ArrayList<>();
+        names.add(getString(R.string.transportation_cost));
+        names.add(getString(R.string.food_cost));
+        names.add(getString(R.string.activities_cost));
+        names.add(getString(R.string.entries_cost));
+        names.add(getString(R.string.three_star_cost));
+        names.add(getString(R.string.four_star_cost));
+        names.add(getString(R.string.five_star_hotel));
+        value.add(mPlace.get(real_position).cost.transportation);
+        value.add(mPlace.get(real_position).cost.food);
+        value.add(mPlace.get(real_position).cost.activities);
+        value.add(mPlace.get(real_position).cost.entranceFees);
+        Log.e("debug",mPlace.get(real_position).nameEN);
+        value.add(mPlace.get(real_position).cost.overNightStay.get(2).price);
+        value.add(mPlace.get(real_position).cost.overNightStay.get(1).price);
+        value.add(mPlace.get(real_position).cost.overNightStay.get(0).price);
+        Log.e("debug",mPlace.get(real_position).nameEN);
+         size=Integer.parseInt(num_of_person.getText().toString());
+        Log.e("debug",mPlace.get(real_position).cost.overNightStay.size()+"");
+        final recyclePopupAdapter adapter=new recyclePopupAdapter(this,names,value);
         recyclerView.setAdapter(adapter);
           alertDialog=builder.create();
         alertDialog.show();
@@ -250,9 +263,79 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
                 alertDialog.cancel();
             }
         });
+        apply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e("hashmap",adapter.positions.size()+"");
+
+                for(Integer i:adapter.positions.keySet())
+                {
+                    String key=i.toString();
+                  //  int value=adapter.positions.get(key);
+                    //avaragecost+=value;
+                }
+                Log.e("avaragecost",avaragecost+"");
+                avaragecost=avaragecost*Integer.parseInt(num_of_person.getText().toString());
+                Log.e("avaragecost",avaragecost+"");
+                setCostProgress(avaragecost);
+                adapter.positions.clear();
+                avaragecost=0;
+                alertDialog.cancel();
+            }
+        });
 
     }
+    public void temp_btn(View view) {
+        Button ok;
+        TextView min_temp,max_temp;
+        AlertDialog.Builder builder =new AlertDialog.Builder(this);
+        View mView=getLayoutInflater().inflate(R.layout.temperature_popup,null);
+        builder.setView(mView);
+        ok=mView.findViewById(R.id.btntemperature);
+        max_temp=mView.findViewById(R.id.max_temp);
+        min_temp=mView.findViewById(R.id.min_temp);
+        max_temp.setText(""+new DecimalFormat("##.##").format(max)+"C");
+        min_temp.setText(""+new DecimalFormat("##.##").format(min)+"C");
+        alertDialog=builder.create();
+        alertDialog.show();
+        ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.cancel();
+            }
+        });
 
+    }
+    public void quality_btn(View view) {
+        Button ok;
+        AlertDialog.Builder builder =new AlertDialog.Builder(this);
+        View mView=getLayoutInflater().inflate(R.layout.airquality_popup,null);
+        builder.setView(mView);
+        ok=mView.findViewById(R.id.btnquality);
+        alertDialog=builder.create();
+        alertDialog.show();
+        ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.cancel();
+            }
+        });
+    }
+    public void internet_btn(View view) {
+        Button ok;
+        AlertDialog.Builder builder =new AlertDialog.Builder(this);
+        View mView=getLayoutInflater().inflate(R.layout.internet_popup,null);
+        builder.setView(mView);
+        ok=mView.findViewById(R.id.btninternet);
+        alertDialog=builder.create();
+        alertDialog.show();
+        ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.cancel();
+            }
+        });
+    }
     private void getTempApi(double latitude, double longitude) {
         Call <JsonObject> call = openWeatherApi.getTemp(latitude, longitude, APIKEY);
         call.enqueue(new Callback <JsonObject>() {
@@ -266,9 +349,12 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
                 JsonObject root = response.body();
                 JsonObject main = root.getAsJsonObject("main");
                 JsonElement element = main.get("temp");
+                JsonElement element_min=main.get("temp_min");
+                JsonElement element_max=main.get("temp_max");
 
                 tempApiResult = element.getAsDouble() - 273.15;
-
+                min=element_min.getAsDouble()-273.15;
+                max=element_max.getAsDouble()-273.15;
                 setTempProgress((int) tempApiResult);
             }
 
@@ -294,6 +380,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                real_position=position;
                 //System.out.println(positionOffset);
             }
 
@@ -382,9 +469,10 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
 
         costTv.setText(cost + " " + getResources().getString(R.string.JD));
         costProgressBar.setProgress(costProgressBar.getMax()-cost);
-        if (cost <= 10) {
+
+        if (cost <= 10*size) {
             costProgressBar.setProgressColor(Color.GREEN);
-        } else if (cost > 10 && cost <= 30) {
+        } else if (cost > 10*size && cost <= 30*size) {
             costProgressBar.setProgressColor(Color.rgb(255, 165, 0));
         } else {
             costProgressBar.setProgressColor(Color.RED);
@@ -465,6 +553,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
                 internetProgressBar.setProgress(100);
                 internetTv.setText(getResources().getString(R.string.great_internet));
                 break;
+
         }
 
         progressAnimator = ObjectAnimator.ofFloat(internetProgressBar, "progress", 0.0f, internetProgressBar.getProgress());
@@ -610,4 +699,23 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         return super.onOptionsItemSelected(item);
     }
 
+
+    @Override
+    public void onClick(View view)
+    {
+
+        switch (view.getId())
+        {
+            case R.id.plus :
+                if(i!=99)
+                i++;
+                num_of_person.setText(i+"");
+                break;
+            case R.id.minus :
+                if(i!=1)
+                i--;
+                num_of_person.setText(i+"");
+                break;
+        }
+    }
 }
