@@ -1,13 +1,10 @@
 package com.example.seyaha;
 
-
 import android.content.Context;
 
 import android.os.Build;
 
-import android.util.Log;
 import android.view.LayoutInflater;
-
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -16,22 +13,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.firestore.FirebaseFirestore;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
-public class fav_adapter extends RecyclerView.Adapter<fav_adapter.ImageViewHolder> {
-    private static final String TAG = "fav_adapter";
+public class InterestsAdapter extends RecyclerView.Adapter<InterestsAdapter.ImageViewHolder> {
+    private static final String TAG = "InterestsAdapter";
     Context context;
     String[] interests;
     String[] interests_ar;
     static List<String> interests_chosen;
     static HashSet<String> intrests_hashSet;
-    FirebaseFirestore db;
     int counter[];
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -46,7 +40,7 @@ public class fav_adapter extends RecyclerView.Adapter<fav_adapter.ImageViewHolde
         return imageViewHolder;
     }
 
-    public fav_adapter(Context context) {
+    public InterestsAdapter(Context context) {
         this.context = context;
         interests = context.getResources().getStringArray(R.array.interestsEN);
         interests_ar = context.getResources().getStringArray(R.array.interestsAR);
@@ -61,10 +55,8 @@ public class fav_adapter extends RecyclerView.Adapter<fav_adapter.ImageViewHolde
         FirestoreQueries.getUser(new FirestoreQueries.FirestoreUserCallback() {
             @Override
             public void onCallback(User user) {
-                Log.d(TAG, "onCallback: " + user.displayName + " " + user.intrests.toString());
                 intrests_hashSet.addAll(user.intrests);
                 if (intrests_hashSet.size() != 0) {
-                    Log.d(TAG, "onBindViewHolder: ");
                     Iterator<String> i = intrests_hashSet.iterator();
                     while (i.hasNext()) {
                         if (interests[position].equals(i.next())) {
@@ -116,7 +108,6 @@ public class fav_adapter extends RecyclerView.Adapter<fav_adapter.ImageViewHolde
             category = itemView.findViewById(R.id.txt_fav);
             checker = itemView.findViewById(R.id.img_correct);
         }
-
     }
 
     public void clearInterests(){

@@ -47,4 +47,5 @@ public class ToursViewPagerAdapter extends FragmentPagerAdapter {
     public int getCount() {
         return 2;
     }
+
 }

@@ -1,27 +1,22 @@
 package com.example.seyaha;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class recyclePopupAdapter extends  RecyclerView.Adapter<recyclePopupAdapter.ViewHolder>
+public class RecyclePopupAdapter extends  RecyclerView.Adapter<RecyclePopupAdapter.ViewHolder>
 {
 
     List<String> cost_type;
@@ -31,7 +26,7 @@ public class recyclePopupAdapter extends  RecyclerView.Adapter<recyclePopupAdapt
 
    static Map<Integer,Integer> positions;
 
-    public  recyclePopupAdapter(Context context,List<String> cost_type,List<Integer>cost_value)
+    public RecyclePopupAdapter(Context context, List<String> cost_type, List<Integer>cost_value)
     {
 
         this.context=context;

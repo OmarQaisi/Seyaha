@@ -23,12 +23,9 @@ public class RecommendedTourFragment extends Fragment {
     List<Tour> mTours = new ArrayList<Tour>();
     RecyclerView mRecyclerViewRecommended;
     RecyclerView.LayoutManager mManger;
-    FloatingActionButton addTourBtn;
     View mView;
     SwipeRefreshLayout swipeRefreshLayout;
     TourAdapter mAdapter;
-    HashSet<Tour> tourshashSet;
-    ArrayList<Tour> recommendedTours = new ArrayList<>();
     static int i;
     TextView textView;
 

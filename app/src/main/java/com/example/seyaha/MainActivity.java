@@ -151,6 +151,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_profile:
                 if (getSupportFragmentManager().findFragmentByTag(PROFILE_FRAGMENT_TAG) != null) {
                     getSupportFragmentManager().beginTransaction().show(getSupportFragmentManager().findFragmentByTag(PROFILE_FRAGMENT_TAG)).commit();
+                    InterestsAdapter.intrests_hashSet.clear();
+                    ProfileFragment.interest_adapter.notifyDataSetChanged();
                 } else {
                     getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new ProfileFragment(), PROFILE_FRAGMENT_TAG).commit();
                 }

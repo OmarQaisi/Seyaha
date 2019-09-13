@@ -29,7 +29,6 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -51,13 +50,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import org.w3c.dom.Text;
-
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 public class DetailedActivity extends AppCompatActivity implements OnMapReadyCallback, View.OnClickListener {
@@ -67,7 +62,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
     ViewPager viewPager;
     List <String> imageUrls;
     List <Place> mPlace;
-    viewPagerAdapter adapter;
+    ViewPagerAdapter adapter;
     double latitude, longitude;
     String placeName;
     MediaPlayer mp;
@@ -253,7 +248,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         Log.e("debug",mPlace.get(real_position).nameEN);
          size=Integer.parseInt(num_of_person.getText().toString());
         Log.e("debug",mPlace.get(real_position).cost.overNightStay.size()+"");
-        final recyclePopupAdapter adapter=new recyclePopupAdapter(this,names,value);
+        final RecyclePopupAdapter adapter=new RecyclePopupAdapter(this,names,value);
         recyclerView.setAdapter(adapter);
           alertDialog=builder.create();
         alertDialog.show();
@@ -373,7 +368,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
             imageUrls.add(mPlace.get(i).imageURL);
         }
 
-        adapter = new viewPagerAdapter(imageUrls, this);
+        adapter = new ViewPagerAdapter(imageUrls, this);
         viewPager = findViewById(R.id.ViewPager);
         viewPager.setAdapter(adapter);
         viewPager.setPadding(100, 0, 100, 0);

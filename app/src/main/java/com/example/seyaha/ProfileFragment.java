@@ -26,6 +26,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -35,7 +36,7 @@ public class ProfileFragment extends Fragment {
 
     RecyclerView recyclerView;
     GridLayoutManager gridLayoutManager;
-    fav_adapter fav_adapter_v;
+    static InterestsAdapter interest_adapter;
     TextView name;
     CircleImageView img;
     ColorDrawable colorDrawable;
@@ -69,32 +70,33 @@ public class ProfileFragment extends Fragment {
         recyclerView = mView.findViewById(R.id.rv_recommended);
         gridLayoutManager = new GridLayoutManager(mView.getContext(), 3);
         recyclerView.setLayoutManager(gridLayoutManager);
-        fav_adapter_v = new fav_adapter(getContext());
-        recyclerView.setAdapter(fav_adapter_v);
+        interest_adapter = new InterestsAdapter(getContext());
+        recyclerView.setAdapter(interest_adapter);
         db = FirebaseFirestore.getInstance();
 
         save_but.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(fav_adapter.intrests_hashSet.size() != 0){
+                if(InterestsAdapter.intrests_hashSet.size() != 0 && !checkInterestsIdentical()){
                     publish_interests();
-                    fav_adapter.interests_chosen.clear();
+                    InterestsAdapter.interests_chosen.clear();
                     Toast.makeText(getContext(), getResources().getString(R.string.save), Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getContext(), MainActivity.class);
                     intent.putExtra("FRAGMENT_ID", 1);
                     startActivity(intent);
-                } else{
+                } else if(mUser.intrests.size() != 0 && checkInterestsIdentical())
+                    Toast.makeText(getContext(), getResources().getString(R.string.save_size_check2), Toast.LENGTH_SHORT).show();
+                else
                     Toast.makeText(getContext(), getResources().getString(R.string.save_size_check), Toast.LENGTH_SHORT).show();
-                }
             }
         });
 
         clear_but.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fav_adapter.intrests_hashSet.clear();
+                InterestsAdapter.intrests_hashSet.clear();
                 publish_interests();
-                fav_adapter_v.clearInterests();
+                interest_adapter.clearInterests();
             }
         });
 
@@ -116,8 +118,8 @@ public class ProfileFragment extends Fragment {
     private void publish_interests() {
 
         Map<String, Object> updatedData = new HashMap<>();
-        fav_adapter.interests_chosen.addAll(fav_adapter.intrests_hashSet);
-        updatedData.put("intrests", fav_adapter.interests_chosen);
+        InterestsAdapter.interests_chosen.addAll(InterestsAdapter.intrests_hashSet);
+        updatedData.put("intrests", InterestsAdapter.interests_chosen);
         DocumentReference userRefernce = db.collection("users").document(mUser.userId);
         userRefernce.update(updatedData).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
@@ -132,6 +134,23 @@ public class ProfileFragment extends Fragment {
         });
     }
 
+    public boolean checkInterestsIdentical(){
+        int counter =0;
+        for (int i=0; i < mUser.intrests.size(); i++){
+            if (InterestsAdapter.intrests_hashSet.size() != 0) {
+                Iterator<String> x = InterestsAdapter.intrests_hashSet.iterator();
+                while (x.hasNext()) {
+                    if(mUser.intrests.get(i).equals(x.next()))
+                        counter++;
+                }
+            }
+        }
+
+        if(counter == mUser.intrests.size() && counter == InterestsAdapter.intrests_hashSet.size())
+            return true;
+        else
+            return false;
+    }
 
 }
 

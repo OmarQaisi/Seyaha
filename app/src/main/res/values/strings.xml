@@ -131,11 +131,14 @@
     <string name="using">Share using:</string>
     <string name="recommended">Recommended</string>
     <string name="top_rated">Top Rated</string>
+
     <string name="emergency">Emergency</string>
     <string name="ministry_of_tourism">Ministry Of Tourism:</string>
     <string name="contact_us">Contact Us</string>
+
     <string name="test_tour">You have not selected your interests yet.</string>
     <string name="overview_activity_title">Tour Overview</string>
+
     <string name="food_cost">food cost : </string>
     <string name="activities_cost">Activities cost : </string>
     <string name="entries_cost">entries  fees cost : </string>
@@ -157,6 +160,5 @@
     <string name="good_airquality">From 1 to 50</string>
     <string name="moderate_airquality">From 51 to 100</string>
     <string name="apply">Apply</string>
-
 
 </resources>
