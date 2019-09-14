@@ -143,7 +143,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
 
         run_viewPager();
 
-        setCostProgress(mPlace.get(0).cost.activities);
+        setCostProgress(0);
         getTempApi(mPlace.get(0).latitude, mPlace.get(0).longitude);
         setAirQualityProgress(mPlace.get(0).airQuality);
         setInternetProgress(mPlace.get(0).internet);
@@ -239,14 +239,17 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         names.add(getString(R.string.five_star_hotel));
         value.add(mPlace.get(real_position).cost.transportation);
         value.add(mPlace.get(real_position).cost.food);
-        value.add(mPlace.get(real_position).cost.activities);
+        value.add(mPlace.get(real_position).activities.get(0).cost);
         value.add(mPlace.get(real_position).cost.entranceFees);
         Log.e("debug",mPlace.get(real_position).nameEN);
-        value.add(mPlace.get(real_position).cost.overNightStay.get(2).price);
-        value.add(mPlace.get(real_position).cost.overNightStay.get(1).price);
-        value.add(mPlace.get(real_position).cost.overNightStay.get(0).price);
+        value.add(mPlace.get(real_position).cost.overNightStay.get(2));
+        value.add(mPlace.get(real_position).cost.overNightStay.get(1));
+        value.add(mPlace.get(real_position).cost.overNightStay.get(0));
         Log.e("debug",mPlace.get(real_position).nameEN);
+
+
          size=Integer.parseInt(num_of_person.getText().toString());
+
         Log.e("debug",mPlace.get(real_position).cost.overNightStay.size()+"");
         final RecyclePopupAdapter adapter=new RecyclePopupAdapter(this,names,value);
         recyclerView.setAdapter(adapter);
@@ -381,7 +384,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
 
             @Override
             public void onPageSelected(int position) {
-                setCostProgress(mPlace.get(position).cost.activities);
+                setCostProgress(0);
                 getTempApi(mPlace.get(position).latitude, mPlace.get(position).longitude);
                 setAirQualityProgress(mPlace.get(position).airQuality);
                 setInternetProgress(mPlace.get(position).internet);
@@ -535,15 +538,21 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         switch (internet) {
             case 0:
                 internetProgressBar.setProgressColor(Color.RED);
-                internetProgressBar.setProgress(30);
+                internetProgressBar.setProgress(25);
                 internetTv.setText(getResources().getString(R.string.bad_internet));
                 break;
+
             case 1:
                 internetProgressBar.setProgressColor(Color.rgb(255, 165, 0));
-                internetProgressBar.setProgress(60);
-                internetTv.setText(getResources().getString(R.string.good_internet));
+                internetProgressBar.setProgress(50);
+                internetTv.setText(getResources().getString(R.string.okay_internet));
                 break;
             case 2:
+                internetProgressBar.setProgressColor(Color.rgb(255,215,0));
+                internetProgressBar.setProgress(75);
+                internetTv.setText(getResources().getString(R.string.good_internet));
+                break;
+            case 3:
                 internetProgressBar.setProgressColor(Color.GREEN);
                 internetProgressBar.setProgress(100);
                 internetTv.setText(getResources().getString(R.string.great_internet));

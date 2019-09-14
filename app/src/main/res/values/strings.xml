@@ -160,5 +160,6 @@
     <string name="good_airquality">From 1 to 50</string>
     <string name="moderate_airquality">From 51 to 100</string>
     <string name="apply">Apply</string>
+    <string name="okay_internet">Okay</string>
 
 </resources>

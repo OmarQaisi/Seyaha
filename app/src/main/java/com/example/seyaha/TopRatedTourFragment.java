@@ -81,7 +81,7 @@ public class TopRatedTourFragment extends Fragment {
             public void onClick(View v) {
                 FirebaseFirestore mFirebaseFirestore = FirebaseFirestore.getInstance();
                 DocumentReference reference = mFirebaseFirestore.collection("places").document(addPlaceEt.getText().toString());
-                reference.set(new Place(0, "", "", new Cost(0, 0, 0, 0, new ArrayList<SleepingPlace>()), "", "", 0, "", 0, 0, 0, "", "", "", 0, 0, "", "")).addOnCompleteListener(new OnCompleteListener<Void>() {
+                reference.set(new Place(new ArrayList<ActivityClass>(),0, "", "", new Cost( 0, 0, 0, new ArrayList<Integer>()), "", "", 0, "", 0, 0, 0, "", "", "", 0, 0, "", "")).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {

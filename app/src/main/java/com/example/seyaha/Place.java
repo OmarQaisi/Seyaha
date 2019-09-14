@@ -1,10 +1,11 @@
 package com.example.seyaha;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Place implements Serializable {
 
-
+    public List<ActivityClass> activities;
     public int airQuality;
     public String categoryAR;
     public String categoryEN;
@@ -24,7 +25,7 @@ public class Place implements Serializable {
     public String voiceURL;
     public String keywords;
 
-    public Place(int airQuality, String categoryAR, String categoryEN, Cost cost, String descAR, String descEN, int estimatedTime, String imageURL, int internet, double latitude, double longitude, String nameAR, String nameEN, String recommendedAge, int recommendedSeason, int recommendedTime, String voiceURL,String keywords) {
+    public Place(List<ActivityClass> activities,int airQuality, String categoryAR, String categoryEN, Cost cost, String descAR, String descEN, int estimatedTime, String imageURL, int internet, double latitude, double longitude, String nameAR, String nameEN, String recommendedAge, int recommendedSeason, int recommendedTime, String voiceURL,String keywords) {
         this.airQuality = airQuality;
         this.categoryAR = categoryAR;
         this.categoryEN = categoryEN;
@@ -43,6 +44,7 @@ public class Place implements Serializable {
         this.recommendedTime = recommendedTime;
         this.voiceURL = voiceURL;
         this.keywords=keywords;
+        this.activities=activities;
     }
 
     public Place(){}

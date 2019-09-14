@@ -6,19 +6,18 @@ import java.util.List;
 public class Cost implements Serializable
 {
 
-public int activities;
 public int entranceFees;
 public int food;
 public int transportation;
-public List<SleepingPlace> overNightStay;
+public List<Integer> overNightStay;
 
 public Cost(){}
-    public Cost(int activities, int entranceFees, int food, int transportation, List<SleepingPlace> overNightStay) {
-        this.activities = activities;
-        this.entranceFees = entranceFees;
-        this.food = food;
-        this.transportation = transportation;
-        this.overNightStay = overNightStay;
-    }
 
+
+    public Cost(int entranceFees, int food, int transportation, List<Integer> overNightStay) {
+        this.entranceFees= entranceFees;
+        this.food= food;
+        this.transportation= transportation;
+        this.overNightStay= overNightStay;
+    }
 }
