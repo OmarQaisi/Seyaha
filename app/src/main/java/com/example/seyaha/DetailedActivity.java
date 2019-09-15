@@ -233,12 +233,13 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         builder.setView(mView);
 
         MaterialSpinner overNightSpinner = mView.findViewById(R.id.over_night_spinner);
-       OverNightSpinnerAdapter overNightAdapter=new OverNightSpinnerAdapter(this,mPlace.get(position).cost.overNightStay);
+       OverNightSpinnerAdapter overNightAdapter=new OverNightSpinnerAdapter(this,R.layout.over_night_spinner_item,mPlace.get(position).cost.overNightStay);
         overNightSpinner.setAdapter(overNightAdapter);
+
         overNightSpinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(@NotNull MaterialSpinner materialSpinner, @Nullable View view, int i, long l) {
-                Toast.makeText(DetailedActivity.this, view.getId()+"", Toast.LENGTH_SHORT).show();
+
             }
 
             @Override

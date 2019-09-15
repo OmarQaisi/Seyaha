@@ -158,14 +158,10 @@
     <string name="good_airquality">From 1 to 50</string>
     <string name="moderate_airquality">From 51 to 100</string>
     <string name="apply">Apply</string>
-<<<<<<< Updated upstream
-=======
-    <string name="okay_internet">Okay</string>
     <string name="entrance_fees">Entrance fees</string>
-
     <string name="cheap_cost">cheap price</string>
     <string name="average_cost">Average price</string>
     <string name="expensive_cost">Expensive price</string>
->>>>>>> Stashed changes
+
 
 </resources>
