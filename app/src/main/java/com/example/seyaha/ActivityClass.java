@@ -5,14 +5,14 @@ import java.io.Serializable;
 public class ActivityClass implements Serializable
 {
 
-    public String nameAr;
-    public String nameEn;
+    public String nameAR;
+    public String nameEN;
     public int cost;
     public double time;
 
     public ActivityClass(String nameAr, String nameEn, int cost, double time){
-        this.nameAr = nameAr;
-        this.nameEn = nameEn;
+        this.nameAR = nameAr;
+        this.nameEN = nameEn;
         this.cost = cost;
         this.time = time;
     }

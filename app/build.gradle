@@ -43,6 +43,8 @@ dependencies {
     implementation 'com.agrawalsuneet.androidlibs:dotsloader:1.4'
     implementation 'com.rengwuxian.materialedittext:library:2.1.4'
     implementation 'com.wajahatkarim3.EasyFlipView:EasyFlipView:2.1.2'
+    implementation 'com.bitvale:switcher:1.0.5'
+    implementation 'com.github.tiper:MaterialSpinner:1.3.3'
 
     // Firebase
     implementation 'com.google.firebase:firebase-firestore:20.2.0'

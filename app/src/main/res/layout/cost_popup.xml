@@ -1,97 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="8dp"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:layout_margin="4dp"
     android:background="@drawable/corners"
-    >
+    android:orientation="vertical"
+    android:padding="8dp">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:backgroundTint="@color/blue_logo"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="5dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginEnd="5dp"
-        android:background="@android:drawable/screen_background_light_transparent">
+    <TextView
+        android:id="@+id/entrance_fees_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="@string/entrance_fees"
+        android:textAlignment="center"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toRightOf="@id/entrance_fees_checkBox"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.recyclerview.widget.RecyclerView>
+    <com.bitvale.switcher.SwitcherC
+        android:id="@+id/entrance_fees_checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:switcher_icon_color="@color/white_login_screen"
+        app:switcher_off_color="@color/red_logo"
+        app:switcher_on_color="@color/green_great" />
 
-    <LinearLayout
-        android:id="@+id/lay"
-        android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_marginTop="25dp"
-        android:layout_below="@id/rv"
-        android:gravity="center_horizontal|bottom"
-        android:layout_marginBottom="10dp"
-        android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/entrance_fees_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="8JD"
+        android:textSize="18sp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageButton
-            android:id="@+id/plus"
-            android:layout_width="30dp"
-            android:layout_height="33dp"
-            android:src="@drawable/ic_add"
-            android:background="@color/blue_logo"
-            />
-        <TextView
-            android:id="@+id/num_of_person"
-            android:layout_width="30dp"
-            android:gravity="center_horizontal"
-            android:layout_height="33dp"
-            android:text="1"
-            android:textColor="@color/blue_logo"
-            android:textSize="26sp"/>
-        <ImageButton
-            android:id="@+id/minus"
-            android:layout_width="30dp"
-            android:layout_height="33dp"
-            android:src="@drawable/ic_remove"
-            android:background="@color/blue_logo"
-            />
 
-    </LinearLayout>
-    <LinearLayout
+    <com.bitvale.switcher.SwitcherC
+        android:id="@+id/food_checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/entrance_fees_checkBox"
+        app:switcher_icon_color="@color/white_login_screen"
+        app:switcher_off_color="@color/red_logo"
+        app:switcher_on_color="@color/green_great" />
+
+    <TextView
+        android:id="@+id/food_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="Food"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toRightOf="@id/food_checkBox"
+        app:layout_constraintTop_toBottomOf="@id/entrance_fees_text" />
+
+    <TextView
+        android:id="@+id/food_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="2JD"
+        android:textSize="18sp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/entrance_fees_price" />
+
+    <com.bitvale.switcher.SwitcherC
+        android:id="@+id/transportation_checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/food_checkBox"
+        app:switcher_icon_color="@color/white_login_screen"
+        app:switcher_off_color="@color/red_logo"
+        app:switcher_on_color="@color/green_great" />
+
+    <TextView
+        android:id="@+id/transportation_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="Transportation"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toRightOf="@id/transportation_checkBox"
+        app:layout_constraintTop_toBottomOf="@id/food_text" />
+
+    <TextView
+        android:id="@+id/transportation_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="20JD"
+        android:textSize="18sp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/food_price" />
+
+    <com.tiper.MaterialSpinner
+        android:id="@+id/over_night_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/lay"
-        android:weightSum="2">
+        android:focusable="false"
+        app:spinnerMode="bottomsheet"
+        android:layout_marginTop="10dp"
+        android:hint="Over night staying"
+        app:layout_constraintTop_toBottomOf="@id/transportation_checkBox"/>
 
-        <Button
-            android:id="@+id/cancel_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:layout_weight="1"
-            android:background="@drawable/button_border_radius"
-            android:elevation="2dp"
-            android:fontFamily="@font/montserrat_bold"
-            android:text="@string/alert_rating_cancel"
-            android:textColor="@color/blue_logo"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/apply"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:layout_weight="1"
-            android:background="@drawable/button_radius"
-            android:elevation="2dp"
-            android:fontFamily="@font/montserrat_bold"
-            android:text="@string/apply"
-            android:textColor="@android:color/white"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-
-    </LinearLayout>
+    <com.tiper.MaterialSpinner
+        android:id="@+id/activities_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="false"
+        android:layout_marginTop="10dp"
+        app:spinnerMode="bottomsheet"
+        android:hint="@string/activities_cost"
+        app:layout_constraintTop_toBottomOf="@id/over_night_spinner"/>
 
 
 
-</RelativeLayout>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

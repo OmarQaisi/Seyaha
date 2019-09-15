@@ -73,7 +73,7 @@ public class AddTourActivity extends AppCompatActivity {
             @Override
             public void onCallback(List<Place> places) {
                 mPlaces = places;
-
+                System.out.println(places.get(0).activities.get(0).nameEN);
                 AdminPlaceAdapter adminPlaceAdapter = new AdminPlaceAdapter(AddTourActivity.this, mPlaces);
                 recyclerView.setAdapter(adminPlaceAdapter);
             }

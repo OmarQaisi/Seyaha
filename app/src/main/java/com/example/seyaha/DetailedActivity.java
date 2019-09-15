@@ -25,12 +25,15 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Adapter;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -48,13 +51,17 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.tiper.MaterialSpinner;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class DetailedActivity extends AppCompatActivity implements OnMapReadyCallback, View.OnClickListener {
+public class DetailedActivity extends AppCompatActivity implements OnMapReadyCallback {
     private static final String TAG = "DetailedActivity";
 
     private GoogleMap mMap;
@@ -79,7 +86,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
     TextView seasonTv, timeToGoTv, ageTv1, ageTv2, estimationTv, costTv, tempTv, airQualityTv, internetTv, placeNameInfo, placeNameRecommendations, placeNameLocation, description, placeNameTitle;
     RoundCornerProgressBar costProgressBar, tempProgressBar, airQualityProgressBar, internetProgressBar;
     View frontLayoutSeason, backLayoutSeason, frontLayoutTime, backLayouTime, frontLayoutAge, backLayoutAge, frontLayoutEstimated, backLayoutEstimated;
-    ImageView seasonImg, timeToGoImg, estimationImg;
+    ImageView seasonImg, timeToGoImg, estimationImg,costDetails;
     TextView num_of_person;
     private AnimatorSet mSetRightOut;
     private AnimatorSet mSetLeftIn;
@@ -130,7 +137,20 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         timeToGoFlip = findViewById(R.id.time_btn);
         ageFlip = findViewById(R.id.age_btn);
         estimationFlip = findViewById(R.id.estimated_btn);
+        //progress details deceleration
+        costDetails=findViewById(R.id.cost_details_btn);
+
+
+        costDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDetailedCost(0);
+            }
+        });
+
         loadAnimations();
+
+
         Intent i = getIntent();
         mPlace = (List <Place>) i.getSerializableExtra("places");
         description.setMovementMethod(new ScrollingMovementMethod());
@@ -153,10 +173,6 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
             {
                 Log.d("place_name", ""+mPlace.get(0).nameEN+" \n"+e);
             }
-        setSeason(mPlace.get(0).recommendedSeason);
-        setTimeToGo(mPlace.get(0).recommendedTime);
-        setAge(mPlace.get(0).recommendedAge);
-        setEstimatedTime(mPlace.get(0).estimatedTime);
 
         if (SplashScreenActivity.lan.equalsIgnoreCase("ar")) {
             description.setText(mPlace.get(0).descAR);
@@ -204,84 +220,42 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
             }
         });
 
+
+
+
     }
 
-    public void cost_btn(View view)
+
+    public void showDetailedCost(int position)
     {
-        show_cost_dialog();
-    }
-    private void show_cost_dialog()
-    {
-        Button close,apply;
-        ImageButton plus,minus;
-        AlertDialog.Builder builder =new AlertDialog.Builder(this);
         View mView=getLayoutInflater().inflate(R.layout.cost_popup,null);
+        AlertDialog.Builder builder=new AlertDialog.Builder(this);
         builder.setView(mView);
-        close=mView.findViewById(R.id.cancel_btn);
-        apply=mView.findViewById(R.id.apply);
-        RecyclerView recyclerView=mView.findViewById(R.id.rv);
-        plus=mView.findViewById(R.id.plus);
-        plus.setOnClickListener(this);
-        minus=mView.findViewById(R.id.minus);
-        minus.setOnClickListener(this);
-        num_of_person=mView.findViewById(R.id.num_of_person);
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        List<String> names=new ArrayList<>();
-        final List<Integer> value=new ArrayList<>();
-        names.add(getString(R.string.transportation_cost));
-        names.add(getString(R.string.food_cost));
-        names.add(getString(R.string.activities_cost));
-        names.add(getString(R.string.entries_cost));
-        names.add(getString(R.string.three_star_cost));
-        names.add(getString(R.string.four_star_cost));
-        names.add(getString(R.string.five_star_hotel));
-        value.add(mPlace.get(real_position).cost.transportation);
-        value.add(mPlace.get(real_position).cost.food);
-        value.add(mPlace.get(real_position).activities.get(0).cost);
-        value.add(mPlace.get(real_position).cost.entranceFees);
-        Log.e("debug",mPlace.get(real_position).nameEN);
-        value.add(mPlace.get(real_position).cost.overNightStay.get(2));
-        value.add(mPlace.get(real_position).cost.overNightStay.get(1));
-        value.add(mPlace.get(real_position).cost.overNightStay.get(0));
-        Log.e("debug",mPlace.get(real_position).nameEN);
 
+        MaterialSpinner overNightSpinner = mView.findViewById(R.id.over_night_spinner);
+       OverNightSpinnerAdapter overNightAdapter=new OverNightSpinnerAdapter(this,mPlace.get(position).cost.overNightStay);
+        overNightSpinner.setAdapter(overNightAdapter);
+        overNightSpinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(@NotNull MaterialSpinner materialSpinner, @Nullable View view, int i, long l) {
+                Toast.makeText(DetailedActivity.this, view.getId()+"", Toast.LENGTH_SHORT).show();
+            }
 
-         size=Integer.parseInt(num_of_person.getText().toString());
+            @Override
+            public void onNothingSelected(@NotNull MaterialSpinner materialSpinner) {
 
-        Log.e("debug",mPlace.get(real_position).cost.overNightStay.size()+"");
-        final RecyclePopupAdapter adapter=new RecyclePopupAdapter(this,names,value);
-        recyclerView.setAdapter(adapter);
-          alertDialog=builder.create();
+            }
+        });
+
+        MaterialSpinner activitiesSpinner=mView.findViewById(R.id.activities_spinner);
+        String[] arr2={"walking","shopping","cycling"};
+        ArrayAdapter<String> adapter=new ArrayAdapter<>(this,android.R.layout.select_dialog_multichoice,arr2);
+        activitiesSpinner.setAdapter(adapter);
+
+        alertDialog=builder.create();
         alertDialog.show();
-        close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                alertDialog.cancel();
-            }
-        });
-        apply.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.e("hashmap",adapter.positions.size()+"");
-
-                for(Integer i:adapter.positions.keySet())
-                {
-                    String key=i.toString();
-                  //  int value=adapter.positions.get(key);
-                    //avaragecost+=value;
-                }
-                Log.e("avaragecost",avaragecost+"");
-                avaragecost=avaragecost*Integer.parseInt(num_of_person.getText().toString());
-                Log.e("avaragecost",avaragecost+"");
-                setCostProgress(avaragecost);
-                adapter.positions.clear();
-                avaragecost=0;
-                alertDialog.cancel();
-            }
-        });
-
     }
+
     public void temp_btn(View view) {
         Button ok;
         TextView min_temp,max_temp;
@@ -333,6 +307,8 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
             }
         });
     }
+
+
     private void getTempApi(double latitude, double longitude) {
         Call <JsonObject> call = openWeatherApi.getTemp(latitude, longitude, APIKEY);
         call.enqueue(new Callback <JsonObject>() {
@@ -382,7 +358,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
             }
 
             @Override
-            public void onPageSelected(int position) {
+            public void onPageSelected(final int position) {
                 setCostProgress(0);
                 getTempApi(mPlace.get(position).latitude, mPlace.get(position).longitude);
                 setAirQualityProgress(mPlace.get(position).airQuality);
@@ -416,6 +392,13 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
                 scrollView.fullScroll(View.FOCUS_UP);
                 description.scrollTo(0, 0);
 
+
+                costDetails.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showDetailedCost(position);
+                    }
+                });
             }
 
             @Override
@@ -702,22 +685,4 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
     }
 
 
-    @Override
-    public void onClick(View view)
-    {
-
-        switch (view.getId())
-        {
-            case R.id.plus :
-                if(i!=99)
-                i++;
-                num_of_person.setText(i+"");
-                break;
-            case R.id.minus :
-                if(i!=1)
-                i--;
-                num_of_person.setText(i+"");
-                break;
-        }
-    }
 }

@@ -137,12 +137,12 @@
     <string name="test_tour">You have not selected your interests yet.</string>
     <string name="overview_activity_title">Tour Overview</string>
 
-    <string name="food_cost">food cost : </string>
-    <string name="activities_cost">Activities cost : </string>
-    <string name="entries_cost">entries  fees cost : </string>
+    <string name="activities_cost">Activities cost</string>
+
     <string name="three_star_cost">3 star hotels cost : </string>
     <string name="four_star_cost">4 star hotels cost : </string>
     <string name="five_star_hotel">5 star hotels cost : </string>
+
     <string name="max">max :</string>
     <string name="min">min :</string>
     <string name="great">Great</string>
@@ -158,5 +158,14 @@
     <string name="good_airquality">From 1 to 50</string>
     <string name="moderate_airquality">From 51 to 100</string>
     <string name="apply">Apply</string>
+<<<<<<< Updated upstream
+=======
+    <string name="okay_internet">Okay</string>
+    <string name="entrance_fees">Entrance fees</string>
+
+    <string name="cheap_cost">cheap price</string>
+    <string name="average_cost">Average price</string>
+    <string name="expensive_cost">Expensive price</string>
+>>>>>>> Stashed changes
 
 </resources>
