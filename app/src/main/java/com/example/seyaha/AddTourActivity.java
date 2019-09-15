@@ -1,6 +1,7 @@
 package com.example.seyaha;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -10,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -34,6 +36,7 @@ public class AddTourActivity extends AppCompatActivity {
     TextInputEditText titleAR, titleEN;
     GridLayoutManager gridLayoutManager;
     boolean flag=false;
+    int []counter;
 
     private Toolbar mToolbar;
     private TextView mTextView;
@@ -41,6 +44,7 @@ public class AddTourActivity extends AppCompatActivity {
     //Firebase
     private FirebaseFirestore mFirebaseFirestore;
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,8 +64,15 @@ public class AddTourActivity extends AppCompatActivity {
 
         titleAR = findViewById(R.id.titleA);
         titleEN = findViewById(R.id.titleE);
-
         recyclerView = findViewById(R.id.fav_categories_rv);
+       recyclerView.setHasFixedSize(true);
+       recyclerView.setItemViewCacheSize(20);
+       recyclerView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+           @Override
+           public void onScrollChange(View view, int i, int i1, int i2, int i3) {
+
+           }
+       });
         gridLayoutManager = new GridLayoutManager(this, 3);
         recyclerView.setLayoutManager(gridLayoutManager);
         chosen_place = new ArrayList<Place>();
@@ -75,6 +86,7 @@ public class AddTourActivity extends AppCompatActivity {
                 mPlaces = places;
                 System.out.println(places.get(0).activities.get(0).nameEN);
                 AdminPlaceAdapter adminPlaceAdapter = new AdminPlaceAdapter(AddTourActivity.this, mPlaces);
+                adminPlaceAdapter.setHasStableIds(true);
                 recyclerView.setAdapter(adminPlaceAdapter);
             }
         });

@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 
 import android.view.View;
@@ -45,15 +46,16 @@ public class AdminPlaceAdapter extends RecyclerView.Adapter<AdminPlaceAdapter.Im
     {
         mPlace= place;
         this.context=context;
+        chosen_places = new ArrayList <Place>();
+        counter=new int[mPlace.size()];
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onBindViewHolder(final ImageViewHolder holder, final int position)
     {
-        counter=new int[mPlace.size()];
+
         colorDrawable = new ColorDrawable(Color.GRAY);
-        chosen_places = new ArrayList <Place>();
 
         Picasso.get().load(mPlace.get(position).imageURL).placeholder(colorDrawable).fit().into(holder.circle);
         holder.circle.setClipToOutline(true);
@@ -70,6 +72,7 @@ public class AdminPlaceAdapter extends RecyclerView.Adapter<AdminPlaceAdapter.Im
             @Override
             public void onClick(View view)
             {
+
                 if(counter[position]%2==0)
                 {
                     holder.checkable.setVisibility(View.VISIBLE);
@@ -80,6 +83,7 @@ public class AdminPlaceAdapter extends RecyclerView.Adapter<AdminPlaceAdapter.Im
                     holder.checkable.setVisibility(View.INVISIBLE);
                     chosen_places.remove(mPlace.get(position));
                 }
+                Log.e("fucker",chosen_places.size()+"");
                 counter[position]++;
             }
         });
