@@ -32,7 +32,6 @@ import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -390,7 +389,6 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
                 setInternetProgress(mPlace.get(position).internet);
 
                 mp = MediaPlayer.create(getApplicationContext(), getResources().getIdentifier(mPlace.get(position).voiceURL,"raw",getPackageName()));
-
 
                 setSeason(mPlace.get(position).recommendedSeason);
                 setTimeToGo(mPlace.get(position).recommendedTime);

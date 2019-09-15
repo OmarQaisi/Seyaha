@@ -48,8 +48,6 @@
     <string name="save_size_check2">pick a new/another interest before saving !!</string>
 
 
-
-
     <string name="notification">Notification</string>
     <string name="notification_on">Notification Enabled</string>
     <string name="notification_off">Notification Disabled</string>
@@ -100,7 +98,7 @@
     <string name="bad_internet">Bad</string>
     <string name="good_internet">Good</string>
     <string name="great_internet">Great</string>
-    <string name="okey_internet">Good</string>
+    <string name="okay_internet">Okay</string>
     <string name="alert_rating_hint">"Share Your Experience about this tour"</string>
     <string name="alert_rating_post">Post</string>
     <string name="alert_rating_cancel">Cancel</string>
@@ -160,6 +158,5 @@
     <string name="good_airquality">From 1 to 50</string>
     <string name="moderate_airquality">From 51 to 100</string>
     <string name="apply">Apply</string>
-    <string name="okay_internet">Okay</string>
 
 </resources>

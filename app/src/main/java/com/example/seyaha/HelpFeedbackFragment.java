@@ -6,17 +6,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.squareup.picasso.Picasso;
-
 public class HelpFeedbackFragment extends Fragment {
     TextView emergency_num, mot_num, mot_mail;
-    ImageView arcImageView;
 
     @Nullable
     @Override
@@ -24,8 +20,6 @@ public class HelpFeedbackFragment extends Fragment {
 
         View mView = inflater.inflate(R.layout.fragment_helpfeedback, container, false);
 
-        arcImageView = mView.findViewById(R.id.arc_img);
-        Picasso.get().load("https://see.news/wp-content/uploads/2019/05/Jordanian-Royal-Family.jpg").fit().into(arcImageView);
         emergency_num = mView.findViewById(R.id.emergency_num);
         mot_num = mView.findViewById(R.id.mot_num);
         mot_mail = mView.findViewById(R.id.mot_mail);

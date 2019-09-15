@@ -63,7 +63,7 @@
     <string name="bad_internet">سيئ</string>
     <string name="good_internet">جيد</string>
     <string name="great_internet">رائع</string>
-    <string name="okey_internet">مقبول</string>
+    <string name="okay_internet">مقبول</string>
     <string name="alert_rating_hint">"شاركنا تجربتك لهذه الرحلة"</string>
     <string name="alert_rating_post">تم</string>
     <string name="alert_rating_cancel">الغاء</string>

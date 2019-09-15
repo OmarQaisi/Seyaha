@@ -22,7 +22,6 @@ public class TourFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-
         mView = inflater.inflate(R.layout.fragment_tour, container, false);
 
         TabLayout tabLayout = mView.findViewById(R.id.tablayout);
@@ -38,6 +37,7 @@ public class TourFragment extends Fragment {
 
         return mView;
     }
+
 
 
 }
