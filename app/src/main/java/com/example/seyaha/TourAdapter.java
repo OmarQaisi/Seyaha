@@ -232,7 +232,7 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
         return mTours.size();
     }
 
-    public static class ImageViewHolder extends RecyclerView.ViewHolder {
+    protected static class ImageViewHolder extends RecyclerView.ViewHolder {
         ImageView img1, img2, img3;
         CircleImageView ratingPic;
         TextView mTitle, mDescription, mRating, mComments, ratingName;

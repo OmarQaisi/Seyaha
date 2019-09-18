@@ -25,21 +25,22 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Adapter;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
 import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -66,8 +67,8 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
 
     private GoogleMap mMap;
     ViewPager viewPager;
-    List <String> imageUrls;
-    List <Place> mPlace;
+    List<String> imageUrls;
+    List<Place> mPlace;
     ViewPagerAdapter adapter;
     double latitude, longitude;
     String placeName;
@@ -75,7 +76,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
     AlertDialog alertDialog;
     private final String APIKEY = "4e4480d5039580a36c576fa58a0c1d3a";
     private OpenWeatherApi openWeatherApi;
-    private double tempApiResult,min,max;
+    private double tempApiResult, min, max;
     ImageButton zoom_in, zoom_out, text_to_speech;
     View map_view;
     private Toolbar mToolbar;
@@ -86,13 +87,14 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
     TextView seasonTv, timeToGoTv, ageTv1, ageTv2, estimationTv, costTv, tempTv, airQualityTv, internetTv, placeNameInfo, placeNameRecommendations, placeNameLocation, description, placeNameTitle;
     RoundCornerProgressBar costProgressBar, tempProgressBar, airQualityProgressBar, internetProgressBar;
     View frontLayoutSeason, backLayoutSeason, frontLayoutTime, backLayouTime, frontLayoutAge, backLayoutAge, frontLayoutEstimated, backLayoutEstimated;
-    ImageView seasonImg, timeToGoImg, estimationImg,costDetails;
+    ImageView seasonImg, timeToGoImg, estimationImg, costDetails;
     TextView num_of_person;
     private AnimatorSet mSetRightOut;
     private AnimatorSet mSetLeftIn;
     private boolean[] mIsBackVisible = {false, false, false, false};
-    int i=1,avaragecost=0,size;;
-    static int real_position=0;
+    int i = 1, avaragecost = 0, size;
+    ;
+    static int real_position = 0;
 
 
     @Override
@@ -138,7 +140,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         ageFlip = findViewById(R.id.age_btn);
         estimationFlip = findViewById(R.id.estimated_btn);
         //progress details deceleration
-        costDetails=findViewById(R.id.cost_details_btn);
+        costDetails = findViewById(R.id.cost_details_btn);
 
 
         costDetails.setOnClickListener(new View.OnClickListener() {
@@ -152,7 +154,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
 
 
         Intent i = getIntent();
-        mPlace = (List <Place>) i.getSerializableExtra("places");
+        mPlace = (List<Place>) i.getSerializableExtra("places");
         description.setMovementMethod(new ScrollingMovementMethod());
         latitude = mPlace.get(0).latitude;
         longitude = mPlace.get(0).longitude;
@@ -166,13 +168,11 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         getTempApi(mPlace.get(0).latitude, mPlace.get(0).longitude);
         setAirQualityProgress(mPlace.get(0).airQuality);
         setInternetProgress(mPlace.get(0).internet);
-            try {
-                mp = MediaPlayer.create(getApplicationContext(), getResources().getIdentifier(mPlace.get(0).voiceURL, "raw", getPackageName()));
-            }
-            catch (Exception e)
-            {
-                Log.d("place_name", ""+mPlace.get(0).nameEN+" \n"+e);
-            }
+        try {
+            mp = MediaPlayer.create(getApplicationContext(), getResources().getIdentifier(mPlace.get(0).voiceURL, "raw", getPackageName()));
+        } catch (Exception e) {
+            Log.d("place_name", "" + mPlace.get(0).nameEN + " \n" + e);
+        }
 
         if (SplashScreenActivity.lan.equalsIgnoreCase("ar")) {
             description.setText(mPlace.get(0).descAR);
@@ -220,21 +220,19 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
             }
         });
 
-
-
-
     }
 
 
-    public void showDetailedCost(int position)
-    {
-        View mView=getLayoutInflater().inflate(R.layout.cost_popup,null);
-        AlertDialog.Builder builder=new AlertDialog.Builder(this);
+    public void showDetailedCost(int position) {
+        View mView = getLayoutInflater().inflate(R.layout.detailed_cost_dialog, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(mView);
 
+
         MaterialSpinner overNightSpinner = mView.findViewById(R.id.over_night_spinner);
-       OverNightSpinnerAdapter overNightAdapter=new OverNightSpinnerAdapter(this,R.layout.over_night_spinner_item,mPlace.get(position).cost.overNightStay);
+        OverNightSpinnerAdapter overNightAdapter = new OverNightSpinnerAdapter(this, R.layout.over_night_spinner_item, mPlace.get(position).cost.overNightStay);
         overNightSpinner.setAdapter(overNightAdapter);
+
 
         overNightSpinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
             @Override
@@ -248,27 +246,31 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
             }
         });
 
-        MaterialSpinner activitiesSpinner=mView.findViewById(R.id.activities_spinner);
-        String[] arr2={"walking","shopping","cycling"};
-        ArrayAdapter<String> adapter=new ArrayAdapter<>(this,android.R.layout.select_dialog_multichoice,arr2);
-        activitiesSpinner.setAdapter(adapter);
+       ActivityCostAdapter activityCostAdapter=new ActivityCostAdapter(this,mPlace.get(position).activities);
+       ListView activitiesListView=mView.findViewById(R.id.activities_list_view);
+       activitiesListView.setAdapter(activityCostAdapter);
 
-        alertDialog=builder.create();
+
+        alertDialog = builder.create();
+      WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(alertDialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
         alertDialog.show();
     }
 
     public void temp_btn(View view) {
         Button ok;
-        TextView min_temp,max_temp;
-        AlertDialog.Builder builder =new AlertDialog.Builder(this);
-        View mView=getLayoutInflater().inflate(R.layout.temperature_popup,null);
+        TextView min_temp, max_temp;
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View mView = getLayoutInflater().inflate(R.layout.temperature_popup, null);
         builder.setView(mView);
-        ok=mView.findViewById(R.id.btntemperature);
-        max_temp=mView.findViewById(R.id.max_temp);
-        min_temp=mView.findViewById(R.id.min_temp);
-        max_temp.setText(""+new DecimalFormat("##.##").format(max)+"C");
-        min_temp.setText(""+new DecimalFormat("##.##").format(min)+"C");
-        alertDialog=builder.create();
+        ok = mView.findViewById(R.id.btntemperature);
+        max_temp = mView.findViewById(R.id.max_temp);
+        min_temp = mView.findViewById(R.id.min_temp);
+        max_temp.setText("" + new DecimalFormat("##.##").format(max) + "C");
+        min_temp.setText("" + new DecimalFormat("##.##").format(min) + "C");
+        alertDialog = builder.create();
         alertDialog.show();
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -278,13 +280,14 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         });
 
     }
+
     public void quality_btn(View view) {
         Button ok;
-        AlertDialog.Builder builder =new AlertDialog.Builder(this);
-        View mView=getLayoutInflater().inflate(R.layout.airquality_popup,null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View mView = getLayoutInflater().inflate(R.layout.airquality_popup, null);
         builder.setView(mView);
-        ok=mView.findViewById(R.id.btnquality);
-        alertDialog=builder.create();
+        ok = mView.findViewById(R.id.btnquality);
+        alertDialog = builder.create();
         alertDialog.show();
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -293,13 +296,14 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
             }
         });
     }
+
     public void internet_btn(View view) {
         Button ok;
-        AlertDialog.Builder builder =new AlertDialog.Builder(this);
-        View mView=getLayoutInflater().inflate(R.layout.internet_popup,null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View mView = getLayoutInflater().inflate(R.layout.internet_popup, null);
         builder.setView(mView);
-        ok=mView.findViewById(R.id.btninternet);
-        alertDialog=builder.create();
+        ok = mView.findViewById(R.id.btninternet);
+        alertDialog = builder.create();
         alertDialog.show();
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -311,10 +315,10 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
 
 
     private void getTempApi(double latitude, double longitude) {
-        Call <JsonObject> call = openWeatherApi.getTemp(latitude, longitude, APIKEY);
-        call.enqueue(new Callback <JsonObject>() {
+        Call<JsonObject> call = openWeatherApi.getTemp(latitude, longitude, APIKEY);
+        call.enqueue(new Callback<JsonObject>() {
             @Override
-            public void onResponse(Call <JsonObject> call, Response <JsonObject> response) {
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
 
                 if (!response.isSuccessful()) {
                     Log.d(TAG, "Code: " + response.code());
@@ -323,17 +327,17 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
                 JsonObject root = response.body();
                 JsonObject main = root.getAsJsonObject("main");
                 JsonElement element = main.get("temp");
-                JsonElement element_min=main.get("temp_min");
-                JsonElement element_max=main.get("temp_max");
+                JsonElement element_min = main.get("temp_min");
+                JsonElement element_max = main.get("temp_max");
 
                 tempApiResult = element.getAsDouble() - 273.15;
-                min=element_min.getAsDouble()-273.15;
-                max=element_max.getAsDouble()-273.15;
+                min = element_min.getAsDouble() - 273.15;
+                max = element_max.getAsDouble() - 273.15;
                 setTempProgress((int) tempApiResult);
             }
 
             @Override
-            public void onFailure(Call <JsonObject> call, Throwable t) {
+            public void onFailure(Call<JsonObject> call, Throwable t) {
                 Log.d(TAG, "onFailure: " + t.getMessage());
             }
         });
@@ -341,7 +345,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
     }
 
     private void run_viewPager() {
-        imageUrls = new ArrayList <>();
+        imageUrls = new ArrayList<>();
 
         for (int i = 0; i < mPlace.size(); i++) {
             imageUrls.add(mPlace.get(i).imageURL);
@@ -354,7 +358,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                real_position=position;
+                real_position = position;
                 //System.out.println(positionOffset);
             }
 
@@ -364,7 +368,9 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
                 getTempApi(mPlace.get(position).latitude, mPlace.get(position).longitude);
                 setAirQualityProgress(mPlace.get(position).airQuality);
                 setInternetProgress(mPlace.get(position).internet);
+
                 mp = MediaPlayer.create(getApplicationContext(), getResources().getIdentifier(mPlace.get(position).voiceURL,"raw",getPackageName()));
+
                 setSeason(mPlace.get(position).recommendedSeason);
                 setTimeToGo(mPlace.get(position).recommendedTime);
                 setAge(mPlace.get(position).recommendedAge);
@@ -446,11 +452,11 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
     private void setCostProgress(int cost) {
 
         costTv.setText(cost + " " + getResources().getString(R.string.JD));
-        costProgressBar.setProgress(costProgressBar.getMax()-cost);
+        costProgressBar.setProgress(costProgressBar.getMax() - cost);
 
-        if (cost <= 10*size) {
+        if (cost <= 10 * size) {
             costProgressBar.setProgressColor(Color.GREEN);
-        } else if (cost > 10*size && cost <= 30*size) {
+        } else if (cost > 10 * size && cost <= 30 * size) {
             costProgressBar.setProgressColor(Color.rgb(255, 165, 0));
         } else {
             costProgressBar.setProgressColor(Color.RED);
@@ -465,23 +471,23 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
 
     private void setTempProgress(int temp) {
 
-        if (temp <=10) {
+        if (temp <= 10) {
             tempProgressBar.setProgressColor(Color.RED);
             tempProgressBar.setProgress(temp);
-            tempTv.setText(getResources().getString(R.string.cold) + temp + "\u2103" +getString(R.string.now));
+            tempTv.setText(getResources().getString(R.string.cold) + temp + "\u2103" + getString(R.string.now));
 
         } else if (temp > 10 && temp <= 18) {
-            tempTv.setText(getResources().getString(R.string.normal) + temp + "\u2103" +getString(R.string.now));
+            tempTv.setText(getResources().getString(R.string.normal) + temp + "\u2103" + getString(R.string.now));
             tempProgressBar.setProgress(temp);
             tempProgressBar.setProgressColor(Color.rgb(255, 165, 0));
         } else if (temp > 18 && temp <= 30) {
             tempProgressBar.setProgressColor(Color.GREEN);
             tempProgressBar.setProgress(55);
-            tempTv.setText(getResources().getString(R.string.perfect) + temp + "\u2103" +getString(R.string.now));
+            tempTv.setText(getResources().getString(R.string.perfect) + temp + "\u2103" + getString(R.string.now));
         } else {
             tempProgressBar.setProgressColor(Color.RED);
             tempProgressBar.setProgress(55 - temp);
-            tempTv.setText(getResources().getString(R.string.hot) + temp + "\u2103" +getString(R.string.now));
+            tempTv.setText(getResources().getString(R.string.hot) + temp + "\u2103" + getString(R.string.now));
         }
 
         ObjectAnimator progressAnimator;
@@ -528,7 +534,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
                 internetTv.setText(getResources().getString(R.string.okay_internet));
                 break;
             case 2:
-                internetProgressBar.setProgressColor(Color.rgb(255,215,0));
+                internetProgressBar.setProgressColor(Color.rgb(255, 215, 0));
                 internetProgressBar.setProgress(75);
                 internetTv.setText(getResources().getString(R.string.good_internet));
                 break;
