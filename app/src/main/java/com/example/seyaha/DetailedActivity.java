@@ -28,13 +28,17 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -42,6 +46,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
+import com.bitvale.switcher.SwitcherC;
+import com.bitvale.switcher.SwitcherX;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -64,6 +70,7 @@ import java.util.List;
 
 public class DetailedActivity extends AppCompatActivity implements OnMapReadyCallback {
     private static final String TAG = "DetailedActivity";
+    public static int totalCost = 0;
 
     private GoogleMap mMap;
     ViewPager viewPager;
@@ -92,9 +99,10 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
     private AnimatorSet mSetRightOut;
     private AnimatorSet mSetLeftIn;
     private boolean[] mIsBackVisible = {false, false, false, false};
-    int i = 1, avaragecost = 0, size;
-    ;
-    static int real_position = 0;
+    int i = 1, size;
+
+    int defaultCost;
+    int previousSpinnerItem, currentSpinnerItem = 1;
 
 
     @Override
@@ -164,10 +172,17 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
 
         run_viewPager();
 
-        setCostProgress(0);
+        setCostProgress(calculateCost(mPlace.get(0).cost.entranceFees, mPlace.get(0).cost.food, mPlace.get(0).cost.transportation, mPlace.get(0).cost.overNightStay.get(1), 0));
         getTempApi(mPlace.get(0).latitude, mPlace.get(0).longitude);
         setAirQualityProgress(mPlace.get(0).airQuality);
         setInternetProgress(mPlace.get(0).internet);
+
+        setSeason(mPlace.get(0).recommendedSeason);
+        setTimeToGo(mPlace.get(0).recommendedTime);
+        setAge(mPlace.get(0).recommendedAge);
+        setEstimatedTime(mPlace.get(0).estimatedTime);
+
+        totalCost = defaultCost;
         try {
             mp = MediaPlayer.create(getApplicationContext(), getResources().getIdentifier(mPlace.get(0).voiceURL, "raw", getPackageName()));
         } catch (Exception e) {
@@ -222,22 +237,85 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
 
     }
 
+    private int calculateCost(int entranceFees, int food, int transportation, Integer overNightStay, int activites) {
+        defaultCost = entranceFees + food + transportation + overNightStay + activites;
+        return defaultCost;
+    }
 
-    public void showDetailedCost(int position) {
+
+    public void showDetailedCost(final int position) {
         View mView = getLayoutInflater().inflate(R.layout.detailed_cost_dialog, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(mView);
+
+        totalCost = defaultCost;
+        currentSpinnerItem = 1;
+
+        TextView entrenceFeesPrice = mView.findViewById(R.id.entrance_fees_price);
+        entrenceFeesPrice.setText(mPlace.get(position).cost.entranceFees + "JD");
+
+        final SwitcherX entrenceFeesCheckbox = mView.findViewById(R.id.entrance_fees_checkBox);
+        entrenceFeesCheckbox.setOnCheckedChangeListener(new Function1<Boolean, Unit>() {
+            @Override
+            public Unit invoke(Boolean checked) {
+
+                if (checked) {
+                    totalCost += mPlace.get(position).cost.entranceFees;
+                } else {
+                    totalCost -= mPlace.get(position).cost.entranceFees;
+                }
+                return null;
+            }
+        });
+
+        TextView foodPrice = mView.findViewById(R.id.food_price);
+        foodPrice.setText(mPlace.get(position).cost.food + "JD");
+
+        final SwitcherX foodCheckbox = mView.findViewById(R.id.food_checkBox);
+        foodCheckbox.setOnCheckedChangeListener(new Function1<Boolean, Unit>() {
+            @Override
+            public Unit invoke(Boolean checked) {
+                if (checked) {
+                    totalCost += mPlace.get(position).cost.food;
+                } else {
+                    totalCost -= mPlace.get(position).cost.food;
+                }
+
+                return null;
+            }
+        });
+
+        TextView transportationPrice = mView.findViewById(R.id.transportation_price);
+        transportationPrice.setText(mPlace.get(position).cost.transportation + "JD");
+
+        final SwitcherX transportationCheckbox = mView.findViewById(R.id.transportation_checkBox);
+        transportationCheckbox.setOnCheckedChangeListener(new Function1<Boolean, Unit>() {
+            @Override
+            public Unit invoke(Boolean checked) {
+                if (checked) {
+                    totalCost += mPlace.get(position).cost.transportation;
+                } else {
+                    totalCost -= mPlace.get(position).cost.transportation;
+                }
+
+                return null;
+            }
+        });
 
 
         MaterialSpinner overNightSpinner = mView.findViewById(R.id.over_night_spinner);
         OverNightSpinnerAdapter overNightAdapter = new OverNightSpinnerAdapter(this, R.layout.over_night_spinner_item, mPlace.get(position).cost.overNightStay);
         overNightSpinner.setAdapter(overNightAdapter);
+        overNightSpinner.setSelection(1);
 
 
         overNightSpinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(@NotNull MaterialSpinner materialSpinner, @Nullable View view, int i, long l) {
-
+                previousSpinnerItem = currentSpinnerItem;
+                currentSpinnerItem = i;
+                totalCost -= mPlace.get(position).cost.overNightStay.get(previousSpinnerItem);
+                totalCost += mPlace.get(position).cost.overNightStay.get(currentSpinnerItem);
             }
 
             @Override
@@ -246,13 +324,30 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
             }
         });
 
-       ActivityCostAdapter activityCostAdapter=new ActivityCostAdapter(this,mPlace.get(position).activities);
-       ListView activitiesListView=mView.findViewById(R.id.activities_list_view);
-       activitiesListView.setAdapter(activityCostAdapter);
+        ActivityCostAdapter activityCostAdapter = new ActivityCostAdapter(this, mPlace.get(position).activities);
+        ListView activitiesListView = mView.findViewById(R.id.activities_list_view);
+        activitiesListView.setAdapter(activityCostAdapter);
 
+
+        Button applyBtn = mView.findViewById(R.id.apply_cost_dialog_btn);
+        applyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setCostProgress(totalCost);
+                alertDialog.dismiss();
+            }
+        });
+
+        Button canelBtn = mView.findViewById(R.id.cancel_cost_dialog_btn);
+        canelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
 
         alertDialog = builder.create();
-      WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(alertDialog.getWindow().getAttributes());
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
         lp.height = WindowManager.LayoutParams.MATCH_PARENT;
@@ -358,23 +453,23 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                real_position = position;
+
                 //System.out.println(positionOffset);
             }
 
             @Override
             public void onPageSelected(final int position) {
-                setCostProgress(0);
+
+
                 getTempApi(mPlace.get(position).latitude, mPlace.get(position).longitude);
                 setAirQualityProgress(mPlace.get(position).airQuality);
                 setInternetProgress(mPlace.get(position).internet);
 
-                mp = MediaPlayer.create(getApplicationContext(), getResources().getIdentifier(mPlace.get(position).voiceURL,"raw",getPackageName()));
+                mp = MediaPlayer.create(getApplicationContext(), getResources().getIdentifier(mPlace.get(position).voiceURL, "raw", getPackageName()));
 
-                setSeason(mPlace.get(position).recommendedSeason);
-                setTimeToGo(mPlace.get(position).recommendedTime);
-                setAge(mPlace.get(position).recommendedAge);
-                setEstimatedTime(mPlace.get(position).estimatedTime);
+                setCostProgress(calculateCost(mPlace.get(position).cost.entranceFees, mPlace.get(position).cost.food, mPlace.get(position).cost.transportation, mPlace.get(position).cost.overNightStay.get(1), 0));
+
+                totalCost = defaultCost;
                 if (SplashScreenActivity.lan.equalsIgnoreCase("ar")) {
                     description.setText(mPlace.get(position).descAR);
                     placeNameRecommendations.setText(mPlace.get(position).nameAR);
@@ -454,13 +549,18 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         costTv.setText(cost + " " + getResources().getString(R.string.JD));
         costProgressBar.setProgress(costProgressBar.getMax() - cost);
 
-        if (cost <= 10 * size) {
+        if (cost <= 100) {
             costProgressBar.setProgressColor(Color.GREEN);
-        } else if (cost > 10 * size && cost <= 30 * size) {
+        } else if (cost > 100 && cost <= 200) {
             costProgressBar.setProgressColor(Color.rgb(255, 165, 0));
+        } else if (cost > 200 && cost <= 250) {
+            costProgressBar.setProgressColor(Color.RED);
+
         } else {
+            costProgressBar.setProgress(10);
             costProgressBar.setProgressColor(Color.RED);
         }
+
         ObjectAnimator progressAnimator;
         progressAnimator = ObjectAnimator.ofFloat(costProgressBar, "progress", 0.0f, costProgressBar.getProgress());
         progressAnimator.setDuration(1000);

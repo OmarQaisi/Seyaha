@@ -5,34 +5,28 @@
     android:layout_marginBottom="10dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.bitvale.switcher.SwitcherC
+    <CheckBox
         android:id="@+id/activity_cost_item_checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginBottom="10dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:switcher_icon_color="@color/white_login_screen"
-        app:switcher_off_color="@color/red_logo"
-        app:switcher_on_color="@color/green_great" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/activity_cost_item_text"
-        app:layout_constraintLeft_toRightOf="@id/activity_cost_item_checkbox"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textSize="18sp"
+        android:focusable="true"
         android:fontFamily="@font/montserrat_medium"
-        android:text="Activity name"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"/>
+        android:focusableInTouchMode="true"
+        android:textSize="18sp"
+        android:text="Actvity name"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="20JD"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
+       android:layout_marginBottom="10dp"
         android:id="@+id/activity_cost_item_price"
         android:textSize="18sp"
         app:layout_constraintRight_toRightOf="parent"
