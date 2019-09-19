@@ -1,133 +1,207 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/corners"
-    android:padding="16dp">
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginStart="12dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="@string/detailed_activity_air_quality"
+        android:textColor="@color/blue_logo"
+        android:textSize="30sp"
+        app:layout_constraintStart_toEndOf="@+id/air_quality_logo"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <ImageView
+        android:id="@+id/air_quality_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="@drawable/circle"
-        android:id="@+id/imgquality"
-        android:src="@drawable/ic_airquality_icon"/>
+        android:layout_marginTop="6dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:src="@drawable/ic_wind"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
+
+    <TextView
+        android:id="@+id/great_tv"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/montserrat_semibold"
+        android:text="@string/great_internet"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/air_quality_logo" />
+
+    <View
+        android:id="@+id/great_view"
+        android:layout_width="50dp"
+        android:layout_height="3dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:background="#00FF00"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/great_tv" />
+
+    <TextView
+        android:id="@+id/colon1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:text=":"
+        android:textColor="@color/blue_logo"
+        android:textSize="20dp"
+        app:layout_constraintStart_toEndOf="@+id/great_view"
+        app:layout_constraintTop_toBottomOf="@+id/air_quality_logo" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="0 - 25"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/colon1"
+        app:layout_constraintTop_toBottomOf="@+id/air_quality_logo" />
+
+    <TextView
+        android:id="@+id/good_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="10dp"
-        android:orientation="horizontal">
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+        android:fontFamily="@font/montserrat_semibold"
+        android:text="@string/good_internet"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/great_tv" />
 
-            <TextView
-                android:text="@string/good"
-                android:textSize="22sp"
-                android:layout_marginTop="10dp"
-                android:textColor="#000"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+    <View
+        android:id="@+id/good_view"
+        android:layout_width="50dp"
+        android:layout_height="3dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:background="#FFA500"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/good_tv" />
 
-
-            <TextView
-                android:text="@string/moderate"
-                android:textSize="22sp"
-                android:layout_marginTop="10dp"
-                android:textColor="#000"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=":"
-                android:textStyle="bold"
-                android:layout_marginTop="10dp"
-                android:textColor="#000"
-                android:textSize="22sp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=":"
-                android:textStyle="bold"
-                android:textColor="#000"
-                android:layout_marginTop="10dp"
-                android:textSize="22sp"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
-            android:orientation="vertical">
-            <TextView
-                android:text="@string/good_airquality"
-                android:textSize="22sp"
-                android:layout_marginTop="10dp"
-                android:layout_width="match_parent"
-                android:fontFamily="@font/montserrat_semibold"
-                android:textColor="#339633"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:text="@string/moderate_airquality"
-                android:textSize="22sp"
-                android:textColor="#ecec13"
-                android:fontFamily="@font/montserrat_semibold"
-                android:layout_marginTop="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
-    </LinearLayout>
     <TextView
-        android:layout_width="match_parent"
-        android:visibility="gone"
+        android:id="@+id/colon2"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/txtquality1"
-        android:text="good   :  from 1 to 50"
-        android:textSize="20sp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
-        android:textStyle="bold|italic"
-        />
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:text=":"
+        android:textColor="@color/blue_logo"
+        android:textSize="20dp"
+        app:layout_constraintStart_toEndOf="@+id/good_view"
+        app:layout_constraintTop_toBottomOf="@+id/great_tv" />
+
     <TextView
-        android:visibility="gone"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/txtquality22"
-        android:text="moderate  :  from 51 to 100"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="25 - 50"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:textColor="@android:color/black"
         android:textSize="20sp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
-        android:textStyle="bold|italic"
-        />
+        app:layout_constraintStart_toEndOf="@+id/colon2"
+        app:layout_constraintTop_toBottomOf="@+id/great_tv" />
+
+    <TextView
+        android:id="@+id/bad_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/montserrat_semibold"
+        android:text="@string/bad_internet"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/good_tv" />
+
+    <View
+        android:id="@+id/bad_view"
+        android:layout_width="50dp"
+        android:layout_height="3dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:background="#FF0000"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bad_tv" />
+
+    <TextView
+        android:id="@+id/colon3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:text=":"
+        android:textColor="@color/blue_logo"
+        android:textSize="20dp"
+        app:layout_constraintStart_toEndOf="@+id/bad_view"
+        app:layout_constraintTop_toBottomOf="@+id/good_tv" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="50+"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/colon3"
+        app:layout_constraintTop_toBottomOf="@+id/good_tv" />
+
 
     <Button
+        android:id="@+id/cancel_airquality_dialog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/btnquality"
-        android:layout_marginTop="15dp"
-        android:layout_gravity="right|end"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/button_radius"
-        android:fontFamily="@font/montserrat_medium"
-        android:text="OK"
+        android:fontFamily="@font/montserrat_semibold"
+        android:text="@string/alert_rating_cancel"
         android:textAllCaps="false"
-        android:textColor="#ffff"
-        android:textSize="14sp" />
+        android:textColor="@android:color/white"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bad_tv" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

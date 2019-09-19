@@ -63,7 +63,6 @@ public class SplashScreenActivity extends AppCompatActivity {
         coordinatorLayout = findViewById(R.id.coordinator);
         checkInternet();
         firebaseLogin();
-
     }
 
     private void start_activity() {

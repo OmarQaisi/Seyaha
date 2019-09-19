@@ -35,8 +35,8 @@ public class AddTourActivity extends AppCompatActivity {
     List<Place> chosen_place;
     TextInputEditText titleAR, titleEN;
     GridLayoutManager gridLayoutManager;
-    boolean flag=false;
-    int []counter;
+    boolean flag = false;
+    int[] counter;
 
     private Toolbar mToolbar;
     private TextView mTextView;
@@ -57,7 +57,7 @@ public class AddTourActivity extends AppCompatActivity {
         mTextView.setText(getString(R.string.create_tour));
 
         // add back arrow to toolbar
-        if (getSupportActionBar() != null){
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
@@ -65,18 +65,12 @@ public class AddTourActivity extends AppCompatActivity {
         titleAR = findViewById(R.id.titleA);
         titleEN = findViewById(R.id.titleE);
         recyclerView = findViewById(R.id.fav_categories_rv);
-       recyclerView.setHasFixedSize(true);
-       recyclerView.setItemViewCacheSize(20);
-       recyclerView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-           @Override
-           public void onScrollChange(View view, int i, int i1, int i2, int i3) {
-
-           }
-       });
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setItemViewCacheSize(20);
         gridLayoutManager = new GridLayoutManager(this, 3);
         recyclerView.setLayoutManager(gridLayoutManager);
-        chosen_place = new ArrayList<Place>();
 
+        chosen_place = new ArrayList<Place>();
         mPlaces = new ArrayList<Place>();
 
         FirestoreQueries.getPlaces(new FirestoreQueries.FirestorePlaceCallback() {
@@ -95,24 +89,23 @@ public class AddTourActivity extends AppCompatActivity {
     public void addTour(View v) {
         if (AdminPlaceAdapter.chosen_places.size() >= 3) {
             chosen_place = AdminPlaceAdapter.chosen_places;
-            Log.d("boss", AdminPlaceAdapter.chosen_places.size()+"");
-            if (Text_checker()){
+            if (Text_checker()) {
                 mFirebaseFirestore = FirebaseFirestore.getInstance();
                 DocumentReference newTourRef = mFirebaseFirestore.collection("tours").document();
                 List<Comment> comments = new ArrayList<Comment>();
-                mTour = new Tour(makeCategoryArabic(chosen_place), makeCategoryEnglish(chosen_place), comments, 0, images(chosen_place), 0, chosen_place, 0.0, titleAR.getText().toString().trim(), titleEN.getText().toString().trim(), newTourRef.getId(),makeKeywords(chosen_place));
+                mTour = new Tour(makeCategoryArabic(chosen_place), makeCategoryEnglish(chosen_place), comments, 0, images(chosen_place), 0, chosen_place, 0.0, titleAR.getText().toString().trim(), titleEN.getText().toString().trim(), newTourRef.getId(), makeKeywords(chosen_place));
                 newTourRef.set(mTour).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful())
-                            Log.d(TAG, "onComplete: "+" Created a new Tour!");
+                        if (task.isSuccessful())
+                            Log.d(TAG, "onComplete: " + " Created a new Tour!");
                         else
                             Log.d(TAG, "Failed!!");
                     }
                 });
                 flag = true;
             }
-            if(flag){
+            if (flag) {
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
             }
@@ -127,7 +120,7 @@ public class AddTourActivity extends AppCompatActivity {
     private ArrayList<String> makeCategoryEnglish(List<Place> mPlaces) {
         ArrayList<String> en = new ArrayList<>();
         for (int i = 0; i < mPlaces.size(); i++) {
-            if(!en.contains(mPlaces.get(i).categoryEN))
+            if (!en.contains(mPlaces.get(i).categoryEN))
                 en.add(mPlaces.get(i).categoryEN);
         }
         return en;
@@ -136,23 +129,20 @@ public class AddTourActivity extends AppCompatActivity {
     private ArrayList<String> makeCategoryArabic(List<Place> mPlaces) {
         ArrayList<String> ar = new ArrayList<>();
         for (int i = 0; i < mPlaces.size(); i++) {
-            if(!ar.contains(mPlaces.get(i).categoryAR))
+            if (!ar.contains(mPlaces.get(i).categoryAR))
                 ar.add(mPlaces.get(i).categoryAR);
         }
         return ar;
     }
 
-    private String makeKeywords(List<Place> mPlaces)
-    {
-        String tourKeywords="";
-        for(int i=0;i<mPlaces.size();i++)
-        {
-            String placeKeywords=mPlaces.get(i).keywords.trim();
-            String[] placeKeywordsArr=placeKeywords.split(" ");
-            for(int j=0;j<placeKeywordsArr.length;j++)
-            {
-                if(!tourKeywords.contains(placeKeywordsArr[j]))
-                   tourKeywords+=placeKeywordsArr[j]+" ";
+    private String makeKeywords(List<Place> mPlaces) {
+        String tourKeywords = "";
+        for (int i = 0; i < mPlaces.size(); i++) {
+            String placeKeywords = mPlaces.get(i).keywords.trim();
+            String[] placeKeywordsArr = placeKeywords.split(" ");
+            for (int j = 0; j < placeKeywordsArr.length; j++) {
+                if (!tourKeywords.contains(placeKeywordsArr[j]))
+                    tourKeywords += placeKeywordsArr[j] + " ";
             }
         }
 

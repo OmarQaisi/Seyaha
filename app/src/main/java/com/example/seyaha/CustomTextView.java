@@ -6,7 +6,6 @@ import android.util.AttributeSet;
 
 import javax.annotation.Nullable;
 
-import io.opencensus.internal.Utils;
 
 public class CustomTextView extends androidx.appcompat.widget.AppCompatTextView {
     public CustomTextView(Context context) {

@@ -36,4 +36,7 @@
     <color name="blue_logo_transparent">#202343BA</color>
 
     <color name="toolbar_tv_color">#001588</color>
+
+    <color name="transparent_color">#80ffffff</color>
+
 </resources>

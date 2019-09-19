@@ -5,8 +5,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.res.ResourcesCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.animation.AnimatorInflater;
@@ -16,6 +14,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 
@@ -26,16 +25,13 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
@@ -46,7 +42,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
-import com.bitvale.switcher.SwitcherC;
 import com.bitvale.switcher.SwitcherX;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -83,7 +78,8 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
     AlertDialog alertDialog;
     private final String APIKEY = "4e4480d5039580a36c576fa58a0c1d3a";
     private OpenWeatherApi openWeatherApi;
-    private double tempApiResult, min, max;
+    private double tempApiResult, min, max, speed;
+    private int humidity;
     ImageButton zoom_in, zoom_out, text_to_speech;
     View map_view;
     private Toolbar mToolbar;
@@ -355,57 +351,63 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
     }
 
     public void temp_btn(View view) {
-        Button ok;
-        TextView min_temp, max_temp;
+        Button cancel_temp_dialog_btn;
+        TextView min_temp, max_temp, humidity_tv, wind_tv;
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View mView = getLayoutInflater().inflate(R.layout.temperature_popup, null);
         builder.setView(mView);
-        ok = mView.findViewById(R.id.btntemperature);
+        cancel_temp_dialog_btn = mView.findViewById(R.id.cancel_temp_dialog);
         max_temp = mView.findViewById(R.id.max_temp);
         min_temp = mView.findViewById(R.id.min_temp);
-        max_temp.setText("" + new DecimalFormat("##.##").format(max) + "C");
-        min_temp.setText("" + new DecimalFormat("##.##").format(min) + "C");
+        humidity_tv = mView.findViewById(R.id.humidity_tv);
+        wind_tv = mView.findViewById(R.id.wind_tv);
+        max_temp.setText("" + new DecimalFormat("##.##").format(max));
+        min_temp.setText("" + new DecimalFormat("##.##").format(min));
+        humidity_tv.setText(humidity+"");
+        wind_tv.setText(speed+"");
         alertDialog = builder.create();
         alertDialog.show();
-        ok.setOnClickListener(new View.OnClickListener() {
+        cancel_temp_dialog_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 alertDialog.cancel();
             }
         });
-
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
     }
 
     public void quality_btn(View view) {
-        Button ok;
+        Button cancel_airquality_dialog_btn;
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View mView = getLayoutInflater().inflate(R.layout.airquality_popup, null);
         builder.setView(mView);
-        ok = mView.findViewById(R.id.btnquality);
+        cancel_airquality_dialog_btn = mView.findViewById(R.id.cancel_airquality_dialog);
         alertDialog = builder.create();
         alertDialog.show();
-        ok.setOnClickListener(new View.OnClickListener() {
+        cancel_airquality_dialog_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 alertDialog.cancel();
             }
         });
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
     }
 
     public void internet_btn(View view) {
-        Button ok;
+        Button cancel_internet_dialog_btn;
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View mView = getLayoutInflater().inflate(R.layout.internet_popup, null);
         builder.setView(mView);
-        ok = mView.findViewById(R.id.btninternet);
+        cancel_internet_dialog_btn = mView.findViewById(R.id.cancel_internet_dialog);
         alertDialog = builder.create();
         alertDialog.show();
-        ok.setOnClickListener(new View.OnClickListener() {
+        cancel_internet_dialog_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 alertDialog.cancel();
             }
         });
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
     }
 
 
@@ -421,13 +423,20 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
                 }
                 JsonObject root = response.body();
                 JsonObject main = root.getAsJsonObject("main");
-                JsonElement element = main.get("temp");
-                JsonElement element_min = main.get("temp_min");
-                JsonElement element_max = main.get("temp_max");
+                JsonElement element_temp = main.get("temp");
+                JsonElement element_min_temp = main.get("temp_min");
+                JsonElement element_max_temp = main.get("temp_max");
+                JsonElement element_humidity = main.get("humidity");
 
-                tempApiResult = element.getAsDouble() - 273.15;
-                min = element_min.getAsDouble() - 273.15;
-                max = element_max.getAsDouble() - 273.15;
+                JsonObject wind = root.getAsJsonObject("wind");
+                JsonElement element_speed = wind.get("speed");
+
+                tempApiResult = element_temp.getAsDouble() - 273.15;
+                min = element_min_temp.getAsDouble() - 273.15;
+                max = element_max_temp.getAsDouble() - 273.15;
+                humidity = element_humidity.getAsInt();
+                speed = (int) (element_speed.getAsDouble() * 3.6);
+                Log.d("boss", "onResponse: speeeeeeeed::  "+speed);
                 setTempProgress((int) tempApiResult);
             }
 

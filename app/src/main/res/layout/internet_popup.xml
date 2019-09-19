@@ -1,157 +1,257 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp"
-    android:background="@drawable/corners">
+    android:background="@drawable/corners"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginStart="12dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="@string/detailed_activity_internet"
+        android:textColor="@color/blue_logo"
+        android:textSize="30sp"
+        app:layout_constraintStart_toEndOf="@+id/internet_logo"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <ImageView
+        android:id="@+id/internet_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-       android:background="@drawable/circle"
-        android:src="@drawable/ic_internet_icon"
-       />
-    <RelativeLayout
+        android:layout_marginTop="6dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:src="@drawable/ic_wifi"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/great_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/montserrat_semibold"
+        android:text="@string/great_internet"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/internet_logo" />
 
-       <LinearLayout
-           android:id="@+id/text_linear"
-           android:orientation="vertical"
-           android:layout_width="wrap_content"
-           android:gravity="start"
-           android:layout_height="wrap_content">
+    <View
+        android:id="@+id/great_view"
+        android:layout_width="50dp"
+        android:layout_height="3dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:background="#00FF00"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/great_tv" />
 
-           <TextView
-               android:text="@string/great"
-               android:textSize="22sp"
-               android:textColor="#000"
-               android:layout_marginTop="10dp"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content" />
-
-           <TextView
-               android:text="@string/good"
-               android:textSize="22sp"
-               android:layout_marginTop="10dp"
-               android:textColor="#000"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content" />
-           <TextView
-               android:text="@string/okay"
-               android:textSize="22sp"
-               android:textColor="#000"
-               android:layout_width="wrap_content"
-               android:layout_marginTop="10dp"
-               android:layout_height="wrap_content" />
-           <TextView
-               android:text="@string/bad"
-               android:textSize="22sp"
-               android:textColor="#000"
-               android:layout_width="wrap_content"
-               android:layout_marginTop="10dp"
-               android:layout_height="wrap_content" />
-       </LinearLayout>
-        <LinearLayout
-            android:id="@+id/pointer_linear"
-            android:layout_toRightOf="@id/text_linear"
-            android:layout_toEndOf="@id/text_linear"
-            android:layout_width="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=":"
-                android:textColor="#000"
-                android:textStyle="bold"
-                android:layout_marginTop="10dp"
-                android:textSize="22sp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=":"
-                android:textColor="#000"
-                android:textStyle="bold"
-                android:layout_marginTop="10dp"
-                android:textSize="22sp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=":"
-                android:textColor="#000"
-                android:textStyle="bold"
-                android:layout_marginTop="10dp"
-                android:textSize="22sp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:text=":"
-                android:textColor="#000"
-                android:layout_marginTop="10dp"
-                android:textSize="22sp"/>
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/pointer_linear"
-            android:layout_toEndOf="@id/pointer_linear"
-            android:layout_marginLeft="5dp"
-            android:layout_marginStart="5dp"
-            android:orientation="vertical"
-            >
-            <TextView
-                android:text="@string/four_g"
-                android:textSize="22sp"
-                android:layout_marginTop="10dp"
-                android:layout_width="match_parent"
-                android:fontFamily="@font/montserrat_semibold"
-                android:textColor="#339633"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:text="@string/three_g"
-                android:textSize="22sp"
-                android:textColor="#1da71d"
-                android:layout_marginTop="10dp"
-                android:layout_width="match_parent"
-                android:fontFamily="@font/montserrat_semibold"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:text="@string/two_g"
-                android:textSize="22sp"
-                android:textColor="#ecec13"
-                android:fontFamily="@font/montserrat_semibold"
-                android:layout_marginTop="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:text="@string/no_service"
-                android:textSize="22sp"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/montserrat_semibold"
-                android:textColor="#FF0000"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-    </RelativeLayout>
-    <Button
+    <TextView
+        android:id="@+id/colon1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/btninternet"
-        android:layout_marginTop="10dp"
-        android:layout_gravity="right|end"
-        android:background="@drawable/button_radius"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:text=":"
+        android:textColor="@color/blue_logo"
+        android:textSize="20dp"
+        app:layout_constraintStart_toEndOf="@+id/great_view"
+        app:layout_constraintTop_toBottomOf="@+id/internet_logo" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:fontFamily="@font/montserrat_medium"
-        android:text="@string/ok"
+        android:text="@string/four_g"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/colon1"
+        app:layout_constraintTop_toBottomOf="@+id/internet_logo" />
+
+    <TextView
+        android:id="@+id/good_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/montserrat_semibold"
+        android:text="@string/good_internet"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/great_tv" />
+
+    <View
+        android:id="@+id/good_view"
+        android:layout_width="50dp"
+        android:layout_height="3dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:background="#FFD700"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/good_tv" />
+
+    <TextView
+        android:id="@+id/colon2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:text=":"
+        android:textColor="@color/blue_logo"
+        android:textSize="20dp"
+        app:layout_constraintStart_toEndOf="@+id/good_view"
+        app:layout_constraintTop_toBottomOf="@+id/great_tv" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="@string/three_g"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/colon2"
+        app:layout_constraintTop_toBottomOf="@+id/great_tv" />
+
+    <TextView
+        android:id="@+id/okay_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/montserrat_semibold"
+        android:text="@string/okay_internet"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/good_tv" />
+
+    <View
+        android:id="@+id/okay_view"
+        android:layout_width="50dp"
+        android:layout_height="3dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:background="#FFA500"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/okay_tv" />
+
+    <TextView
+        android:id="@+id/colon3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:text=":"
+        android:textColor="@color/blue_logo"
+        android:textSize="20dp"
+        app:layout_constraintStart_toEndOf="@+id/bad_view"
+        app:layout_constraintTop_toBottomOf="@+id/good_tv" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="@string/two_g"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/colon3"
+        app:layout_constraintTop_toBottomOf="@+id/good_tv" />
+
+    <TextView
+        android:id="@+id/bad_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/montserrat_semibold"
+        android:text="@string/bad_internet"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/okay_tv" />
+
+    <View
+        android:id="@+id/bad_view"
+        android:layout_width="50dp"
+        android:layout_height="3dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:background="#FF0000"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bad_tv" />
+
+    <TextView
+        android:id="@+id/colon4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:text=":"
+        android:textColor="@color/blue_logo"
+        android:textSize="20dp"
+        app:layout_constraintStart_toEndOf="@+id/bad_view"
+        app:layout_constraintTop_toBottomOf="@+id/okay_tv" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="@string/no_service"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/colon4"
+        app:layout_constraintTop_toBottomOf="@+id/okay_tv" />
+
+    <Button
+        android:id="@+id/cancel_internet_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/button_radius"
+        android:fontFamily="@font/montserrat_semibold"
+        android:text="@string/alert_rating_cancel"
         android:textAllCaps="false"
-        android:textColor="#ffff"
-        android:textSize="14sp" />
-</LinearLayout>
+        android:textColor="@android:color/white"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bad_tv" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

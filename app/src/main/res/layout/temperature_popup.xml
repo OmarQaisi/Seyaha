@@ -1,88 +1,271 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="20dp"
-    android:background="@drawable/corners">
+    android:background="@drawable/corners"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginStart="12dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="@string/weather"
+        android:textColor="@color/blue_logo"
+        android:textSize="30sp"
+        app:layout_constraintStart_toEndOf="@+id/weather_logo"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <ImageView
+        android:id="@+id/weather_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/img_popup"
-        android:layout_gravity="center"
-        android:background="@drawable/circle"
-        android:src="@drawable/ic_summer" />
+        android:layout_marginTop="6dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:src="@drawable/ic_weather"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
+
+    <TextView
+        android:id="@+id/high_tv"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="left|start">
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/montserrat_semibold"
+        android:text="@string/max"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/weather_logo" />
 
-        <TextView
-            android:id="@+id/max"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:textColor="#000"
-            android:text="@string/max"
-            android:textSize="22sp"
-            android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/max_temp"
-            android:layout_width="281dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="2dp"
-            android:textColor="#339633"
-            android:layout_marginStart="2dp"
-            android:layout_marginTop="20dp"
-            android:text="25c"
-            android:textSize="22sp"
-            android:textStyle="bold" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/colon1"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="20dp"
-        android:layout_gravity="left|start">
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="12dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:text=":"
+        android:textColor="@color/blue_logo"
+        android:textSize="20dp"
+        app:layout_constraintStart_toEndOf="@+id/high_tv"
+        app:layout_constraintTop_toBottomOf="@+id/weather_logo" />
 
-        <TextView
-            android:id="@+id/min"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/min"
-            android:textColor="#000"
-            android:textSize="22sp"
-            android:textStyle="bold" />
+    <TextView
+        android:id="@+id/max_temp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="35"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/colon1"
+        app:layout_constraintTop_toBottomOf="@+id/weather_logo" />
 
-        <TextView
-            android:id="@+id/min_temp"
-            android:layout_width="281dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="2dp"
-            android:layout_marginStart="2dp"
-            android:text="15c"
-            android:textColor="#339633"
-            android:textSize="22sp"
-            android:textStyle="bold"/>
-        </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="℃"
+        android:textColor="@color/blue_logo"
+        android:textSize="19sp"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginStart="2dp"
+        app:layout_constraintStart_toEndOf="@+id/max_temp"
+        app:layout_constraintTop_toBottomOf="@+id/weather_logo"/>
+
+    <TextView
+        android:id="@+id/low_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/montserrat_semibold"
+        android:text="@string/min"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/high_tv" />
+
+    <TextView
+        android:id="@+id/colon2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:text=":"
+        android:textColor="@color/blue_logo"
+        android:textSize="20dp"
+        app:layout_constraintStart_toEndOf="@+id/high_tv"
+        app:layout_constraintTop_toBottomOf="@+id/high_tv" />
+
+    <TextView
+        android:id="@+id/min_temp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="19"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/colon2"
+        app:layout_constraintTop_toBottomOf="@+id/high_tv" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="℃"
+        android:textColor="@color/blue_logo"
+        android:textSize="19sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginStart="2dp"
+        app:layout_constraintStart_toEndOf="@+id/min_temp"
+        app:layout_constraintTop_toBottomOf="@+id/high_tv"/>
+
+    <TextView
+        android:id="@+id/humidity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/montserrat_semibold"
+        android:text="@string/humidity"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/low_tv" />
+
+    <TextView
+        android:id="@+id/colon3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:text=":"
+        android:textColor="@color/blue_logo"
+        android:textSize="20dp"
+        app:layout_constraintStart_toEndOf="@+id/high_tv"
+        app:layout_constraintTop_toBottomOf="@+id/low_tv" />
+
+    <TextView
+        android:id="@+id/humidity_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="50"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/colon3"
+        app:layout_constraintTop_toBottomOf="@+id/low_tv" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="%"
+        android:textColor="@color/blue_logo"
+        android:textSize="19sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginStart="2dp"
+        app:layout_constraintStart_toEndOf="@+id/humidity_tv"
+        app:layout_constraintTop_toBottomOf="@+id/low_tv"/>
+
+    <TextView
+        android:id="@+id/wind"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/montserrat_semibold"
+        android:text="@string/wind"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/humidity" />
+
+    <TextView
+        android:id="@+id/colon4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:text=":"
+        android:textColor="@color/blue_logo"
+        android:textSize="20dp"
+        app:layout_constraintStart_toEndOf="@+id/high_tv"
+        app:layout_constraintTop_toBottomOf="@+id/humidity" />
+
+    <TextView
+        android:id="@+id/wind_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="14"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/colon4"
+        app:layout_constraintTop_toBottomOf="@+id/humidity" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="km/h"
+        android:textColor="@color/blue_logo"
+        android:textSize="18sp"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginStart="4dp"
+        app:layout_constraintStart_toEndOf="@+id/wind_tv"
+        app:layout_constraintTop_toBottomOf="@+id/humidity"/>
+
 
     <Button
+        android:id="@+id/cancel_temp_dialog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/btntemperature"
-        android:layout_marginTop="10dp"
-        android:layout_gravity="right"
-        android:layout_marginRight="10dp"
+        android:layout_marginTop="18dp"
         android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/button_radius"
-        android:fontFamily="@font/montserrat_medium"
-        android:text="OK"
+        android:fontFamily="@font/montserrat_semibold"
+        android:text="@string/alert_rating_cancel"
         android:textAllCaps="false"
-        android:textColor="#ffff"
-        android:textSize="14sp" />
+        android:textColor="@android:color/white"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/wind_tv" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

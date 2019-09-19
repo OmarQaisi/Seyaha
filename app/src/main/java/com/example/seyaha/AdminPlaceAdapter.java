@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 
 import android.view.View;
@@ -42,67 +41,57 @@ public class AdminPlaceAdapter extends RecyclerView.Adapter<AdminPlaceAdapter.Im
         return imageViewHolder;
     }
 
-    public AdminPlaceAdapter(Context context, List<Place> place)
-    {
-        mPlace= place;
-        this.context=context;
-        chosen_places = new ArrayList <Place>();
-        counter=new int[mPlace.size()];
+    public AdminPlaceAdapter(Context context, List<Place> place) {
+        mPlace = place;
+        this.context = context;
+        chosen_places = new ArrayList<Place>();
+        counter = new int[mPlace.size()];
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
-    public void onBindViewHolder(final ImageViewHolder holder, final int position)
-    {
-
+    public void onBindViewHolder(final ImageViewHolder holder, final int position) {
         colorDrawable = new ColorDrawable(Color.GRAY);
 
         Picasso.get().load(mPlace.get(position).imageURL).placeholder(colorDrawable).fit().into(holder.circle);
         holder.circle.setClipToOutline(true);
-        if(SplashScreenActivity.lan.equalsIgnoreCase("ar"))
-        {
+        if (SplashScreenActivity.lan.equalsIgnoreCase("ar")) {
             holder.place_name_admin.setText(mPlace.get(position).nameAR);
-        }
-        else
-        {
+        } else {
             holder.place_name_admin.setText(mPlace.get(position).nameEN);
         }
 
         holder.circle.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
-
-                if(counter[position]%2==0)
-                {
+            public void onClick(View view) {
+                if (counter[position] % 2 == 0) {
                     holder.checkable.setVisibility(View.VISIBLE);
                     chosen_places.add(mPlace.get(position));
-                }
-                else
-                {
+                } else {
                     holder.checkable.setVisibility(View.INVISIBLE);
                     chosen_places.remove(mPlace.get(position));
                 }
-                Log.e("fucker",chosen_places.size()+"");
                 counter[position]++;
             }
         });
 
     }
+
     @Override
     public int getItemCount() {
         return mPlace.size();
     }
 
     public static class ImageViewHolder extends RecyclerView.ViewHolder {
-       ImageView circle,checkable;
-       TextView place_name_admin;
+        ImageView circle, checkable;
+        TextView place_name_admin;
+
         @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         public ImageViewHolder(View itemView) {
             super(itemView);
-            circle=itemView.findViewById(R.id.round_img);
-            checkable=itemView.findViewById(R.id.img_correct);
-            place_name_admin=itemView.findViewById(R.id.place_name_admin);
+            circle = itemView.findViewById(R.id.round_img);
+            checkable = itemView.findViewById(R.id.img_correct);
+            place_name_admin = itemView.findViewById(R.id.place_name_admin);
         }
 
     }
