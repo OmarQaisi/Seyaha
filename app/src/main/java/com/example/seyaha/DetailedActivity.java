@@ -91,7 +91,6 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
     RoundCornerProgressBar costProgressBar, tempProgressBar, airQualityProgressBar, internetProgressBar;
     View frontLayoutSeason, backLayoutSeason, frontLayoutTime, backLayouTime, frontLayoutAge, backLayoutAge, frontLayoutEstimated, backLayoutEstimated;
     ImageView seasonImg, timeToGoImg, estimationImg, costDetails;
-    TextView num_of_person;
     private AnimatorSet mSetRightOut;
     private AnimatorSet mSetLeftIn;
     private boolean[] mIsBackVisible = {false, false, false, false};
@@ -473,6 +472,12 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
                 getTempApi(mPlace.get(position).latitude, mPlace.get(position).longitude);
                 setAirQualityProgress(mPlace.get(position).airQuality);
                 setInternetProgress(mPlace.get(position).internet);
+
+                setSeason(mPlace.get(position).recommendedSeason);
+                setTimeToGo(mPlace.get(position).recommendedTime);
+                setAge(mPlace.get(position).recommendedAge);
+                setEstimatedTime(mPlace.get(position).estimatedTime);
+
 
                 mp = MediaPlayer.create(getApplicationContext(), getResources().getIdentifier(mPlace.get(position).voiceURL, "raw", getPackageName()));
 

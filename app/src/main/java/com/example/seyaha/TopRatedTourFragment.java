@@ -74,7 +74,7 @@ public class TopRatedTourFragment extends Fragment {
         });
 
 
-        final EditText addPlaceEt = mView.findViewById(R.id.place_name_et);
+       /* final EditText addPlaceEt = mView.findViewById(R.id.place_name_et);
         FloatingActionButton addPlaceBtn = mView.findViewById(R.id.add_place_btn);
         addPlaceBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,7 +91,7 @@ public class TopRatedTourFragment extends Fragment {
                 });
 
             }
-        });
+        });*/
 
         return mView;
     }
