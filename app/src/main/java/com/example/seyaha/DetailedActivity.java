@@ -65,12 +65,11 @@ import java.util.List;
 
 public class DetailedActivity extends AppCompatActivity implements OnMapReadyCallback {
     private static final String TAG = "DetailedActivity";
-    public static int totalCost = 0;
-
+    public  int totalCost = 0;
     private GoogleMap mMap;
     ViewPager viewPager;
-    List<String> imageUrls;
-    List<Place> mPlace;
+    List <String> imageUrls;
+    List <Place> mPlace;
     ViewPagerAdapter adapter;
     double latitude, longitude;
     String placeName;
@@ -95,16 +94,16 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
     private AnimatorSet mSetLeftIn;
     private boolean[] mIsBackVisible = {false, false, false, false};
     int i = 1, size;
-
-    int defaultCost;
-    int previousSpinnerItem, currentSpinnerItem = 1;
-
+    public static Sharedpreference prefs;
+    String Tour_id;
+    int index = 0;
+    SwitcherX foodCheckbox, entrenceFeesCheckbox, transportationCheckbox;
+    String Parent_Key;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detailed);
-
         mToolbar = findViewById(R.id.detailed_toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle(null);
@@ -145,40 +144,36 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         estimationFlip = findViewById(R.id.estimated_btn);
         //progress details deceleration
         costDetails = findViewById(R.id.cost_details_btn);
-
-
         costDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDetailedCost(0);
             }
         });
-
         loadAnimations();
-
-
         Intent i = getIntent();
-        mPlace = (List<Place>) i.getSerializableExtra("places");
+        mPlace = (List <Place>) i.getSerializableExtra("places");
+        Tour_id = i.getStringExtra("tour_id");
         description.setMovementMethod(new ScrollingMovementMethod());
         latitude = mPlace.get(0).latitude;
         longitude = mPlace.get(0).longitude;
         placeName = mPlace.get(0).nameEN;
         map_view = mapFragment.getView();
         mapFragment.getMapAsync(this);
-
         run_viewPager();
-
-        setCostProgress(calculateCost(mPlace.get(0).cost.entranceFees, mPlace.get(0).cost.food, mPlace.get(0).cost.transportation, mPlace.get(0).cost.overNightStay.get(1), 0));
+        int deff = mPlace.get(0).cost.entranceFees + mPlace.get(0).cost.food + mPlace.get(0).cost.transportation + mPlace.get(0).cost.overNightStay.get(1);
         getTempApi(mPlace.get(0).latitude, mPlace.get(0).longitude);
         setAirQualityProgress(mPlace.get(0).airQuality);
         setInternetProgress(mPlace.get(0).internet);
-
         setSeason(mPlace.get(0).recommendedSeason);
         setTimeToGo(mPlace.get(0).recommendedTime);
         setAge(mPlace.get(0).recommendedAge);
-        setEstimatedTime(calculateEstimatiedTime(mPlace.get(0).estimatedTime,mPlace.get(0).activities));
+        setEstimatedTime(calculateEstimatiedTime(mPlace.get(0).estimatedTime, mPlace.get(0).activities));
+         Parent_Key = Tour_id + place_id(mPlace.get(0).nameEN);
+         Log.e("anasss",Parent_Key);
+        prefs = new Sharedpreference(this, Parent_Key);
+        setCostProgress(prefs.getintPrefs("total_cost", deff));
 
-        totalCost = defaultCost;
         try {
             mp = MediaPlayer.create(getApplicationContext(), getResources().getIdentifier(mPlace.get(0).voiceURL, "raw", getPackageName()));
         } catch (Exception e) {
@@ -233,91 +228,55 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
     }
 
     private int calculateCost(int entranceFees, int food, int transportation, Integer overNightStay, int activites) {
-        defaultCost = entranceFees + food + transportation + overNightStay + activites;
-        return defaultCost;
+        return entranceFees + food + transportation + overNightStay + activites;
     }
-
 
     public void showDetailedCost(final int position) {
         View mView = getLayoutInflater().inflate(R.layout.cost_popup, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(mView);
+        totalCost = 0;
+        foodCheckbox = mView.findViewById(R.id.food_checkBox);
+        entrenceFeesCheckbox = mView.findViewById(R.id.entrance_fees_checkBox);
+        transportationCheckbox = mView.findViewById(R.id.transportation_checkBox);
+        entrenceFeesCheckbox.setChecked(prefs.getboolPrefs("enterence", true), false);
+        foodCheckbox.setChecked(prefs.getboolPrefs("food", true), false);
+        transportationCheckbox.setChecked(prefs.getboolPrefs("trans", true), false);
 
-        totalCost = defaultCost;
-        currentSpinnerItem = 1;
-
-        TextView entrenceFeesPrice = mView.findViewById(R.id.entrance_fees_price);
+        final TextView entrenceFeesPrice = mView.findViewById(R.id.entrance_fees_price);
         entrenceFeesPrice.setText(mPlace.get(position).cost.entranceFees + "JD");
 
-        final SwitcherX entrenceFeesCheckbox = mView.findViewById(R.id.entrance_fees_checkBox);
-        entrenceFeesCheckbox.setOnCheckedChangeListener(new Function1<Boolean, Unit>() {
-            @Override
-            public Unit invoke(Boolean checked) {
-                if (checked) {
-                    totalCost += mPlace.get(position).cost.entranceFees;
-                } else {
-                    totalCost -= mPlace.get(position).cost.entranceFees;
-                }
-                return null;
-            }
-        });
+        entrenceFeesCheckbox = mView.findViewById(R.id.entrance_fees_checkBox);
 
         TextView foodPrice = mView.findViewById(R.id.food_price);
         foodPrice.setText(mPlace.get(position).cost.food + "JD");
 
-        final SwitcherX foodCheckbox = mView.findViewById(R.id.food_checkBox);
-        foodCheckbox.setOnCheckedChangeListener(new Function1<Boolean, Unit>() {
-            @Override
-            public Unit invoke(Boolean checked) {
-                if (checked) {
-                    totalCost += mPlace.get(position).cost.food;
-                } else {
-                    totalCost -= mPlace.get(position).cost.food;
-                }
-
-                return null;
-            }
-        });
+        foodCheckbox = mView.findViewById(R.id.food_checkBox);
 
         TextView transportationPrice = mView.findViewById(R.id.transportation_price);
         transportationPrice.setText(mPlace.get(position).cost.transportation + "JD");
 
-        final SwitcherX transportationCheckbox = mView.findViewById(R.id.transportation_checkBox);
-        transportationCheckbox.setOnCheckedChangeListener(new Function1<Boolean, Unit>() {
-            @Override
-            public Unit invoke(Boolean checked) {
-                if (checked) {
-                    totalCost += mPlace.get(position).cost.transportation;
-                } else {
-                    totalCost -= mPlace.get(position).cost.transportation;
-                }
-
-                return null;
-            }
-        });
+        transportationCheckbox = mView.findViewById(R.id.transportation_checkBox);
 
 
-        MaterialSpinner overNightSpinner = mView.findViewById(R.id.over_night_spinner);
-        OverNightSpinnerAdapter overNightAdapter = new OverNightSpinnerAdapter(this, R.layout.over_night_spinner_item, mPlace.get(position).cost.overNightStay);
+        final MaterialSpinner overNightSpinner = mView.findViewById(R.id.over_night_spinner);
+        final OverNightSpinnerAdapter overNightAdapter = new OverNightSpinnerAdapter(this, R.layout.over_night_spinner_item, mPlace.get(position).cost.overNightStay);
         overNightSpinner.setAdapter(overNightAdapter);
-        overNightSpinner.setSelection(1);
+        overNightSpinner.setSelection(prefs.getintPrefs("sleep", 1));
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1){
-            if(SplashScreenActivity.lan.equals("ar"))
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            if (SplashScreenActivity.lan.equals("ar"))
                 overNightSpinner.setTextDirection(View.TEXT_DIRECTION_RTL);
-            else if(SplashScreenActivity.lan.equals("en"))
+            else if (SplashScreenActivity.lan.equals("en"))
                 overNightSpinner.setTextDirection(View.TEXT_DIRECTION_LTR);
         }
 
         overNightSpinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(@NotNull MaterialSpinner materialSpinner, @Nullable View view, int i, long l) {
-                previousSpinnerItem = currentSpinnerItem;
-                currentSpinnerItem = i;
-                totalCost -= mPlace.get(position).cost.overNightStay.get(previousSpinnerItem);
-                totalCost += mPlace.get(position).cost.overNightStay.get(currentSpinnerItem);
+                index = i;
             }
-
             @Override
             public void onNothingSelected(@NotNull MaterialSpinner materialSpinner) {
 
@@ -328,13 +287,32 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         ListView activitiesListView = mView.findViewById(R.id.activities_list_view);
         activitiesListView.setAdapter(activityCostAdapter);
 
-
         Button applyBtn = mView.findViewById(R.id.apply_cost_dialog_btn);
         applyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setCostProgress(totalCost);
+
                 alertDialog.dismiss();
+                prefs.setboolPrefs("trans", transportationCheckbox.isChecked());
+                prefs.setboolPrefs("food", foodCheckbox.isChecked());
+                prefs.setboolPrefs("enterence", entrenceFeesCheckbox.isChecked());
+                prefs.setintPrefs("sleep", index);
+
+                if (entrenceFeesCheckbox.isChecked()) {
+                    totalCost += mPlace.get(position).cost.entranceFees;
+                }
+                if (foodCheckbox.isChecked()) {
+                    totalCost += mPlace.get(position).cost.food;
+                }
+                if (transportationCheckbox.isChecked()) {
+                    totalCost += mPlace.get(position).cost.transportation;
+                }
+                totalCost += mPlace.get(position).cost.overNightStay.get(overNightSpinner.getSelection());
+                totalCost += ActivityCostAdapter.totalcost;
+                prefs.setintPrefs("total_cost", totalCost);
+                Log.e("anass",Parent_Key+"   "+totalCost);
+                setCostProgress(totalCost);
+
             }
         });
 
@@ -367,10 +345,10 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         min_temp = mView.findViewById(R.id.min_temp);
         humidity_tv = mView.findViewById(R.id.humidity_tv);
         wind_tv = mView.findViewById(R.id.wind_tv);
-        max_temp.setText((int)max+"");
-        min_temp.setText((int)min+"");
-        humidity_tv.setText(humidity+"");
-        wind_tv.setText((int)speed+"");
+        max_temp.setText((int) max + "");
+        min_temp.setText((int) min + "");
+        humidity_tv.setText(humidity + "");
+        wind_tv.setText((int) speed + "");
         alertDialog = builder.create();
         alertDialog.show();
         cancel_temp_dialog_btn.setOnClickListener(new View.OnClickListener() {
@@ -399,6 +377,11 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
     }
 
+    String place_id(String name) {
+        name = name.replaceAll("\\s+", "");
+        return name.toLowerCase();
+    }
+
     public void internet_btn(View view) {
         Button cancel_internet_dialog_btn;
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -418,10 +401,10 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
 
 
     private void getTempApi(double latitude, double longitude) {
-        Call<JsonObject> call = openWeatherApi.getTemp(latitude, longitude, APIKEY);
-        call.enqueue(new Callback<JsonObject>() {
+        Call <JsonObject> call = openWeatherApi.getTemp(latitude, longitude, APIKEY);
+        call.enqueue(new Callback <JsonObject>() {
             @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+            public void onResponse(Call <JsonObject> call, Response <JsonObject> response) {
 
                 if (!response.isSuccessful()) {
                     Log.d(TAG, "Code: " + response.code());
@@ -446,7 +429,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
             }
 
             @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
+            public void onFailure(Call <JsonObject> call, Throwable t) {
                 Log.d(TAG, "onFailure: " + t.getMessage());
             }
         });
@@ -454,7 +437,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
     }
 
     private void run_viewPager() {
-        imageUrls = new ArrayList<>();
+        imageUrls = new ArrayList <>();
 
         for (int i = 0; i < mPlace.size(); i++) {
             imageUrls.add(mPlace.get(i).imageURL);
@@ -466,30 +449,27 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         viewPager.setPadding(100, 0, 100, 0);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels)
+            {
 
-                //System.out.println(positionOffset);
             }
 
             @Override
             public void onPageSelected(final int position) {
-
-
+                 Parent_Key = Tour_id + place_id(mPlace.get(position).nameEN);
+                prefs = new Sharedpreference(DetailedActivity.this, Parent_Key);
+                int deff = mPlace.get(position).cost.entranceFees + mPlace.get(position).cost.food + mPlace.get(position).cost.transportation + mPlace.get(position).cost.overNightStay.get(1);
+                int total=prefs.getintPrefs("total_cost",deff);
+                Log.e("anass","hereeeeeee"+Parent_Key+" "+total);
+                setCostProgress(total);
+                setSeason(mPlace.get(position).recommendedSeason);
                 getTempApi(mPlace.get(position).latitude, mPlace.get(position).longitude);
                 setAirQualityProgress(mPlace.get(position).airQuality);
                 setInternetProgress(mPlace.get(position).internet);
-
-                setSeason(mPlace.get(position).recommendedSeason);
                 setTimeToGo(mPlace.get(position).recommendedTime);
                 setAge(mPlace.get(position).recommendedAge);
-                setEstimatedTime(calculateEstimatiedTime(mPlace.get(position).estimatedTime,mPlace.get(position).activities));
-
-
+                setEstimatedTime(calculateEstimatiedTime(mPlace.get(position).estimatedTime, mPlace.get(position).activities));
                 mp = MediaPlayer.create(getApplicationContext(), getResources().getIdentifier(mPlace.get(position).voiceURL, "raw", getPackageName()));
-
-                setCostProgress(calculateCost(mPlace.get(position).cost.entranceFees, mPlace.get(position).cost.food, mPlace.get(position).cost.transportation, mPlace.get(position).cost.overNightStay.get(1), 0));
-
-                totalCost = defaultCost;
                 if (SplashScreenActivity.lan.equalsIgnoreCase("ar")) {
                     description.setText(mPlace.get(position).descAR);
                     placeNameRecommendations.setText(mPlace.get(position).nameAR);
@@ -595,23 +575,23 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
             tempProgressBar.setProgressColor(Color.RED);
             tempProgressBar.setProgress(temp);
             tempOverallTv.setText(getResources().getString(R.string.cold));
-            tempTv.setText(temp+"");
+            tempTv.setText(temp + "");
 
         } else if (temp > 10 && temp <= 18) {
             tempProgressBar.setProgress(temp);
             tempProgressBar.setProgressColor(Color.rgb(255, 165, 0));
             tempOverallTv.setText(getResources().getString(R.string.normal));
-            tempTv.setText(temp+"");
+            tempTv.setText(temp + "");
         } else if (temp > 18 && temp <= 30) {
             tempProgressBar.setProgressColor(Color.GREEN);
             tempProgressBar.setProgress(55);
             tempOverallTv.setText(getResources().getString(R.string.perfect));
-            tempTv.setText(temp+"");
+            tempTv.setText(temp + "");
         } else {
             tempProgressBar.setProgressColor(Color.RED);
             tempProgressBar.setProgress(55 - temp);
             tempOverallTv.setText(getResources().getString(R.string.hot));
-            tempTv.setText(temp+"");
+            tempTv.setText(temp + "");
         }
 
         ObjectAnimator progressAnimator;
@@ -815,23 +795,23 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
 
 
     // calculate the cost of transportation using the yellow taxi day charging rate
-    private int calculateTransportationCost(int distance, int duration){
+    private int calculateTransportationCost(int distance, int duration) {
         int cost = 250; // starter fee in fils
-        cost += (distance/100) * 24; // 24 fils per 100 meters
-        cost += duration*30; // 30 fils per 1 minute
+        cost += (distance / 100) * 24; // 24 fils per 100 meters
+        cost += duration * 30; // 30 fils per 1 minute
 
         System.out.println(cost);
-        return cost/1000; // return cost in JD
+        return cost / 1000; // return cost in JD
     }
 
-    private int calculateEstimatiedTime(int transportationTime, List<ActivityClass> activites){
+    private int calculateEstimatiedTime(int transportationTime, List <ActivityClass> activites) {
         double time = 0;
         time += transportationTime;
-        for (int i=0; i < activites.size(); i++){
+        for (int i = 0; i < activites.size(); i++) {
             time += activites.get(i).time;
         }
 
-        return (int)time;
+        return (int) time;
     }
 
 }

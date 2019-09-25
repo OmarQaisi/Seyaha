@@ -13,22 +13,27 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class ActivityCostAdapter extends ArrayAdapter<ActivityClass> {
 
     List<ActivityClass> activities;
-
-    public ActivityCostAdapter(@NonNull Context context, List<ActivityClass> activities) {
+    static int  totalcost=0;
+    public ActivityCostAdapter(@NonNull Context context, List<ActivityClass> activities)
+    {
         super(context, 0,activities);
         this.activities = activities;
-    }
 
+
+    }
     @NonNull
     @Override
     public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        if (convertView == null) {
+
+        if (convertView == null)
+        {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.activity_cost_item, parent, false);
         }
 
@@ -40,13 +45,13 @@ public class ActivityCostAdapter extends ArrayAdapter<ActivityClass> {
             @Override
             public void onClick(View v) {
                 if (mCheckBox.isChecked()) {
-
-                    DetailedActivity.totalCost+=activities.get(position).cost;
-                    System.out.println(DetailedActivity.totalCost);
-
-                } else {
-                    DetailedActivity.totalCost-=activities.get(position).cost;
-
+                    totalcost+= activities.get(position).cost;
+                    SetCheckedActivities(position,true);
+                }
+                else
+                {
+                    totalcost-=activities.get(position).cost;
+                    SetCheckedActivities(position,false);
                 }
             }
         });
@@ -63,4 +68,10 @@ public class ActivityCostAdapter extends ArrayAdapter<ActivityClass> {
 
         return convertView;
     }
+    public void SetCheckedActivities(int position,boolean Checked)
+    {
+        DetailedActivity.prefs.setboolPrefs("cost_"+position,Checked);
+
+    }
+
 }

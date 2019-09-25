@@ -10,6 +10,7 @@ import java.util.Locale;
 
 public class SeyahaUtils {
 
+
     public static Boolean checkInternetConnectivity(Activity context) {
         ConnectionDetector connectionCheck = new ConnectionDetector(context);
 
@@ -31,6 +32,7 @@ public class SeyahaUtils {
         editor.putString(langPref, lang);
         editor.commit();
     }
+
 
     public static void loadLocale(Activity context) {
 

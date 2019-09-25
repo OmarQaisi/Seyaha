@@ -116,6 +116,7 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
                 Tour.addClickEffect(view);
                 Intent i = new Intent(context, DetailedActivity.class);
                 i.putExtra("places", (Serializable) mTours.get(position).places);
+                i.putExtra("tour_id",tour.tourId);
                 context.startActivity(i);
             }
         });
@@ -302,6 +303,7 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
                     case R.id.overview_tour:
                         Intent i=new Intent(context,OverviewActivity.class);
                         i.putExtra("places", (Serializable) mTours.get(position).places);
+                        i.putExtra("tour_id",tour.tourId);
                         context.startActivity(i);
                         break;
                     case R.id.delete_tour:
