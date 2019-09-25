@@ -176,7 +176,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         setSeason(mPlace.get(0).recommendedSeason);
         setTimeToGo(mPlace.get(0).recommendedTime);
         setAge(mPlace.get(0).recommendedAge);
-        setEstimatedTime(mPlace.get(0).estimatedTime);
+        setEstimatedTime(calculateEstimatiedTime(mPlace.get(0).estimatedTime,mPlace.get(0).activities));
 
         totalCost = defaultCost;
         try {
@@ -253,7 +253,6 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         entrenceFeesCheckbox.setOnCheckedChangeListener(new Function1<Boolean, Unit>() {
             @Override
             public Unit invoke(Boolean checked) {
-
                 if (checked) {
                     totalCost += mPlace.get(position).cost.entranceFees;
                 } else {
@@ -483,7 +482,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
                 setSeason(mPlace.get(position).recommendedSeason);
                 setTimeToGo(mPlace.get(position).recommendedTime);
                 setAge(mPlace.get(position).recommendedAge);
-                setEstimatedTime(mPlace.get(position).estimatedTime);
+                setEstimatedTime(calculateEstimatiedTime(mPlace.get(position).estimatedTime,mPlace.get(position).activities));
 
 
                 mp = MediaPlayer.create(getApplicationContext(), getResources().getIdentifier(mPlace.get(position).voiceURL, "raw", getPackageName()));
@@ -814,5 +813,25 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         return super.onOptionsItemSelected(item);
     }
 
+
+    // calculate the cost of transportation using the yellow taxi day charging rate
+    private int calculateTransportationCost(int distance, int duration){
+        int cost = 250; // starter fee in fils
+        cost += (distance/100) * 24; // 24 fils per 100 meters
+        cost += duration*30; // 30 fils per 1 minute
+
+        System.out.println(cost);
+        return cost/1000; // return cost in JD
+    }
+
+    private int calculateEstimatiedTime(int transportationTime, List<ActivityClass> activites){
+        double time = 0;
+        time += transportationTime;
+        for (int i=0; i < activites.size(); i++){
+            time += activites.get(i).time;
+        }
+
+        return (int)time;
+    }
 
 }
