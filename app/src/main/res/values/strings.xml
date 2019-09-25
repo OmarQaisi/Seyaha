@@ -6,7 +6,7 @@
         <item>walking</item>
         <item>safari-desert</item>
         <item>safari-adventure</item>
-        <item>religon</item>
+        <item>religion</item>
         <item>nature</item>
         <item>historical</item>
         <item>treatment</item>
@@ -91,10 +91,10 @@
 
 
     <!-- Strings for the(Detailed activity) -->
-    <string name="cold">"Cold: "</string>
-    <string name="perfect">"Perfect: "</string>
-    <string name="hot">"Hot: "</string>
-    <string name="normal">"Normal: "</string>
+    <string name="cold">"Cold"</string>
+    <string name="perfect">"Perfect"</string>
+    <string name="hot">"Hot"</string>
+    <string name="normal">"Normal"</string>
 
     <string name="bad_internet">Bad</string>
     <string name="good_internet">Good</string>
@@ -139,7 +139,7 @@
     <string name="test_tour">You have not selected your interests yet.</string>
     <string name="overview_activity_title">Tour Overview</string>
 
-    <string name="activities_cost">Activities cost</string>
+    <string name="activities_cost">Activities Cost:</string>
 
     <string name="three_star_cost">3 star hotels cost : </string>
     <string name="four_star_cost">4 star hotels cost : </string>
@@ -156,10 +156,14 @@
     <string name="two_g">2G Available</string>
     <string name="no_service">No Service</string>
 
-    <string name="apply">Apply</string>
+    <string name="cost_popup_title">Cost Details</string>
     <string name="entrance_fees">Entrance fees</string>
+    <string name="food">Food</string>
+    <string name="transportation">Transportation</string>
+    <string name="overnight_rate">Overnight rate</string>
     <string name="cheap_cost">cheap price</string>
     <string name="average_cost">Average price</string>
     <string name="expensive_cost">Expensive price</string>
+    <string name="apply">Apply</string>
 
 </resources>

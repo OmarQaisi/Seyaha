@@ -41,7 +41,7 @@ public class ActivityCostAdapter extends ArrayAdapter<ActivityClass> {
             public void onClick(View v) {
                 if (mCheckBox.isChecked()) {
 
-                          DetailedActivity.totalCost+=activities.get(position).cost;
+                    DetailedActivity.totalCost+=activities.get(position).cost;
                     System.out.println(DetailedActivity.totalCost);
 
                 } else {
@@ -53,7 +53,7 @@ public class ActivityCostAdapter extends ArrayAdapter<ActivityClass> {
 
         if (SplashScreenActivity.lan.equalsIgnoreCase("ar")) {
             mCheckBox.setText(activities.get(position).nameAR);
-
+            notifyDataSetChanged();
         } else {
             mCheckBox.setText(activities.get(position).nameEN);
         }

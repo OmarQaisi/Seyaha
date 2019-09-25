@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="450dp"
+    android:layout_margin="4dp"
+    android:background="@drawable/corners"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginStart="12dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="@string/cost_popup_title"
+        android:textColor="@color/blue_logo"
+        android:textSize="30sp"
+        app:layout_constraintStart_toEndOf="@+id/cost_logo"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ImageView
+        android:id="@+id/cost_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:src="@drawable/ic_wallet"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/apply_cost_dialog_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/button_radius"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="@string/apply"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activities_list_view" />
+
+    <Button
+        android:id="@+id/cancel_cost_dialog_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/button_border_radius"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="@string/alert_rating_cancel"
+        android:textColor="@color/blue_logo"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/apply_cost_dialog_btn"
+        app:layout_constraintTop_toBottomOf="@+id/activities_list_view" />
+
+    <ListView
+        android:id="@+id/activities_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:descendantFocusability="blocksDescendants"
+        android:divider="@android:color/transparent"
+        android:listSelector="@android:color/transparent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/activities_text_view" />
+
+
+    <TextView
+        android:id="@+id/entrance_fees_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="@string/entrance_fees"
+        android:textAlignment="center"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/cost_logo"
+        app:layout_constraintStart_toEndOf="@id/entrance_fees_checkBox"/>
+
+
+    <TextView
+        android:id="@+id/entrance_fees_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="8JD"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cost_logo" />
+
+    <TextView
+        android:id="@+id/food_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="11dp"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="@string/food"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@id/food_checkBox"
+        app:layout_constraintTop_toBottomOf="@id/entrance_fees_text" />
+
+    <TextView
+        android:id="@+id/food_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="11dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="2JD"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/entrance_fees_price" />
+
+    <TextView
+        android:id="@+id/transportation_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="11dp"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="@string/transportation"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@id/transportation_checkBox"
+        app:layout_constraintTop_toBottomOf="@id/food_text" />
+
+    <TextView
+        android:id="@+id/transportation_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="11dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="20JD"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/food_price" />
+
+    <TextView
+        android:id="@+id/activities_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="18sp"
+        android:text="@string/activities_cost"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/over_night_spinner" />
+
+    <com.bitvale.switcher.SwitcherX
+        android:id="@+id/entrance_fees_checkBox"
+        android:layout_marginLeft="6dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="18dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cost_logo"
+        app:switcher_icon_color="@color/white_login_screen"
+        app:switcher_off_color="@color/gray_text_view"
+        app:switcher_on_color="@color/blue_logo" />
+
+    <com.bitvale.switcher.SwitcherX
+        android:id="@+id/food_checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="6dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/entrance_fees_checkBox"
+        app:switcher_icon_color="@color/white_login_screen"
+        app:switcher_off_color="@color/gray_text_view"
+        app:switcher_on_color="@color/blue_logo" />
+
+    <com.bitvale.switcher.SwitcherX
+        android:id="@+id/transportation_checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginStart="6dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/food_checkBox"
+        app:switcher_icon_color="@color/white_login_screen"
+        app:switcher_off_color="@color/gray_text_view"
+        app:switcher_on_color="@color/blue_logo" />
+
+    <com.tiper.MaterialSpinner
+        android:id="@+id/over_night_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:focusable="false"
+        android:hint="@string/overnight_rate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/transportation_checkBox"
+        app:spinnerMode="dropdown" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+

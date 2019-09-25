@@ -56,10 +56,10 @@
     <string name="select_places">اختر الأماكن:</string>
 
     <!-- Strings for the(Detailed activity) -->
-    <string name="cold">"بارد: "</string>
-    <string name="perfect">"مثالي: "</string>
-    <string name="hot">"حار: "</string>
-    <string name="normal">"طبيعي: "</string>
+    <string name="cold">"بارد"</string>
+    <string name="perfect">"مثالي"</string>
+    <string name="hot">"حار"</string>
+    <string name="normal">"طبيعي"</string>
     <string name="bad_internet">سيئ</string>
     <string name="good_internet">جيد</string>
     <string name="great_internet">ممتاز</string>
@@ -104,7 +104,7 @@
     <string name="contact_us">تواصل معنا:</string>
     <string name="test_tour">لم تقم باختيار اهتماماتك حتى الآن.</string>
     <string name="overview_activity_title">نظرة عامة على الرحلة</string>
-    <string name="activities_cost"> تكاليف النشاطات</string>
+    <string name="activities_cost"> تكاليف النشاطات:</string>
     <string name="three_star_cost">فندق 3 نجوم :</string>
     <string name="four_star_cost">فندق 4 نجوم :</string>
     <string name="five_star_hotel">فندق 5 نجوم :</string>
@@ -120,11 +120,14 @@
     <string name="two_g">يدعم الجيل الثاني</string>
     <string name="no_service">لا يوجد خدمة</string>
 
-    <string name="apply">Apply</string>
-
+    <string name="cost_popup_title">تفاصيل السعر</string>
     <string name="entrance_fees">رسوم الدخول</string>
+    <string name="food">الطعام</string>
+    <string name="transportation">أجرة النقل</string>
+    <string name="overnight_rate">سعر المبيت</string>
     <string name="cheap_cost">رخيص الثمن</string>
     <string name="average_cost">متوسط الثمن</string>
     <string name="expensive_cost">غالي الثمن</string>
+    <string name="apply">حفظ</string>
 
 </resources>

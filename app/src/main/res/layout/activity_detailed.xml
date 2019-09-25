@@ -232,7 +232,7 @@
                         android:fontFamily="@font/montserrat_light"
                         android:text="$200"
                         android:layout_marginTop="2dp"
-                        android:textSize="14sp"
+                        android:textSize="13sp"
                         android:layout_gravity="top|start"/>
 
                     <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
@@ -249,16 +249,76 @@
                         app:rcSecondaryProgressColor="@android:color/transparent"
                         app:rcBackgroundColor="@color/background_gray" />
 
-                    <TextView
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:textColor="@android:color/black"
-                        android:id="@+id/temp_tv"
-                        android:text="30C"
-                        android:fontFamily="@font/montserrat_light"
-                        android:textSize="14sp"
-                        android:layout_gravity="top|start"/>
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:textColor="@android:color/black"
+                            android:id="@+id/temp_overall_tv"
+                            android:text="Hot"
+                            android:fontFamily="@font/montserrat_light"
+                            android:textSize="12sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                        <TextView
+                            android:id="@+id/now_notation"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
+                            android:layout_marginStart="2dp"
+                            android:layout_marginLeft="2dp"
+                            android:textColor="@android:color/black"
+                            android:text="@string/now"
+                            android:fontFamily="@font/montserrat_light"
+                            android:textSize="11sp"
+                            app:layout_constraintStart_toEndOf="@id/temp_overall_tv"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@android:color/black"
+                            android:layout_marginTop="1dp"
+                            android:id="@+id/colon"
+                            android:text=":"
+                            android:fontFamily="@font/montserrat_light"
+                            android:textSize="14sp"
+                            app:layout_constraintStart_toEndOf="@id/now_notation"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:layout_marginStart="12dp"
+                            android:layout_marginLeft="12dp"
+                            android:textColor="@android:color/black"
+                            android:id="@+id/temp_tv"
+                            android:text="30"
+                            android:fontFamily="@font/montserrat_light"
+                            android:textSize="13sp"
+                            app:layout_constraintStart_toEndOf="@id/colon"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:textColor="@android:color/black"
+                            android:text="℃"
+                            android:layoutDirection="ltr"
+                            android:fontFamily="@font/montserrat_light"
+                            android:textSize="11sp"
+                            app:layout_constraintStart_toEndOf="@id/temp_tv"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                     <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
                         android:layout_width="match_parent"
@@ -283,7 +343,7 @@
                         android:text="62"
                         android:layout_marginTop="2dp"
                         android:fontFamily="@font/montserrat_light"
-                        android:textSize="14sp"
+                        android:textSize="13sp"
                         android:layout_gravity="top|start"/>
 
 
@@ -310,7 +370,7 @@
                         android:text="Good"
                         android:layout_marginTop="2dp"
                         android:fontFamily="@font/montserrat_light"
-                        android:textSize="14sp"
+                        android:textSize="13sp"
                         android:layout_gravity="top|start"/>
 
                     <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
