@@ -166,4 +166,10 @@
     <string name="expensive_cost">Expensive price</string>
     <string name="apply">Apply</string>
 
+    <!-- Clarification Dialog -->
+    <string name="clarification_dialog_title">Clarification</string>
+    <string name="clarification_dialog_body">&#8226; Default value of Transportation\'s cost/duration was calculated from Queen Alia Airport as a starter point and the desired place as an end point.\n\n&#8226; Default value of Estimated Time was calculated by adding up all the desired place activities time and the duration of the transportation from Queen Alia Airport.\n\n&#8226; <b>You Can Customize Both The Etimated Time and Cost of Each Place by Clicking on the Exclamation Mark Beside the (Cost).</b></string>
+    <string name="clarification_dialog_checkbox">Dont show this again</string>
+
+
 </resources>

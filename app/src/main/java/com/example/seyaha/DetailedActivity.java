@@ -27,6 +27,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -65,11 +66,11 @@ import java.util.List;
 
 public class DetailedActivity extends AppCompatActivity implements OnMapReadyCallback {
     private static final String TAG = "DetailedActivity";
-    public  int totalCost = 0;
+    public int totalCost = 0;
     private GoogleMap mMap;
     ViewPager viewPager;
-    List <String> imageUrls;
-    List <Place> mPlace;
+    List<String> imageUrls;
+    List<Place> mPlace;
     ViewPagerAdapter adapter;
     double latitude, longitude;
     String placeName;
@@ -96,7 +97,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
     int i = 1, size;
     public static Sharedpreference prefs;
     String Tour_id;
-    int index = 0;
+    int index = 1;
     SwitcherX foodCheckbox, entrenceFeesCheckbox, transportationCheckbox;
     String Parent_Key;
 
@@ -114,10 +115,12 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
+
         //retrofit config
         Retrofit retrofit = new Retrofit.Builder().baseUrl("http://api.openweathermap.org/").addConverterFactory(GsonConverterFactory.create()).build();
         openWeatherApi = retrofit.create(OpenWeatherApi.class);
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+
         //text views and description deceleration
         placeNameRecommendations = findViewById(R.id.place_name_recommendations);
         placeNameInfo = findViewById(R.id.place_name_information_about);
@@ -127,6 +130,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         description = findViewById(R.id.description_tv);
         scrollView = findViewById(R.id.scrollview);
         placeNameTitle = findViewById(R.id.place_name_title);
+
         //information about the place deceleration
         costProgressBar = findViewById(R.id.cost_progress);
         tempProgressBar = findViewById(R.id.temp_progress);
@@ -137,22 +141,27 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         tempOverallTv = findViewById(R.id.temp_overall_tv);
         airQualityTv = findViewById(R.id.air_quality_tv);
         internetTv = findViewById(R.id.internet_tv);
+
         //recommendations about the place deceleration
         seasonFlip = findViewById(R.id.season_btn);
         timeToGoFlip = findViewById(R.id.time_btn);
         ageFlip = findViewById(R.id.age_btn);
         estimationFlip = findViewById(R.id.estimated_btn);
+
         //progress details deceleration
         costDetails = findViewById(R.id.cost_details_btn);
+
         costDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDetailedCost(0);
             }
         });
+
         loadAnimations();
+
         Intent i = getIntent();
-        mPlace = (List <Place>) i.getSerializableExtra("places");
+        mPlace = (List<Place>) i.getSerializableExtra("places");
         Tour_id = i.getStringExtra("tour_id");
         description.setMovementMethod(new ScrollingMovementMethod());
         latitude = mPlace.get(0).latitude;
@@ -169,15 +178,14 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         setTimeToGo(mPlace.get(0).recommendedTime);
         setAge(mPlace.get(0).recommendedAge);
         setEstimatedTime(calculateEstimatiedTime(mPlace.get(0).estimatedTime, mPlace.get(0).activities));
-         Parent_Key = Tour_id + place_id(mPlace.get(0).nameEN);
-         Log.e("anasss",Parent_Key);
+        Parent_Key = Tour_id + place_id(mPlace.get(0).nameEN);
         prefs = new Sharedpreference(this, Parent_Key);
         setCostProgress(prefs.getintPrefs("total_cost", deff));
 
         try {
             mp = MediaPlayer.create(getApplicationContext(), getResources().getIdentifier(mPlace.get(0).voiceURL, "raw", getPackageName()));
         } catch (Exception e) {
-            Log.d("place_name", "" + mPlace.get(0).nameEN + " \n" + e);
+            Log.d(TAG, "" + mPlace.get(0).nameEN + " \n" + e);
         }
 
         if (SplashScreenActivity.lan.equalsIgnoreCase("ar")) {
@@ -225,6 +233,35 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
             }
         });
 
+        //clarification_dialog
+        if (!prefs.getboolPrefs("clarification_dialog", false)) {
+            showClarificationDialog();
+        }
+
+    }
+
+    private void showClarificationDialog() {
+        Button cancel_clarification_dialog_btn;
+        final CheckBox dont_show_again;
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View mView = getLayoutInflater().inflate(R.layout.clarification_dialog, null);
+        builder.setView(mView);
+        cancel_clarification_dialog_btn = mView.findViewById(R.id.cancel_clarification_dialog);
+        dont_show_again = mView.findViewById(R.id.clarification_checkBox);
+        alertDialog = builder.create();
+        alertDialog.show();
+        cancel_clarification_dialog_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (dont_show_again.isChecked()) {
+                    prefs.setboolPrefs("clarification_dialog", true);
+                } else {
+                    prefs.setboolPrefs("clarification_dialog", false);
+                }
+                alertDialog.cancel();
+            }
+        });
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
     }
 
     private int calculateCost(int entranceFees, int food, int transportation, Integer overNightStay, int activites) {
@@ -277,9 +314,10 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
             public void onItemSelected(@NotNull MaterialSpinner materialSpinner, @Nullable View view, int i, long l) {
                 index = i;
             }
+
             @Override
             public void onNothingSelected(@NotNull MaterialSpinner materialSpinner) {
-
+                index = 1;
             }
         });
 
@@ -308,9 +346,10 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
                     totalCost += mPlace.get(position).cost.transportation;
                 }
                 totalCost += mPlace.get(position).cost.overNightStay.get(overNightSpinner.getSelection());
+                prefs.setintPrefs("checked_cost",ActivityCostAdapter.totalcost);
                 totalCost += ActivityCostAdapter.totalcost;
+                ActivityCostAdapter.totalcost=0;
                 prefs.setintPrefs("total_cost", totalCost);
-                Log.e("anass",Parent_Key+"   "+totalCost);
                 setCostProgress(totalCost);
 
             }
@@ -401,10 +440,10 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
 
 
     private void getTempApi(double latitude, double longitude) {
-        Call <JsonObject> call = openWeatherApi.getTemp(latitude, longitude, APIKEY);
-        call.enqueue(new Callback <JsonObject>() {
+        Call<JsonObject> call = openWeatherApi.getTemp(latitude, longitude, APIKEY);
+        call.enqueue(new Callback<JsonObject>() {
             @Override
-            public void onResponse(Call <JsonObject> call, Response <JsonObject> response) {
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
 
                 if (!response.isSuccessful()) {
                     Log.d(TAG, "Code: " + response.code());
@@ -429,7 +468,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
             }
 
             @Override
-            public void onFailure(Call <JsonObject> call, Throwable t) {
+            public void onFailure(Call<JsonObject> call, Throwable t) {
                 Log.d(TAG, "onFailure: " + t.getMessage());
             }
         });
@@ -437,7 +476,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
     }
 
     private void run_viewPager() {
-        imageUrls = new ArrayList <>();
+        imageUrls = new ArrayList<>();
 
         for (int i = 0; i < mPlace.size(); i++) {
             imageUrls.add(mPlace.get(i).imageURL);
@@ -449,18 +488,16 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         viewPager.setPadding(100, 0, 100, 0);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels)
-            {
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
             }
 
             @Override
             public void onPageSelected(final int position) {
-                 Parent_Key = Tour_id + place_id(mPlace.get(position).nameEN);
+                Parent_Key = Tour_id + place_id(mPlace.get(position).nameEN);
                 prefs = new Sharedpreference(DetailedActivity.this, Parent_Key);
                 int deff = mPlace.get(position).cost.entranceFees + mPlace.get(position).cost.food + mPlace.get(position).cost.transportation + mPlace.get(position).cost.overNightStay.get(1);
-                int total=prefs.getintPrefs("total_cost",deff);
-                Log.e("anass","hereeeeeee"+Parent_Key+" "+total);
+                int total = prefs.getintPrefs("total_cost", deff);
                 setCostProgress(total);
                 setSeason(mPlace.get(position).recommendedSeason);
                 getTempApi(mPlace.get(position).latitude, mPlace.get(position).longitude);
@@ -804,7 +841,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         return cost / 1000; // return cost in JD
     }
 
-    private int calculateEstimatiedTime(int transportationTime, List <ActivityClass> activites) {
+    private int calculateEstimatiedTime(int transportationTime, List<ActivityClass> activites) {
         double time = 0;
         time += transportationTime;
         for (int i = 0; i < activites.size(); i++) {

@@ -130,4 +130,9 @@
     <string name="expensive_cost">غالي الثمن</string>
     <string name="apply">حفظ</string>
 
+    <!-- Clarification Dialog -->
+    <string name="clarification_dialog_title">توضيح</string>
+    <string name="clarification_dialog_body">Apply</string>
+    <string name="clarification_dialog_checkbox">عدم اﻹظهار مرة أخرى</string>
+
 </resources>
