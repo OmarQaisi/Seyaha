@@ -110,8 +110,8 @@ public class InterestsAdapter extends RecyclerView.Adapter<InterestsAdapter.Imag
         }
     }
 
-    public void clearInterests(){
-        Arrays.fill(counter,0);
+    public void clearInterests() {
+        Arrays.fill(counter, 0);
         notifyDataSetChanged();
     }
 

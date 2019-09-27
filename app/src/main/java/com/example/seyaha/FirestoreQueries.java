@@ -16,7 +16,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 public class FirestoreQueries {
@@ -95,4 +94,6 @@ public class FirestoreQueries {
     protected interface FirestoreTourCallback {
         void onCallback(List<Tour> tours);
     }
+
+
 }

@@ -35,8 +35,6 @@ import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import kotlin.Unit;
-import kotlin.jvm.functions.Function1;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -60,7 +58,6 @@ import com.tiper.MaterialSpinner;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,7 +70,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
     List<String> imageUrls;
     List<Place> mPlace;
     ViewPagerAdapter adapter;
-    double latitude, longitude ;
+    double latitude, longitude;
     String placeName;
     MediaPlayer mp;
     AlertDialog alertDialog;
@@ -178,7 +175,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         setInternetProgress(mPlace.get(0).internet);
         setSeason(mPlace.get(0).recommendedSeason);
         setAge(mPlace.get(0).recommendedAge);
-        setEstimatedTime(mPlace.get(0).estimatedTime+prefs.getintPrefs("act_time",0));
+        setEstimatedTime(mPlace.get(0).estimatedTime + prefs.getintPrefs("act_time", 0));
         setCostProgress(prefs.getintPrefs("total_cost", deff));
         setTimeToGo(mPlace.get(0).recommendedTime);
 
@@ -277,17 +274,17 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         transportationCheckbox.setChecked(prefs.getboolPrefs("trans", true), false);
 
         final TextView entrenceFeesPrice = mView.findViewById(R.id.entrance_fees_price);
-        entrenceFeesPrice.setText(mPlace.get(position).cost.entranceFees + "JD");
+        entrenceFeesPrice.setText(mPlace.get(position).cost.entranceFees + " JD");
 
         entrenceFeesCheckbox = mView.findViewById(R.id.entrance_fees_checkBox);
 
         TextView foodPrice = mView.findViewById(R.id.food_price);
-        foodPrice.setText(mPlace.get(position).cost.food + "JD");
+        foodPrice.setText(mPlace.get(position).cost.food + " JD");
 
         foodCheckbox = mView.findViewById(R.id.food_checkBox);
 
         final TextView transportationPrice = mView.findViewById(R.id.transportation_price);
-        transportationPrice.setText(mPlace.get(position).cost.transportation + "JD");
+        transportationPrice.setText(mPlace.get(position).cost.transportation + " JD");
 
         transportationCheckbox = mView.findViewById(R.id.transportation_checkBox);
 
@@ -320,29 +317,23 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         ListView activitiesListView = mView.findViewById(R.id.activities_list_view);
         activitiesListView.setAdapter(activityCostAdapter);
         Button applyBtn = mView.findViewById(R.id.apply_cost_dialog_btn);
-        applyBtn.setOnClickListener(new View.OnClickListener()
-        {
+        applyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
-                for(Integer KEY : ActivityCostAdapter.map.keySet())
-                {
-                    boolean val=ActivityCostAdapter.map.get(KEY);
-                    ActivityCostAdapter.SetCheckedActivities(KEY,val);
+            public void onClick(View v) {
+                for (Integer KEY : ActivityCostAdapter.map.keySet()) {
+                    boolean val = ActivityCostAdapter.map.get(KEY);
+                    ActivityCostAdapter.SetCheckedActivities(KEY, val);
                 }
-                int activity_cost=0;
-                for (Integer KEY : ActivityCostAdapter.cost_map.keySet())
-                {
-                    activity_cost+=ActivityCostAdapter.cost_map.get(KEY);
+                int activity_cost = 0;
+                for (Integer KEY : ActivityCostAdapter.cost_map.keySet()) {
+                    activity_cost += ActivityCostAdapter.cost_map.get(KEY);
                 }
-                int act_time=0;
-                for(Integer KEY : ActivityCostAdapter.time_map.keySet())
-                {
-                    act_time+=ActivityCostAdapter.time_map.get(KEY);
+                int act_time = 0;
+                for (Integer KEY : ActivityCostAdapter.time_map.keySet()) {
+                    act_time += ActivityCostAdapter.time_map.get(KEY);
                 }
-                prefs.setintPrefs("act_time",act_time);
-                Log.e("anas",act_time+"");
-                setEstimatedTime(mPlace.get(position).estimatedTime+act_time);
+                prefs.setintPrefs("act_time", act_time);
+                setEstimatedTime(mPlace.get(position).estimatedTime + act_time);
                 alertDialog.dismiss();
                 prefs.setboolPrefs("trans", transportationCheckbox.isChecked());
                 prefs.setboolPrefs("food", foodCheckbox.isChecked());
@@ -359,7 +350,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
                     totalCost += mPlace.get(position).cost.transportation;
                 }
                 totalCost += mPlace.get(position).cost.overNightStay.get(overNightSpinner.getSelection());
-                totalCost+=activity_cost;
+                totalCost += activity_cost;
                 //ActivityCostAdapter.totalcost=0;
                 prefs.setintPrefs("total_cost", totalCost);
                 setCostProgress(totalCost);
@@ -517,7 +508,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
                 setInternetProgress(mPlace.get(position).internet);
                 setTimeToGo(mPlace.get(position).recommendedTime);
                 setAge(mPlace.get(position).recommendedAge);
-                setEstimatedTime(mPlace.get(position).estimatedTime+prefs.getintPrefs("act_time",0));
+                setEstimatedTime(mPlace.get(position).estimatedTime + prefs.getintPrefs("act_time", 0));
                 mp = MediaPlayer.create(getApplicationContext(), getResources().getIdentifier(mPlace.get(position).voiceURL, "raw", getPackageName()));
                 if (SplashScreenActivity.lan.equalsIgnoreCase("ar")) {
                     description.setText(mPlace.get(position).descAR);
@@ -849,6 +840,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         cost += (distance / 100) * 24; // 24 fils per 100 meters
         cost += duration * 30; // 30 fils per 1 minute
         System.out.println(cost);
+
         return cost / 1000; // return cost in JD
     }
 
