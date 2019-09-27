@@ -73,7 +73,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
     List<String> imageUrls;
     List<Place> mPlace;
     ViewPagerAdapter adapter;
-    double latitude, longitude;
+    double latitude, longitude ;
     String placeName;
     MediaPlayer mp;
     AlertDialog alertDialog;
@@ -160,10 +160,11 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         });
 
         loadAnimations();
-
         Intent i = getIntent();
         mPlace = (List<Place>) i.getSerializableExtra("places");
         Tour_id = i.getStringExtra("tour_id");
+        Parent_Key = Tour_id + place_id(mPlace.get(0).nameEN);
+        prefs = new Sharedpreference(this, Parent_Key);
         description.setMovementMethod(new ScrollingMovementMethod());
         latitude = mPlace.get(0).latitude;
         longitude = mPlace.get(0).longitude;
@@ -176,12 +177,10 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         setAirQualityProgress(mPlace.get(0).airQuality);
         setInternetProgress(mPlace.get(0).internet);
         setSeason(mPlace.get(0).recommendedSeason);
-        setTimeToGo(mPlace.get(0).recommendedTime);
         setAge(mPlace.get(0).recommendedAge);
-        setEstimatedTime(calculateEstimatiedTime(mPlace.get(0).estimatedTime, mPlace.get(0).activities));
-        Parent_Key = Tour_id + place_id(mPlace.get(0).nameEN);
-        prefs = new Sharedpreference(this, Parent_Key);
+        setEstimatedTime(mPlace.get(0).estimatedTime+prefs.getintPrefs("act_time",0));
         setCostProgress(prefs.getintPrefs("total_cost", deff));
+        setTimeToGo(mPlace.get(0).recommendedTime);
 
         try {
             mp = MediaPlayer.create(getApplicationContext(), getResources().getIdentifier(mPlace.get(0).voiceURL, "raw", getPackageName()));
@@ -287,7 +286,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
 
         foodCheckbox = mView.findViewById(R.id.food_checkBox);
 
-        TextView transportationPrice = mView.findViewById(R.id.transportation_price);
+        final TextView transportationPrice = mView.findViewById(R.id.transportation_price);
         transportationPrice.setText(mPlace.get(position).cost.transportation + "JD");
 
         transportationCheckbox = mView.findViewById(R.id.transportation_checkBox);
@@ -328,13 +327,22 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
             {
                 for(Integer KEY : ActivityCostAdapter.map.keySet())
                 {
-                    ActivityCostAdapter.SetCheckedActivities(KEY,ActivityCostAdapter.map.get(KEY));
+                    boolean val=ActivityCostAdapter.map.get(KEY);
+                    ActivityCostAdapter.SetCheckedActivities(KEY,val);
                 }
                 int activity_cost=0;
                 for (Integer KEY : ActivityCostAdapter.cost_map.keySet())
                 {
                     activity_cost+=ActivityCostAdapter.cost_map.get(KEY);
                 }
+                int act_time=0;
+                for(Integer KEY : ActivityCostAdapter.time_map.keySet())
+                {
+                    act_time+=ActivityCostAdapter.time_map.get(KEY);
+                }
+                prefs.setintPrefs("act_time",act_time);
+                Log.e("anas",act_time+"");
+                setEstimatedTime(mPlace.get(position).estimatedTime+act_time);
                 alertDialog.dismiss();
                 prefs.setboolPrefs("trans", transportationCheckbox.isChecked());
                 prefs.setboolPrefs("food", foodCheckbox.isChecked());
@@ -509,7 +517,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
                 setInternetProgress(mPlace.get(position).internet);
                 setTimeToGo(mPlace.get(position).recommendedTime);
                 setAge(mPlace.get(position).recommendedAge);
-                setEstimatedTime(calculateEstimatiedTime(mPlace.get(position).estimatedTime, mPlace.get(position).activities));
+                setEstimatedTime(mPlace.get(position).estimatedTime+prefs.getintPrefs("act_time",0));
                 mp = MediaPlayer.create(getApplicationContext(), getResources().getIdentifier(mPlace.get(position).voiceURL, "raw", getPackageName()));
                 if (SplashScreenActivity.lan.equalsIgnoreCase("ar")) {
                     description.setText(mPlace.get(position).descAR);
@@ -840,19 +848,9 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         int cost = 250; // starter fee in fils
         cost += (distance / 100) * 24; // 24 fils per 100 meters
         cost += duration * 30; // 30 fils per 1 minute
-
         System.out.println(cost);
         return cost / 1000; // return cost in JD
     }
 
-    private int calculateEstimatiedTime(int transportationTime, List<ActivityClass> activites) {
-        double time = 0;
-        time += transportationTime;
-        for (int i = 0; i < activites.size(); i++) {
-            time += activites.get(i).time;
-        }
-
-        return (int) time;
-    }
 
 }

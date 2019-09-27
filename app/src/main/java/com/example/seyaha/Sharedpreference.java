@@ -38,6 +38,7 @@ public  class Sharedpreference
         return prefs.getInt(Child_value,Default);
 
     }
+
     public void setstringPrefs(String Child_value,String Value)
     {
         editor=prefs.edit();

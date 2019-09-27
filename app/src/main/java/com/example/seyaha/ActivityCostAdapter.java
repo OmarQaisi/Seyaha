@@ -22,15 +22,17 @@ import java.util.Map;
 
 public class ActivityCostAdapter extends ArrayAdapter<ActivityClass> {
 
-    List<ActivityClass> activities;
+   static List<ActivityClass> activities;
     static Map <Integer,Boolean> map;
     static Map<Integer,Integer> cost_map;
+    static Map<Integer,Double> time_map;
 
     public ActivityCostAdapter(@NonNull Context context, List<ActivityClass> activities) {
         super(context, 0, activities);
         this.activities = activities;
        map=new HashMap <>();
        cost_map=new HashMap <>();
+       time_map=new HashMap <>();
     }
     @NonNull
     @Override
@@ -47,11 +49,13 @@ public class ActivityCostAdapter extends ArrayAdapter<ActivityClass> {
         {
             map.put(position,true);
             cost_map.put(position,activities.get(position).cost);
+            time_map.put(position,activities.get(position).time);
         }
         else
             {
                 cost_map.put(position,0);
                 map.put(position,false);
+                time_map.put(position,0.0);
             }
         final TextView mActivityPrice = convertView.findViewById(R.id.activity_cost_item_price);
         mCheckBox.setOnClickListener(new View.OnClickListener() {
@@ -61,10 +65,12 @@ public class ActivityCostAdapter extends ArrayAdapter<ActivityClass> {
                 {
                     map.put(position,true);
                     cost_map.put(position,activities.get(position).cost);
+                    time_map.put(position,activities.get(position).time);
                 } else
                 {
                     map.put(position,false);
                     cost_map.put(position,0);
+                    time_map.put(position,0.0);
                 }
             }
         });
