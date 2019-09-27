@@ -134,5 +134,6 @@
     <string name="clarification_dialog_title">توضيح</string>
     <string name="clarification_dialog_body">Apply</string>
     <string name="clarification_dialog_checkbox">عدم اﻹظهار مرة أخرى</string>
+    <string name="sleep">المبيت</string>
 
 </resources>

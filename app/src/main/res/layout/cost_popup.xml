@@ -212,6 +212,31 @@
         app:switcher_icon_color="@color/white_login_screen"
         app:switcher_off_color="@color/gray_text_view"
         app:switcher_on_color="@color/blue_logo" />
+    <com.bitvale.switcher.SwitcherX
+        android:id="@+id/sleep_checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginStart="6dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/transportation_checkBox"
+        app:switcher_icon_color="@color/white_login_screen"
+        app:switcher_off_color="@color/gray_text_view"
+        app:switcher_on_color="@color/blue_logo" />
+    <TextView
+        android:id="@+id/sleep_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="11dp"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="@string/sleep"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@id/sleep_checkBox"
+        app:layout_constraintTop_toBottomOf="@id/transportation_checkBox" />
 
     <com.tiper.MaterialSpinner
         android:id="@+id/over_night_spinner"
@@ -221,7 +246,7 @@
         android:focusable="false"
         android:hint="@string/overnight_rate"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/transportation_checkBox"
+        app:layout_constraintTop_toBottomOf="@id/sleep_checkBox"
         app:spinnerMode="dropdown" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -28,6 +28,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -99,7 +100,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
     public static Sharedpreference prefs;
     String Tour_id;
     int index = 1;
-    SwitcherX foodCheckbox, entrenceFeesCheckbox, transportationCheckbox;
+    SwitcherX foodCheckbox, entrenceFeesCheckbox, transportationCheckbox,sleepCheckBox;
     String Parent_Key;
 
     @Override
@@ -116,7 +117,6 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
-
         //retrofit config
         Retrofit retrofit = new Retrofit.Builder().baseUrl("http://api.openweathermap.org/").addConverterFactory(GsonConverterFactory.create()).build();
         openWeatherApi = retrofit.create(OpenWeatherApi.class);
@@ -272,25 +272,21 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         foodCheckbox = mView.findViewById(R.id.food_checkBox);
         entrenceFeesCheckbox = mView.findViewById(R.id.entrance_fees_checkBox);
         transportationCheckbox = mView.findViewById(R.id.transportation_checkBox);
+        sleepCheckBox=mView.findViewById(R.id.sleep_checkBox);
         entrenceFeesCheckbox.setChecked(prefs.getboolPrefs("enterence", true), false);
         foodCheckbox.setChecked(prefs.getboolPrefs("food", true), false);
         transportationCheckbox.setChecked(prefs.getboolPrefs("trans", true), false);
+        sleepCheckBox.setChecked(prefs.getboolPrefs("sleep_checkbox", true), false);
 
         final TextView entrenceFeesPrice = mView.findViewById(R.id.entrance_fees_price);
         entrenceFeesPrice.setText(mPlace.get(position).cost.entranceFees + "JD");
 
-        entrenceFeesCheckbox = mView.findViewById(R.id.entrance_fees_checkBox);
-
         TextView foodPrice = mView.findViewById(R.id.food_price);
         foodPrice.setText(mPlace.get(position).cost.food + "JD");
 
-        foodCheckbox = mView.findViewById(R.id.food_checkBox);
 
         final TextView transportationPrice = mView.findViewById(R.id.transportation_price);
         transportationPrice.setText(mPlace.get(position).cost.transportation + "JD");
-
-        transportationCheckbox = mView.findViewById(R.id.transportation_checkBox);
-
 
         final MaterialSpinner overNightSpinner = mView.findViewById(R.id.over_night_spinner);
         final OverNightSpinnerAdapter overNightAdapter = new OverNightSpinnerAdapter(this, R.layout.over_night_spinner_item, mPlace.get(position).cost.overNightStay);
@@ -316,6 +312,28 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
             }
         });
 
+        if(!sleepCheckBox.isChecked())
+        {
+        overNightSpinner.setVisibility(View.GONE);
+        }
+        else
+        {
+            overNightSpinner.setVisibility(View.VISIBLE);
+        }
+        sleepCheckBox.setOnCheckedChangeListener(new Function1<Boolean, Unit>() {
+    @Override
+    public Unit invoke(Boolean checked) {
+
+        if (checked) {
+            overNightSpinner.setVisibility(View.VISIBLE);
+        } else {
+
+            overNightSpinner.setVisibility(View.GONE);
+        }
+        return null;
+    }
+        });
+
         ActivityCostAdapter activityCostAdapter = new ActivityCostAdapter(this, mPlace.get(position).activities);
         ListView activitiesListView = mView.findViewById(R.id.activities_list_view);
         activitiesListView.setAdapter(activityCostAdapter);
@@ -323,31 +341,27 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         applyBtn.setOnClickListener(new View.OnClickListener()
         {
             @Override
-            public void onClick(View v)
-            {
-                for(Integer KEY : ActivityCostAdapter.map.keySet())
-                {
-                    boolean val=ActivityCostAdapter.map.get(KEY);
-                    ActivityCostAdapter.SetCheckedActivities(KEY,val);
+            public void onClick(View v) {
+                for (Integer KEY : ActivityCostAdapter.map.keySet()) {
+                    boolean val = ActivityCostAdapter.map.get(KEY);
+                    ActivityCostAdapter.SetCheckedActivities(KEY, val);
                 }
-                int activity_cost=0;
-                for (Integer KEY : ActivityCostAdapter.cost_map.keySet())
-                {
-                    activity_cost+=ActivityCostAdapter.cost_map.get(KEY);
+                int activity_cost = 0;
+                for (Integer KEY : ActivityCostAdapter.cost_map.keySet()) {
+                    activity_cost += ActivityCostAdapter.cost_map.get(KEY);
                 }
-                int act_time=0;
-                for(Integer KEY : ActivityCostAdapter.time_map.keySet())
-                {
-                    act_time+=ActivityCostAdapter.time_map.get(KEY);
+                int act_time = 0;
+                for (Integer KEY : ActivityCostAdapter.time_map.keySet()) {
+                    act_time += ActivityCostAdapter.time_map.get(KEY);
                 }
-                prefs.setintPrefs("act_time",act_time);
-                Log.e("anas",act_time+"");
-                setEstimatedTime(mPlace.get(position).estimatedTime+act_time);
+                prefs.setintPrefs("act_time", act_time);
+                setEstimatedTime(mPlace.get(position).estimatedTime + act_time);
                 alertDialog.dismiss();
                 prefs.setboolPrefs("trans", transportationCheckbox.isChecked());
                 prefs.setboolPrefs("food", foodCheckbox.isChecked());
                 prefs.setboolPrefs("enterence", entrenceFeesCheckbox.isChecked());
                 prefs.setintPrefs("sleep", index);
+                prefs.setboolPrefs("sleep_checkbox",sleepCheckBox.isChecked());
 
                 if (entrenceFeesCheckbox.isChecked()) {
                     totalCost += mPlace.get(position).cost.entranceFees;
@@ -358,7 +372,10 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
                 if (transportationCheckbox.isChecked()) {
                     totalCost += mPlace.get(position).cost.transportation;
                 }
-                totalCost += mPlace.get(position).cost.overNightStay.get(overNightSpinner.getSelection());
+                if(sleepCheckBox.isChecked())
+                {
+                    totalCost += mPlace.get(position).cost.overNightStay.get(overNightSpinner.getSelection());
+                }
                 totalCost+=activity_cost;
                 //ActivityCostAdapter.totalcost=0;
                 prefs.setintPrefs("total_cost", totalCost);
