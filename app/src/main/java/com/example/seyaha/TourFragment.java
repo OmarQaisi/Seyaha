@@ -31,13 +31,12 @@ public class TourFragment extends Fragment {
         tabLayout.setupWithViewPager(mViewPager);
 
         int position = 0;
-        if(getArguments() != null)
+        if (getArguments() != null)
             position = getArguments().getInt("TARGET_FRAGMENT_ID");
         mViewPager.setCurrentItem(position);
 
         return mView;
     }
-
 
 
 }

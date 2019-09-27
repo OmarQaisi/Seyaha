@@ -24,6 +24,7 @@ public class SeyahaUtils {
     public static boolean isTablet(Context context) {
         return (context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE;
     }
+
     public static void saveLocale(String lang, Activity context) {
         String langPref = "Language";
         SharedPreferences prefs = context.getSharedPreferences("CommonPrefs",

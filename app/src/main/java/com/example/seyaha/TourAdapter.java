@@ -49,7 +49,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolder> {
     private static final String TAG = "TourAdapter";
-    public  List<Tour> mTours;
+    public List<Tour> mTours;
     ColorDrawable colorDrawable;
     Context context;
     public User mUser;
@@ -62,7 +62,7 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
     @Override
     public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         context = viewGroup.getContext();
-         view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.tour_item, viewGroup, false);
+        view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.tour_item, viewGroup, false);
         ImageViewHolder imageViewHolder = new ImageViewHolder(view);
 
         FirestoreQueries.getUser(new FirestoreQueries.FirestoreUserCallback() {
@@ -116,7 +116,7 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
                 Tour.addClickEffect(view);
                 Intent i = new Intent(context, DetailedActivity.class);
                 i.putExtra("places", (Serializable) mTours.get(position).places);
-                i.putExtra("tour_id",tour.tourId);
+                i.putExtra("tour_id", tour.tourId);
                 context.startActivity(i);
             }
         });
@@ -145,7 +145,7 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
                         Tour tour = documentSnapshot.toObject(Tour.class);
                         List<Comment> comments = new ArrayList<>();
                         comments = tour.comments;
-                        addComment(comments, tour, holder.editText, holder.ratingBar, holder.mRating, holder.mComments, holder.mRate_btn,holder.mComment_btn, position);
+                        addComment(comments, tour, holder.editText, holder.ratingBar, holder.mRating, holder.mComments, holder.mRate_btn, holder.mComment_btn, position);
                         holder.alertDialog.dismiss();
                     }
                 });
@@ -166,10 +166,10 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
                     if (n.equals(mTours.get(position).tourId)) {
                         holder.mRate_btn.setImageResource(R.drawable.ic_star_filled);
                         holder.mComment_btn.setImageResource(R.drawable.ic_chat_comment_blue);
-                       holder.mRate_btn.setOnClickListener(new View.OnClickListener() {
+                        holder.mRate_btn.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                Toast.makeText(context,context.getString(R.string.already_rated),Toast.LENGTH_LONG).show();
+                                Toast.makeText(context, context.getString(R.string.already_rated), Toast.LENGTH_LONG).show();
                             }
                         });
                         break;
@@ -181,7 +181,7 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
         holder.mArrowDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createPopupMenu(context, v, tour,position);
+                createPopupMenu(context, v, tour, position);
             }
         });
 
@@ -210,13 +210,13 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
         holder.mShare_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent myIntent =new Intent(Intent.ACTION_SEND);
+                Intent myIntent = new Intent(Intent.ACTION_SEND);
                 myIntent.setType("text/plain");
-                String shareSub=context.getString(R.string.title_share);
-                String shareBody=context.getString(R.string.title_share)+"\n https://github.com/OmarQaisi/Seyaha";
-                myIntent.putExtra(Intent.EXTRA_SUBJECT,shareSub);
-                myIntent.putExtra(Intent.EXTRA_TEXT,shareBody);
-                context.startActivity(Intent.createChooser(myIntent,context.getString(R.string.using)));
+                String shareSub = context.getString(R.string.title_share);
+                String shareBody = context.getString(R.string.title_share) + "\n https://github.com/OmarQaisi/Seyaha";
+                myIntent.putExtra(Intent.EXTRA_SUBJECT, shareSub);
+                myIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
+                context.startActivity(Intent.createChooser(myIntent, context.getString(R.string.using)));
             }
         });
 
@@ -283,7 +283,7 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
             mShare_btn = itemView.findViewById(R.id.share_btn);
             mComment_btn = itemView.findViewById(R.id.comment_btn);
             mRate_btn = itemView.findViewById(R.id.star);
-            commentsCancelBtn=commentsDialogView.findViewById(R.id.cancel_btn_comments);
+            commentsCancelBtn = commentsDialogView.findViewById(R.id.cancel_btn_comments);
         }
 
     }
@@ -301,9 +301,9 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.overview_tour:
-                        Intent i=new Intent(context,OverviewActivity.class);
+                        Intent i = new Intent(context, OverviewActivity.class);
                         i.putExtra("places", (Serializable) mTours.get(position).places);
-                        i.putExtra("tour_id",tour.tourId);
+                        i.putExtra("tour_id", tour.tourId);
                         context.startActivity(i);
                         break;
                     case R.id.delete_tour:
@@ -327,11 +327,9 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
     }
 
 
-    private void addComment(List<Comment> comments, Tour tour, EditText editText, RatingBar ratingBar, TextView mRating, TextView mComments, ImageButton mRate_btn,ImageButton mComment_btn, int position) {
+    private void addComment(List<Comment> comments, Tour tour, EditText editText, RatingBar ratingBar, TextView mRating, TextView mComments, ImageButton mRate_btn, ImageButton mComment_btn, int position) {
 
         final DocumentReference tourReference = db.collection("tours").document(mTours.get(position).tourId);
-
-        String mDate = getCurrentDate();
 
         Comment mComment = new Comment(mUser, editText.getText().toString(), ratingBar.getRating(), getCurrentDate());
         comments.add(mComment);
@@ -357,10 +355,9 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
         mRate_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context,context.getString(R.string.already_rated),Toast.LENGTH_LONG).show();
+                Toast.makeText(context, context.getString(R.string.already_rated), Toast.LENGTH_LONG).show();
             }
         });
-
 
 
         tourReference.update(updatedData).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -395,7 +392,6 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
         });
 
 
-
         editText.setText("");
         ratingBar.setRating(0);
 
@@ -407,8 +403,8 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ImageViewHolde
         DateFormat format = new SimpleDateFormat("dd MMMM");
         return format.format(date);
     }
-    public void clear()
-    {
+
+    public void clear() {
         mTours.clear();
     }
 

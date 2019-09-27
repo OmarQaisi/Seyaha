@@ -8,8 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import java.util.List;
 
 
@@ -17,9 +19,10 @@ public class OverNightSpinnerAdapter extends ArrayAdapter {
 
     List<Integer> overNightStay;
     Context context;
-    public OverNightSpinnerAdapter(@NonNull Context context,int resource, List<Integer> overNightStay) {
-        super(context,resource);
-        this.context=context;
+
+    public OverNightSpinnerAdapter(@NonNull Context context, int resource, List<Integer> overNightStay) {
+        super(context, resource);
+        this.context = context;
         this.overNightStay = overNightStay;
     }
 
@@ -30,7 +33,7 @@ public class OverNightSpinnerAdapter extends ArrayAdapter {
 
     @Override
     public Object getItem(int position) {
-        return overNightStay.get(position)+"JD";
+        return overNightStay.get(position) + " JD";
     }
 
     @Override
@@ -42,14 +45,14 @@ public class OverNightSpinnerAdapter extends ArrayAdapter {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         try {
-            if(convertView==null) {
+            if (convertView == null) {
                 convertView = LayoutInflater.from(context).inflate(R.layout.over_night_spinner_item, parent, false);
             }
             TextView overNightName = convertView.findViewById(R.id.over_night_name);
 
             TextView overNightPrice = convertView.findViewById(R.id.over_night_price);
 
-            overNightPrice.setText(overNightStay.get(position)+"JD");
+            overNightPrice.setText(overNightStay.get(position) + "JD");
 
             switch (position) {
                 case 0:
@@ -62,10 +65,8 @@ public class OverNightSpinnerAdapter extends ArrayAdapter {
                     overNightName.setText(context.getResources().getText(R.string.expensive_cost));
                     break;
             }
-        }
-        catch (Exception e)
-        {
-            Log.e("motassem", "getView: ",e);
+        } catch (Exception e) {
+            Log.e("motassem", "getView: ", e);
         }
 
         return convertView;
@@ -79,7 +80,7 @@ public class OverNightSpinnerAdapter extends ArrayAdapter {
 
             TextView overNightPrice = convertView.findViewById(R.id.over_night_price);
 
-            overNightPrice.setText(overNightStay.get(position)+"JD");
+            overNightPrice.setText(overNightStay.get(position) + " JD");
 
             switch (position) {
                 case 0:
@@ -92,12 +93,12 @@ public class OverNightSpinnerAdapter extends ArrayAdapter {
                     overNightName.setText(context.getResources().getText(R.string.expensive_cost));
                     break;
             }
-        }
-        catch (Exception e)
-        {
-            Log.e("motassem", "getView: ",e);
+        } catch (Exception e) {
+            Log.e("motassem", "getView: ", e);
         }
 
         return convertView;
     }
+
+
 }

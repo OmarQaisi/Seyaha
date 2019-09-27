@@ -3,6 +3,7 @@ package com.example.seyaha;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+
 public class ConnectionDetector {
 
     private Context _context;

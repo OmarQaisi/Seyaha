@@ -25,7 +25,7 @@ public class Place implements Serializable {
     public String voiceURL;
     public String keywords;
 
-    public Place(List<ActivityClass> activities,int airQuality, String categoryAR, String categoryEN, Cost cost, String descAR, String descEN, int estimatedTime, String imageURL, int internet, double latitude, double longitude, String nameAR, String nameEN, String recommendedAge, int recommendedSeason, int recommendedTime, String voiceURL,String keywords) {
+    public Place(List<ActivityClass> activities, int airQuality, String categoryAR, String categoryEN, Cost cost, String descAR, String descEN, int estimatedTime, String imageURL, int internet, double latitude, double longitude, String nameAR, String nameEN, String recommendedAge, int recommendedSeason, int recommendedTime, String voiceURL, String keywords) {
         this.airQuality = airQuality;
         this.categoryAR = categoryAR;
         this.categoryEN = categoryEN;
@@ -43,32 +43,10 @@ public class Place implements Serializable {
         this.recommendedSeason = recommendedSeason;
         this.recommendedTime = recommendedTime;
         this.voiceURL = voiceURL;
-        this.keywords=keywords;
-        this.activities=activities;
+        this.keywords = keywords;
+        this.activities = activities;
     }
 
-    public Place(){}
+    public Place() { }
 
-    @Override
-    public String toString() {
-        return "Place{" +
-                "airQuality=" + airQuality +
-                ", categoryAR='" + categoryAR + '\'' +
-                ", categoryEN='" + categoryEN + '\'' +
-                ", cost=" + cost +
-                ", descAR='" + descAR + '\'' +
-                ", descEN='" + descEN + '\'' +
-                ", estimatedTime=" + estimatedTime +
-                ", imageURL='" + imageURL + '\'' +
-                ", internet=" + internet +
-                ", latitude=" + latitude +
-                ", longitude=" + longitude +
-                ", nameAR='" + nameAR + '\'' +
-                ", nameEN='" + nameEN + '\'' +
-                ", recommendedAge='" + recommendedAge + '\'' +
-                ", recommendedSeason=" + recommendedSeason +
-                ", recommendedTime=" + recommendedTime +
-                ", voiceURL='" + voiceURL + '\'' +
-                '}';
-    }
 }

@@ -8,5 +8,5 @@ import retrofit2.http.Query;
 
 public interface OpenWeatherApi {
     @GET("data/2.5/weather")
-    Call<JsonObject> getTemp(@Query("lat") Double lat,@Query("lon") Double lon, @Query("APPID") String key);
+    Call<JsonObject> getTemp(@Query("lat") Double lat, @Query("lon") Double lon, @Query("APPID") String key);
 }

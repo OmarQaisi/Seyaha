@@ -34,6 +34,7 @@ import me.rishabhkhanna.customtogglebutton.CustomToggleButton;
 
 public class ProfileFragment extends Fragment {
 
+    private static final String TAG = "ProfileFragment";
     RecyclerView recyclerView;
     GridLayoutManager gridLayoutManager;
     static InterestsAdapter interest_adapter;
@@ -54,7 +55,6 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onCallback(User user) {
                 mUser = user;
-
             }
         });
 
@@ -77,14 +77,14 @@ public class ProfileFragment extends Fragment {
         save_but.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(InterestsAdapter.intrests_hashSet.size() != 0 && !checkInterestsIdentical()){
+                if (InterestsAdapter.intrests_hashSet.size() != 0 && !checkInterestsIdentical()) {
                     publish_interests();
                     InterestsAdapter.interests_chosen.clear();
                     Toast.makeText(getContext(), getResources().getString(R.string.save), Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getContext(), MainActivity.class);
                     intent.putExtra("FRAGMENT_ID", 1);
                     startActivity(intent);
-                } else if(mUser.intrests.size() != 0 && checkInterestsIdentical())
+                } else if (mUser.intrests.size() != 0 && checkInterestsIdentical())
                     Toast.makeText(getContext(), getResources().getString(R.string.save_size_check2), Toast.LENGTH_SHORT).show();
                 else
                     Toast.makeText(getContext(), getResources().getString(R.string.save_size_check), Toast.LENGTH_SHORT).show();
@@ -103,10 +103,9 @@ public class ProfileFragment extends Fragment {
         notification_but.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(notification_but.isChecked()){
+                if (notification_but.isChecked()) {
                     Toast.makeText(getContext(), getResources().getString(R.string.notification_on), Toast.LENGTH_SHORT).show();
-                }
-                else{
+                } else {
                     Toast.makeText(getContext(), getResources().getString(R.string.notification_off), Toast.LENGTH_SHORT).show();
                 }
             }
@@ -124,27 +123,29 @@ public class ProfileFragment extends Fragment {
         userRefernce.update(updatedData).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
+                Log.d(TAG, "onSuccess: user info updated");
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
+                Log.e(TAG, "onFailure: ", e);
             }
         });
     }
 
-    public boolean checkInterestsIdentical(){
-        int counter =0;
-        for (int i=0; i < mUser.intrests.size(); i++){
+    public boolean checkInterestsIdentical() {
+        int counter = 0;
+        for (int i = 0; i < mUser.intrests.size(); i++) {
             if (InterestsAdapter.intrests_hashSet.size() != 0) {
                 Iterator<String> x = InterestsAdapter.intrests_hashSet.iterator();
                 while (x.hasNext()) {
-                    if(mUser.intrests.get(i).equals(x.next()))
+                    if (mUser.intrests.get(i).equals(x.next()))
                         counter++;
                 }
             }
         }
 
-        if(counter == mUser.intrests.size() && counter == InterestsAdapter.intrests_hashSet.size())
+        if (counter == mUser.intrests.size() && counter == InterestsAdapter.intrests_hashSet.size())
             return true;
         else
             return false;

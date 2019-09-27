@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 public class HelpFeedbackFragment extends Fragment {
+
     TextView emergency_num, mot_num, mot_mail;
 
     @Nullable
@@ -31,7 +32,6 @@ public class HelpFeedbackFragment extends Fragment {
                 Intent intent = new Intent(Intent.ACTION_DIAL);
                 intent.setData(Uri.parse(uri));
                 startActivity(intent);
-
             }
         });
 
@@ -44,6 +44,7 @@ public class HelpFeedbackFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
         mot_mail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,4 +57,5 @@ public class HelpFeedbackFragment extends Fragment {
 
         return mView;
     }
+
 }

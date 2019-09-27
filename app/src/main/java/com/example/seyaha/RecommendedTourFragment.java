@@ -33,8 +33,8 @@ public class RecommendedTourFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        mView = inflater.inflate(R.layout.fragment_recommended_tour,container,false);
-        textView=mView.findViewById(R.id.test_tour);
+        mView = inflater.inflate(R.layout.fragment_recommended_tour, container, false);
+        textView = mView.findViewById(R.id.test_tour);
 
         firebase_connection();
 
@@ -60,28 +60,22 @@ public class RecommendedTourFragment extends Fragment {
                 FirestoreQueries.getTours(new FirestoreQueries.FirestoreTourCallback() {
                     @Override
                     public void onCallback(List<Tour> tours) {
-                        mTours=null;
+                        mTours = null;
                         mTours = tours;
-                        ArrayList<String> userKeywords=(ArrayList<String>) user.intrests;
-                        ArrayList<Tour>  recommendedTours=new ArrayList <>();
-                        for(int i=0;i<userKeywords.size();i++)
-                        {
-                            for(int j=0;j<mTours.size();j++)
-                            {
-                                if(mTours.get(j).tourKeywords.contains(userKeywords.get(i)))
-                                {
-                                    if(!recommendedTours.contains(mTours.get(j)))
-                                    recommendedTours.add(mTours.get(j));
+                        ArrayList<String> userKeywords = (ArrayList<String>) user.intrests;
+                        ArrayList<Tour> recommendedTours = new ArrayList<>();
+                        for (int i = 0; i < userKeywords.size(); i++) {
+                            for (int j = 0; j < mTours.size(); j++) {
+                                if (mTours.get(j).tourKeywords.contains(userKeywords.get(i))) {
+                                    if (!recommendedTours.contains(mTours.get(j)))
+                                        recommendedTours.add(mTours.get(j));
 
                                 }
                             }
                         }
-                        if(recommendedTours.size()==0)
-                        {
+                        if (recommendedTours.size() == 0) {
                             textView.setVisibility(View.VISIBLE);
-                        }
-                        else
-                        {
+                        } else {
                             textView.setVisibility(View.INVISIBLE);
 
                         }
@@ -98,5 +92,6 @@ public class RecommendedTourFragment extends Fragment {
             }
         });
     }
+
 
 }

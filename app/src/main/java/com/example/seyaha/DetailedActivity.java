@@ -61,7 +61,6 @@ import com.tiper.MaterialSpinner;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,7 +73,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
     List<String> imageUrls;
     List<Place> mPlace;
     ViewPagerAdapter adapter;
-    double latitude, longitude ;
+    double latitude, longitude;
     String placeName;
     MediaPlayer mp;
     AlertDialog alertDialog;
@@ -178,7 +177,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         setInternetProgress(mPlace.get(0).internet);
         setSeason(mPlace.get(0).recommendedSeason);
         setAge(mPlace.get(0).recommendedAge);
-        setEstimatedTime(mPlace.get(0).estimatedTime+prefs.getintPrefs("act_time",0));
+        setEstimatedTime(mPlace.get(0).estimatedTime + prefs.getintPrefs("act_time", 0));
         setCostProgress(prefs.getintPrefs("total_cost", deff));
         setTimeToGo(mPlace.get(0).recommendedTime);
 
@@ -279,14 +278,14 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         sleepCheckBox.setChecked(prefs.getboolPrefs("sleep_checkbox", true), false);
 
         final TextView entrenceFeesPrice = mView.findViewById(R.id.entrance_fees_price);
-        entrenceFeesPrice.setText(mPlace.get(position).cost.entranceFees + "JD");
+        entrenceFeesPrice.setText(mPlace.get(position).cost.entranceFees + " JD");
 
         TextView foodPrice = mView.findViewById(R.id.food_price);
-        foodPrice.setText(mPlace.get(position).cost.food + "JD");
+        foodPrice.setText(mPlace.get(position).cost.food + " JD");
 
 
         final TextView transportationPrice = mView.findViewById(R.id.transportation_price);
-        transportationPrice.setText(mPlace.get(position).cost.transportation + "JD");
+        transportationPrice.setText(mPlace.get(position).cost.transportation + " JD");
 
         final MaterialSpinner overNightSpinner = mView.findViewById(R.id.over_night_spinner);
         final OverNightSpinnerAdapter overNightAdapter = new OverNightSpinnerAdapter(this, R.layout.over_night_spinner_item, mPlace.get(position).cost.overNightStay);
@@ -320,7 +319,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         {
             overNightSpinner.setVisibility(View.VISIBLE);
         }
-        sleepCheckBox.setOnCheckedChangeListener(new Function1<Boolean, Unit>() {
+        sleepCheckBox.setOnCheckedChangeListener(new Function1 <Boolean, Unit>() {
     @Override
     public Unit invoke(Boolean checked) {
 
@@ -338,8 +337,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         ListView activitiesListView = mView.findViewById(R.id.activities_list_view);
         activitiesListView.setAdapter(activityCostAdapter);
         Button applyBtn = mView.findViewById(R.id.apply_cost_dialog_btn);
-        applyBtn.setOnClickListener(new View.OnClickListener()
-        {
+        applyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 for (Integer KEY : ActivityCostAdapter.map.keySet()) {
@@ -372,11 +370,12 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
                 if (transportationCheckbox.isChecked()) {
                     totalCost += mPlace.get(position).cost.transportation;
                 }
+
                 if(sleepCheckBox.isChecked())
                 {
                     totalCost += mPlace.get(position).cost.overNightStay.get(overNightSpinner.getSelection());
                 }
-                totalCost+=activity_cost;
+                totalCost += activity_cost;
                 //ActivityCostAdapter.totalcost=0;
                 prefs.setintPrefs("total_cost", totalCost);
                 setCostProgress(totalCost);
@@ -534,7 +533,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
                 setInternetProgress(mPlace.get(position).internet);
                 setTimeToGo(mPlace.get(position).recommendedTime);
                 setAge(mPlace.get(position).recommendedAge);
-                setEstimatedTime(mPlace.get(position).estimatedTime+prefs.getintPrefs("act_time",0));
+                setEstimatedTime(mPlace.get(position).estimatedTime + prefs.getintPrefs("act_time", 0));
                 mp = MediaPlayer.create(getApplicationContext(), getResources().getIdentifier(mPlace.get(position).voiceURL, "raw", getPackageName()));
                 if (SplashScreenActivity.lan.equalsIgnoreCase("ar")) {
                     description.setText(mPlace.get(position).descAR);
@@ -866,6 +865,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         cost += (distance / 100) * 24; // 24 fils per 100 meters
         cost += duration * 30; // 30 fils per 1 minute
         System.out.println(cost);
+
         return cost / 1000; // return cost in JD
     }
 
