@@ -70,8 +70,8 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
     public int totalCost = 0;
     private GoogleMap mMap;
     ViewPager viewPager;
-    List<String> imageUrls;
-    List<Place> mPlace;
+    List <String> imageUrls;
+    List <Place> mPlace;
     ViewPagerAdapter adapter;
     double latitude, longitude;
     String placeName;
@@ -99,7 +99,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
     public static Sharedpreference prefs;
     String Tour_id;
     int index = 1;
-    SwitcherX foodCheckbox, entrenceFeesCheckbox, transportationCheckbox,sleepCheckBox;
+    SwitcherX foodCheckbox, entrenceFeesCheckbox, transportationCheckbox, sleepCheckBox;
     String Parent_Key;
 
     @Override
@@ -160,7 +160,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
 
         loadAnimations();
         Intent i = getIntent();
-        mPlace = (List<Place>) i.getSerializableExtra("places");
+        mPlace = (List <Place>) i.getSerializableExtra("places");
         Tour_id = i.getStringExtra("tour_id");
         Parent_Key = Tour_id + place_id(mPlace.get(0).nameEN);
         prefs = new Sharedpreference(this, Parent_Key);
@@ -271,7 +271,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         foodCheckbox = mView.findViewById(R.id.food_checkBox);
         entrenceFeesCheckbox = mView.findViewById(R.id.entrance_fees_checkBox);
         transportationCheckbox = mView.findViewById(R.id.transportation_checkBox);
-        sleepCheckBox=mView.findViewById(R.id.sleep_checkBox);
+        sleepCheckBox = mView.findViewById(R.id.sleep_checkBox);
         entrenceFeesCheckbox.setChecked(prefs.getboolPrefs("enterence", true), false);
         foodCheckbox.setChecked(prefs.getboolPrefs("food", true), false);
         transportationCheckbox.setChecked(prefs.getboolPrefs("trans", true), false);
@@ -311,26 +311,23 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
             }
         });
 
-        if(!sleepCheckBox.isChecked())
-        {
-        overNightSpinner.setVisibility(View.GONE);
-        }
-        else
-        {
+        if (!sleepCheckBox.isChecked()) {
+            overNightSpinner.setVisibility(View.GONE);
+        } else {
             overNightSpinner.setVisibility(View.VISIBLE);
         }
         sleepCheckBox.setOnCheckedChangeListener(new Function1 <Boolean, Unit>() {
-    @Override
-    public Unit invoke(Boolean checked) {
+            @Override
+            public Unit invoke(Boolean checked) {
 
-        if (checked) {
-            overNightSpinner.setVisibility(View.VISIBLE);
-        } else {
+                if (checked) {
+                    overNightSpinner.setVisibility(View.VISIBLE);
+                } else {
 
-            overNightSpinner.setVisibility(View.GONE);
-        }
-        return null;
-    }
+                    overNightSpinner.setVisibility(View.GONE);
+                }
+                return null;
+            }
         });
 
         ActivityCostAdapter activityCostAdapter = new ActivityCostAdapter(this, mPlace.get(position).activities);
@@ -353,13 +350,13 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
                     act_time += ActivityCostAdapter.time_map.get(KEY);
                 }
                 prefs.setintPrefs("act_time", act_time);
-                setEstimatedTime(mPlace.get(position).estimatedTime + act_time);
+                setEstimatedTime(transportationCheckbox.isChecked() ? mPlace.get(position).estimatedTime + act_time : act_time);
                 alertDialog.dismiss();
                 prefs.setboolPrefs("trans", transportationCheckbox.isChecked());
                 prefs.setboolPrefs("food", foodCheckbox.isChecked());
                 prefs.setboolPrefs("enterence", entrenceFeesCheckbox.isChecked());
                 prefs.setintPrefs("sleep", index);
-                prefs.setboolPrefs("sleep_checkbox",sleepCheckBox.isChecked());
+                prefs.setboolPrefs("sleep_checkbox", sleepCheckBox.isChecked());
 
                 if (entrenceFeesCheckbox.isChecked()) {
                     totalCost += mPlace.get(position).cost.entranceFees;
@@ -371,8 +368,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
                     totalCost += mPlace.get(position).cost.transportation;
                 }
 
-                if(sleepCheckBox.isChecked())
-                {
+                if (sleepCheckBox.isChecked()) {
                     totalCost += mPlace.get(position).cost.overNightStay.get(overNightSpinner.getSelection());
                 }
                 totalCost += activity_cost;
@@ -468,10 +464,10 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
 
 
     private void getTempApi(double latitude, double longitude) {
-        Call<JsonObject> call = openWeatherApi.getTemp(latitude, longitude, APIKEY);
-        call.enqueue(new Callback<JsonObject>() {
+        Call <JsonObject> call = openWeatherApi.getTemp(latitude, longitude, APIKEY);
+        call.enqueue(new Callback <JsonObject>() {
             @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+            public void onResponse(Call <JsonObject> call, Response <JsonObject> response) {
 
                 if (!response.isSuccessful()) {
                     Log.d(TAG, "Code: " + response.code());
@@ -496,7 +492,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
             }
 
             @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
+            public void onFailure(Call <JsonObject> call, Throwable t) {
                 Log.d(TAG, "onFailure: " + t.getMessage());
             }
         });
@@ -504,7 +500,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
     }
 
     private void run_viewPager() {
-        imageUrls = new ArrayList<>();
+        imageUrls = new ArrayList <>();
 
         for (int i = 0; i < mPlace.size(); i++) {
             imageUrls.add(mPlace.get(i).imageURL);
