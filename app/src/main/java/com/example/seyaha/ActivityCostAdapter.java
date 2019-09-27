@@ -2,6 +2,7 @@ package com.example.seyaha;
 
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,42 +15,56 @@ import androidx.annotation.Nullable;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class ActivityCostAdapter extends ArrayAdapter<ActivityClass> {
 
     List<ActivityClass> activities;
-    static int totalcost = 0;
-    List<Integer>posiition;
+    static Map <Integer,Boolean> map;
+    static Map<Integer,Integer> cost_map;
 
     public ActivityCostAdapter(@NonNull Context context, List<ActivityClass> activities) {
         super(context, 0, activities);
         this.activities = activities;
-        posiition=new ArrayList<>();
+       map=new HashMap <>();
+       cost_map=new HashMap <>();
     }
-
     @NonNull
     @Override
     public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
-        if (convertView == null) {
+        if (convertView == null)
+        {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.activity_cost_item, parent, false);
         }
 
         final CheckBox mCheckBox = convertView.findViewById(R.id.activity_cost_item_checkbox);
         mCheckBox.setChecked(DetailedActivity.prefs.getboolPrefs("cost_" + position, false));
-        totalcost=DetailedActivity.prefs.getintPrefs("checked_cost",0);
+        if(mCheckBox.isChecked())
+        {
+            map.put(position,true);
+            cost_map.put(position,activities.get(position).cost);
+        }
+        else
+            {
+                cost_map.put(position,0);
+                map.put(position,false);
+            }
         final TextView mActivityPrice = convertView.findViewById(R.id.activity_cost_item_price);
-
         mCheckBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mCheckBox.isChecked()) {
-                   posiition.add(position);
+                if (mCheckBox.isChecked())
+                {
+                    map.put(position,true);
+                    cost_map.put(position,activities.get(position).cost);
                 } else
                 {
-                    posiition.remove(position);
+                    map.put(position,false);
+                    cost_map.put(position,0);
                 }
             }
         });
@@ -67,9 +82,8 @@ public class ActivityCostAdapter extends ArrayAdapter<ActivityClass> {
         return convertView;
     }
 
-    public void SetCheckedActivities(int position, boolean Checked)
+    public static void SetCheckedActivities(int position, boolean Checked)
     {
         DetailedActivity.prefs.setboolPrefs("cost_" + position, Checked);
     }
-
 }

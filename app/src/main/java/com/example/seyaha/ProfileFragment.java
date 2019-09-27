@@ -124,12 +124,10 @@ public class ProfileFragment extends Fragment {
         userRefernce.update(updatedData).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Log.d("anastest", "onSuccess: user info updated");
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.e("anastest", "onFailure: ", e);
             }
         });
     }

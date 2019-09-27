@@ -60,6 +60,7 @@ import com.tiper.MaterialSpinner;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -264,10 +265,6 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
     }
 
-    private int calculateCost(int entranceFees, int food, int transportation, Integer overNightStay, int activites) {
-        return entranceFees + food + transportation + overNightStay + activites;
-    }
-
     public void showDetailedCost(final int position) {
         View mView = getLayoutInflater().inflate(R.layout.cost_popup, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -301,7 +298,6 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         overNightSpinner.setAdapter(overNightAdapter);
         overNightSpinner.setSelection(prefs.getintPrefs("sleep", 1));
 
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             if (SplashScreenActivity.lan.equals("ar"))
                 overNightSpinner.setTextDirection(View.TEXT_DIRECTION_RTL);
@@ -324,12 +320,21 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         ActivityCostAdapter activityCostAdapter = new ActivityCostAdapter(this, mPlace.get(position).activities);
         ListView activitiesListView = mView.findViewById(R.id.activities_list_view);
         activitiesListView.setAdapter(activityCostAdapter);
-
         Button applyBtn = mView.findViewById(R.id.apply_cost_dialog_btn);
-        applyBtn.setOnClickListener(new View.OnClickListener() {
+        applyBtn.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
-
+            public void onClick(View v)
+            {
+                for(Integer KEY : ActivityCostAdapter.map.keySet())
+                {
+                    ActivityCostAdapter.SetCheckedActivities(KEY,ActivityCostAdapter.map.get(KEY));
+                }
+                int activity_cost=0;
+                for (Integer KEY : ActivityCostAdapter.cost_map.keySet())
+                {
+                    activity_cost+=ActivityCostAdapter.cost_map.get(KEY);
+                }
                 alertDialog.dismiss();
                 prefs.setboolPrefs("trans", transportationCheckbox.isChecked());
                 prefs.setboolPrefs("food", foodCheckbox.isChecked());
@@ -346,9 +351,8 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
                     totalCost += mPlace.get(position).cost.transportation;
                 }
                 totalCost += mPlace.get(position).cost.overNightStay.get(overNightSpinner.getSelection());
-                prefs.setintPrefs("checked_cost",ActivityCostAdapter.totalcost);
-                totalCost += ActivityCostAdapter.totalcost;
-                ActivityCostAdapter.totalcost=0;
+                totalCost+=activity_cost;
+                //ActivityCostAdapter.totalcost=0;
                 prefs.setintPrefs("total_cost", totalCost);
                 setCostProgress(totalCost);
 
