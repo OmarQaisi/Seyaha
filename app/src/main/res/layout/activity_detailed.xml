@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".DetailedActivity">
 
-    <include layout="@layout/toolbar"
-        android:id="@+id/detailed_toolbar"/>
+    <include
+        android:id="@+id/detailed_toolbar"
+        layout="@layout/toolbar" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/ViewPager"
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:overScrollMode="never"
-        android:outlineAmbientShadowColor="@android:color/black"
         android:layout_below="@id/detailed_toolbar"
         android:clipToPadding="false"
-        android:foregroundGravity="center">
-    </androidx.viewpager.widget.ViewPager>
+        android:foregroundGravity="center"
+        android:outlineAmbientShadowColor="@android:color/black"
+        android:overScrollMode="never"></androidx.viewpager.widget.ViewPager>
 
     <ScrollView
         android:id="@+id/scrollview"
@@ -37,583 +37,616 @@
                 android:layout_marginTop="4dp"
                 android:gravity="center"
                 android:orientation="horizontal">
+
                 <TextView
+                    android:id="@+id/place_name_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
                     android:layout_marginStart="10dp"
-                    android:text="@string/detailed_activity_description"
-                    android:textSize="24sp"
-                    android:id="@+id/place_name_title"
+                    android:layout_marginLeft="10dp"
                     android:fontFamily="@font/montserrat_bold"
+                    android:text="@string/detailed_activity_description"
                     android:textColor="@color/blue_logo"
-                    />
+                    android:textSize="24sp" />
+
                 <ImageButton
                     android:id="@+id/text_to_speech"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
-                    android:src="@drawable/ic_speak"/>
+                    android:src="@drawable/ic_speak" />
             </LinearLayout>
 
 
             <TextView
+                android:id="@+id/description_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textStyle="normal"
-                android:textSize="15sp"
-                android:maxLines="4"
-                android:id="@+id/description_tv"
-                android:scrollbars="vertical"
-                android:layout_marginLeft="4dp"
                 android:layout_marginStart="4dp"
-                android:layout_marginRight="2dp"
-                android:layout_marginEnd="2dp"
+                android:layout_marginLeft="4dp"
                 android:layout_marginTop="4dp"
+                android:layout_marginEnd="2dp"
+                android:layout_marginRight="2dp"
                 android:fontFamily="@font/montserrat_light"
+                android:maxLines="4"
+                android:scrollbars="vertical"
                 android:text="Observe the comments made about you by your parents, friends, teachers or you may directly ask them. Note these points on a paper and try to make a sample of description."
-                android:textColor="@color/colorPrimary"/>
+                android:textColor="@color/colorPrimary"
+                android:textSize="15sp"
+                android:textStyle="normal" />
+
             <LinearLayout
                 android:id="@+id/linear_places"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/ViewPager"
-                android:gravity="bottom"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="4dp">
+                android:layout_marginBottom="4dp"
+                android:gravity="bottom"
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/detailed_activity_information_about"
-                    android:layout_marginLeft="4dp"
                     android:layout_marginStart="4dp"
-                    android:textSize="16sp"
+                    android:layout_marginLeft="4dp"
                     android:fontFamily="@font/montserrat_medium"
-                    android:textColor="@android:color/black"/>
+                    android:text="@string/detailed_activity_information_about"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
+
                 <TextView
                     android:id="@+id/place_name_information_about"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Petra"
-                    android:textSize="20sp"
-                    android:fontFamily="@font/montserrat_bold"
-                    android:layout_marginLeft="4dp"
                     android:layout_marginStart="4dp"
+                    android:layout_marginLeft="4dp"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:text="Petra"
                     android:textColor="@color/blue_logo"
-                    />
+                    android:textSize="20sp" />
             </LinearLayout>
 
-            <LinearLayout
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginLeft="5dp"
                 android:layout_marginStart="5dp"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:android="http://schemas.android.com/apk/res/android">
+                android:layout_marginLeft="5dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginRight="7dp">
+                    android:layout_marginRight="7dp"
+                    android:orientation="vertical">
+
                     <TextView
                         android:id="@+id/cost"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/detailed_activity_cost"
-                        android:layout_marginTop="10dp"
                         android:layout_gravity="start"
+                        android:layout_marginTop="10dp"
                         android:fontFamily="@font/montserrat_medium"
-                        android:textSize="16sp"
-                        android:textColor="@android:color/black"/>
+                        android:text="@string/detailed_activity_cost"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/temp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="@string/detailed_activity_temp"
-                        android:fontFamily="@font/montserrat_medium"
                         android:layout_gravity="start"
-                        android:textSize="16sp"
-                        android:textColor="@android:color/black"/>
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:text="@string/detailed_activity_temp"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/air_quality"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/detailed_activity_air_quality"
                         android:layout_gravity="start"
                         android:layout_marginTop="10dp"
                         android:fontFamily="@font/montserrat_medium"
-                        android:textSize="16sp"
-                        android:textColor="@android:color/black"/>
+                        android:text="@string/detailed_activity_air_quality"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/internet"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/detailed_activity_internet"
                         android:layout_gravity="start"
-                        android:textSize="16sp"
                         android:layout_marginTop="10dp"
                         android:fontFamily="@font/montserrat_medium"
-                        android:textColor="@android:color/black"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:layout_gravity="bottom"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginRight="10dp"
-                    android:weightSum="4"
-                    android:layout_marginLeft="5dp">
-
-                    <ImageButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/cost_details_btn"
-                        android:src="@drawable/ic_more_information"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:layout_marginTop="1dp"
-                        android:layout_weight="1"
-                        android:layout_gravity="bottom"
-                        />
-                    <ImageButton
-                        android:onClick="temp_btn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:src="@drawable/ic_more_information"
-                        android:layout_marginTop="1dp"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:layout_gravity="bottom"/>
-                    <ImageButton
-                        android:onClick="quality_btn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_more_information"
-                        android:layout_weight="1"
-                        android:layout_marginTop="1dp"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:layout_gravity="bottom"/>
-                    <ImageButton
-                        android:onClick="internet_btn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_more_information"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:layout_marginTop="3dp"
-                        android:layout_weight="1"
-                        android:layout_gravity="bottom"
-                        />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:orientation="vertical">
+                        android:text="@string/detailed_activity_internet"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:text="@string/Places"
                         android:textColor="@android:color/black"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="bottom"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="10dp"
+                    android:orientation="vertical"
+                    android:weightSum="4">
+
+                    <ImageButton
+                        android:id="@+id/cost_details_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginTop="1dp"
+                        android:layout_weight="1"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:src="@drawable/ic_more_information" />
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginTop="1dp"
+                        android:layout_weight="1"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:onClick="temp_btn"
+                        android:src="@drawable/ic_more_information" />
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginTop="1dp"
+                        android:layout_weight="1"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:onClick="quality_btn"
+                        android:src="@drawable/ic_more_information" />
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginTop="1dp"
+                        android:layout_weight="1"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:onClick="internet_btn"
+                        android:src="@drawable/ic_more_information" />
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginTop="3dp"
+                        android:layout_weight="1"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:onClick="place_btn"
+                        android:src="@drawable/ic_circled_location" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:orientation="vertical"
+                    android:padding="5dp">
+
+                    <TextView
                         android:id="@+id/cost_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top|start"
+                        android:layout_marginTop="2dp"
                         android:fontFamily="@font/montserrat_light"
                         android:text="$200"
-                        android:layout_marginTop="2dp"
-                        android:textSize="13sp"
-                        android:layout_gravity="top|start"/>
+                        android:textColor="@android:color/black"
+                        android:textSize="13sp" />
 
                     <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
+                        android:id="@+id/cost_progress"
                         android:layout_width="match_parent"
                         android:layout_height="10dp"
-                        app:rcProgress="100"
-                        app:rcSecondaryProgress="0"
-                        app:rcMax="300"
-                        app:rcRadius="0dp"
-                        android:id="@+id/cost_progress"
                         android:layout_gravity="bottom"
+                        app:rcBackgroundColor="@color/background_gray"
                         app:rcBackgroundPadding="2dp"
+                        app:rcMax="300"
+                        app:rcProgress="100"
+                        app:rcRadius="0dp"
                         app:rcReverse="false"
-                        app:rcSecondaryProgressColor="@android:color/transparent"
-                        app:rcBackgroundColor="@color/background_gray" />
+                        app:rcSecondaryProgress="0"
+                        app:rcSecondaryProgressColor="@android:color/transparent" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
                         <TextView
+                            android:id="@+id/temp_overall_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
-                            android:textColor="@android:color/black"
-                            android:id="@+id/temp_overall_tv"
-                            android:text="Hot"
                             android:fontFamily="@font/montserrat_light"
+                            android:text="Hot"
+                            android:textColor="@android:color/black"
                             android:textSize="12sp"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"/>
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
                             android:id="@+id/now_notation"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="3dp"
                             android:layout_marginStart="2dp"
                             android:layout_marginLeft="2dp"
-                            android:textColor="@android:color/black"
-                            android:text="@string/now"
+                            android:layout_marginTop="3dp"
                             android:fontFamily="@font/montserrat_light"
+                            android:text="@string/now"
+                            android:textColor="@android:color/black"
                             android:textSize="11sp"
                             app:layout_constraintStart_toEndOf="@id/temp_overall_tv"
-                            app:layout_constraintTop_toTopOf="parent"/>
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
+                            android:id="@+id/colon"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@android:color/black"
                             android:layout_marginTop="1dp"
-                            android:id="@+id/colon"
-                            android:text=":"
                             android:fontFamily="@font/montserrat_light"
+                            android:text=":"
+                            android:textColor="@android:color/black"
                             android:textSize="14sp"
                             app:layout_constraintStart_toEndOf="@id/now_notation"
-                            app:layout_constraintTop_toTopOf="parent"/>
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
+                            android:id="@+id/temp_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
                             android:layout_marginStart="12dp"
                             android:layout_marginLeft="12dp"
-                            android:textColor="@android:color/black"
-                            android:id="@+id/temp_tv"
-                            android:text="30"
+                            android:layout_marginTop="2dp"
                             android:fontFamily="@font/montserrat_light"
+                            android:text="30"
+                            android:textColor="@android:color/black"
                             android:textSize="13sp"
                             app:layout_constraintStart_toEndOf="@id/colon"
-                            app:layout_constraintTop_toTopOf="parent"/>
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:textColor="@android:color/black"
-                            android:text="℃"
-                            android:layoutDirection="ltr"
                             android:fontFamily="@font/montserrat_light"
+                            android:layoutDirection="ltr"
+                            android:text="℃"
+                            android:textColor="@android:color/black"
                             android:textSize="11sp"
                             app:layout_constraintStart_toEndOf="@id/temp_tv"
-                            app:layout_constraintTop_toTopOf="parent"/>
+                            app:layout_constraintTop_toTopOf="parent" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
                     <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
-                        android:layout_width="match_parent"
-                        android:layout_height="10dp"
-                        app:rcProgress="55"
-                        app:rcSecondaryProgress="0"
-                        app:rcMax="50"
-                        app:rcRadius="0dp"
                         android:id="@+id/temp_progress"
-                        app:rcBackgroundPadding="2dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
                         android:layout_gravity="bottom"
-                        app:rcReverse="false"
+                        app:rcBackgroundColor="@color/background_gray"
+                        app:rcBackgroundPadding="2dp"
+                        app:rcMax="50"
+                        app:rcProgress="55"
                         app:rcProgressColor="@color/orange_good"
-                        app:rcSecondaryProgressColor="@android:color/transparent"
-                        app:rcBackgroundColor="@color/background_gray" />
+                        app:rcRadius="0dp"
+                        app:rcReverse="false"
+                        app:rcSecondaryProgress="0"
+                        app:rcSecondaryProgressColor="@android:color/transparent" />
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@android:color/black"
                         android:id="@+id/air_quality_tv"
-                        android:text="62"
-                        android:layout_marginTop="2dp"
-                        android:fontFamily="@font/montserrat_light"
-                        android:textSize="13sp"
-                        android:layout_gravity="top|start"/>
-
-
-                    <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
-                        android:layout_width="match_parent"
-                        android:layout_height="10dp"
-                        app:rcProgress="30"
-                        app:rcSecondaryProgress="0"
-                        app:rcMax="100"
-                        app:rcRadius="0dp"
-                        android:id="@+id/air_quality_progress"
-                        app:rcBackgroundPadding="2dp"
-                        app:rcReverse="false"
-                        android:layout_gravity="bottom"
-                        app:rcProgressColor="@color/red_bad"
-                        app:rcSecondaryProgressColor="@android:color/transparent"
-                        app:rcBackgroundColor="@color/background_gray" />
-
-                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@android:color/black"
-                        android:id="@+id/internet_tv"
-                        android:text="Good"
+                        android:layout_gravity="top|start"
                         android:layout_marginTop="2dp"
                         android:fontFamily="@font/montserrat_light"
-                        android:textSize="13sp"
-                        android:layout_gravity="top|start"/>
+                        android:text="62"
+                        android:textColor="@android:color/black"
+                        android:textSize="13sp" />
+
 
                     <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
+                        android:id="@+id/air_quality_progress"
                         android:layout_width="match_parent"
                         android:layout_height="10dp"
-                        app:rcProgress="100"
-                        app:rcSecondaryProgress="0"
-                        app:rcMax="100"
-                        app:rcRadius="0dp"
                         android:layout_gravity="bottom"
-                        android:id="@+id/internet_progress"
+                        app:rcBackgroundColor="@color/background_gray"
                         app:rcBackgroundPadding="2dp"
+                        app:rcMax="100"
+                        app:rcProgress="30"
+                        app:rcProgressColor="@color/red_bad"
+                        app:rcRadius="0dp"
                         app:rcReverse="false"
+                        app:rcSecondaryProgress="0"
+                        app:rcSecondaryProgressColor="@android:color/transparent" />
+
+                    <TextView
+                        android:id="@+id/internet_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top|start"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="@font/montserrat_light"
+                        android:text="Good"
+                        android:textColor="@android:color/black"
+                        android:textSize="13sp" />
+
+                    <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
+                        android:id="@+id/internet_progress"
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:layout_gravity="bottom"
+                        app:rcBackgroundColor="@color/background_gray"
+                        app:rcBackgroundPadding="2dp"
+                        app:rcMax="100"
+                        app:rcProgress="100"
                         app:rcProgressColor="@color/orange_good"
-                        app:rcSecondaryProgressColor="@android:color/transparent"
-                        app:rcBackgroundColor="@color/background_gray" />
+                        app:rcRadius="0dp"
+                        app:rcReverse="false"
+                        app:rcSecondaryProgress="0"
+                        app:rcSecondaryProgressColor="@android:color/transparent" />
                 </LinearLayout>
 
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/recommendationPlace"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/ViewPager"
+                android:layout_marginTop="20dp"
                 android:gravity="bottom"
-                android:layout_marginTop="20dp">
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/reco"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/detailed_activity_recommendations_for"
-                    android:layout_marginLeft="4dp"
                     android:layout_marginStart="4dp"
-                    android:textSize="16sp"
+                    android:layout_marginLeft="4dp"
                     android:fontFamily="@font/montserrat_medium"
-                    android:textColor="@android:color/black"/>
+                    android:text="@string/detailed_activity_recommendations_for"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
+
                 <TextView
                     android:id="@+id/place_name_recommendations"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Petra"
-                    android:fontFamily="@font/montserrat_bold"
-                    android:textSize="20sp"
-                    android:layout_marginLeft="4dp"
                     android:layout_marginStart="4dp"
+                    android:layout_marginLeft="4dp"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:text="Petra"
                     android:textColor="@color/blue_logo"
-                    />
+                    android:textSize="20sp" />
             </LinearLayout>
 
-            <LinearLayout android:orientation="horizontal"
-                android:weightSum="4"
-                android:layout_marginTop="20dp"
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto">
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:weightSum="4">
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
                     android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
                     <FrameLayout
+                        android:id="@+id/season_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:id="@+id/season_btn">
+                        android:layout_gravity="center">
                         <!-- Back Layout Goes Here -->
-                        <include layout="@layout/back_view_recommendations"
-                            android:id="@+id/back_season"/>
+                        <include
+                            android:id="@+id/back_season"
+                            layout="@layout/back_view_recommendations" />
                         <!-- Front Layout Goes Here -->
-                        <include layout="@layout/front_view_recommendations"
-                            android:id="@+id/front_season"/>
+                        <include
+                            android:id="@+id/front_season"
+                            layout="@layout/front_view_recommendations" />
                     </FrameLayout>
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/montserrat_medium"
                         android:text="@string/detailed_activity_season"
-                        android:fontFamily="@font/montserrat_medium"
-                        android:textSize="15sp"
-                        android:layout_marginTop="5dp"
                         android:textColor="@android:color/black"
-                        android:layout_gravity="center"/>
+                        android:textSize="15sp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
                     android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
                     <FrameLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
                         android:id="@+id/time_btn"
-                        >
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center">
                         <!-- Back Layout Goes Here -->
-                        <include layout="@layout/back_view_recommendations"
-                            android:id="@+id/back_time"/>
+                        <include
+                            android:id="@+id/back_time"
+                            layout="@layout/back_view_recommendations" />
                         <!-- Front Layout Goes Here -->
-                        <include layout="@layout/front_view_recommendations"
-                            android:id="@+id/front_time"/>
+                        <include
+                            android:id="@+id/front_time"
+                            layout="@layout/front_view_recommendations" />
                     </FrameLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/detailed_activity_time"
-                        android:fontFamily="@font/montserrat_medium"
-                        android:textColor="@android:color/black"
-                        android:textSize="15sp"
+                        android:layout_gravity="center"
                         android:layout_marginTop="5dp"
-                        android:layout_gravity="center"/>
+                        android:fontFamily="@font/montserrat_medium"
+                        android:text="@string/detailed_activity_time"
+                        android:textColor="@android:color/black"
+                        android:textSize="15sp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
                     android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
                     android:orientation="vertical">
 
                     <FrameLayout
+                        android:id="@+id/estimated_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:id="@+id/estimated_btn"
-                        >
+                        android:layout_gravity="center">
                         <!-- Back Layout Goes Here -->
-                        <include layout="@layout/back_view_recommendations"
-                            android:id="@+id/back_estimated"/>
+                        <include
+                            android:id="@+id/back_estimated"
+                            layout="@layout/back_view_recommendations" />
                         <!-- Front Layout Goes Here -->
-                        <include layout="@layout/front_view_recommendations"
-                            android:id="@+id/front_estimated"/>
+                        <include
+                            android:id="@+id/front_estimated"
+                            layout="@layout/front_view_recommendations" />
                     </FrameLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/detailed_activity_estimation"
-                        android:textSize="15sp"
-                        android:fontFamily="@font/montserrat_medium"
-                        android:textColor="@android:color/black"
                         android:layout_gravity="center"
-                        android:layout_marginTop="5dp"/>
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:text="@string/detailed_activity_estimation"
+                        android:textColor="@android:color/black"
+                        android:textSize="15sp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
                     android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
                     <FrameLayout
+                        android:id="@+id/age_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:id="@+id/age_btn"
-                        >
+                        android:layout_gravity="center">
                         <!-- Back Layout Goes Here -->
-                        <include layout="@layout/back_view_recommendations"
-                            android:id="@+id/back_age"/>
+                        <include
+                            android:id="@+id/back_age"
+                            layout="@layout/back_view_recommendations" />
                         <!-- Front Layout Goes Here -->
-                        <include layout="@layout/back_view_recommendations"
-                            android:id="@+id/front_ag"/>
+                        <include
+                            android:id="@+id/front_ag"
+                            layout="@layout/back_view_recommendations" />
                     </FrameLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/detailed_activity_age"
-                        android:fontFamily="@font/montserrat_medium"
-                        android:textColor="@android:color/black"
-                        android:textSize="15sp"
+                        android:layout_gravity="center"
                         android:layout_marginTop="5dp"
-                        android:layout_gravity="center"/>
+                        android:fontFamily="@font/montserrat_medium"
+                        android:text="@string/detailed_activity_age"
+                        android:textColor="@android:color/black"
+                        android:textSize="15sp" />
                 </LinearLayout>
-
 
 
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/linear_location"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/ViewPager"
+                android:layout_marginTop="20dp"
                 android:gravity="bottom"
-                android:layout_marginTop="20dp">
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/location"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/detailed_activity_location_for"
-                    android:layout_marginLeft="4dp"
                     android:layout_marginStart="4dp"
+                    android:layout_marginLeft="4dp"
                     android:fontFamily="@font/montserrat_medium"
-                    android:textSize="16sp"
-                    android:textColor="@android:color/black"/>
+                    android:text="@string/detailed_activity_location_for"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
+
                 <TextView
                     android:id="@+id/place_name_location"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Petra"
-                    android:fontFamily="@font/montserrat_bold"
-                    android:textSize="20sp"
-                    android:layout_marginLeft="4dp"
                     android:layout_marginStart="4dp"
+                    android:layout_marginLeft="4dp"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:text="Petra"
                     android:textColor="@color/blue_logo"
-                    />
+                    android:textSize="20sp" />
             </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:padding="4dp">
+
                 <fragment
                     android:id="@+id/map"
-                    android:layout_marginTop="5dp"
                     android:name="com.google.android.gms.maps.SupportMapFragment"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    />
+                    android:layout_marginTop="5dp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:orientation="vertical"
-                    >
+                    android:orientation="vertical">
+
                     <ImageButton
                         android:id="@+id/zoomin"
                         android:layout_width="wrap_content"
@@ -621,6 +654,7 @@
                         android:backgroundTint="#e3FDFDFD"
                         android:padding="12dp"
                         android:src="@drawable/ic_plus" />
+
                     <ImageButton
                         android:id="@+id/zoomout"
                         android:layout_width="wrap_content"
@@ -628,8 +662,7 @@
                         android:layout_marginTop="-8dp"
                         android:backgroundTint="#e3FDFDFD"
                         android:padding="12dp"
-                        android:src="@drawable/ic_minus"
-                        />
+                        android:src="@drawable/ic_minus" />
                 </LinearLayout>
 
             </RelativeLayout>

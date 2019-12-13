@@ -172,5 +172,27 @@
     <string name="clarification_dialog_checkbox">Dont show this again</string>
     <string name="sleep">Overnight stay</string>
 
+    <string name="places_toolbar_title">Places</string>
+
+    <string name="place_info_toolbar_title">Place Info</string>
+
+    <string name="image_description">photo</string>
+
+    <string name="Places">Places</string>
+
+    <string name="tab_hotels">Hotels</string>
+
+    <string name="tab_restaurants">Restaurants</string>
+
+    <string name="place">Place</string>
+
+    <string name="information_about">Information about</string>
+
+    <string name="place_location">Unknown</string>
+
+    <string name="place_website">Unknown</string>
+
+    <string name="place_phone">Unknwon</string>
+
 
 </resources>

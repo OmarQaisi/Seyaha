@@ -67,6 +67,9 @@
         <activity
             android:name=".DetailedActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".PlaceInfoActivity"/>
+
+        <activity android:name=".PlacesActivity"/>
 
     </application>
 

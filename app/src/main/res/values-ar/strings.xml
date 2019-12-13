@@ -135,5 +135,13 @@
     <string name="clarification_dialog_body">&#8226; القيمة الافتراضية ل  <b>مدة و أجرة النقل</b> تم حسابها على أساس مطار الملكة علياء الدولي كنقطة انطلاق للمكان المطلوب. \n\n&#8226; القيمة الافتراضية ل <b>الوقت المتوقع</b> تم حسابها عن طريق اضافة وقت النشاطات في المكان مع مدة النقل.\n\n&#8226; <b>يمكنك تعديل الوقت المتوقع والسعر لكل مكان عن طريق الضغط على علامة التعجب بجانب (السعر) واختيار النشاطات واماكن المبيت التي تريدها.</b></string>
     <string name="clarification_dialog_checkbox">عدم اﻹظهار مرة أخرى</string>
     <string name="sleep">المبيت</string>
+    <string name="Places">"الأماكن المجاورة "</string>
+    <string name="image_description">صورة</string>
+    <string name="information_about">معلومات عن</string>
+    <string name="place">المكان</string>
+    <string name="place_info_toolbar_title">معلومات الموقع</string>
+    <string name="places_toolbar_title">الأماكن</string>
+    <string name="tab_hotels">الفنادق</string>
+    <string name="tab_restaurants">"المطاعم "</string>
 
 </resources>

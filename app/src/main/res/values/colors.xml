@@ -39,4 +39,16 @@
 
     <color name="transparent_color">#80ffffff</color>
 
+    <color name="selected_tab_color">#001588</color>
+
+    <color name="titles_color">#000A30</color>
+
+    <color name="green_open">#4c9900</color>
+
+    <color name="red_close">#cc0000</color>
+
+    <color name="bottom_navigation_background">#FFFFFF</color>
+
+    <color name="place_phone_color">#FF485DA8</color>
+
 </resources>

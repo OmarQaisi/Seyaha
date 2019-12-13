@@ -101,6 +101,9 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
     int index = 1;
     SwitcherX foodCheckbox, entrenceFeesCheckbox, transportationCheckbox, sleepCheckBox;
     String Parent_Key;
+    double lat;
+    double lng;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -173,6 +176,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         run_viewPager();
         int deff = mPlace.get(0).cost.entranceFees + mPlace.get(0).cost.food + mPlace.get(0).cost.transportation + mPlace.get(0).cost.overNightStay.get(1);
         getTempApi(mPlace.get(0).latitude, mPlace.get(0).longitude);
+        updateLocation(mPlace.get(0).latitude, mPlace.get(0).longitude);
         setAirQualityProgress(mPlace.get(0).airQuality);
         setInternetProgress(mPlace.get(0).internet);
         setSeason(mPlace.get(0).recommendedSeason);
@@ -498,6 +502,20 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         });
 
     }
+    // send Lat and Lng to PlacesActivity.
+    public void place_btn(View view) {
+        Intent intent = new Intent(DetailedActivity.this, PlacesActivity.class);
+        intent.putExtra("lat", lat);
+        intent.putExtra("lng", lng);
+        startActivity(intent);
+    }
+
+    // update Lat and Lng for each place.
+    public void updateLocation(double lat, double lng) {
+        this.lat = lat;
+        this.lng = lng;
+    }
+
 
     private void run_viewPager() {
         imageUrls = new ArrayList <>();
@@ -525,6 +543,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
                 setCostProgress(total);
                 setSeason(mPlace.get(position).recommendedSeason);
                 getTempApi(mPlace.get(position).latitude, mPlace.get(position).longitude);
+                updateLocation(mPlace.get(position).latitude, mPlace.get(position).longitude);
                 setAirQualityProgress(mPlace.get(position).airQuality);
                 setInternetProgress(mPlace.get(position).internet);
                 setTimeToGo(mPlace.get(position).recommendedTime);
