@@ -17,9 +17,10 @@
         android:layout_below="@id/place_info_toolbar"
         android:layout_marginBottom="5dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:scrollbars="vertical">
@@ -27,11 +28,8 @@
             <FrameLayout
                 android:id="@+id/frame_layout"
                 android:layout_width="match_parent"
-                android:layout_height="260dp"
-                android:layout_marginTop="2dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_height="280dp"
+                android:layout_marginTop="2dp">
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
@@ -44,249 +42,267 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:contentDescription="@string/image_description"
+                        android:foregroundGravity="center"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/nav_drawer_background"
-                        android:foregroundGravity="center"/>
+                        android:src="@drawable/nav_drawer_background" />
 
                 </androidx.cardview.widget.CardView>
+
             </FrameLayout>
 
-            <TextView
-                android:id="@+id/place_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginLeft="4dp"
-                android:layout_marginTop="3dp"
-                android:fontFamily="@font/montserrat_bold"
-                android:text="Marriott Hotel"
-                android:gravity="start"
-                android:textColor="@color/blue_logo"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toTopOf="@+id/tvPlace"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/frame_layout"
-                android:maxLines="1"/>
+            <LinearLayout
+                android:id="@+id/container_one"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tvPlace"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginLeft="4dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="5dp"
-                android:fontFamily="@font/montserrat_medium"
-                android:text="@string/information_about"
-                android:textColor="@android:color/black"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toTopOf="@id/line_one"
-                app:layout_constraintEnd_toStartOf="@id/tvInfo"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/place_title" />
+                <TextView
+                    android:id="@+id/place_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginTop="3dp"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:gravity="start"
+                    android:maxLines="1"
+                    android:text="Marriott Hotel"
+                    android:textColor="@color/blue_logo"
+                    android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/tvInfo"
-                android:layout_width="wrap_content"
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/container_two"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginLeft="4dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="5dp"
-                android:fontFamily="@font/montserrat_bold"
-                android:text="@string/place"
-                android:textColor="@color/blue_logo"
-                android:textSize="20sp"
-                app:layout_constraintBottom_toTopOf="@id/line_one"
-                app:layout_constraintStart_toEndOf="@id/tvPlace"
-                app:layout_constraintTop_toBottomOf="@id/place_title" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_information_about"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:text="@string/information_about"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tvPlace"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:text="@string/place"
+                    android:textColor="@color/blue_logo"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
 
             <View
                 android:id="@+id/line_one"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="5dp"
-                android:background="#C0C0C0"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvPlace" />
+                android:background="#C0C0C0"/>
 
-            <ImageView
-                android:id="@+id/location_icon"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/container_three"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:src="@drawable/ic_location"
-                app:layout_constraintBottom_toTopOf="@id/website_icon"
-                app:layout_constraintEnd_toStartOf="@id/place_location"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/line_one"/>
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/place_location"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:fontFamily="@font/montserrat_medium"
-                android:text="@string/place_location"
-                android:textColor="@android:color/black"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toTopOf="@id/place_website"
-                app:layout_constraintStart_toEndOf="@id/location_icon"
-                app:layout_constraintTop_toBottomOf="@id/line_one"
-                android:maxLines="1" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/website_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:src="@drawable/ic_website"
-                app:layout_constraintBottom_toTopOf="@id/phone_icon"
-                app:layout_constraintEnd_toStartOf="@id/place_website"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/location_icon"/>
+                    <ImageView
+                        android:id="@+id/location_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:src="@drawable/ic_location" />
 
-            <TextView
-                android:id="@+id/place_website"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:autoLink="web"
-                android:clickable="true"
-                android:focusable="true"
-                android:fontFamily="@font/montserrat_medium"
-                android:maxLines="1"
-                android:text="@string/place_website"
-                android:textColor="@android:color/black"
-                android:textColorHighlight="#3F51B5"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toTopOf="@id/place_phone"
-                app:layout_constraintStart_toEndOf="@id/website_icon"
-                app:layout_constraintTop_toBottomOf="@id/place_location" />
+                    <TextView
+                        android:id="@+id/place_location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:maxLines="1"
+                        android:text="@string/place_location"
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp" />
 
-            <ImageView
-                android:id="@+id/phone_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:src="@drawable/ic_phone"
-                app:layout_constraintBottom_toTopOf="@id/line_two"
-                app:layout_constraintEnd_toStartOf="@id/place_phone"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/website_icon" />
+                </LinearLayout>
 
-            <TextView
-                android:id="@+id/place_phone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:autoLink="phone"
-                android:clickable="true"
-                android:focusable="true"
-                android:fontFamily="@font/montserrat_medium"
-                android:maxLines="1"
-                android:text="@string/place_phone"
-                android:textColor="@android:color/black"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toTopOf="@id/line_two"
-                app:layout_constraintStart_toEndOf="@id/phone_icon"
-                app:layout_constraintTop_toBottomOf="@id/place_website" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/website_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:src="@drawable/ic_website" />
+
+                    <TextView
+                        android:id="@+id/place_website"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:autoLink="web"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:maxLines="1"
+                        android:text="@string/place_website"
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/phone_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:src="@drawable/ic_phone" />
+
+                    <TextView
+                        android:id="@+id/place_phone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:autoLink="phone"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:maxLines="1"
+                        android:text="@string/place_phone"
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+            </LinearLayout>
 
             <View
                 android:id="@+id/line_two"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="5dp"
-                android:background="#C0C0C0"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/place_phone" />
+                android:background="#C0C0C0"/>
 
-            <TextView
-                android:id="@+id/tv_location_for"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginLeft="4dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:fontFamily="@font/montserrat_medium"
-                android:text="@string/detailed_activity_location_for"
-                android:textColor="@android:color/black"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toTopOf="@id/map_fragment"
-                app:layout_constraintEnd_toStartOf="@id/tv_place"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/line_two" />
-
-            <TextView
-                android:id="@+id/tv_place"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginLeft="4dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:fontFamily="@font/montserrat_bold"
-                android:text="@string/place"
-                android:textColor="@color/blue_logo"
-                android:textSize="20sp"
-                app:layout_constraintBottom_toTopOf="@id/map_fragment"
-                app:layout_constraintStart_toEndOf="@id/tv_location_for"
-                app:layout_constraintTop_toBottomOf="@id/line_two" />
-
-            <fragment
-                android:id="@+id/map_fragment"
-                android:name="com.google.android.gms.maps.SupportMapFragment"
+            <LinearLayout
+                android:id="@+id/container_four"
                 android:layout_width="match_parent"
-                android:layout_height="190dp"
-                android:layout_marginTop="5dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintEnd_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_location_for" />
-
-            <ImageButton
-                android:id="@+id/zoomIn"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:backgroundTint="#e3FDFDFD"
-                android:padding="12dp"
-                android:src="@drawable/ic_plus"
-                app:layout_constraintBottom_toTopOf="@id/zoomOut"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/map_fragment" />
+                android:orientation="horizontal">
 
-            <ImageButton
-                android:id="@+id/zoomOut"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="0dp"
-                android:backgroundTint="#e3FDFDFD"
-                android:padding="12dp"
-                android:src="@drawable/ic_minus"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/zoomIn" />
+                <TextView
+                    android:id="@+id/tv_location_for"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:text="@string/detailed_activity_location_for"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/tv_place"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:text="@string/place"
+                    android:textColor="@color/blue_logo"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+         <RelativeLayout
+             android:layout_width="match_parent"
+             android:layout_height="200dp"
+             android:padding="4dp">
+
+             <fragment
+                 android:id="@+id/map_fragment"
+                 android:name="com.google.android.gms.maps.SupportMapFragment"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent"
+                 android:layout_marginTop="5dp"/>
+
+             <LinearLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_alignParentStart="true"
+                 android:layout_alignParentLeft="true"
+                 android:layout_centerVertical="true"
+                 android:orientation="vertical">
+
+                 <ImageButton
+                     android:id="@+id/zoomIn"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:backgroundTint="#e3FDFDFD"
+                     android:padding="12dp"
+                     android:src="@drawable/ic_plus" />
+
+                 <ImageButton
+                     android:id="@+id/zoomOut"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_marginTop="-8dp"
+                     android:backgroundTint="#e3FDFDFD"
+                     android:padding="12dp"
+                     android:src="@drawable/ic_minus"/>
+             </LinearLayout>
+
+         </RelativeLayout>
+
+        </LinearLayout>
+
     </ScrollView>
+
 </RelativeLayout>

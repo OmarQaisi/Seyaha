@@ -89,9 +89,15 @@ public class PlaceInfoActivity extends AppCompatActivity implements OnMapReadyCa
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle(null);
 
-        mToolbar.setNavigationIcon(R.drawable.ic_arrow_back);
+        // set toolbar title
         mTextView = findViewById(R.id.toolbar_title);
         mTextView.setText(R.string.place_info_toolbar_title);
+
+        // add back arrow to toolbar
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
 
         // views declaration
         mPlacePhoto = findViewById(R.id.place_Image);

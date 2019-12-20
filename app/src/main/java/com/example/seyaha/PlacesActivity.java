@@ -32,8 +32,11 @@ public class PlacesActivity extends AppCompatActivity {
         TextView mTextView = findViewById(R.id.toolbar_title);
         mTextView.setText(R.string.places_toolbar_title);
         mToolbar.setScrollbarFadingEnabled(true);
-        mToolbar.setNavigationIcon(R.drawable.ic_arrow_back);
-
+        // add back arrow to toolbar
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
 
         // bottom navigation config
         bottomNavigationView = findViewById(R.id.bottom_navigation);
