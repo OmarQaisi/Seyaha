@@ -32,7 +32,7 @@ import java.util.Map;
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.rishabhkhanna.customtogglebutton.CustomToggleButton;
 
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     private static final String TAG = "ProfileFragment";
     RecyclerView recyclerView;
@@ -47,71 +47,39 @@ public class ProfileFragment extends Fragment {
     FirebaseFirestore db;
     public User mUser;
 
+    private void filledView(View pView)
+    {
+        db = FirebaseFirestore.getInstance();
+        save_but = pView.findViewById(R.id.save_interests);
+        save_but.setOnClickListener(this);
+        clear_but = pView.findViewById(R.id.clear_interests);
+        clear_but.setOnClickListener(this);
+        notification_but = pView.findViewById(R.id.notification_button);
+        notification_but.setOnClickListener(this);
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        colorDrawable = new ColorDrawable(Color.GRAY);
+        name = pView.findViewById(R.id.prof_name);
+        name.setText(mFirebaseAuth.getCurrentUser().getDisplayName());
+        img = pView.findViewById(R.id.prof_img);
+        Picasso.get().load(mFirebaseAuth.getCurrentUser().getPhotoUrl().toString() + "?height=500").fit().placeholder(colorDrawable).into(img);
+        recyclerView = pView.findViewById(R.id.rv_recommended);
+        gridLayoutManager = new GridLayoutManager(pView.getContext(), 3);
+        recyclerView.setLayoutManager(gridLayoutManager);
+        interest_adapter = new InterestsAdapter(getContext());
+        recyclerView.setAdapter(interest_adapter);
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View mView = inflater.inflate(R.layout.fragment_profile, container, false);
+        View pView = inflater.inflate(R.layout.fragment_profile, container, false);
         FirestoreQueries.getUser(new FirestoreQueries.FirestoreUserCallback() {
             @Override
             public void onCallback(User user) {
                 mUser = user;
             }
         });
-
-        save_but = mView.findViewById(R.id.save_interests);
-        clear_but = mView.findViewById(R.id.clear_interests);
-        notification_but = mView.findViewById(R.id.notification_button);
-        mFirebaseAuth = FirebaseAuth.getInstance();
-        colorDrawable = new ColorDrawable(Color.GRAY);
-        name = mView.findViewById(R.id.prof_name);
-        name.setText(mFirebaseAuth.getCurrentUser().getDisplayName());
-        img = mView.findViewById(R.id.prof_img);
-        Picasso.get().load(mFirebaseAuth.getCurrentUser().getPhotoUrl().toString() + "?height=500").fit().placeholder(colorDrawable).into(img);
-        recyclerView = mView.findViewById(R.id.rv_recommended);
-        gridLayoutManager = new GridLayoutManager(mView.getContext(), 3);
-        recyclerView.setLayoutManager(gridLayoutManager);
-        interest_adapter = new InterestsAdapter(getContext());
-        recyclerView.setAdapter(interest_adapter);
-        db = FirebaseFirestore.getInstance();
-
-        save_but.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (InterestsAdapter.intrests_hashSet.size() != 0 && !checkInterestsIdentical()) {
-                    publish_interests();
-                    InterestsAdapter.interests_chosen.clear();
-                    Toast.makeText(getContext(), getResources().getString(R.string.save), Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getContext(), MainActivity.class);
-                    intent.putExtra("FRAGMENT_ID", 1);
-                    startActivity(intent);
-                } else if (mUser.intrests.size() != 0 && checkInterestsIdentical())
-                    Toast.makeText(getContext(), getResources().getString(R.string.save_size_check2), Toast.LENGTH_SHORT).show();
-                else
-                    Toast.makeText(getContext(), getResources().getString(R.string.save_size_check), Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        clear_but.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                InterestsAdapter.intrests_hashSet.clear();
-                publish_interests();
-                interest_adapter.clearInterests();
-            }
-        });
-
-        notification_but.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (notification_but.isChecked()) {
-                    Toast.makeText(getContext(), getResources().getString(R.string.notification_on), Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getContext(), getResources().getString(R.string.notification_off), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-        return mView;
+        filledView(pView);
+        return pView;
     }
 
     private void publish_interests() {
@@ -151,6 +119,39 @@ public class ProfileFragment extends Fragment {
             return false;
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId())
+        {
+            case  R.id.save_interests :
+                if (InterestsAdapter.intrests_hashSet.size() != 0 && !checkInterestsIdentical()) {
+                    publish_interests();
+                    InterestsAdapter.interests_chosen.clear();
+                    Toast.makeText(getContext(), getResources().getString(R.string.save), Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getContext(), MainActivity.class);
+                    intent.putExtra("FRAGMENT_ID", 1);
+                    startActivity(intent);
+                } else if (mUser.intrests.size() != 0 && checkInterestsIdentical())
+                    Toast.makeText(getContext(), getResources().getString(R.string.save_size_check2), Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(getContext(), getResources().getString(R.string.save_size_check), Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.clear_interests :
+                InterestsAdapter.intrests_hashSet.clear();
+                publish_interests();
+                interest_adapter.clearInterests();
+                break;
+            case R.id.notification_button :
+
+                if (notification_but.isChecked()) {
+                    Toast.makeText(getContext(), getResources().getString(R.string.notification_on), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getContext(), getResources().getString(R.string.notification_off), Toast.LENGTH_SHORT).show();
+                }
+                break;
+        }
+    }
 }
 
 

@@ -39,24 +39,32 @@ public class OverviewActivity extends AppCompatActivity implements OnMapReadyCal
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_overview);
-
-        mToolbar = findViewById(R.id.overview_toolbar);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle(null);
-        mTextView = findViewById(R.id.toolbar_title);
-        mTextView.setText(R.string.overview_activity_title);
-
-        // add back arrow to toolbar
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        prepareView();
+        prepareActionBar();
         }
 
+        public void prepareActionBar(){
+
+            setSupportActionBar(mToolbar);
+            getSupportActionBar().setTitle(null);
+
+            mTextView.setText(R.string.overview_activity_title);
+
+            // add back arrow to toolbar
+            if (getSupportActionBar() != null) {
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                getSupportActionBar().setDisplayShowHomeEnabled(true);
+            }
+        }
+
+
+    public void prepareView(){
+        mToolbar = findViewById(R.id.overview_toolbar);
+        mTextView = findViewById(R.id.toolbar_title);
         Intent i = getIntent();
         mPlace = (List<Place>) i.getSerializableExtra("places");
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
     }
 
     @Override

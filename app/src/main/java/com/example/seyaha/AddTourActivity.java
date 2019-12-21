@@ -49,18 +49,37 @@ public class AddTourActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_tour);
+        prepareView();
+        prepareActionBar();
 
-        mToolbar = findViewById(R.id.add_tour_toolbar);
+        FirestoreQueries.getPlaces(new FirestoreQueries.FirestorePlaceCallback() {
+
+            @Override
+            public void onCallback(List<Place> places) {
+                mPlaces = places;
+                System.out.println(places.get(0).activities.get(0).nameEN);
+                AdminPlaceAdapter adminPlaceAdapter = new AdminPlaceAdapter(AddTourActivity.this, mPlaces);
+                adminPlaceAdapter.setHasStableIds(true);
+                recyclerView.setAdapter(adminPlaceAdapter);
+            }
+        });
+    }
+    public void prepareActionBar()
+    {
+        // add back arrow to toolbar
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle(null);
-        mTextView = mToolbar.findViewById(R.id.toolbar_title);
         mTextView.setText(getString(R.string.create_tour));
 
-        // add back arrow to toolbar
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
+    }
+    public void prepareView()
+    {
+        mToolbar = findViewById(R.id.add_tour_toolbar);
+        mTextView = mToolbar.findViewById(R.id.toolbar_title);
 
         titleAR = findViewById(R.id.titleA);
         titleEN = findViewById(R.id.titleE);
@@ -69,7 +88,6 @@ public class AddTourActivity extends AppCompatActivity {
         recyclerView.setItemViewCacheSize(20);
         gridLayoutManager = new GridLayoutManager(this, 3);
         recyclerView.setLayoutManager(gridLayoutManager);
-
         chosen_place = new ArrayList<Place>();
         mPlaces = new ArrayList<Place>();
 
@@ -84,6 +102,9 @@ public class AddTourActivity extends AppCompatActivity {
                 recyclerView.setAdapter(adminPlaceAdapter);
             }
         });
+        chosen_place = new ArrayList<Place>();
+        mPlaces = new ArrayList<Place>();
+
     }
 
     public void addTour(View v) {

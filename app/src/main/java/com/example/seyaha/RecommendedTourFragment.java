@@ -43,7 +43,7 @@ public class RecommendedTourFragment extends Fragment {
             @Override
             public void onRefresh() {
 
-                firebase_connection();
+        firebase_connection();
             }
         });
 

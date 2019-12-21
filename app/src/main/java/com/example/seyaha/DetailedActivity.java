@@ -25,6 +25,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -65,30 +66,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class DetailedActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class DetailedActivity extends AppCompatActivity implements OnMapReadyCallback, View.OnClickListener, View.OnTouchListener {
     private static final String TAG = "DetailedActivity";
     public int totalCost = 0;
     private GoogleMap mMap;
     ViewPager viewPager;
-    List <String> imageUrls;
-    List <Place> mPlace;
+    List<String> imageUrls;
+    List<Place> mPlace;
     ViewPagerAdapter adapter;
     double latitude, longitude;
     String placeName;
     MediaPlayer mp;
     AlertDialog alertDialog;
+    Button cancel_temp_dialog_btn, cancel_airquality_dialog_btn;
+    TextView min_temp, max_temp, humidity_tv, wind_tv;
     private final String APIKEY = "4e4480d5039580a36c576fa58a0c1d3a";
+    ListView activitiesListView;
     private OpenWeatherApi openWeatherApi;
     private double tempApiResult, min, max, speed;
     private int humidity;
     ImageButton zoom_in, zoom_out, text_to_speech;
-    View map_view;
+    View map_view, costView, tempView, qualityView, internetView;
     private Toolbar mToolbar;
     private TextView mTextView;
     ScrollView scrollView;
     SupportMapFragment mapFragment;
     FrameLayout seasonFlip, timeToGoFlip, estimationFlip, ageFlip;
-    TextView seasonTv, timeToGoTv, ageTv1, ageTv2, estimationTv, costTv, tempTv, tempOverallTv, airQualityTv, internetTv, placeNameInfo, placeNameRecommendations, placeNameLocation, description, placeNameTitle;
+    TextView seasonTv, timeToGoTv, ageTv1, ageTv2, estimationTv, costTv, tempTv, tempOverallTv, airQualityTv, internetTv, placeNameInfo, placeNameRecommendations, placeNameLocation, description, placeNameTitle,entrenceFeesPrice,foodPrice,transportationPrice;
     RoundCornerProgressBar costProgressBar, tempProgressBar, airQualityProgressBar, internetProgressBar;
     View frontLayoutSeason, backLayoutSeason, frontLayoutTime, backLayouTime, frontLayoutAge, backLayoutAge, frontLayoutEstimated, backLayoutEstimated;
     ImageView seasonImg, timeToGoImg, estimationImg, costDetails;
@@ -103,144 +107,19 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
     String Parent_Key;
     double lat;
     double lng;
-
+    MaterialSpinner overNightSpinner;
+    Button applyBtn, cancelBtn, cancel_internet_dialog_btn;
+    int PublicPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detailed);
-        mToolbar = findViewById(R.id.detailed_toolbar);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle(null);
-        mTextView = findViewById(R.id.toolbar_title);
-        mTextView.setText(R.string.detailed_activity_title);
-        // add back arrow to toolbar
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-        }
-        //retrofit config
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://api.openweathermap.org/").addConverterFactory(GsonConverterFactory.create()).build();
-        openWeatherApi = retrofit.create(OpenWeatherApi.class);
-        mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-
-        //text views and description deceleration
-        placeNameRecommendations = findViewById(R.id.place_name_recommendations);
-        placeNameInfo = findViewById(R.id.place_name_information_about);
-        placeNameLocation = findViewById(R.id.place_name_location);
-        zoom_in = findViewById(R.id.zoomin);
-        zoom_out = findViewById(R.id.zoomout);
-        description = findViewById(R.id.description_tv);
-        scrollView = findViewById(R.id.scrollview);
-        placeNameTitle = findViewById(R.id.place_name_title);
-
-        //information about the place deceleration
-        costProgressBar = findViewById(R.id.cost_progress);
-        tempProgressBar = findViewById(R.id.temp_progress);
-        airQualityProgressBar = findViewById(R.id.air_quality_progress);
-        internetProgressBar = findViewById(R.id.internet_progress);
-        costTv = findViewById(R.id.cost_tv);
-        tempTv = findViewById(R.id.temp_tv);
-        tempOverallTv = findViewById(R.id.temp_overall_tv);
-        airQualityTv = findViewById(R.id.air_quality_tv);
-        internetTv = findViewById(R.id.internet_tv);
-
-        //recommendations about the place deceleration
-        seasonFlip = findViewById(R.id.season_btn);
-        timeToGoFlip = findViewById(R.id.time_btn);
-        ageFlip = findViewById(R.id.age_btn);
-        estimationFlip = findViewById(R.id.estimated_btn);
-
-        //progress details deceleration
-        costDetails = findViewById(R.id.cost_details_btn);
-
-        costDetails.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDetailedCost(0);
-            }
-        });
-
+        fillView();
+        ActionBarChecker();
+        ApiConfig();
         loadAnimations();
-        Intent i = getIntent();
-        mPlace = (List <Place>) i.getSerializableExtra("places");
-        Tour_id = i.getStringExtra("tour_id");
-        Parent_Key = Tour_id + place_id(mPlace.get(0).nameEN);
-        prefs = new Sharedpreference(this, Parent_Key);
-        description.setMovementMethod(new ScrollingMovementMethod());
-        latitude = mPlace.get(0).latitude;
-        longitude = mPlace.get(0).longitude;
-        placeName = mPlace.get(0).nameEN;
-        map_view = mapFragment.getView();
-        mapFragment.getMapAsync(this);
-        run_viewPager();
-        int deff = mPlace.get(0).cost.entranceFees + mPlace.get(0).cost.food + mPlace.get(0).cost.transportation + mPlace.get(0).cost.overNightStay.get(1);
-        getTempApi(mPlace.get(0).latitude, mPlace.get(0).longitude);
-        updateLocation(mPlace.get(0).latitude, mPlace.get(0).longitude);
-        setAirQualityProgress(mPlace.get(0).airQuality);
-        setInternetProgress(mPlace.get(0).internet);
-        setSeason(mPlace.get(0).recommendedSeason);
-        setAge(mPlace.get(0).recommendedAge);
-        setEstimatedTime(mPlace.get(0).estimatedTime + prefs.getintPrefs("act_time", 0));
-        setCostProgress(prefs.getintPrefs("total_cost", deff));
-        setTimeToGo(mPlace.get(0).recommendedTime);
-
-        try {
-            mp = MediaPlayer.create(getApplicationContext(), getResources().getIdentifier(mPlace.get(0).voiceURL, "raw", getPackageName()));
-        } catch (Exception e) {
-            Log.d(TAG, "" + mPlace.get(0).nameEN + " \n" + e);
-        }
-
-        if (SplashScreenActivity.lan.equalsIgnoreCase("ar")) {
-            description.setText(mPlace.get(0).descAR);
-            placeNameRecommendations.setText(mPlace.get(0).nameAR);
-            placeNameInfo.setText(mPlace.get(0).nameAR);
-            placeNameLocation.setText(mPlace.get(0).nameAR);
-            placeNameTitle.setText(mPlace.get(0).nameAR);
-        } else {
-            placeNameTitle.setText(mPlace.get(0).nameEN);
-            description.setText(mPlace.get(0).descEN);
-            placeNameRecommendations.setText(mPlace.get(0).nameEN);
-            placeNameInfo.setText(mPlace.get(0).nameEN);
-            placeNameLocation.setText(mPlace.get(0).nameEN);
-        }
-
-
-        scrollView.setOnTouchListener(new View.OnTouchListener() {
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                description.getParent().requestDisallowInterceptTouchEvent(false);
-
-                return false;
-            }
-        });
-
-        description.setOnTouchListener(new View.OnTouchListener() {
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                description.getParent().requestDisallowInterceptTouchEvent(true);
-
-                return false;
-            }
-        });
-
-        text_to_speech = findViewById(R.id.text_to_speech);
-        text_to_speech.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mp.start();
-            }
-        });
-
-        //clarification_dialog
-        if (!prefs.getboolPrefs("clarification_dialog", false)) {
-            showClarificationDialog();
-        }
-
+        setFirstPlaceDetails();
     }
 
     private void showClarificationDialog() {
@@ -266,6 +145,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         });
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
     }
+
 
     public void showDetailedCost(final int position) {
         View mView = getLayoutInflater().inflate(R.layout.cost_popup, null);
@@ -320,9 +200,10 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         } else {
             overNightSpinner.setVisibility(View.VISIBLE);
         }
-        sleepCheckBox.setOnCheckedChangeListener(new Function1 <Boolean, Unit>() {
+        sleepCheckBox.setOnCheckedChangeListener(new Function1<Boolean, Unit>() {
             @Override
             public Unit invoke(Boolean checked) {
+
 
                 if (checked) {
                     overNightSpinner.setVisibility(View.VISIBLE);
@@ -397,11 +278,11 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
         lp.height = WindowManager.LayoutParams.MATCH_PARENT;
         alertDialog.show();
-
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
     }
 
     public void temp_btn(View view) {
+
         Button cancel_temp_dialog_btn;
         TextView min_temp, max_temp, humidity_tv, wind_tv;
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -412,6 +293,10 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         min_temp = mView.findViewById(R.id.min_temp);
         humidity_tv = mView.findViewById(R.id.humidity_tv);
         wind_tv = mView.findViewById(R.id.wind_tv);
+        if (tempView.getParent() != null) {
+            ((ViewGroup) tempView.getParent()).removeView(tempView);
+        }
+        builder.setView(tempView);
         max_temp.setText((int) max + "");
         min_temp.setText((int) min + "");
         humidity_tv.setText(humidity + "");
@@ -463,15 +348,21 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
                 alertDialog.cancel();
             }
         });
+        if (qualityView.getParent() != null) {
+            ((ViewGroup) qualityView.getParent()).removeView(qualityView);
+        }
+        builder.setView(qualityView);
+        alertDialog = builder.create();
+        alertDialog.show();
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
     }
 
 
     private void getTempApi(double latitude, double longitude) {
-        Call <JsonObject> call = openWeatherApi.getTemp(latitude, longitude, APIKEY);
-        call.enqueue(new Callback <JsonObject>() {
+        Call<JsonObject> call = openWeatherApi.getTemp(latitude, longitude, APIKEY);
+        call.enqueue(new Callback<JsonObject>() {
             @Override
-            public void onResponse(Call <JsonObject> call, Response <JsonObject> response) {
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
 
                 if (!response.isSuccessful()) {
                     Log.d(TAG, "Code: " + response.code());
@@ -496,12 +387,13 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
             }
 
             @Override
-            public void onFailure(Call <JsonObject> call, Throwable t) {
+            public void onFailure(Call<JsonObject> call, Throwable t) {
                 Log.d(TAG, "onFailure: " + t.getMessage());
             }
         });
 
     }
+
     // send Lat and Lng to PlacesActivity.
     public void place_btn(View view) {
         Intent intent = new Intent(DetailedActivity.this, PlacesActivity.class);
@@ -517,8 +409,45 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
     }
 
 
+    public void pageSelectedPlace(int position) {
+        Parent_Key = Tour_id + place_id(mPlace.get(position).nameEN);
+        prefs = new Sharedpreference(DetailedActivity.this, Parent_Key);
+        int deff = mPlace.get(position).cost.entranceFees + mPlace.get(position).cost.food + mPlace.get(position).cost.transportation + mPlace.get(position).cost.overNightStay.get(1);
+        int total = prefs.getintPrefs("total_cost", deff);
+        setCostProgress(total);
+        setSeason(mPlace.get(position).recommendedSeason);
+        getTempApi(mPlace.get(position).latitude, mPlace.get(position).longitude);
+        setAirQualityProgress(mPlace.get(position).airQuality);
+        setInternetProgress(mPlace.get(position).internet);
+        setTimeToGo(mPlace.get(position).recommendedTime);
+        setAge(mPlace.get(position).recommendedAge);
+        setEstimatedTime(mPlace.get(position).estimatedTime + prefs.getintPrefs("act_time", 0));
+        mp = MediaPlayer.create(getApplicationContext(), getResources().getIdentifier(mPlace.get(position).voiceURL, "raw", getPackageName()));
+        if (SplashScreenActivity.lan.equalsIgnoreCase("ar")) {
+            description.setText(mPlace.get(position).descAR);
+            placeNameRecommendations.setText(mPlace.get(position).nameAR);
+            placeNameInfo.setText(mPlace.get(position).nameAR);
+            placeNameLocation.setText(mPlace.get(position).nameAR);
+            placeNameTitle.setText(mPlace.get(position).nameAR);
+        } else {
+            description.setText(mPlace.get(position).descEN);
+            placeNameRecommendations.setText(mPlace.get(position).nameEN);
+            placeNameInfo.setText(mPlace.get(position).nameEN);
+            placeNameLocation.setText(mPlace.get(position).nameEN);
+            placeNameTitle.setText(mPlace.get(position).nameEN);
+        }
+
+        latitude = mPlace.get(position).latitude;
+        longitude = mPlace.get(position).longitude;
+        placeName = mPlace.get(position).nameEN;
+        mapFragment.getMapAsync(DetailedActivity.this);
+
+        scrollView.fullScroll(View.FOCUS_UP);
+        description.scrollTo(0, 0);
+    }
+
     private void run_viewPager() {
-        imageUrls = new ArrayList <>();
+        imageUrls = new ArrayList<>();
 
         for (int i = 0; i < mPlace.size(); i++) {
             imageUrls.add(mPlace.get(i).imageURL);
@@ -536,6 +465,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
 
             @Override
             public void onPageSelected(final int position) {
+
                 Parent_Key = Tour_id + place_id(mPlace.get(position).nameEN);
                 prefs = new Sharedpreference(DetailedActivity.this, Parent_Key);
                 int deff = mPlace.get(position).cost.entranceFees + mPlace.get(position).cost.food + mPlace.get(position).cost.transportation + mPlace.get(position).cost.overNightStay.get(1);
@@ -572,7 +502,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
                 scrollView.fullScroll(View.FOCUS_UP);
                 description.scrollTo(0, 0);
 
-
+                pageSelectedPlace(position);
                 costDetails.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -599,19 +529,6 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(googleMapPlace, 16.0f));
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
         mMap.getUiSettings().setMapToolbarEnabled(true);
-        zoom_out.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mMap.animateCamera(CameraUpdateFactory.zoomOut());
-            }
-        });
-        zoom_in.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mMap.animateCamera(CameraUpdateFactory.zoomIn());
-            }
-        });
-
         //mMap.animateCamera(CameraUpdateFactory.zoomOut());
     }
 
@@ -737,19 +654,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
     }
 
     private void setSeason(int season) {
-
-        frontLayoutSeason = seasonFlip.findViewById(R.id.front_season);
-        backLayoutSeason = seasonFlip.findViewById(R.id.back_season);
-        seasonTv = backLayoutSeason.findViewById(R.id.back_text);
-        seasonImg = frontLayoutSeason.findViewById(R.id.front_icon);
         changeCameraDistance(frontLayoutSeason, backLayoutSeason);
-
-        seasonFlip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                flipCard(frontLayoutSeason, backLayoutSeason, mIsBackVisible, 0);
-            }
-        });
         switch (season) {
             case 0:
                 seasonTv.setText(getResources().getString(R.string.summer_season));
@@ -765,7 +670,6 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
                 seasonTv.setText(getResources().getString(R.string.spring_season));
                 seasonImg.setImageResource(R.drawable.ic_spring);
                 break;
-
             case 3:
                 seasonTv.setText(getResources().getString(R.string.autumn_season));
                 seasonImg.setImageResource(R.drawable.ic_autumn);
@@ -774,17 +678,9 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
     }
 
     private void setTimeToGo(int time) {
-        frontLayoutTime = findViewById(R.id.front_time);
-        backLayouTime = findViewById(R.id.back_time);
-        timeToGoTv = backLayouTime.findViewById(R.id.back_text);
-        timeToGoImg = frontLayoutTime.findViewById(R.id.front_icon);
+
         changeCameraDistance(frontLayoutTime, backLayouTime);
-        timeToGoFlip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                flipCard(frontLayoutTime, backLayouTime, mIsBackVisible, 1);
-            }
-        });
+
 
         switch (time) {
             case 0:
@@ -799,43 +695,26 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
     }
 
     private void setAge(String age) {
-        frontLayoutAge = findViewById(R.id.front_ag);
-        backLayoutAge = findViewById(R.id.back_age);
-        ageTv1 = backLayoutAge.findViewById(R.id.back_text);
-        ageTv2 = frontLayoutAge.findViewById(R.id.back_text);
+
         ageTv2.setTextSize(20);
         ageTv1.setTextSize(20);
         ageTv1.setText(age);
         ageTv2.setText(age);
 
         changeCameraDistance(frontLayoutAge, backLayoutAge);
-        ageFlip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                flipCard(frontLayoutAge, backLayoutAge, mIsBackVisible, 2);
-            }
-        });
+
     }
 
     private void setEstimatedTime(int estimatedTime) {
-        frontLayoutEstimated = findViewById(R.id.front_estimated);
-        backLayoutEstimated = findViewById(R.id.back_estimated);
-        estimationTv = backLayoutEstimated.findViewById(R.id.back_text);
-        estimationImg = frontLayoutEstimated.findViewById(R.id.front_icon);
+
         estimationTv.setText(estimatedTime + "Hrs");
         estimationImg.setImageResource(R.drawable.ic_stopwatch);
 
         changeCameraDistance(frontLayoutEstimated, backLayoutEstimated);
-        estimationFlip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                flipCard(frontLayoutEstimated, backLayoutEstimated, mIsBackVisible, 3);
-            }
-        });
+
     }
 
     public void flipCard(View front, View back, boolean mIsBackVisible[], int position) {
-
         if (!mIsBackVisible[position]) {
             mSetRightOut.setTarget(front);
             mSetLeftIn.setTarget(back);
@@ -869,10 +748,8 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         if (item.getItemId() == android.R.id.home) {
             finish(); // close this activity and return to preview activity (if there is any)
         }
-
         return super.onOptionsItemSelected(item);
     }
-
 
     // calculate the cost of transportation using the yellow taxi day charging rate
     private int calculateTransportationCost(int distance, int duration) {
@@ -882,6 +759,261 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
         System.out.println(cost);
 
         return cost / 1000; // return cost in JD
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.cost_details_btn:
+                showDetailedCost(0);
+                break;
+
+            case R.id.text_to_speech:
+                mp.start();
+                break;
+
+            case R.id.apply_cost_dialog_btn:
+                for (Integer KEY : ActivityCostAdapter.map.keySet()) {
+                    boolean val = ActivityCostAdapter.map.get(KEY);
+                    ActivityCostAdapter.SetCheckedActivities(KEY, val);
+                }
+                int activity_cost = 0;
+                for (Integer KEY : ActivityCostAdapter.cost_map.keySet()) {
+                    activity_cost += ActivityCostAdapter.cost_map.get(KEY);
+                }
+                int act_time = 0;
+                for (Integer KEY : ActivityCostAdapter.time_map.keySet()) {
+                    act_time += ActivityCostAdapter.time_map.get(KEY);
+                }
+                prefs.setintPrefs("act_time", act_time);
+                setEstimatedTime(transportationCheckbox.isChecked() ? mPlace.get(PublicPosition).estimatedTime + act_time : act_time);
+                alertDialog.dismiss();
+                prefs.setboolPrefs("trans", transportationCheckbox.isChecked());
+                prefs.setboolPrefs("food", foodCheckbox.isChecked());
+                prefs.setboolPrefs("enterence", entrenceFeesCheckbox.isChecked());
+                prefs.setintPrefs("sleep", index);
+                prefs.setboolPrefs("sleep_checkbox", sleepCheckBox.isChecked());
+
+                if (entrenceFeesCheckbox.isChecked()) {
+                    totalCost += mPlace.get(PublicPosition).cost.entranceFees;
+                }
+                if (foodCheckbox.isChecked()) {
+                    totalCost += mPlace.get(PublicPosition).cost.food;
+                }
+                if (transportationCheckbox.isChecked()) {
+                    totalCost += mPlace.get(PublicPosition).cost.transportation;
+                }
+
+                if (sleepCheckBox.isChecked()) {
+                    totalCost += mPlace.get(PublicPosition).cost.overNightStay.get(overNightSpinner.getSelection());
+                }
+                totalCost += activity_cost;
+                //ActivityCostAdapter.totalcost=0;
+                prefs.setintPrefs("total_cost", totalCost);
+                setCostProgress(totalCost);
+                break;
+
+            case R.id.cancel_cost_dialog_btn:
+            case R.id.cancel_temp_dialog:
+            case R.id.cancel_airquality_dialog:
+                alertDialog.dismiss();
+                break;
+            case R.id.cancel_internet_dialog:
+                alertDialog.cancel();
+                break;
+            case R.id.zoomin:
+                mMap.animateCamera(CameraUpdateFactory.zoomIn());
+                break;
+            case R.id.zoomout:
+                mMap.animateCamera(CameraUpdateFactory.zoomOut());
+                break;
+            case R.id.season_btn:
+                flipCard(frontLayoutSeason, backLayoutSeason, mIsBackVisible, 0);
+                break;
+            case R.id.time_btn:
+                flipCard(frontLayoutTime, backLayouTime, mIsBackVisible, 1);
+                break;
+            case R.id.age_btn:
+                flipCard(frontLayoutAge, backLayoutAge, mIsBackVisible, 2);
+                break;
+            case R.id.estimated_btn:
+                flipCard(frontLayoutEstimated, backLayoutEstimated, mIsBackVisible, 3);
+                break;
+
+        }
+    }
+
+
+    public void fillView() {
+        costView = getLayoutInflater().inflate(R.layout.cost_popup, null);
+        tempView = getLayoutInflater().inflate(R.layout.temperature_popup, null);
+        qualityView = getLayoutInflater().inflate(R.layout.airquality_popup, null);
+        internetView = getLayoutInflater().inflate(R.layout.internet_popup, null);
+
+        foodCheckbox = costView.findViewById(R.id.food_checkBox);
+        entrenceFeesCheckbox = costView.findViewById(R.id.entrance_fees_checkBox);
+        transportationCheckbox = costView.findViewById(R.id.transportation_checkBox);
+        sleepCheckBox = costView.findViewById(R.id.sleep_checkBox);
+        entrenceFeesPrice = costView.findViewById(R.id.entrance_fees_price);
+        foodPrice = costView.findViewById(R.id.food_price);
+        transportationPrice = costView.findViewById(R.id.transportation_price);
+        overNightSpinner = costView.findViewById(R.id.over_night_spinner);
+        activitiesListView = costView.findViewById(R.id.activities_list_view);
+        applyBtn = costView.findViewById(R.id.apply_cost_dialog_btn);
+        applyBtn.setOnClickListener(this);
+        cancelBtn = costView.findViewById(R.id.cancel_cost_dialog_btn);
+        cancelBtn.setOnClickListener(this);
+        cancel_temp_dialog_btn = tempView.findViewById(R.id.cancel_temp_dialog);
+        cancel_temp_dialog_btn.setOnClickListener(this);
+        max_temp = tempView.findViewById(R.id.max_temp);
+        min_temp = tempView.findViewById(R.id.min_temp);
+        humidity_tv = tempView.findViewById(R.id.humidity_tv);
+        wind_tv = tempView.findViewById(R.id.wind_tv);
+        cancel_airquality_dialog_btn = qualityView.findViewById(R.id.cancel_airquality_dialog);
+        cancel_airquality_dialog_btn.setOnClickListener(this);
+        cancel_temp_dialog_btn.setOnClickListener(this);
+        mToolbar = findViewById(R.id.detailed_toolbar);
+        mTextView = findViewById(R.id.toolbar_title);
+        placeNameRecommendations = findViewById(R.id.place_name_recommendations);
+        placeNameInfo = findViewById(R.id.place_name_information_about);
+        placeNameLocation = findViewById(R.id.place_name_location);
+        zoom_in = findViewById(R.id.zoomin);
+        zoom_out = findViewById(R.id.zoomout);
+        zoom_in.setOnClickListener(this);
+        zoom_out.setOnClickListener(this);
+        description = findViewById(R.id.description_tv);
+        description.setOnTouchListener(this);
+        scrollView = findViewById(R.id.scrollview);
+        scrollView.setOnTouchListener(this);
+        placeNameTitle = findViewById(R.id.place_name_title);
+        cancel_internet_dialog_btn = internetView.findViewById(R.id.cancel_internet_dialog);
+        cancel_internet_dialog_btn.setOnClickListener(this);
+        viewPager = findViewById(R.id.ViewPager);
+        frontLayoutTime = findViewById(R.id.front_time);
+        backLayouTime = findViewById(R.id.back_time);
+        timeToGoTv = backLayouTime.findViewById(R.id.back_text);
+        timeToGoImg = frontLayoutTime.findViewById(R.id.front_icon);
+        frontLayoutAge = findViewById(R.id.front_ag);
+        backLayoutAge = findViewById(R.id.back_age);
+        ageTv1 = backLayoutAge.findViewById(R.id.back_text);
+        ageTv2 = frontLayoutAge.findViewById(R.id.back_text);
+        frontLayoutEstimated = findViewById(R.id.front_estimated);
+        backLayoutEstimated = findViewById(R.id.back_estimated);
+        estimationTv = backLayoutEstimated.findViewById(R.id.back_text);
+        estimationImg = frontLayoutEstimated.findViewById(R.id.front_icon);
+
+
+        //information about the place deceleration
+        costProgressBar = findViewById(R.id.cost_progress);
+        tempProgressBar = findViewById(R.id.temp_progress);
+        airQualityProgressBar = findViewById(R.id.air_quality_progress);
+        internetProgressBar = findViewById(R.id.internet_progress);
+        costTv = findViewById(R.id.cost_tv);
+        tempTv = findViewById(R.id.temp_tv);
+        tempOverallTv = findViewById(R.id.temp_overall_tv);
+        airQualityTv = findViewById(R.id.air_quality_tv);
+        internetTv = findViewById(R.id.internet_tv);
+
+        //recommendations about the place deceleration
+        seasonFlip = findViewById(R.id.season_btn);
+        seasonFlip.setOnClickListener(this);
+        frontLayoutSeason = seasonFlip.findViewById(R.id.front_season);
+        backLayoutSeason = seasonFlip.findViewById(R.id.back_season);
+        seasonTv = backLayoutSeason.findViewById(R.id.back_text);
+        seasonImg = frontLayoutSeason.findViewById(R.id.front_icon);
+        timeToGoFlip = findViewById(R.id.time_btn);
+        timeToGoFlip.setOnClickListener(this);
+        ageFlip = findViewById(R.id.age_btn);
+        ageFlip.setOnClickListener(this);
+        estimationFlip = findViewById(R.id.estimated_btn);
+        estimationFlip.setOnClickListener(this);
+
+        //progress details deceleration
+        costDetails = findViewById(R.id.cost_details_btn);
+        costDetails.setOnClickListener(this);
+        text_to_speech = findViewById(R.id.text_to_speech);
+        text_to_speech.setOnClickListener(this);
+        mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        //clarification_dialog
+        prefs = new Sharedpreference(this, Parent_Key);
+        if (!prefs.getboolPrefs("clarification_dialog", false)) {
+            showClarificationDialog();
+        }
+
+    }
+
+    public void ActionBarChecker() {
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setTitle(null);
+        // add back arrow to toolbar
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+        mTextView.setText(R.string.detailed_activity_title);
+    }
+
+    public void ApiConfig() {
+        //retrofit config
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://api.openweathermap.org/").addConverterFactory(GsonConverterFactory.create()).build();
+        openWeatherApi = retrofit.create(OpenWeatherApi.class);
+    }
+
+    public void setFirstPlaceDetails() {
+
+        Intent i = getIntent();
+        mPlace = (List<Place>) i.getSerializableExtra("places");
+        Tour_id = i.getStringExtra("tour_id");
+        Parent_Key = Tour_id + place_id(mPlace.get(0).nameEN);
+        description.setMovementMethod(new ScrollingMovementMethod());
+        latitude = mPlace.get(0).latitude;
+        longitude = mPlace.get(0).longitude;
+        placeName = mPlace.get(0).nameEN;
+        map_view = mapFragment.getView();
+        mapFragment.getMapAsync(this);
+        run_viewPager();
+        int deff = mPlace.get(0).cost.entranceFees + mPlace.get(0).cost.food + mPlace.get(0).cost.transportation + mPlace.get(0).cost.overNightStay.get(1);
+        getTempApi(mPlace.get(0).latitude, mPlace.get(0).longitude);
+        setAirQualityProgress(mPlace.get(0).airQuality);
+        setInternetProgress(mPlace.get(0).internet);
+        setSeason(mPlace.get(0).recommendedSeason);
+        setAge(mPlace.get(0).recommendedAge);
+        setEstimatedTime(mPlace.get(0).estimatedTime + prefs.getintPrefs("act_time", 0));
+        setCostProgress(prefs.getintPrefs("total_cost", deff));
+        setTimeToGo(mPlace.get(0).recommendedTime);
+
+        try {
+            mp = MediaPlayer.create(getApplicationContext(), getResources().getIdentifier(mPlace.get(0).voiceURL, "raw", getPackageName()));
+        } catch (Exception e) {
+            Log.d(TAG, "" + mPlace.get(0).nameEN + " \n" + e);
+        }
+
+        if (SplashScreenActivity.lan.equalsIgnoreCase("ar")) {
+            description.setText(mPlace.get(0).descAR);
+            placeNameRecommendations.setText(mPlace.get(0).nameAR);
+            placeNameInfo.setText(mPlace.get(0).nameAR);
+            placeNameLocation.setText(mPlace.get(0).nameAR);
+            placeNameTitle.setText(mPlace.get(0).nameAR);
+        } else {
+            placeNameTitle.setText(mPlace.get(0).nameEN);
+            description.setText(mPlace.get(0).descEN);
+            placeNameRecommendations.setText(mPlace.get(0).nameEN);
+            placeNameInfo.setText(mPlace.get(0).nameEN);
+            placeNameLocation.setText(mPlace.get(0).nameEN);
+        }
+    }
+
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+        switch (view.getId()) {
+            case R.id.scrollview:
+                description.getParent().requestDisallowInterceptTouchEvent(false);
+                break;
+            case R.id.description_tv:
+                description.getParent().requestDisallowInterceptTouchEvent(true);
+                break;
+        }
+        return false;
     }
 
 
