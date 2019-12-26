@@ -91,7 +91,7 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
     ScrollView scrollView;
     SupportMapFragment mapFragment;
     FrameLayout seasonFlip, timeToGoFlip, estimationFlip, ageFlip;
-    TextView seasonTv, timeToGoTv, ageTv1, ageTv2, estimationTv, costTv, tempTv, tempOverallTv, airQualityTv, internetTv, placeNameInfo, placeNameRecommendations, placeNameLocation, description, placeNameTitle,entrenceFeesPrice,foodPrice,transportationPrice;
+    TextView seasonTv, timeToGoTv, ageTv1, ageTv2, estimationTv, costTv, tempTv, tempOverallTv, airQualityTv, internetTv, placeNameInfo, placeNameRecommendations, placeNameLocation, description, placeNameTitle, entrenceFeesPrice, foodPrice, transportationPrice, nearbyTv;
     RoundCornerProgressBar costProgressBar, tempProgressBar, airQualityProgressBar, internetProgressBar;
     View frontLayoutSeason, backLayoutSeason, frontLayoutTime, backLayouTime, frontLayoutAge, backLayoutAge, frontLayoutEstimated, backLayoutEstimated;
     ImageView seasonImg, timeToGoImg, estimationImg, costDetails;
@@ -933,6 +933,10 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
             showClarificationDialog();
         }
 
+        nearbyTv = findViewById(R.id.nearby_tv);
+        if(nearbyTv.getText().toString().length()!=0){
+            nearbyTv.setText(getResources().getString(R.string.nearby)+" ");
+        }
     }
 
     public void ActionBarChecker() {

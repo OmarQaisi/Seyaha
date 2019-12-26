@@ -150,4 +150,6 @@
     <string name="tab_hotels">الفنادق</string>
     <string name="tab_restaurants">"المطاعم"</string>
 
+    <string name="nearby"></string>
+
 </resources>

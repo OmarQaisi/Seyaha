@@ -115,8 +115,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_marginLeft="5dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginRight="20dp">
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -168,15 +168,32 @@
                         android:textColor="@android:color/black"
                         android:textSize="16sp" />
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="start"
                         android:layout_marginTop="10dp"
-                        android:fontFamily="@font/montserrat_medium"
-                        android:text="@string/Places"
-                        android:textColor="@android:color/black"
-                        android:textSize="16sp" />
+                        android:gravity="start|bottom"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/nearby_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start|bottom"
+                            android:text="@string/nearby"
+                            android:textSize="14sp"
+                            android:textColor="@android:color/black"
+                            android:fontFamily="@font/montserrat_medium"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start|bottom"
+                            android:fontFamily="@font/montserrat_bold"
+                            android:text="@string/Places"
+                            android:textColor="@color/blue_logo"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
                 </LinearLayout>
 
                 <LinearLayout
