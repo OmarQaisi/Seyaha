@@ -148,6 +148,6 @@
     <string name="place_info_toolbar_title">معلومات الموقع</string>
     <string name="places_toolbar_title">الأماكن</string>
     <string name="tab_hotels">الفنادق</string>
-    <string name="tab_restaurants">"المطاعم "</string>
+    <string name="tab_restaurants">"المطاعم"</string>
 
 </resources>

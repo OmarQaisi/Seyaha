@@ -413,6 +413,7 @@
                         app:rcReverse="false"
                         app:rcSecondaryProgress="0"
                         app:rcSecondaryProgressColor="@android:color/transparent" />
+
                 </LinearLayout>
 
             </LinearLayout>

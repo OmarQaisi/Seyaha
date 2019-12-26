@@ -127,7 +127,7 @@
    <string name="already_rated">You have already rated this tour!!</string>
     <string name="interests">Select your interests:</string>
     <string name="now">(Now)</string>
-    <string name="title_share">this app used to discover the tourism places in jordan</string>
+    <string name="title_share">An application for tourism in Jordan</string>
     <string name="using">Share using:</string>
     <string name="recommended">Recommended</string>
     <string name="top_rated">Top Rated</string>
@@ -193,6 +193,5 @@
     <string name="place_website">Unknown</string>
 
     <string name="place_phone">Unknwon</string>
-
 
 </resources>

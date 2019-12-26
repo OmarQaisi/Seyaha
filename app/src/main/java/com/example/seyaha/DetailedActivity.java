@@ -29,7 +29,6 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -348,12 +347,6 @@ public class DetailedActivity extends AppCompatActivity implements OnMapReadyCal
                 alertDialog.cancel();
             }
         });
-        if (qualityView.getParent() != null) {
-            ((ViewGroup) qualityView.getParent()).removeView(qualityView);
-        }
-        builder.setView(qualityView);
-        alertDialog = builder.create();
-        alertDialog.show();
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
     }
 
